@@ -1,0 +1,84 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="simple_car">
+    <static>false</static> <!-- This means the model can move -->
+
+    <!-- ========== CHASSIS (The Body) ========== -->
+    <link name="chassis">
+      <pose>0 0 0.2 0 0 0</pose>
+      <inertial> <!-- Physics properties -->
+        <mass>10.0</mass>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box><size>1.0 0.6 0.2</size></box> <!-- Shape for physics collisions -->
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box><size>1.0 0.6 0.2</size></box> <!-- Shape you see -->
+        </geometry>
+        <material>
+          <ambient>0.0 0.0 1.0 1</ambient> <!-- Make it blue -->
+          <diffuse>0.0 0.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <!-- ========== WHEELS ========== -->
+    <!-- We will create 4 wheels and attach them to the chassis with joints -->
+
+    <!-- Front Left Wheel -->
+    <link name="front_left_wheel">
+      <pose>0.3 0.35 0.1 0 1.5707 0</pose> <!-- Position relative to car center -->
+      <inertial><mass>1.0</mass></inertial>
+      <collision name="collision">
+        <geometry><cylinder><radius>0.1</radius><length>0.05</length></cylinder></geometry>
+      </collision>
+      <visual name="visual">
+        <geometry><cylinder><radius>0.1</radius><length>0.05</length></cylinder></geometry>
+        <material><ambient>0.1 0.1 0.1 1</ambient><diffuse>0.1 0.1 0.1 1</diffuse></material>
+      </visual>
+    </link>
+    
+    <!-- ... (Repeat for front_right, rear_left, rear_right with different poses) ... -->
+    <!-- NOTE: For brevity, I'll omit the other 3 wheels. A full file would have them. -->
+
+    <!-- ========== JOINTS (Connecting Wheels to Chassis) ========== -->
+    <joint name="front_left_wheel_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>front_left_wheel</child>
+      <axis><xyz>0 1 0</xyz></axis> <!-- The axis the wheel spins on -->
+    </joint>
+
+    <!-- ... (Joints for the other 3 wheels) ... -->
+
+    <!-- ========== GAZEBO PLUGINS (The ROS Connection) ========== -->
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <!-- This plugin provides a differential drive (skid steer) interface -->
+      <ros>
+        <!-- Remap the default 'cmd_vel' topic to one specific for our car -->
+        <namespace>/my_car</namespace>
+        <remapping>cmd_vel:=cmd_vel_raw</remapping>
+        <remapping>odom:=odom_raw</remapping>
+      </ros>
+      
+      <!-- Wheel joint names -->
+      <left_joint>front_left_wheel_joint</left_joint>
+      <left_joint>rear_left_wheel_joint</left_joint>
+      <right_joint>front_right_wheel_joint</right_joint>
+      <right_joint>rear_right_wheel_joint</right_joint>
+
+      <!-- Kinematics -->
+      <wheel_separation>0.7</wheel_separation> <!-- Distance between left and right wheels -->
+      <wheel_diameter>0.2</wheel_diameter>
+      
+      <!-- Output -->
+      <publish_odom>true</publish_odom>
+      <publish_tf>true</publish_tf>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>chassis</robot_base_frame>
+    </plugin>
+    
+  </model>
+</sdf>

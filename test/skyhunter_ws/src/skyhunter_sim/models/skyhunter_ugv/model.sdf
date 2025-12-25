@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="skyhunter_ugv">
+    <static>false</static>
+    <!-- CHASSIS (Main Body) -->
+    <link name="base_link">
+      <inertial><mass>10</mass></inertial>
+      <visual name="visual">
+        <geometry><box><size>0.8 0.5 0.2</size></box></geometry>
+        <material><ambient>0.8 0.2 0.2 1</ambient><diffuse>0.8 0.2 0.2 1</diffuse></material> <!-- Make it Red -->
+      </visual>
+      <collision name="collision">
+        <geometry><box><size>0.8 0.5 0.2</size></box></geometry>
+      </collision>
+    </link>
+    <!-- WHEELS (Just one for this example to keep it simple) -->
+    <link name="left_wheel">
+        <pose>0.25 0.28 0.1 0 1.5707 0</pose>
+        <inertial><mass>1</mass></inertial>
+        <visual name="visual"><geometry><cylinder><radius>0.1</radius><length>0.05</length></cylinder></geometry></visual>
+        <collision name="collision"><geometry><cylinder><radius>0.1</radius><length>0.05</length></cylinder></geometry></collision>
+    </link>
+    <link name="right_wheel">
+        <pose>0.25 -0.28 0.1 0 1.5707 0</pose>
+        <inertial><mass>1</mass></inertial>
+        <visual name="visual"><geometry><cylinder><radius>0.1</radius><length>0.05</length></cylinder></geometry></visual>
+        <collision name="collision"><geometry><cylinder><radius>0.1</radius><length>0.05</length></cylinder></geometry></collision>
+    </link>
+    <!-- JOINTS (Connecting wheels to body) -->
+    <joint name="left_wheel_joint" type="revolute"><parent>base_link</parent><child>left_wheel</child><axis><xyz>0 1 0</xyz></axis></joint>
+    <joint name="right_wheel_joint" type="revolute"><parent>base_link</parent><child>right_wheel</child><axis><xyz>0 1 0</xyz></axis></joint>
+    
+    <!-- ROS 2 PLUGIN: This makes the robot drivable via ROS topics! -->
+    <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+      <ros>
+        <namespace>/</namespace>
+      </ros>
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+      <wheel_separation>0.56</wheel_separation>
+      <wheel_diameter>0.2</wheel_diameter>
+      <publish_odom>true</publish_odom>
+      <publish_tf>true</publish_tf>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+    </plugin>
+  </model>
+</sdf>
