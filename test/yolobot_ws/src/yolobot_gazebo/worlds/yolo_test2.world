@@ -1,0 +1,118 @@
+<!-- <?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="yolo_test_world">
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <name>person_block</name>
+      <uri>model://person_block</uri>
+      <static>true</static>
+      <pose>1 0 0 0 0 0</pose>
+    </include>
+    <include>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
+      <static>true</static>
+      <pose>0 -2 0 0 0 0</pose>
+    </include>
+    <include>
+      <name>suv</name>
+      <uri>model://suv</uri>
+      <static>true</static>
+      <pose>5 4 0 0 0 -0.8</pose>
+    </include>    
+    <include>
+      <name>stop_sign</name>
+      <uri>model://stop_sign</uri>
+      <static>true</static>
+      <pose>-5 4 0 0 0 1.57</pose>
+    </include>  
+    <include>
+      <name>table</name>
+      <uri>model://table</uri>
+      <static>true</static>
+      <pose>-5 -4 0 0 0 1.57</pose>
+    </include> 
+    <include>
+      <name>prius_hybrid</name>
+      <uri>model://prius_hybrid</uri>
+      <static>true</static>
+      <pose>-7 6 0 0 0 0</pose>
+    </include> 
+    <include>
+      <name>cat_block</name>
+      <uri>model://cat_block</uri>
+      <static>true</static>
+      <pose>3 -3 0 0 0 0.3</pose>
+    </include> 
+  </world>
+</sdf> -->
+
+
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="yolo_test_world">
+    <!-- Essential lighting and ground -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- === OBJECTS FOR DETECTION === -->
+
+    <!-- A static person, easy to see -->
+    <include>
+      <name>person_standing_1</name>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/person_standing</uri>
+      <static>true</static>
+      <pose>3 0 0 0 0 -1.57</pose> <!-- Position: x=3, y=0, z=0. Yaw=-1.57 (facing robot) -->
+    </include>
+    
+    <!-- Another person, further away -->
+    <include>
+      <name>person_walking_1</name>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/person_walking</uri>
+      <static>true</static>
+      <pose>-4 5 0 0 0 0.8</pose> <!-- Positioned further away and at an angle -->
+    </include>
+
+    <!-- A car -->
+    <include>
+      <name>hatchback_car</name>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/hatchback</uri>
+      <static>true</static>
+      <pose>5 5 0 0 0 -2.5</pose>
+    </include>
+
+    <!-- A stop sign -->
+    <include>
+      <name>stop_sign</name>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/stop_sign</uri>
+      <static>true</static>
+      <pose>0 6 0 0 0 0</pose>
+    </include>
+
+    <!-- A fire hydrant -->
+    <include>
+      <name>fire_hydrant</name>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/fire_hydrant</uri>
+      <static>true</static>
+      <pose>-4 -3 0 0 0 0</pose>
+    </include>
+
+    <!-- A backpack (small object test) -->
+    <include>
+      <name>backpack</name>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/backpack</uri>
+      <static>true</static>
+      <pose>2 -3 0 0 0 0.5</pose>
+    </include>
+
+  </world>
+</sdf>
