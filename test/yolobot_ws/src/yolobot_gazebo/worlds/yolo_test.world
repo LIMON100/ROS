@@ -1,53 +1,53 @@
 <?xml version="1.0" ?>
 <sdf version="1.6">
   <world name="yolo_test_world">
-    <!-- Essential lighting and ground -->
     <include>
       <uri>model://sun</uri>
     </include>
     <include>
       <uri>model://ground_plane</uri>
     </include>
-
-    <!-- A person model from Fuel -->
     <include>
-      <name>person_standing_1</name>
-      <uri>model://https://fuel.gazebosim.org/1.0/OpenRobotics/models/person_standing</uri>
+      <name>person_block</name>
+      <uri>model://person_block</uri>
       <static>true</static>
-      <pose>3 0 0 0 0 -1.57</pose>
+      <pose>1 0 0 0 0 0</pose>
     </include>
-    
-    <!-- Another person, further away -->
     <include>
-      <name>person_walking_1</name>
-      <uri>model://https://fuel.gazebosim.org/1.0/OpenRobotics/models/person_walking</uri>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
       <static>true</static>
-      <pose>-4 5 0 0 0 0.8</pose> 
+      <pose>0 -2 0 0 0 0</pose>
     </include>
-
-    <!-- A car -->
     <include>
-      <name>hatchback_car</name>
-      <uri>model://https://fuel.gazebosim.org/1.0/OpenRobotics/models/hatchback</uri>
+      <name>suv</name>
+      <uri>model://suv</uri>
       <static>true</static>
-      <pose>5 5 0 0 0 -2.5</pose>
-    </include>
-
-    <!-- A stop sign -->
+      <pose>5 4 0 0 0 -0.8</pose>
+    </include>    
     <include>
       <name>stop_sign</name>
-      <uri>model://https://fuel.gazebosim.org/1.0/OpenRobotics/models/stop_sign</uri>
+      <uri>model://stop_sign</uri>
       <static>true</static>
-      <pose>0 6 0 0 0 0</pose>
-    </include>
-
-    <!-- A fire hydrant -->
+      <pose>-5 4 0 0 0 1.57</pose>
+    </include>  
     <include>
-      <name>fire_hydrant</name>
-      <uri>model://https://fuel.gazebosim.org/1.0/OpenRobotics/models/fire_hydrant</uri>
+      <name>table</name>
+      <uri>model://table</uri>
       <static>true</static>
-      <pose>-4 -3 0 0 0 0</pose>
-    </include>
-
+      <pose>-5 -4 0 0 0 1.57</pose>
+    </include> 
+    <include>
+      <name>prius_hybrid</name>
+      <uri>model://prius_hybrid</uri>
+      <static>true</static>
+      <pose>-7 6 0 0 0 0</pose>
+    </include> 
+    <include>
+      <name>cat_block</name>
+      <uri>model://cat_block</uri>
+      <static>true</static>
+      <pose>3 -3 0 0 0 0.3</pose>
+    </include> 
   </world>
 </sdf>
