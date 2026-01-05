@@ -47,53 +47,32 @@
   </gazebo>
   <!-- ros_control plugin -->
   <gazebo>
-    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-      <robotNamespace>/yolobot</robotNamespace>
-      <robotParam>/robot_description</robotParam>
-      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-    </plugin>
-  </gazebo>
-  <gazebo>
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+      <update_rate>100</update_rate>
+      
+      <!-- Wheel Joints - CORRECTED NAMES -->
+      <left_joint>joint_left_wheel</left_joint>
+      <right_joint>joint_right_wheel</right_joint>
 
-      <ros>
-        <namespace>/yolobot</namespace>
-      </ros>
-
-      <!-- wheels -->
-      <left_joint>joint_right_wheel</left_joint>
-      <right_joint>joint_left_wheel</right_joint>
-
-      <!-- kinematics -->
+      <!-- Kinematics -->
       <wheel_separation>0.1</wheel_separation>
-      <wheel_diameter>0.025</wheel_diameter>
+      <wheel_diameter>0.07</wheel_diameter> <!-- Note: Radius was 0.035, so diameter is 0.07 -->
 
-      <!-- limits -->
-      <max_wheel_torque>0.5</max_wheel_torque>
-      <max_wheel_acceleration>1.0</max_wheel_acceleration>
+      <!-- Limits -->
+      <max_wheel_torque>20.0</max_wheel_torque>
+      <max_wheel_acceleration>5.0</max_wheel_acceleration>
 
-      <!-- output -->
+      <!-- Topics -->
+      <command_topic>yolobot/cmd_vel</command_topic>
+      <odometry_topic>yolobot/odom</odometry_topic>
+
+      <!-- Frames -->
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+
       <publish_odom>true</publish_odom>
       <publish_odom_tf>true</publish_odom_tf>
-
-      <odometry_frame>odom</odometry_frame>
-      <robot_base_frame>chassis</robot_base_frame>
-
-
-    </plugin>
-  </gazebo>
-  <!-- imu -->
-  <gazebo>
-    <plugin filename="libgazebo_ros_imu.so" name="gazebo_ros_imu_controller">
-      <robotNamespace>/yolobot/</robotNamespace>
-      <topicName>imu/data3</topicName>
-      <serviceName>imu/service</serviceName>
-      <bodyName>chassis</bodyName>
-      <gaussianNoise>0</gaussianNoise>
-      <rpyOffsets>0 0 0</rpyOffsets>
-      <updateRate>50.0</updateRate>
-      <alwaysOn>true</alwaysOn>
-      <gaussianNoise>0</gaussianNoise>
+      <publish_wheel_tf>false</publish_wheel_tf>
     </plugin>
   </gazebo>
 
@@ -353,6 +332,88 @@
     <mu1>0.5</mu1>
     <mu2>0.5</mu2>
     <material>Gazebo/Green</material>
+  </gazebo>
+
+  <!-- New Link for the LiDAR sensor -->
+  <link name="lidar_link">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link>
+  <joint name="lidar_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="lidar_link"/>
+    <origin xyz="0.08 0 0.05" rpy="0 0 0"/> <!-- Mount it on the front of the chassis, slightly above -->
+  </joint>
+
+  <!-- New Link for the IMU sensor (can be invisible) -->
+  <link name="imu_link"/>
+  <joint name="imu_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> <!-- Mount it at the center of the chassis -->
+  </joint>
+
+  <!-- Modern LiDAR Sensor Plugin -->
+  <gazebo reference="lidar_link">
+    <sensor name="lidar" type="ray">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.12</min>
+          <max>12.0</max>
+          <resolution>0.015</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_ray_sensor" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <output_type>sensor_msgs/PointCloud2</output_type>
+          <topic>scan</topic>
+        </ros>
+        <frame_name>lidar_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- Modern IMU Sensor Plugin -->
+  <gazebo reference="imu_link">
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <plugin name="gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">
+        <ros>
+          <topic>imu/data</topic>
+        </ros>
+        <initial_orientation_as_reference>false</initial_orientation_as_reference>
+      </plugin>
+    </sensor>
   </gazebo>
   
 </robot>
