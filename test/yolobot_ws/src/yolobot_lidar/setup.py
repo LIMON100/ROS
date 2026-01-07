@@ -24,7 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'lidar_processor = yolobot_lidar.lidar_processor:main'
+            'lidar_processor = yolobot_lidar.lidar_processor:main',
+            'imu_processor = yolobot_lidar.imu_processor:main'
         ],
     },
 )
