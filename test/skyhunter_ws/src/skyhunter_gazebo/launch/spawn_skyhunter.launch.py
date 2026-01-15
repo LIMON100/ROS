@@ -25,7 +25,7 @@ def generate_launch_description():
 
     # Get the robot's URDF file
     # urdf_file_path = os.path.join(pkg_skyhunter_description, 'urdf', 'skyhunter.urdf')
-    urdf_file_path = os.path.join(pkg_skyhunter_description, 'robot', 'yolobot.urdf') 
+    urdf_file_path = os.path.join(pkg_skyhunter_description, 'robot', 'new_bot.urdf') 
 
     # Start the Robot State Publisher
     start_robot_state_publisher_cmd = Node(
