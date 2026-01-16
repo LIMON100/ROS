@@ -24,8 +24,7 @@ def generate_launch_description():
     )
 
     # Get the robot's URDF file
-    # urdf_file_path = os.path.join(pkg_skyhunter_description, 'urdf', 'skyhunter.urdf')
-    urdf_file_path = os.path.join(pkg_skyhunter_description, 'robot', 'new_bot.urdf') 
+    urdf_file_path = os.path.join(pkg_skyhunter_description, 'robot', 'skyhunter_pro_v3.urdf') 
 
     # Start the Robot State Publisher
     start_robot_state_publisher_cmd = Node(
@@ -40,7 +39,10 @@ def generate_launch_description():
         package='gazebo_ros',
         executable='spawn_entity.py',
         arguments=['-topic', 'robot_description', '-entity', 'skyhunter',
-                   '-x', '0.0', '-y', '0.0', '-z', '0.5'],
+                   '-x', '0.0', 
+                   '-y', '0.0', 
+                   '-z', '1.0'
+                   ],
         output='screen'
     )
 
