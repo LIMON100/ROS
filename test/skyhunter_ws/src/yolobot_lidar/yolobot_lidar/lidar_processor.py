@@ -6,6 +6,7 @@ from std_msgs.msg import String
 import math
 import numpy as np
 from sklearn.cluster import DBSCAN
+from rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSHistoryPolicy
 
 class LidarProcessorNode(Node):
     def __init__(self):
@@ -25,11 +26,24 @@ class LidarProcessorNode(Node):
         self.DBSCAN_MIN_SAMPLES = 5
 
         # Subscribers and Publishers
+        # self.subscription = self.create_subscription(
+        #     PointCloud2,
+        #     '/lidar/points',
+        #     self.lidar_callback,
+        #     10)
+
+        qos_profile = QoSProfile(
+        reliability=QoSReliabilityPolicy.BEST_EFFORT,
+        history=QoSHistoryPolicy.KEEP_LAST,
+        depth=5  # Keep the last 5 messages
+    )
+
         self.subscription = self.create_subscription(
             PointCloud2,
-            '/scan', 
+            '/lidar/points',
             self.lidar_callback,
-            10)
+            qos_profile) # <-- Use the new QoS profile
+
         
         self.object_publisher = self.create_publisher(String, '/lidar/closest_object', 10)
         

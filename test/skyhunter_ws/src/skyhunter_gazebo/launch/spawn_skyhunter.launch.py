@@ -41,7 +41,7 @@ def generate_launch_description():
         arguments=['-topic', 'robot_description', '-entity', 'skyhunter',
                    '-x', '0.0', 
                    '-y', '0.0', 
-                   '-z', '1.0'
+                   '-z', '0.5'
                    ],
         output='screen'
     )
