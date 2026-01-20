@@ -1,0 +1,109 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="agriculture_world">
+    <!-- Add a light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- The main world terrain and barn -->
+    <model name="agriculture_geometry">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="world_link">
+        <visual name="visual">
+          <origin xyz="0 0 0" rpy="0 0 3.14159"/>
+          <geometry>
+            <mesh>
+              <!-- USE ABSOLUTE PATH -->
+              <uri>/home/limonubuntu/Work/Limon/ros2_work/skyhunter_ws/src/skyhunter_gazebo/meshes/agriculture_world.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <origin xyz="0 0 0" rpy="0 0 3.14159"/>
+          <geometry>
+            <mesh>
+              <!-- USE ABSOLUTE PATH -->
+              <uri>/home/limonubuntu/Work/Limon/ros2_work/skyhunter_ws/src/skyhunter_gazebo/meshes/agriculture_world.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- The base station accessory -->
+    <model name="base_station">
+        <static>true</static>
+        <pose>-40 -17 0.7 0 0 0</pose>
+        <link name="link">
+            <visual name="visual">
+                <geometry>
+                    <mesh>
+                        <!-- USE ABSOLUTE PATH -->
+                        <uri>/home/limonubuntu/Work/Limon/ros2_work/skyhunter_ws/src/skyhunter_gazebo/meshes/BaseStationWithTripod.dae</uri>
+                    </mesh>
+                </geometry>
+            </visual>
+            <collision name="collision">
+                <geometry>
+                    <mesh>
+                        <!-- USE ABSOLUTE PATH -->
+                        <uri>/home/limonubuntu/Work/Limon/ros2_work/skyhunter_ws/src/skyhunter_gazebo/meshes/BaseStationWithTripod.dae</uri>
+                    </mesh>
+                </geometry>
+            </collision>
+        </link>
+    </model>
+
+    <!-- The charging dock accessory -->
+    <model name="charge_dock">
+        <static>true</static>
+        <pose>8 -4 -0.2 0 0 1.5707</pose>
+        <link name="link">
+            <visual name="visual">
+                <origin xyz="-0.35 0 0" rpy="0 0 1.5707"/>
+                <geometry>
+                    <mesh>
+                        <!-- USE ABSOLUTE PATH -->
+                        <uri>/home/limonubuntu/Work/Limon/ros2_work/skyhunter_ws/src/skyhunter_gazebo/meshes/WiboticTR301.dae</uri>
+                    </mesh>
+                </geometry>
+            </visual>
+            <collision name="collision">
+                 <origin xyz="-0.35 0 0" rpy="0 0 1.5707"/>
+                <geometry>
+                    <mesh>
+                        <!-- USE ABSOLUTE PATH -->
+                        <uri>/home/limonubuntu/Work/Limon/ros2_work/skyhunter_ws/src/skyhunter_gazebo/meshes/WiboticTR301.dae</uri>
+                    </mesh>
+                </geometry>
+            </collision>
+        </link>
+    </model>
+
+    <include>
+      <name>farmer_john</name> 
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/person_standing</uri>
+      <static>true</static>
+      <pose>-5 5 1 0 0 1.57</pose> <!-- Position: x=-5, y=5, z=1. Facing a certain direction -->
+    </include>
+    
+    <!-- Add an SUV parked near the solar panels -->
+    <include>
+      <name>farm_suv</name>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/person_standing</uri>
+      <static>true</static>
+      <pose>10 -15 0.5 0 0 -0.8</pose> <!-- Position: x=10, y=-15, z=0.5. At an angle -->
+    </include>
+
+    <!-- Add a smaller car (Prius Hybrid) -->
+    <include>
+      <name>prius_hybrid</name>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/person_standing</uri>
+      <static>true</static>
+      <pose>-15 -10 0.5 0 0 0</pose> 
+    </include>
+
+  </world>
+</sdf>
