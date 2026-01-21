@@ -18,13 +18,13 @@ find_package(PCL 1.12 REQUIRED) # It's safer to use the version installed by Hum
 # === Build LiDAR Processor Node
 # =======================================================
 add_executable(
-  lidar_processor_node
-  src/lidar_processor_node.cpp
+  e1_preprocessor_node
+  src/e1_preprocessor_node.cpp
 )
 
 # Specify dependencies ONLY for the LiDAR node
 ament_target_dependencies(
-  lidar_processor_node
+  e1_preprocessor_node
   rclcpp
   sensor_msgs
   std_msgs
@@ -33,7 +33,7 @@ ament_target_dependencies(
 
 # Link the LiDAR node against the PCL libraries
 target_link_libraries(
-  lidar_processor_node
+  e1_preprocessor_node
   ${PCL_LIBRARIES}
 )
 
@@ -59,7 +59,7 @@ ament_target_dependencies(
 # Install both executables so ros2 run can find them
 install(
   TARGETS
-    lidar_processor_node
+    e1_preprocessor_node
     imu_processor_node
   DESTINATION lib/${PROJECT_NAME}
 )
