@@ -12,10 +12,13 @@ find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(pcl_conversions REQUIRED)
 find_package(tf2_ros REQUIRED)
-find_package(PCL 1.12 REQUIRED) # It's safer to use the version installed by Humble, which is 1.12
+find_package(PCL 1.12 REQUIRED) 
+find_package(grid_map_ros REQUIRED)
+find_package(grid_map_msgs REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 # =======================================================
-# === Build LiDAR Processor Node
+# === Build E1 Processor Node
 # =======================================================
 add_executable(
   e1_preprocessor_node
@@ -29,12 +32,35 @@ ament_target_dependencies(
   sensor_msgs
   std_msgs
   pcl_conversions
+  grid_map_ros
 )
 
 # Link the LiDAR node against the PCL libraries
 target_link_libraries(
   e1_preprocessor_node
   ${PCL_LIBRARIES}
+)
+
+# =======================================================
+# === Build Elevation Mapper Node (NEW BLOCK)
+# =======================================================
+add_executable(
+  elevation_mapper_node
+  src/elevation_mapper_node.cpp
+)
+ament_target_dependencies(
+  elevation_mapper_node
+  rclcpp
+  sensor_msgs
+  pcl_conversions
+  grid_map_ros
+  grid_map_msgs
+)
+# PCL is needed for the PointCloud type
+target_link_libraries(
+  elevation_mapper_node
+  ${PCL_LIBRARIES}
+  Eigen3::Eigen
 )
 
 # =======================================================
@@ -60,6 +86,7 @@ ament_target_dependencies(
 install(
   TARGETS
     e1_preprocessor_node
+    elevation_mapper_node
     imu_processor_node
   DESTINATION lib/${PROJECT_NAME}
 )
