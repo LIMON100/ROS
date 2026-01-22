@@ -144,7 +144,7 @@
   </gazebo>
   
   <gazebo reference="lidar_link">
-        <sensor name="lidar" type="ray">
+        <sensor name="lidar_sensor" type="ray">
           <always_on>true</always_on>
           <visualize>false</visualize>
           <update_rate>10</update_rate>
