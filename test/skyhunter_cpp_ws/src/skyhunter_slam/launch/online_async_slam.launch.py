@@ -8,6 +8,8 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     
     pkg_skyhunter_slam = get_package_share_directory('skyhunter_slam')
+
+    qos_params_file = os.path.join(pkg_skyhunter_slam, 'config', 'qos_override.yaml')
     
     # --- Declare Launch Arguments ---
     use_sim_time_arg = DeclareLaunchArgument(
@@ -44,7 +46,7 @@ def generate_launch_description():
             'use_inf': True,
             'inf_epsilon': 1.0,
             'use_sim_time': LaunchConfiguration('use_sim_time'),
-        }]
+        }, qos_params_file]
     )
 
     # --- SLAM Toolbox Node ---
