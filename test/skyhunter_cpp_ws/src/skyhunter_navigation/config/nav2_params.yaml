@@ -46,6 +46,18 @@ controller_server:
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
       # Parameters for the DWB controller
+      # --- ADD/CHANGE THESE LINES FOR SPEED ---
+      max_vel_x: 0.8       # Max forward speed in m/s (e.g., 0.8 m/s is a brisk walk)
+      max_vel_theta: 1.2   # Max turning speed in rad/s (e.g., 1.2 rad/s is a reasonably quick turn)
+      min_vel_x: 0.0       # Minimum forward speed. Can be 0 or a small positive value.
+                           # Setting to 0 allows the robot to stop.
+
+      acc_lim_x: 2.0       # Max forward acceleration in m/s^2. Higher values make it more responsive.
+      acc_lim_theta: 3.2   # Max angular acceleration in rad/s^2.
+      decel_lim_x: -2.0      # Max forward deceleration.
+      decel_lim_theta: -3.2  # Max angular deceleration.
+      # ----------------------------------------
+
       xy_goal_tolerance: 0.25
       yaw_goal_tolerance: 0.25
       prune_plan: true
