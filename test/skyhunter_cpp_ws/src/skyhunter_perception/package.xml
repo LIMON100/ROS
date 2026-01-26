@@ -12,13 +12,24 @@
   <depend>rclcpp</depend>
   <depend>sensor_msgs</depend>
   <depend>std_msgs</depend>
-  <depend>pcl_conversions</depend> 
-
-  <depend>tf2</depend> 
-  <depend>tf2_geometry_msgs</depend> 
-
+  <depend>geometry_msgs</depend>
+  
+  <!-- Point Cloud & Grid Map -->
+  <depend>pcl_conversions</depend>
+  <depend>libpcl-all-dev</depend> <!-- Ensures PCL headers are found -->
   <depend>grid_map_ros</depend>
   <depend>grid_map_msgs</depend>
+  <depend>libeigen3-dev</depend>
+
+  <!-- TF2 Dependencies (Crucial for Transforms) -->
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_eigen</depend>
+  <depend>tf2_sensor_msgs</depend>
+  <depend>tf2_geometry_msgs</depend>
+
+  <depend>nav2_costmap_2d</depend>
+  <depend>pluginlib</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

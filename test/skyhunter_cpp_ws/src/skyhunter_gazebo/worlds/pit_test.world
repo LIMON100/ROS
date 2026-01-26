@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="pit_test_world">
+    <include><uri>model://sun</uri></include>
+    <include><uri>model://ground_plane</uri></include>
+    
+    <!-- A trench in front of the robot -->
+    <model name='trench'>
+      <static>true</static>
+      <pose>3 0 -0.5 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1 5 1</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1 5 1</size></box></geometry>
+          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/CeilingTiled</name></script></material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>
