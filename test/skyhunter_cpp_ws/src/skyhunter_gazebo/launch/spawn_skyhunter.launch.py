@@ -16,7 +16,7 @@ def generate_launch_description():
     pkg_skyhunter_localization = get_package_share_directory('skyhunter_localization')
 
     # Use our new, self-contained world file
-    world = os.path.join(pkg_skyhunter_gazebo, 'worlds', 'agriculture.world')
+    world = os.path.join(pkg_skyhunter_gazebo, 'worlds', 'nav_test.world')
 
     # Launch Gazebo with the world
     gazebo = IncludeLaunchDescription(
