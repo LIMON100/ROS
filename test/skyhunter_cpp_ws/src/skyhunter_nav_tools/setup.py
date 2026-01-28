@@ -16,7 +16,7 @@ setup(
     maintainer='limonubuntu',
     maintainer_email='mahmudurlimon41@gmail.com',
     description='TODO: Package description',
-    llicense='Apache-2.0',
+    license='Apache-2.0',
     extras_require={
         'test': [
             'pytest',
