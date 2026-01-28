@@ -219,4 +219,8 @@
     </sensor>
   </gazebo>
 
+  <gazebo reference="chassis_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
 </robot>
