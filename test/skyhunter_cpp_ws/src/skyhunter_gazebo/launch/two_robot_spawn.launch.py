@@ -15,7 +15,7 @@ def generate_launch_description():
     
     # --- World File ---
     # We use the existing nav_test.world, or you can create an empty one
-    world_path = os.path.join(pkg_skyhunter_gazebo, 'worlds', 'nav_test.world')
+    world_path = os.path.join(pkg_skyhunter_gazebo, 'worlds', 'rough_terrain.world')
     
     # --- Robot Description (URDF) ---
     urdf_file = os.path.join(pkg_yolobot_description, 'robot', 'skyhunter_pro_v3.urdf')

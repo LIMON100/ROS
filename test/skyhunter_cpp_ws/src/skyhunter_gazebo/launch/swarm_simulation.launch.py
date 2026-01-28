@@ -107,7 +107,7 @@ def generate_launch_description():
     pkg_skyhunter_gazebo = get_package_share_directory('skyhunter_gazebo')
     pkg_yolobot_description = get_package_share_directory('yolobot_description')
     
-    world_path = os.path.join(pkg_skyhunter_gazebo, 'worlds', 'nav_test.world')
+    world_path = os.path.join(pkg_skyhunter_gazebo, 'worlds', 'rough_terrain.world')
     
     # Read the URDF file once
     urdf_file = os.path.join(pkg_yolobot_description, 'robot', 'skyhunter_pro_v3.urdf')
