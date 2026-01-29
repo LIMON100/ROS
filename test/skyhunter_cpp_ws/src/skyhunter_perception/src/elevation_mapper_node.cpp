@@ -330,7 +330,10 @@ public:
         this->declare_parameter<double>("max_gap_size", 0.220);    // 220mm
 
         // --- Grid Map Initialization ---
-        map_frame_ = "odom"; 
+        // map_frame_ = "odom"; 
+        this->declare_parameter<std::string>("map_frame", "odom");
+        map_frame_ = this->get_parameter("map_frame").as_string();
+
         robot_base_frame_ = this->get_parameter("base_frame").as_string();
 
         grid_map_.setFrameId(map_frame_);
@@ -360,6 +363,7 @@ public:
             std::bind(&ElevationMapperNode::cloud_callback, this, std::placeholders::_1));
 
         map_publisher_ = this->create_publisher<grid_map_msgs::msg::GridMap>("/elevation_map", 1);
+        
 
         // TF Listener setup
         tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());

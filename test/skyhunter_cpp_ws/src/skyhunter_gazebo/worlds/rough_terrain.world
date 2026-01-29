@@ -115,5 +115,27 @@
       </link>
     </model>
 
+    <!-- ========================================================== -->
+    <!-- 5. THE BRIDGE (Safe Passage) -->
+    <!-- Connects the two platforms over the trench -->
+    <!-- ========================================================== -->
+    <model name="connector_road">
+      <static>true</static>
+      <!-- Position: Center X=15.25 (Middle of gap), Y=5.0 (Offset side), Z=-0.5 -->
+      <pose>15.25 5.0 -0.5 0 0 0</pose> 
+      <link name="link">
+        <collision name="col">
+          <!-- CHANGED: 5.0m long, 10.0m wide -->
+          <geometry><box><size>15.0 10.0 1.0</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>15.0 10.0 1.0</size></box></geometry>
+          <material>
+            <script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
   </world>
 </sdf>
