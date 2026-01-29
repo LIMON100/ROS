@@ -18,6 +18,9 @@ find_package(sensor_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(std_srvs REQUIRED)
 
+find_package(grid_map_ros REQUIRED)
+find_package(grid_map_msgs REQUIRED)
+
 # Leader Node
 add_executable(leader_node src/leader_node.cpp)
 ament_target_dependencies(leader_node
@@ -29,16 +32,19 @@ ament_target_dependencies(leader_node
 
 # Follower Node
 add_executable(follower_node src/follower_node.cpp)
-ament_target_dependencies(follower_node
+ament_target_dependencies(
+  follower_node
   rclcpp
   geometry_msgs
   nav_msgs
   skyhunter_msgs
-  tf2               # Now this will work because we found it above
+  tf2               
   tf2_geometry_msgs
   sensor_msgs
   tf2_ros
   std_srvs
+  grid_map_ros  
+  grid_map_msgs 
 )
 
 # Swarm Monitor Node
