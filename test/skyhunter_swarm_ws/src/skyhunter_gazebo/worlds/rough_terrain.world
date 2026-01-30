@@ -1,0 +1,141 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="rough_terrain_test">
+    
+    <!-- SUN -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- PHYSICS -->
+    <physics type="ode">
+      <real_time_update_rate>1000.0</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+    </physics>
+
+    <!-- ========================================================== -->
+    <!-- 1. STARTING PLATFORM (The Base) -->
+    <!-- Surface is at Z=0.0. We use a box shifted down so Z=0 is the top -->
+    <!-- ========================================================== -->
+    <model name="start_platform">
+      <static>true</static>
+      <pose>0 0 -0.5 0 0 0</pose> <!-- Center is -0.5, so top is 0.0 -->
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>30 50 1.0</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>30 50 1.0</size></box></geometry>
+          <material>
+            <script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grass</name></script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ========================================================== -->
+    <!-- 2. THE TRENCH (Negative Obstacle Test) -->
+    <!-- A gap of 0.5 meters (Client limit is 0.22m, so this is dangerous) -->
+    <!-- Starts at x=15.0 (Edge of start platform) -->
+    <!-- ========================================================== -->
+    <model name="platform_after_trench">
+      <static>true</static>
+      <!-- Start platform ends at x=15. We add 0.5m gap. Next starts at 15.5 + 10 (half width) = 25.5 -->
+      <pose>30.5 0 -0.5 0 0 0</pose> 
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>20 50 1.0</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>20 50 1.0</size></box></geometry>
+          <material>
+            <script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Dirt</name></script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ========================================================== -->
+    <!-- 3. OBSTACLE FIELD (Hard Obstacles) -->
+    <!-- Scattered rocks to test formation breaking -->
+    <!-- ========================================================== -->
+    <model name="rock_1">
+      <static>true</static>
+      <pose>8 2 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.5 0.5 0.5</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.5 0.5 0.5</size></box></geometry><material><script><name>Gazebo/Grey</name></script></material></visual>
+      </link>
+    </model>
+
+    <model name="rock_2">
+      <static>true</static>
+      <pose>8 -2 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><cylinder><radius>0.3</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.3</radius><length>0.5</length></cylinder></geometry><material><script><name>Gazebo/Grey</name></script></material></visual>
+      </link>
+    </model>
+    
+    <model name="rock_3">
+      <static>true</static>
+      <pose>10 0 0.25 0 0 0</pose> <!-- Right in the leader's path -->
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.8 1.5 0.5</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.8 1.5 0.5</size></box></geometry><material><script><name>Gazebo/Grey</name></script></material></visual>
+      </link>
+    </model>
+
+    <!-- ========================================================== -->
+    <!-- 4. THE RAMP (Slope Test) -->
+    <!-- Client limit is 30 deg. We make a 25 deg (Safe) and 35 deg (Unsafe) ramp -->
+    <!-- ========================================================== -->
+    
+    <!-- Safe Ramp (20 Degrees) -->
+    <model name="ramp_safe">
+      <static>true</static>
+      <pose>5 10 0.85 0 -0.35 0</pose> <!-- -0.35 rad is approx 20 deg -->
+      <link name="link">
+        <collision name="col"><geometry><box><size>10 5 0.1</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>10 5 0.1</size></box></geometry>
+        <material><script><name>Gazebo/Wood</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Unsafe Ramp (40 Degrees) -->
+    <model name="ramp_steep">
+      <static>true</static>
+      <pose>5 -10 1.5 0 -0.7 0</pose> <!-- -0.7 rad is approx 40 deg -->
+      <link name="link">
+        <collision name="col"><geometry><box><size>10 5 0.1</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>10 5 0.1</size></box></geometry>
+        <material><script><name>Gazebo/Red</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ========================================================== -->
+    <!-- 5. THE BRIDGE (Safe Passage) -->
+    <!-- Connects the two platforms over the trench -->
+    <!-- ========================================================== -->
+    <model name="connector_road">
+      <static>true</static>
+      <!-- Position: Center X=15.25 (Middle of gap), Y=5.0 (Offset side), Z=-0.5 -->
+      <pose>15.25 5.0 -0.5 0 0 0</pose> 
+      <link name="link">
+        <collision name="col">
+          <!-- CHANGED: 5.0m long, 10.0m wide -->
+          <geometry><box><size>15.0 10.0 1.0</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>15.0 10.0 1.0</size></box></geometry>
+          <material>
+            <script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>

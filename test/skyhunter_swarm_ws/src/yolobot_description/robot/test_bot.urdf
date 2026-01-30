@@ -1,0 +1,260 @@
+<?xml version="1.0" ?>
+<robot name="skyhunter_pro_v3">
+
+  <!-- MATERIAL DEFINITIONS -->
+  <material name="dark_grey"><color rgba="0.2 0.2 0.2 1.0"/></material>
+  <material name="light_grey"><color rgba="0.4 0.4 0.4 1.0"/></material>
+  <material name="black"><color rgba="0.15 0.15 0.15 1.0"/></material>
+  <material name="sensor_blue"><color rgba="0.0 0.0 1.0 1.0"/></material>
+
+  <!-- BASE LINK (Center of the robot footprint on ground) -->
+  <link name="base_link"/>
+
+  <!-- CHASSIS LINK -->
+  <link name="chassis_link">
+    <visual>
+      <geometry><box size="0.8 0.5 0.2"/></geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <geometry><box size="0.8 0.5 0.2"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="25.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="2.5" iyz="0.0" izz="2.5"/>
+    </inertial>
+  </link>
+  <joint name="chassis_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="chassis_link"/>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/> <!-- Raised slightly to clear wheels -->
+  </joint>
+
+  <!-- ====================== WHEELS ====================== -->
+  <!-- Wheels are positioned relative to base_link/chassis -->
+  
+  <link name="left_wheel_front">
+    <visual><origin rpy="1.5707 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry><material name="black"/></visual>
+    <collision><origin rpy="1.5707 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry></collision>
+    <inertial><mass value="2"/><inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/></inertial>
+  </link>
+  <joint name="left_wheel_front_joint" type="continuous">
+    <parent link="chassis_link"/>
+    <child link="left_wheel_front"/>
+    <origin xyz="0.25 0.275 -0.05" rpy="0 0 0"/> <!-- Lowered relative to chassis -->
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="left_wheel_rear">
+    <visual><origin rpy="1.5707 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry><material name="black"/></visual>
+    <collision><origin rpy="1.5707 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry></collision>
+    <inertial><mass value="2"/><inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/></inertial>
+  </link>
+  <joint name="left_wheel_rear_joint" type="continuous">
+    <parent link="chassis_link"/>
+    <child link="left_wheel_rear"/>
+    <origin xyz="-0.25 0.275 -0.05" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="right_wheel_front">
+    <visual><origin rpy="1.5707 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry><material name="black"/></visual>
+    <collision><origin rpy="1.5707 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry></collision>
+    <inertial><mass value="2"/><inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/></inertial>
+  </link>
+  <joint name="right_wheel_front_joint" type="continuous">
+    <parent link="chassis_link"/>
+    <child link="right_wheel_front"/>
+    <origin xyz="0.25 -0.275 -0.05" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="right_wheel_rear">
+    <visual><origin rpy="1.5707 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry><material name="black"/></visual>
+    <collision><origin rpy="1.5707 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry></collision>
+    <inertial><mass value="2"/><inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/></inertial>
+  </link>
+  <joint name="right_wheel_rear_joint" type="continuous">
+    <parent link="chassis_link"/>
+    <child link="right_wheel_rear"/>
+    <origin xyz="-0.25 -0.275 -0.05" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  
+  <!-- ====================== SENSOR MAST/TURRET (IMPROVED) ====================== -->
+  
+  <!-- Turret Base: Raised higher to clear chassis -->
+  <link name="turret_base_link">
+    <visual><geometry><cylinder radius="0.08" length="0.4"/></geometry><origin xyz="0 0 0.2"/><material name="light_grey"/></visual>
+    <inertial><mass value="1.0"/><inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/></inertial>
+  </link>
+  <!-- Moved slightly forward (0.2) so it's not looking at the back of the robot -->
+  <joint name="turret_pan_joint" type="revolute">
+    <parent link="chassis_link"/>
+    <child link="turret_base_link"/>
+    <origin xyz="0.2 0 0.1" rpy="0 0 0"/> 
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
+  </joint>
+
+  <!-- Sensor Head: The box that holds sensors -->
+  <link name="sensor_head_link">
+    <visual><geometry><box size="0.15 0.3 0.15"/></geometry><material name="black"/></visual>
+    <inertial><mass value="1.0"/><inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/></inertial>
+  </link>
+  <joint name="turret_tilt_joint" type="revolute">
+    <parent link="turret_base_link"/>
+    <child link="sensor_head_link"/>
+    <origin xyz="0 0 0.4" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.785" upper="0.785" effort="10" velocity="1.0"/>
+  </joint>
+
+  <!-- LiDAR: Moved to FRONT-TOP edge of sensor head to clear all obstructions -->
+  <link name="lidar_link">
+     <visual><geometry><cylinder radius="0.05" length="0.08"/></geometry><material name="sensor_blue"/></visual>
+  </link>
+  <joint name="lidar_joint" type="fixed">
+    <parent link="sensor_head_link"/>
+    <child link="lidar_link"/>
+    <!-- Moved forward (x=0.05) and up (z=0.1) -->
+    <origin xyz="0.05 0 0.1" rpy="0 0 0"/> 
+  </joint>
+
+  <link name="imu_link"/>
+  <joint name="imu_joint" type="fixed">
+    <parent link="sensor_head_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <!-- ====================== GAZEBO SENSOR PLUGINS ====================== -->
+
+  <gazebo reference="sensor_head_link">
+    <!-- RGB CAMERA: Moved forward (x=0.08) so the lens sticks out -->
+    <sensor name="camera_rgb" type="camera">
+      <pose>0.08 0.1 0 0 0 0</pose> 
+      <visualize>true</visualize> <!-- Turn on visualize to see the frustum in Gazebo -->
+      <update_rate>30.0</update_rate>
+      <camera>
+        <horizontal_fov>1.396</horizontal_fov>
+        <image><width>800</width><height>600</height></image>
+        <clip><near>0.05</near><far>100</far></clip> <!-- Reduced near clip -->
+      </camera>
+      <plugin name="camera_rgb_controller" filename="libgazebo_ros_camera.so">
+        <ros><remapping>image_raw:=camera/rgb/image_raw</remapping></ros>
+        <frame_name>sensor_head_link</frame_name>
+      </plugin>
+    </sensor>
+
+    <!-- IR CAMERA: Moved forward (x=0.08) -->
+    <sensor name="camera_ir" type="camera">
+      <pose>0.08 -0.1 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>30.0</update_rate>
+      <camera>
+        <horizontal_fov>1.0</horizontal_fov>
+        <image><width>640</width><height>480</height><format>L8</format></image>
+        <clip><near>0.05</near><far>100</far></clip>
+      </camera>
+      <plugin name="camera_ir_controller" filename="libgazebo_ros_camera.so">
+        <ros><remapping>image_raw:=camera/ir/image_raw</remapping></ros>
+        <frame_name>sensor_head_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="lidar_link">
+        <sensor name="lidar_sensor" type="ray">
+          <always_on>true</always_on>
+          <visualize>false</visualize>
+          <update_rate>10</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>360</samples>
+                <resolution>1</resolution>
+                <min_angle>-3.14</min_angle>
+                <max_angle>3.14</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>16</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.2617</min_angle>
+                <max_angle>0.2617</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.3</min> <!-- Increased min range to avoid self-collision noise -->
+              <max>30.0</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </ray>
+          <plugin name="lidar_plugin" filename="libgazebo_ros_ray_sensor.so">
+            <ros><remapping>~/out:=/lidar/points</remapping></ros>
+            <output_type>sensor_msgs/PointCloud2</output_type>
+            <frame_name>lidar_link</frame_name>
+          </plugin>
+        </sensor>
+      </gazebo>
+
+  <!-- DIFFERENTIAL DRIVE CONTROLLER -->
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <left_joint>left_wheel_rear_joint</left_joint>
+      <right_joint>right_wheel_rear_joint</right_joint>
+      <wheel_separation>0.55</wheel_separation>
+      <wheel_diameter>0.2</wheel_diameter>
+      <max_wheel_torque>200.0</max_wheel_torque>
+      <max_wheel_acceleration>20.0</max_wheel_acceleration>
+      <command_topic>cmd_vel</command_topic>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <update_rate>100</update_rate>
+    </plugin>
+  </gazebo>
+  
+  <gazebo>
+  <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+    <ros>
+        <remapping>~/out:=joint_states</remapping>
+    </ros>
+    <update_rate>30</update_rate>
+    <joint_name>left_wheel_front_joint</joint_name>
+    <joint_name>left_wheel_rear_joint</joint_name>
+    <joint_name>right_wheel_front_joint</joint_name>
+    <joint_name>right_wheel_rear_joint</joint_name>
+    <joint_name>turret_pan_joint</joint_name>
+    <joint_name>turret_tilt_joint</joint_name>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="imu_link">
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <plugin name="imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+        <ros><remapping>~/out:=imu/data</remapping></ros>
+      </plugin>
+    </sensor>
+  </gazebo>
+  
+  <gazebo reference="chassis_link">
+    <sensor name="gps_sensor" type="gps">
+      <update_rate>10</update_rate>
+      <plugin name="gps_plugin" filename="libgazebo_ros_gps_sensor.so">
+        <ros><remapping>~/out:=gps/fix</remapping></ros>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
