@@ -1,0 +1,28 @@
+# Build artifacts
+build/
+install/
+log/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Temporary files
+*.bak
+*.tmp
+*~
+
+# Large mesh files 
+# *.stl
+# *.dae
