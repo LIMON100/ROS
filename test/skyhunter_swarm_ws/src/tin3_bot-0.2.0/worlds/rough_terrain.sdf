@@ -42,10 +42,9 @@
     </model>
 
     <!-- THE DITCH (Negative Obstacle) -->
-    <!-- We simulate a ditch by placing two ground platforms with a gap -->
     <model name="ditch_platform">
       <static>true</static>
-      <pose>10 0 0 0 0 0</pose>
+      <pose>15 0 0 0 0 0</pose>
       <link name="link">
         <collision name="col">
           <geometry><box><size>5 20 0.1</size></box></geometry>
@@ -60,7 +59,7 @@
     <!-- THE RAMP (Slope Obstacle) -->
     <model name="steep_ramp">
       <static>true</static>
-      <pose>5 5 0.5 0 -0.5 0</pose> <!-- ~28 degrees pitch -->
+      <pose>8 8 0.5 0 -0.5 0</pose> <!-- ~28 degrees pitch -->
       <link name="link">
         <collision name="col">
           <geometry><box><size>4 2 0.1</size></box></geometry>
@@ -68,6 +67,51 @@
         <visual name="vis">
           <geometry><box><size>4 2 0.1</size></box></geometry>
           <material><ambient>0.8 0.2 0.2 1</ambient><diffuse>0.8 0.2 0.2 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- OBSTACLE 1: Cylinder (Tree/Pole) -->
+    <model name="cylinder_obstacle_1">
+      <static>true</static>
+      <pose>5 2 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><cylinder><radius>0.3</radius><length>1.0</length></cylinder></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><cylinder><radius>0.3</radius><length>1.0</length></cylinder></geometry>
+          <material><ambient>0.2 0.8 0.2 1</ambient><diffuse>0.2 0.8 0.2 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- OBSTACLE 2: Cylinder (Tree/Pole) -->
+    <model name="cylinder_obstacle_2">
+      <static>true</static>
+      <pose>5 -2 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><cylinder><radius>0.3</radius><length>1.0</length></cylinder></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><cylinder><radius>0.3</radius><length>1.0</length></cylinder></geometry>
+          <material><ambient>0.2 0.8 0.2 1</ambient><diffuse>0.2 0.8 0.2 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- OBSTACLE 3: Box (Rock/Wall) -->
+    <model name="box_obstacle">
+      <static>true</static>
+      <pose>8 0 0.5 0 0 0.785</pose> <!-- Rotated 45 deg -->
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>1.0 1.0 1.0</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>1.0 1.0 1.0</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material>
         </visual>
       </link>
     </model>

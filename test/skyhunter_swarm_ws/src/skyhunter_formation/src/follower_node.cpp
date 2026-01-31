@@ -1,4 +1,4 @@
-// // WORKABLE
+// //WORKABLE
 // #include <chrono>
 // #include <cmath>
 // #include <memory>
@@ -126,7 +126,7 @@
 //                     "!!! DITCH DETECTED AHEAD (%.1fm)! STOPPING !!!", d);
 //                 return false; // UNSAFE
 //             }
-//             if (trav > 0.8) {
+//             if (trav > 0.98) {
 //                 RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, 
 //                     "!!! OBSTACLE DETECTED AHEAD (%.1fm)! STOPPING !!!", d);
 //                 return false; // UNSAFE
@@ -224,6 +224,21 @@
 //   return 0;
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #include <chrono>
 #include <cmath>
 #include <memory>
@@ -238,7 +253,7 @@
 #include "tf2/utils.h"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 
-// Grid Map Headers for Safety
+// Grid Map Headers
 #include <grid_map_ros/grid_map_ros.hpp>
 #include <grid_map_msgs/msg/grid_map.hpp>
 
@@ -258,13 +273,11 @@ public:
     this->declare_parameter<double>("k_theta", 4.0);
     this->declare_parameter<double>("min_safe_dist", 1.0); 
     this->declare_parameter<std::string>("leader_topic", "/robot1/leader_state");
-    this->declare_parameter<double>("kp_angular", 4.0);
-    this->declare_parameter<double>("kp_linear", 1.5);
     
-    // Safety Parameters
-    this->declare_parameter<std::string>("map_topic", "elevation_map"); // Local map topic
-    this->declare_parameter<double>("safety_lookahead", 1.5); // Check 1.5m ahead
-    this->declare_parameter<double>("safety_width", 0.6);     // Width of safety curtain
+    // Safety & Avoidance Parameters
+    this->declare_parameter<std::string>("map_topic", "elevation_map"); 
+    this->declare_parameter<double>("safety_lookahead", 2.0); // Check further ahead for smooth turns
+    this->declare_parameter<double>("safety_width", 0.8);     // Width of robot + margin
 
     offset_x_ = this->get_parameter("offset_x").as_double();
     offset_y_ = this->get_parameter("offset_y").as_double();
@@ -275,7 +288,6 @@ public:
     safety_lookahead_ = this->get_parameter("safety_lookahead").as_double();
     safety_width_ = this->get_parameter("safety_width").as_double();
     
-    // --- Communication ---
     auto qos = rclcpp::QoS(rclcpp::KeepLast(1)).best_effort();
     
     leader_sub_ = this->create_subscription<skyhunter_msgs::msg::LeaderState>(
@@ -286,18 +298,16 @@ public:
       "odom", qos, 
       std::bind(&FollowerNode::odom_callback, this, std::placeholders::_1));
 
-    // NEW: Subscribe to local elevation map for safety
-    // Note: The topic is relative, so it will be /robotX/elevation_map
     map_sub_ = this->create_subscription<grid_map_msgs::msg::GridMap>(
-      this->get_parameter("map_topic").as_string(), rclcpp::QoS(1).best_effort(), // Map is often Best Effort
+      this->get_parameter("map_topic").as_string(), rclcpp::QoS(1).best_effort(), 
       std::bind(&FollowerNode::map_callback, this, std::placeholders::_1));
 
     cmd_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
 
     timer_ = this->create_wall_timer(
-      50ms, std::bind(&FollowerNode::control_loop, this)); // 20Hz
+      50ms, std::bind(&FollowerNode::control_loop, this)); 
 
-    RCLCPP_INFO(this->get_logger(), "Safety-Aware Follower Started. Offset: [%.1f, %.1f]", offset_x_, offset_y_);
+    RCLCPP_INFO(this->get_logger(), "Active Avoidance Follower Started.");
   }
 
 private:
@@ -316,96 +326,99 @@ private:
 
   void map_callback(const grid_map_msgs::msg::GridMap::SharedPtr msg)
   {
-    // Convert ROS msg to GridMap object
     grid_map::GridMapRosConverter::fromMessage(*msg, local_map_);
     has_map_ = true;
   }
 
-  // --- THE SAFETY CHECK ---
-  bool is_path_unsafe()
+  // --- CHECK A SPECIFIC ANGLE FOR SAFETY ---
+  // Returns TRUE if the path along 'check_angle' is safe
+  bool is_direction_safe(double check_angle)
   {
-    // if (!has_map_ || !has_odom_) return false;
+    if (!has_map_ || !has_odom_) return true; 
 
-    if (!has_map_ || !has_odom_) {
-        // Debug print to check if we are even getting data
-        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 2000, "Waiting for Map/Odom...");
-        return false; 
-    }
-
-    // Get current robot state
     double x = current_pose_.position.x;
     double y = current_pose_.position.y;
     double yaw = tf2::getYaw(current_pose_.orientation);
+    
+    // Global angle to check
+    double global_angle = yaw + check_angle;
 
-    // Define search resolution
-    double step_length = 0.1; // Check every 10cm
-    int width_steps = 3;      // Check center, left, right
+    // Start checking OUTSIDE robot footprint (from 1.3m ahead)
+    double start_dist = 1.3; 
+    double step_length = 0.2; 
 
-    for (double d = 0.3; d <= safety_lookahead_; d += step_length) {
-        for (int w = -1; w <= 1; w++) {
-            
-            // Calculate check point in World Frame
-            double lateral_offset = w * (safety_width_ / 2.0);
-            double px_local = d;
-            double py_local = lateral_offset;
-            
-            double px_global = x + (px_local * cos(yaw) - py_local * sin(yaw));
-            double py_global = y + (px_local * sin(yaw) + py_local * cos(yaw));
-            
-            grid_map::Position pos(px_global, py_global);
+    for (double d = start_dist; d <= safety_lookahead_; d += step_length) {
+        // We check a single line for the "feeler"
+        double px = x + d * cos(global_angle);
+        double py = y + d * sin(global_angle);
+        grid_map::Position pos(px, py);
 
-            if (local_map_.isInside(pos)) {
-                // Check Drop Risk (Ditch)
-                if (local_map_.exists("drop_risk")) {
-                    float risk = local_map_.atPosition("drop_risk", pos);
-                    if (risk > 0.5) {
-                        RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, 
-                            "!!! DITCH DETECTED AHEAD (%.1fm)! STOPPING !!!", d);
-                        return true; // UNSAFE
-                    }
-                }
+        if (local_map_.isInside(pos)) {
+            float drop_risk = 0.0;
+            float trav = 0.0;
 
-                // Check Traversability (Walls/Obstacles)
-                if (local_map_.exists("traversability")) {
-                    float cost = local_map_.atPosition("traversability", pos);
-                    if (cost > 0.5) {
-                        RCLCPP_INFO(this->get_logger(), "Scan(%.1fm): Cost=%.2f", d, cost);
-                    }
+            try {
+                if (local_map_.exists("drop_risk")) drop_risk = local_map_.atPosition("drop_risk", pos);
+                if (local_map_.exists("traversability")) trav = local_map_.atPosition("traversability", pos);
+            } catch (...) { continue; }
 
-                    if (cost > 0.8) { // Lethal threshold
-                        RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, 
-                            "!!! OBSTACLE AHEAD (%.1fm)! STOPPING !!!", d);
-                        return true; // UNSAFE
-                    }
-                }
+            if (drop_risk > 0.5 || trav > 0.8) {
+                return false; // BLOCKED
             }
         }
     }
-    return false; // SAFE
+    return true; // CLEAR
+  }
+
+  // --- FIND BEST DETOUR ANGLE ---
+  // If center is blocked, look left and right for an opening
+  double find_safe_heading(double desired_heading_error)
+  {
+      // 1. Check straight towards target first
+      if (is_direction_safe(desired_heading_error)) {
+          return desired_heading_error; 
+      }
+
+      // 2. If blocked, check angles in increments
+      // We check +/- 15, +/- 30, +/- 45, +/- 60 degrees, up to 90
+      double scan_step = 0.26; // ~15 degrees
+      int max_steps = 6;
+
+      for (int i = 1; i <= max_steps; i++) {
+          double left_angle = desired_heading_error + (i * scan_step);
+          double right_angle = desired_heading_error - (i * scan_step);
+
+          if (is_direction_safe(left_angle)) {
+              RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "Obstacle! Swerving LEFT.");
+              return left_angle;
+          }
+          if (is_direction_safe(right_angle)) {
+              RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "Obstacle! Swerving RIGHT.");
+              return right_angle;
+          }
+      }
+
+      // 3. If everything is blocked -> Emergency Stop
+      RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "TRAPPED! No safe path found.");
+      return -999.0; // Error code for "trapped"
   }
 
   void control_loop()
   {
-    if (!has_leader_ || !has_odom_) return;
+    if (!has_leader_ || !has_odom_) {
+        return;
+    }
 
-    // Safety Timeout
     if ((this->get_clock()->now() - last_leader_time_).seconds() > 0.5) {
         stop_robot(); 
         return;
     }
 
-    // --- SAFETY CHECK ---
-    if (is_path_unsafe()) {
-        stop_robot();
-        return; // Override formation control
-    }
-
-    // --- NORMAL FORMATION LOGIC ---
+    // --- 1. CALCULATE DESIRED TARGET (Formation Logic) ---
     double leader_x = last_leader_msg_.pose.position.x;
     double leader_y = last_leader_msg_.pose.position.y;
     double leader_yaw = tf2::getYaw(last_leader_msg_.pose.orientation);
     double leader_v = last_leader_msg_.velocity.linear.x;
-    double leader_w = last_leader_msg_.velocity.angular.z;
 
     double my_x = current_pose_.position.x;
     double my_y = current_pose_.position.y;
@@ -416,19 +429,39 @@ private:
 
     double ex_global = target_x - my_x;
     double ey_global = target_y - my_y;
-    double etheta_global = leader_yaw - my_yaw;
+    double dist_error = sqrt(ex_global * ex_global + ey_global * ey_global);
+    
+    double desired_heading_global = atan2(ey_global, ex_global);
+    double desired_heading_error = desired_heading_global - my_yaw;
 
-    while (etheta_global > M_PI) etheta_global -= 2.0 * M_PI;
-    while (etheta_global < -M_PI) etheta_global += 2.0 * M_PI;
+    while (desired_heading_error > M_PI) desired_heading_error -= 2.0 * M_PI;
+    while (desired_heading_error < -M_PI) desired_heading_error += 2.0 * M_PI;
 
-    double ex_local = ex_global * cos(my_yaw) + ey_global * sin(my_yaw);
-    double ey_local = -ex_global * sin(my_yaw) + ey_global * cos(my_yaw);
-
+    // --- 2. OBSTACLE AVOIDANCE OVERRIDE ---
+    double steering_angle = find_safe_heading(desired_heading_error);
     geometry_msgs::msg::Twist cmd;
-    cmd.linear.x = (leader_v * cos(etheta_global)) + (k_x_ * ex_local);
-    cmd.angular.z = leader_w + (k_y_ * ey_local) + (k_theta_ * etheta_global);
 
-    cmd.linear.x = std::clamp(cmd.linear.x, -0.5, 2.0);
+    if (steering_angle == -999.0) {
+        stop_robot();
+        return;
+    }
+    
+    // --- 3. DRIVE ---
+    bool is_swerving = (std::abs(steering_angle - desired_heading_error) > 0.1);
+    
+    cmd.angular.z = k_theta_ * steering_angle;
+
+    if (is_swerving) {
+         cmd.linear.x = 0.5;
+    } else {
+         cmd.linear.x = (leader_v * cos(desired_heading_error)) + (k_x_ * dist_error);
+    }
+    
+    if (std::abs(steering_angle) > (M_PI / 2.0)) {
+        cmd.linear.x = 0.0;
+    }
+
+    cmd.linear.x = std::clamp(cmd.linear.x, 0.0, 1.5);
     cmd.angular.z = std::clamp(cmd.angular.z, -2.0, 2.0);
 
     cmd_vel_pub_->publish(cmd);
@@ -436,13 +469,11 @@ private:
 
   void stop_robot()
   {
-    geometry_msgs::msg::Twist cmd;
-    cmd.linear.x = 0.0;
-    cmd.angular.z = 0.0;
+    geometry_msgs::msg::Twist cmd; // Defaults to zero
     cmd_vel_pub_->publish(cmd);
   }
 
-  // Vars
+  // Member Variables
   skyhunter_msgs::msg::LeaderState last_leader_msg_;
   rclcpp::Time last_leader_time_;
   bool has_leader_ = false;
