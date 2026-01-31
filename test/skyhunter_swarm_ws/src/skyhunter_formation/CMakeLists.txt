@@ -20,6 +20,7 @@ find_package(std_srvs REQUIRED)
 
 find_package(grid_map_ros REQUIRED)
 find_package(grid_map_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 # Leader Node
 add_executable(leader_node src/leader_node.cpp)
@@ -45,6 +46,7 @@ ament_target_dependencies(
   std_srvs
   grid_map_ros  
   grid_map_msgs 
+  visualization_msgs
 )
 
 # Swarm Monitor Node

@@ -126,9 +126,11 @@ def generate_launch_description():
                 name='elevation_mapper',
                 parameters=[{
                     'use_sim_time': True,
-                    'base_frame': f'{robot_name}/base_link',
+                    'base_frame': f'{robot_name}/base_footprint', # tin3_bot uses base_footprint
                     'map_frame': f'{robot_name}/odom',
-                    'cloud_topic': 'scan/points',
+                    # Force the topic to be absolute relative to the namespace
+                    # Since we are in PushRosNamespace(robot_name), "scan/points" becomes "/robotX/scan/points"
+                    'cloud_topic': 'scan/points', 
                     'map.length': 10.0
                 }],
                 condition=should_spawn
