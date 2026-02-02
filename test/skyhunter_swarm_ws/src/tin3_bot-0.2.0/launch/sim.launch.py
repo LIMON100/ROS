@@ -270,18 +270,18 @@ def launch_swarm_logic(context, num_robots):
         # *** CRITICAL FIX: Add a Static TF Publisher for EACH robot ***
         # This connects each robot's local odom frame to the global map frame.
         # ==========================================================
-        static_tf_publisher = Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name=f'map_to_{robot_ns}_odom_tf',
-            arguments=[
-                '0', '0', '0', '0', '0', '0', # No offset between map and odom frames
-                'map',                        # Parent Frame
-                f'{robot_ns}/odom'            # Child Frame
-            ],
-            parameters=[{'use_sim_time': True}],
-        )
-        nodes.append(static_tf_publisher)
+        # static_tf_publisher = Node(
+        #     package='tf2_ros',
+        #     executable='static_transform_publisher',
+        #     name=f'map_to_{robot_ns}_odom_tf',
+        #     arguments=[
+        #         '0', '0', '0', '0', '0', '0', # No offset between map and odom frames
+        #         'map',                        # Parent Frame
+        #         f'{robot_ns}/odom'            # Child Frame
+        #     ],
+        #     parameters=[{'use_sim_time': True}],
+        # )
+        # nodes.append(static_tf_publisher)
 
         # 1. Perception Node (Elevation Mapper) - for ALL robots
         perception_node = Node(
