@@ -463,7 +463,7 @@ public:
         grid_map_.add("density_low", 0.0);  
         grid_map_.add("density_high", 0.0); 
         grid_map_.add("drop_risk", 0.0);
-        grid_map_.add("traversability", NAN);
+        grid_map_.add("traversability", 0.0);
 
         auto qos = rclcpp::SensorDataQoS();
         cloud_subscription_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
