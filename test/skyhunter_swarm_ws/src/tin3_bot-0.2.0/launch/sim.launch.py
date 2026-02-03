@@ -215,25 +215,16 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 
-# ========================================================================
-# 1. ROBOT SPAWNER (The Body)
-# This function calls 'spawn_robot.launch.py' for each robot.
-# It handles the Gazebo model, the Bridge, and the Robot State Publisher.
-# ========================================================================
 def spawn_robots(context, num_robots, use_ekf, lidar_mode):
     pkg_tin3_bot = get_package_share_directory("tin3_bot")
     num = int(context.perform_substitution(num_robots))
     spawn_actions = []
     
     for i in range(num):
-        # Namespace: robot_01, robot_02... (Standard ROS 2 convention)
         ns = f"robot_{i + 1:02d}"
-        
-        # Initial V-Shape Positions
         x = 0.0 if i == 0 else -2.0 * i
         y = 0.0 if i == 0 else (2.0 if i % 2 != 0 else -2.0)
         
-        # Stagger spawning to prevent Gazebo freeze
         spawn = TimerAction(
             period=float(i) * 2.0,
             actions=[
@@ -244,7 +235,7 @@ def spawn_robots(context, num_robots, use_ekf, lidar_mode):
                     launch_arguments={
                         "robot_ns": ns,
                         "x": str(x), "y": str(y), "z": "0.5",
-                        "use_ekf": "true", # EKF provides the /odom -> /base_footprint TF
+                        "use_ekf": "true",
                         "lidar_mode": "half",
                     }.items(),
                 )
@@ -253,35 +244,13 @@ def spawn_robots(context, num_robots, use_ekf, lidar_mode):
         spawn_actions.append(spawn)
     return spawn_actions
 
-# ========================================================================
-# 2. SWARM INTELLIGENCE (The Brain)
-# This function starts your C++ Leader and Follower nodes.
-# ========================================================================
 def launch_swarm_logic(context, num_robots):
     num = int(context.perform_substitution(num_robots))
     pkg_tin3_bot = get_package_share_directory("tin3_bot")
     nodes = []
 
-    # --- Create Logic Nodes for EACH ROBOT in a loop ---
     for i in range(num):
         robot_ns = f"robot_{i + 1:02d}"
-
-        # ==========================================================
-        # *** CRITICAL FIX: Add a Static TF Publisher for EACH robot ***
-        # This connects each robot's local odom frame to the global map frame.
-        # ==========================================================
-        # static_tf_publisher = Node(
-        #     package='tf2_ros',
-        #     executable='static_transform_publisher',
-        #     name=f'map_to_{robot_ns}_odom_tf',
-        #     arguments=[
-        #         '0', '0', '0', '0', '0', '0', # No offset between map and odom frames
-        #         'map',                        # Parent Frame
-        #         f'{robot_ns}/odom'            # Child Frame
-        #     ],
-        #     parameters=[{'use_sim_time': True}],
-        # )
-        # nodes.append(static_tf_publisher)
 
         # 1. Perception Node (Elevation Mapper) - for ALL robots
         perception_node = Node(
@@ -300,9 +269,11 @@ def launch_swarm_logic(context, num_robots):
         )
         nodes.append(perception_node)
 
-        # 2. Launch Leader-specific or Follower-specific nodes
+        # 2. Logic Splitting
         if i == 0:
-            # --- THIS IS THE LEADER (robot_01) ---
+            # ==========================
+            # LEADER (Robot 01)
+            # ==========================
             leader_node = Node(
                 package='skyhunter_formation', 
                 executable='leader_node',
@@ -317,7 +288,7 @@ def launch_swarm_logic(context, num_robots):
             )
             nodes.append(leader_node)
 
-            # Launch Nav2 Stack ONLY for the leader
+            # Launch Nav2 Stack (This handles the map->odom TF for the leader)
             nav2_launch = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     os.path.join(pkg_tin3_bot, "launch", "nav2_test.launch.py")
@@ -327,7 +298,22 @@ def launch_swarm_logic(context, num_robots):
             nodes.append(nav2_launch)
 
         else:
-            # --- THESE ARE THE FOLLOWERS (robot_02, robot_03, ...) ---
+            # ==========================
+            # FOLLOWERS (Robot 02+)
+            # ==========================
+            
+            # *** FIX: Only spawn Static TF for followers ***
+            # The Leader gets its TF from nav2_test.launch.py
+            static_tf_publisher = Node(
+                package='tf2_ros',
+                executable='static_transform_publisher',
+                name=f'map_to_{robot_ns}_odom_tf',
+                arguments=['0', '0', '0', '0', '0', '0', 'map', f'{robot_ns}/odom'],
+                parameters=[{'use_sim_time': True}],
+            )
+            nodes.append(static_tf_publisher)
+
+            # Follower Logic
             offsets = [(-2.0, 2.0), (-2.0, -2.0), (-4.0, 4.0), (-4.0, -4.0), (-6.0, 6.0), (-6.0, -6.0)]
             off_x, off_y = offsets[(i-1) % len(offsets)]
             
@@ -342,8 +328,8 @@ def launch_swarm_logic(context, num_robots):
                     'offset_y': off_y,
                     'leader_topic': '/leader_state',
                     'map_topic': 'elevation_map',
-                    'k_x': 1.5, # Renamed from kp_linear for clarity
-                    'k_theta': 4.0 # Renamed from kp_angular
+                    'k_x': 1.5, 
+                    'k_theta': 4.0 
                 }],
                 output='screen'
             )
@@ -355,7 +341,6 @@ def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory("ros_gz_sim")
     pkg_tin3_bot = get_package_share_directory("tin3_bot")
 
-    # Set Resource Path for Gazebo to find meshes
     gz_resource_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH",
         value=[os.environ.get("GZ_SIM_RESOURCE_PATH", ""), ":", os.path.dirname(pkg_tin3_bot)]
@@ -363,26 +348,19 @@ def generate_launch_description():
 
     return LaunchDescription([
         gz_resource_path,
-        
-        # Args
-        DeclareLaunchArgument("world", default_value="empty_world.sdf"),
+        DeclareLaunchArgument("world", default_value="obstacle_world.sdf"),
         DeclareLaunchArgument("num_robots", default_value="2"),
         DeclareLaunchArgument("use_ekf", default_value="true"),
         DeclareLaunchArgument("lidar_mode", default_value="half"),
         
-        # Start Gazebo
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(pkg_ros_gz_sim, "launch", "gz_sim.launch.py")),
             launch_arguments={"gz_args": [PathJoinSubstitution([pkg_tin3_bot, "worlds", LaunchConfiguration("world")]), " -r"]}.items(),
         ),
         
-        # Start Clock Bridge (Crucial for sim time)
         Node(package="ros_gz_bridge", executable="parameter_bridge",
              name="clock_bridge", arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"], output="screen"),
              
-        # Spawn Robots
         OpaqueFunction(function=spawn_robots, args=[LaunchConfiguration("num_robots"), LaunchConfiguration("use_ekf"), LaunchConfiguration("lidar_mode")]),
-        
-        # Start Logic (Delayed to ensure robots are ready)
         TimerAction(period=8.0, actions=[OpaqueFunction(function=launch_swarm_logic, args=[LaunchConfiguration("num_robots")])])
     ])
