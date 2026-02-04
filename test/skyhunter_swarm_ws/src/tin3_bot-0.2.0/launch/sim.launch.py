@@ -348,7 +348,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         gz_resource_path,
-        DeclareLaunchArgument("world", default_value="obstacle_world.sdf"),
+        DeclareLaunchArgument("world", default_value="empty_world.sdf"),
         DeclareLaunchArgument("num_robots", default_value="2"),
         DeclareLaunchArgument("use_ekf", default_value="true"),
         DeclareLaunchArgument("lidar_mode", default_value="half"),
