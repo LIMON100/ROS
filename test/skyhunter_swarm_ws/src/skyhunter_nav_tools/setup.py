@@ -24,7 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'send_goal = skyhunter_nav_tools.send_goal:main',
+            'waypoint_sender = skyhunter_nav_tools.waypoint_sender:main',
         ],
     },
 )

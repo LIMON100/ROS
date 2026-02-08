@@ -120,6 +120,16 @@ def launch_nav2_with_namespace(context, *args, **kwargs):
         ],
         **node_kwargs,
     )
+
+    global_costmap = Node(
+        package='nav2_costmap_2d',
+        executable='nav2_costmap_2d',
+        name='global_costmap',
+        remappings=[
+            ('scan', 'scan/points'),
+        ],
+        **node_kwargs,
+    )
     
     # Lifecycle Manager kwargs
     lifecycle_kwargs = {
@@ -133,6 +143,7 @@ def launch_nav2_with_namespace(context, *args, **kwargs):
                 'behavior_server',
                 'bt_navigator',
                 'local_costmap',
+                'global_costmap',
             ]},
         ],
     }
@@ -150,6 +161,7 @@ def launch_nav2_with_namespace(context, *args, **kwargs):
     return [
         static_tf_map_to_odom,
         local_costmap,
+        global_costmap,
         controller_server,
         planner_server,
         behavior_server,

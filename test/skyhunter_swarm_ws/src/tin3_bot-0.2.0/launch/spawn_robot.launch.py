@@ -176,7 +176,7 @@ def generate_launch_description():
     )
     ekf_argument = DeclareLaunchArgument(
         "use_ekf",
-        default_value="false",
+        default_value="true",
         description="Enable EKF sensor fusion (robot_localization)",
     )
     lidar_mode_argument = DeclareLaunchArgument(
