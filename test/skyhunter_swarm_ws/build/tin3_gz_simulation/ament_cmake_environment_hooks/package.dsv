@@ -1,0 +1,4 @@
+source;share/tin3_gz_simulation/local_setup.bash
+source;share/tin3_gz_simulation/local_setup.dsv
+source;share/tin3_gz_simulation/local_setup.sh
+source;share/tin3_gz_simulation/local_setup.zsh

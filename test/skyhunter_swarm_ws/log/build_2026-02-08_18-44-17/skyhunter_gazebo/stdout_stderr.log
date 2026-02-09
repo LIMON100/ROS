@@ -1,0 +1,52 @@
+-- The C compiler identification is GNU 12.3.0
+-- The CXX compiler identification is GNU 12.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /home/limonubuntu/.pyenv/shims/python3 (found version "3.10.12") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_gazebo
+-- Install configuration: ""
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch/swarm_simulation.launch.py
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch/two_robot_spawn.launch.py
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch/sim_harmonic.launch.py
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch/spawn_skyhunter.launch.py
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/worlds
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/worlds/new_world.sdf
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/worlds/rough_terrain.sdf
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/agriculture_world.dae
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/MetalCorrugatedIronSheet002_METALNESS_3K_METALNESS.jpg
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/WoodPlanksWorn33_COL_VAR1_3K.jpg
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/SolarPanelsPolycrystallineTypeBFramedClean001_COL_3K.jpg
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/WiboticTR301.dae
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/WoodPlanksWornWhite33_COL_VAR1_3K.jpg
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/BaseStationWithTripod.dae
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/AgriBakeLarge.jpg
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/BaseStation.dae
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/WoodPlanksWornRed33_COL_VAR1_3K.jpg
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/ament_index/resource_index/package_run_dependencies/skyhunter_gazebo
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/ament_index/resource_index/parent_prefix_path/skyhunter_gazebo
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/environment/ament_prefix_path.sh
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/environment/ament_prefix_path.dsv
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/environment/path.sh
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/environment/path.dsv
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/local_setup.bash
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/local_setup.sh
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/local_setup.zsh
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/local_setup.dsv
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/package.dsv
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/ament_index/resource_index/packages/skyhunter_gazebo
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/cmake/skyhunter_gazeboConfig.cmake
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/cmake/skyhunter_gazeboConfig-version.cmake
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/package.xml

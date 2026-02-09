@@ -1,0 +1,39 @@
+[0.027s] Invoking command in '/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_teleop:/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake --build /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_gazebo -- -j24 -l24
+[0.309s] Invoked command in '/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_teleop:/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake --build /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_gazebo -- -j24 -l24
+[0.309s] Invoking command in '/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_teleop:/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake --install /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_gazebo
+[0.317s] -- Install configuration: ""
+[0.317s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch
+[0.317s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch/swarm_simulation.launch.py
+[0.317s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch/two_robot_spawn.launch.py
+[0.317s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch/sim_harmonic.launch.py
+[0.317s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/launch/spawn_skyhunter.launch.py
+[0.317s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/worlds
+[0.317s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/worlds/new_world.sdf
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/worlds/rough_terrain.sdf
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/agriculture_world.dae
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/MetalCorrugatedIronSheet002_METALNESS_3K_METALNESS.jpg
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/WoodPlanksWorn33_COL_VAR1_3K.jpg
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/SolarPanelsPolycrystallineTypeBFramedClean001_COL_3K.jpg
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/WiboticTR301.dae
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/WoodPlanksWornWhite33_COL_VAR1_3K.jpg
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/BaseStationWithTripod.dae
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/AgriBakeLarge.jpg
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/BaseStation.dae
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/meshes/WoodPlanksWornRed33_COL_VAR1_3K.jpg
+[0.318s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/ament_index/resource_index/package_run_dependencies/skyhunter_gazebo
+[0.319s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/ament_index/resource_index/parent_prefix_path/skyhunter_gazebo
+[0.319s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/environment/ament_prefix_path.sh
+[0.320s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/environment/ament_prefix_path.dsv
+[0.320s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/environment/path.sh
+[0.320s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/environment/path.dsv
+[0.320s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/local_setup.bash
+[0.321s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/local_setup.sh
+[0.321s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/local_setup.zsh
+[0.322s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/local_setup.dsv
+[0.322s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/package.dsv
+[0.322s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/ament_index/resource_index/packages/skyhunter_gazebo
+[0.322s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/cmake/skyhunter_gazeboConfig.cmake
+[0.322s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/cmake/skyhunter_gazeboConfig-version.cmake
+[0.322s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_gazebo/share/skyhunter_gazebo/package.xml
+[0.343s] Invoked command in '/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_teleop:/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake --install /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_gazebo

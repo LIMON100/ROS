@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-e72bebe501deb8f435b2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "skyhunter_formation",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "follower_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-follower_node-677b13662414117ae04c.json",
+					"name" : "follower_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "leader_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-leader_node-c899bba9a0a02405172c.json",
+					"name" : "leader_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "skyhunter_formation_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-skyhunter_formation_uninstall-7ef5774dffb3982be17a.json",
+					"name" : "skyhunter_formation_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "swarm_monitor_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-swarm_monitor_node-b388d2a577a26905b9ec.json",
+					"name" : "swarm_monitor_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-b67975f19fc468854aca.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_formation",
+		"source" : "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/src/skyhunter_formation"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

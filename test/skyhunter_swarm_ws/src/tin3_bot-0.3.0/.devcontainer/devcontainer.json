@@ -1,0 +1,50 @@
+{
+  "name": "tin3_bot_humble",
+  "dockerFile": "Dockerfile",
+  "runArgs": [
+    "--privileged",
+    "--network=host"
+  ],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/ros2_ws/src/${localWorkspaceFolderBasename},type=bind",
+  "workspaceFolder": "/ros2_ws",
+  "mounts": [
+    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind"
+  ],
+  "containerEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "QT_X11_NO_MITSHM": "1"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "password": "vscode",
+      "webPort": "6080",
+      "vncPort": "5901"
+    }
+  },
+  "forwardPorts": [6080, 5901],
+  "portsAttributes": {
+    "6080": {
+      "label": "Desktop (Web)"
+    },
+    "5901": {
+      "label": "Desktop (VNC)"
+    }
+  },
+  "postCreateCommand": "sudo apt-get update && sudo rosdep update && cd /ros2_ws && rosdep install --from-paths src --ignore-src -r -y && colcon build --symlink-install && echo 'source /ros2_ws/install/setup.bash' >> ~/.bashrc",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-vscode.cpptools",
+        "ms-iot.vscode-ros",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "python.analysis.extraPaths": [
+          "/opt/ros/humble/lib/python3.10/site-packages"
+        ]
+      }
+    }
+  }
+}

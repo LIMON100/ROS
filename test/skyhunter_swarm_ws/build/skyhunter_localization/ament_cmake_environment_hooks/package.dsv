@@ -1,0 +1,4 @@
+source;share/skyhunter_localization/local_setup.bash
+source;share/skyhunter_localization/local_setup.dsv
+source;share/skyhunter_localization/local_setup.sh
+source;share/skyhunter_localization/local_setup.zsh

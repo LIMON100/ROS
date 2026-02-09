@@ -1,0 +1,3 @@
+[console_scripts]
+teleop_keyboard = skyhunter_teleop.teleop_keyboard:main
+

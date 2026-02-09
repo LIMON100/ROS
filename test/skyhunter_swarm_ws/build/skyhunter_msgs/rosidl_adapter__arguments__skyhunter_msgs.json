@@ -1,0 +1,6 @@
+{
+  "package_name": "skyhunter_msgs",
+  "non_idl_tuples": [
+    "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/src/skyhunter_msgs:msg/LeaderState.msg"
+  ]
+}

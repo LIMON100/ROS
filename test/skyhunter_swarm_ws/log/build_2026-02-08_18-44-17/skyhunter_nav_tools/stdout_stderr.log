@@ -1,0 +1,35 @@
+running egg_info
+creating ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info
+writing ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/PKG-INFO
+writing dependency_links to ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/dependency_links.txt
+writing entry points to ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/entry_points.txt
+writing requirements to ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/requires.txt
+writing top-level names to ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/top_level.txt
+writing manifest file '../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/SOURCES.txt'
+reading manifest file '../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/SOURCES.txt'
+writing manifest file '../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_nav_tools/build
+creating /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib
+creating /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools
+copying skyhunter_nav_tools/waypoint_sender.py -> /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools
+copying skyhunter_nav_tools/__init__.py -> /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools
+running install
+running install_lib
+creating /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools
+copying /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools/waypoint_sender.py -> /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools
+copying /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools/__init__.py -> /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools
+byte-compiling /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools/waypoint_sender.py to waypoint_sender.cpython-310.pyc
+byte-compiling /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/ament_index
+creating /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/ament_index/resource_index
+creating /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/ament_index/resource_index/packages
+copying resource/skyhunter_nav_tools -> /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/ament_index/resource_index/packages
+copying package.xml -> /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/skyhunter_nav_tools
+running install_egg_info
+Copying ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info to /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools-0.0.0-py3.10.egg-info
+running install_scripts
+Installing waypoint_sender script to /home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/skyhunter_nav_tools
+writing list of installed files to '/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/skyhunter_nav_tools/install.log'

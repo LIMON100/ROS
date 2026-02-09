@@ -1,0 +1,9 @@
+/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/yolobot_description/CMakeFiles/uninstall.dir
+/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/yolobot_description/CMakeFiles/yolobot_description_uninstall.dir
+/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/yolobot_description/CMakeFiles/test.dir
+/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/yolobot_description/CMakeFiles/edit_cache.dir
+/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/yolobot_description/CMakeFiles/rebuild_cache.dir
+/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/yolobot_description/CMakeFiles/list_install_components.dir
+/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/yolobot_description/CMakeFiles/install.dir
+/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/yolobot_description/CMakeFiles/install/local.dir
+/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/build/yolobot_description/CMakeFiles/install/strip.dir

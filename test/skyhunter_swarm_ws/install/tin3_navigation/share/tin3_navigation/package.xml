@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>tin3_navigation</name>
+  <version>1.0.0</version>
+  <description>Navigation and localization configs for TIN3 robot (EKF + Nav2)</description>
+  <maintainer email="your@email.com">Your Name</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Robot description -->
+  <exec_depend>tin3_description</exec_depend>
+
+  <!-- ROS 2 core -->
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <!-- Localization -->
+  <exec_depend>robot_localization</exec_depend>
+
+  <!-- Navigation -->
+  <exec_depend>nav2_bringup</exec_depend>
+  <exec_depend>nav2_bt_navigator</exec_depend>
+  <exec_depend>nav2_controller</exec_depend>
+  <exec_depend>nav2_planner</exec_depend>
+  <exec_depend>nav2_costmap_2d</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
