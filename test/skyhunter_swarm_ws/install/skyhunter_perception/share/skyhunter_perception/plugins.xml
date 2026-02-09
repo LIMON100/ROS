@@ -1,5 +1,0 @@
-<library path="terrain_layer_plugin">
-  <class name="skyhunter_costmap/TerrainLayer" type="skyhunter_costmap::TerrainLayer" base_class_type="nav2_costmap_2d::Layer">
-    <description>This layer imports traversability data from GridMap.</description>
-  </class>
-</library>

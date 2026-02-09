@@ -1,3 +1,0 @@
-[console_scripts]
-waypoint_sender = skyhunter_nav_tools.waypoint_sender:main
-
