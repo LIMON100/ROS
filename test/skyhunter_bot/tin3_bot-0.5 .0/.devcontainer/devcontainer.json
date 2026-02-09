@@ -1,0 +1,41 @@
+{
+  "name": "tin3_bot_humble",
+  "dockerFile": "Dockerfile",
+  "runArgs": [
+    "--privileged",
+    "--network=host",
+    "--gpus", "all",
+    "--ipc=host" // CRITICAL: Allows shared memory for high-bandwidth data like PointClouds
+  ],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/ros2_ws/src,type=bind",
+  "workspaceFolder": "/ros2_ws",
+  "mounts": [
+    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
+    "source=${localEnv:HOME}/.Xauthority,target=/root/.Xauthority,type=bind" // Allows RViz to auth with your X server
+  ],
+  "containerEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "QT_X11_NO_MITSHM": "1",
+    "XAUTHORITY": "/root/.Xauthority", // Points to the mounted auth file
+    "NVIDIA_VISIBLE_DEVICES": "all",
+    "NVIDIA_DRIVER_CAPABILITIES": "all", // Ensures compute and graphics are both active
+    "LIBGL_ALWAYS_SOFTWARE": "0" 
+  },
+  "postCreateCommand": "sudo apt-get update && sudo rosdep update && cd /ros2_ws && rosdep install --from-paths src --ignore-src -r -y && colcon build --symlink-install && echo 'source /ros2_ws/install/setup.bash' >> ~/.bashrc",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-vscode.cpptools",
+        "ms-iot.vscode-ros",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "python.analysis.extraPaths": [
+          "/opt/ros/humble/lib/python3.10/site-packages"
+        ]
+      }
+    }
+  }
+}
