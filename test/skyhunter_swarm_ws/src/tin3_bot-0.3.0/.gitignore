@@ -1,0 +1,31 @@
+# Build artifacts
+build/
+install/
+log/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Temporary files
+*.bak
+*.tmp
+*~
+
+# Test worlds (local only)
+tin3_gz_worlds/models/marsyard2020_terrain/
+tin3_gz_worlds/models/orchard_world/
+# *.stl
+# *.dae
+tin3_gz_simulation/scripts/
