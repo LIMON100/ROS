@@ -703,24 +703,23 @@ private:
         debug_obstacle_pub_->publish(markers);
 
         // 6. Traversability (Parallelizable)
-        grid_map::Polygon roi_polygon;
-        roi_polygon.setFrameId(map_frame_);
-        double look_ahead = 5.0; double half_width = 1.2; 
-        auto add_corner = [&](double x, double y) {
-            double rx = x * cy - y * sy + sensor_x; double ry = x * sy + y * cy + sensor_y;
-            roi_polygon.addVertex(grid_map::Position(rx, ry));
-        };
-        add_corner(look_ahead, half_width); add_corner(look_ahead, -half_width);  
-        add_corner(-1.0, -half_width); add_corner(-1.0, half_width);  
-
-        for (grid_map::PolygonIterator iterator(grid_map_, roi_polygon); !iterator.isPastEnd(); ++iterator) {
-            if (!grid_map_.isValid(*iterator, "elevation")) continue;
+        for (grid_map::GridMapIterator iterator(grid_map_); !iterator.isPastEnd(); ++iterator) {
             
+            // Check the high-density layer (points above 0.25m)
             float d_high = grid_map_.at("density_high", *iterator);
-            if (std::isnan(d_high)) d_high = 0.0;
+            
+            // If the cell has never been seen by LiDAR, keep it safe (0.0) or skip
+            if (std::isnan(d_high)) {
+                continue; 
+            }
 
-            if (d_high > 1.0) grid_map_.at("traversability", *iterator) = 1.0; 
-            else grid_map_.at("traversability", *iterator) = 0.0; 
+            // REASON FOR STUCK: We lowered threshold from 1.0 to 0.0
+            // If even 1 filtered point is there, it's an obstacle.
+            if (d_high > 0.0) {
+                grid_map_.at("traversability", *iterator) = 1.0; // Lethal Obstacle
+            } else {
+                grid_map_.at("traversability", *iterator) = 0.0; // Safe Ground
+            }
         }
         
         std::unique_ptr<grid_map_msgs::msg::GridMap> out_msg;

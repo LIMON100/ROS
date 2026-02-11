@@ -469,130 +469,64 @@ private:
       return max_dist; // No collision found
   }
 
-  void control_loop() {
+ void control_loop() {
     if (!has_leader_) return;
 
-    // Safety Timeout
     if ((this->get_clock()->now() - last_leader_time_).seconds() > 2.0) {
         stop_robot(); return;
     }
 
-    // 1. CALCULATE TARGET (World Frame)
+    // 1. Calculate Target position in Global Map frame
     double leader_x = last_leader_msg_.pose.position.x;
     double leader_y = last_leader_msg_.pose.position.y;
     tf2::Quaternion q_l; tf2::fromMsg(last_leader_msg_.pose.orientation, q_l);
     double leader_yaw = tf2::getYaw(q_l);
-    double leader_v = last_leader_msg_.velocity.linear.x;
 
     double target_wx = leader_x + (offset_x_ * cos(leader_yaw) - offset_y_ * sin(leader_yaw));
     double target_wy = leader_y + (offset_x_ * sin(leader_yaw) + offset_y_ * cos(leader_yaw));
 
-    // 2. TRANSFORM TO ROBOT FRAME
+    // 2. Transform the Global Target into my LOCAL robot frame
     geometry_msgs::msg::PoseStamped goal_w, goal_r;
-    goal_w.header = last_leader_msg_.header; // Assuming Leader is in "odom" or "map"
-    goal_w.header.stamp = rclcpp::Time(0); // Get latest transform
+    goal_w.header.frame_id = "map"; 
+    goal_w.header.stamp = rclcpp::Time(0); // Get latest available TF
     goal_w.pose.position.x = target_wx; 
     goal_w.pose.position.y = target_wy; 
     goal_w.pose.orientation.w = 1.0;
 
     try {
+        // This calculates exactly where the target is relative to the follower's body
         tf_buffer_->transform(goal_w, goal_r, my_frame_, tf2::durationFromSec(0.1));
     } catch (tf2::TransformException &ex) {
-        // TF failure
+        RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 2000, 
+            "TF ERROR: Cannot find map to %s. QoS Mismatch?", my_frame_.c_str());
+        stop_robot();
         return; 
     }
 
+    // 3. Extract errors from the transformed pose
     double dx = goal_r.pose.position.x;
     double dy = goal_r.pose.position.y;
     double dist_error = std::hypot(dx, dy);
     double heading_error = std::atan2(dy, dx);
 
-    // --- FIX 2: FORCE FOLLOWER TO CATCH UP ---
-    // Even if leader stops, if we are far (>1.0m), we keep moving.
-    bool leader_stopped = (std::abs(leader_v) < 0.05);
-    bool arrived = (dist_error < 0.8); // Arrival tolerance
-
-    if (leader_stopped && arrived) {
-        stop_robot(); return;
-    }
-
-    // 3. OBSTACLE AVOIDANCE (DWA-lite)
-    int paths = 31; // More resolution
-    double max_scan_angle = 1.5; // ~90 degrees
-    double best_score = -999.0;
-    double best_angle = 0.0;
-    bool path_found = false;
-    double max_speed_allowed = 1.5;
-
-    visualization_msgs::msg::MarkerArray markers;
-
-    for (int i = 0; i < paths; i++) {
-        double angle = -max_scan_angle + (i * (2.0 * max_scan_angle) / (paths - 1));
-        
-        // Prefer straight to target
-        double angle_diff = std::abs(angle - heading_error);
-        
-        // Check safety
-        double clear_dist = check_path_clearance(angle, 4.0); // Check 4m ahead
-        
-        // Scoring Function
-        // 1. Safety (Distance to collision)
-        // 2. Goal Alignment (Angle diff)
-        double score = (clear_dist * 2.0) - (angle_diff * 1.5);
-
-        // Penalize hazardous paths heavily
-        if (clear_dist < 1.0) score -= 100.0;
-
-        if (score > best_score) {
-            best_score = score;
-            best_angle = angle;
-            max_speed_allowed = std::min(1.5, clear_dist * 0.5); // Slow down if obs near
-            path_found = true;
-        }
-
-        // Visualize
-        visualization_msgs::msg::Marker m;
-        m.header.frame_id = my_frame_; m.header.stamp = this->get_clock()->now();
-        m.ns = "p"; m.id = i; m.type = 0; m.action = 0;
-        m.scale.x = (clear_dist/4.0); m.scale.y = 0.05; m.scale.z = 0.05;
-        m.color.a = 0.5; 
-        if (clear_dist < 1.5) { m.color.r=1.0; m.color.g=0.0; } 
-        else { m.color.r=0.0; m.color.g=1.0; }
-        
-        tf2::Quaternion q; q.setRPY(0, 0, angle);
-        m.pose.orientation = tf2::toMsg(q);
-        markers.markers.push_back(m);
-    }
-    pub_debug_->publish(markers);
-
-    // 4. EXECUTE
+    // 4. Movement Logic
     geometry_msgs::msg::Twist cmd;
     
-    if (!path_found || max_speed_allowed < 0.1) {
-        // TRAPPED: Rotate in place to scan
-        cmd.linear.x = 0.0;
-        cmd.angular.z = 0.5; // Slow spin
-    } else {
-        // DRIVE
-        cmd.angular.z = 2.0 * best_angle; // High gain for steering
-        
-        // Linear logic:
-        // Base speed = Leader Speed
-        // + Catchup Speed (proportional to distance)
-        // Clamped by Obstacle Safety
-        double target_speed = leader_v + (0.5 * dist_error);
-        cmd.linear.x = std::min(target_speed, max_speed_allowed);
-        
-        // Slow down if turning sharply
-        if (std::abs(best_angle) > 0.5) cmd.linear.x *= 0.5;
+    if (dist_error < 0.4) { // Arrived
+        stop_robot();
+        return;
     }
 
-    // Deadband
-    if (dist_error < 0.2) { cmd.linear.x=0; cmd.angular.z=0; }
+    // P-Controller for steering and speed
+    cmd.angular.z = 2.0 * heading_error; 
+    cmd.linear.x = 0.6 * dist_error; // Move faster if far away
 
-    // Final Safety Clamp
-    cmd.linear.x = std::max(0.0, std::min(cmd.linear.x, 1.5));
-    cmd.angular.z = std::max(-1.5, std::min(cmd.angular.z, 1.5));
+    // Limit speeds
+    cmd.linear.x = std::clamp(cmd.linear.x, 0.0, 1.2);
+    cmd.angular.z = std::clamp(cmd.angular.z, -1.5, 1.5);
+    
+    // Slow down speed if turning sharply
+    if (std::abs(heading_error) > 0.6) cmd.linear.x *= 0.3;
 
     pub_cmd_->publish(cmd);
   }
