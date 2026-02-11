@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<sdf version="1.8">
+  <model name="route_66">
+    <static>true</static>
+    <pose>0 0 0 0 0 -1.5708</pose>
+      <!-- <pose>2475.38 1517.51 -89.54 0 0.36 0.10</pose> -->
+    <link name="world_link">
+      <visual name="world_visual">
+        <geometry>
+          <mesh>
+            <uri>model://route_66/meshes/route66_visual.obj</uri>
+            <scale>0.5 0.5 0.5</scale>
+          </mesh>
+        </geometry>
+          <material>
+    <ambient>0.4 0.3 0.2 1</ambient>
+    <diffuse>0.6 0.5 0.3 1</diffuse>
+  </material>
+      </visual>
+      
+      <collision name="terrain_collision">
+        <geometry>
+          <mesh>
+            <uri>model://route_66/meshes/route66_visual.obj</uri>
+             <scale>0.5 0.5 0.5</scale>
+          </mesh>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.0</mu>
+              <mu2>1.0</mu2>
+            </ode>
+            <bullet>
+              <friction>1.0</friction>
+              <friction2>1.0</friction2>
+            </bullet>
+          </friction>
+        </surface>
+      </collision>
+      
+    </link>
+  </model>
+</sdf>

@@ -1,27 +1,36 @@
 #! /usr/bin/env python3
 import time
 from geometry_msgs.msg import PoseStamped
-from rclpy.duration import Duration
 import rclpy
-from rclpy.node import Node
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
 
 def main():
     rclpy.init()
-    navigator = BasicNavigator()
 
+    # CRITICAL: Match the namespace used in the Launch file GroupAction
+    robot_ns = 'robot_01'
+    navigator = BasicNavigator(namespace=robot_ns)
+
+    print(f"Waiting for Nav2 to be active in namespace: /{robot_ns}...")
+    # This checks /robot_01/amcl/get_state. If launch file is fixed, this passes.
+    navigator.waitUntilNav2Active(localizer='amcl') 
+
+    # --- 1. SET INITIAL POSE ---
+    # We must tell AMCL where we are to start.
     print("Setting Initial Pose...")
     initial_pose = PoseStamped()
     initial_pose.header.frame_id = 'map'
     initial_pose.header.stamp = navigator.get_clock().now().to_msg()
     initial_pose.pose.position.x = 0.0
     initial_pose.pose.position.y = 0.0
+    initial_pose.pose.orientation.z = 0.0
     initial_pose.pose.orientation.w = 1.0
     navigator.setInitialPose(initial_pose)
 
-    time.sleep(3) # Wait for AMCL/SLAM to settle
+    # Wait a moment for AMCL particle cloud to initialize
+    time.sleep(3.0) 
 
-    # --- SINGLE GOAL (20m Ahead) ---
+    # --- 2. SEND GOAL ---
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = 'map'
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
@@ -30,18 +39,28 @@ def main():
     goal_pose.pose.orientation.w = 1.0
 
     print("Sending Goal: 20m Forward...")
-    navigator.goToPose(goal_pose)  # <--- Changed from followWaypoints to goToPose
+    navigator.goToPose(goal_pose)
 
+    # --- 3. MONITOR PROGRESS ---
+    i = 0
     while not navigator.isTaskComplete():
+        i += 1
         feedback = navigator.getFeedback()
-        # print('Feedback: ', feedback)
-        # time.sleep(1.0)
+        if feedback and i % 5 == 0:
+            print(f'Distance remaining: {feedback.distance_remaining:.2f} meters')
+        
+        # Optional: Timeout if it takes too long (e.g., 60 seconds)
+        # if Duration.from_msg(feedback.navigation_time) > Duration(seconds=600):
+        #     navigator.cancelTask()
 
+    # --- 4. RESULT ---
     result = navigator.getResult()
     if result == TaskResult.SUCCEEDED:
         print('Goal Reached!')
-    else:
-        print('Goal Failed!')
+    elif result == TaskResult.CANCELED:
+        print('Goal was canceled!')
+    elif result == TaskResult.FAILED:
+        print('Goal failed!')
 
     exit(0)
 

@@ -29,6 +29,7 @@ ament_target_dependencies(leader_node
   geometry_msgs
   nav_msgs
   skyhunter_msgs
+  visualization_msgs
 )
 
 # Follower Node
