@@ -104,27 +104,18 @@ def spawn_robot(
             executable="parameter_bridge",
             name=node_name_prefix + "parameter_bridge",
             arguments=[
-                # Commands (ROS → Gazebo)
                 bridge_prefix + "/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist",
-                bridge_prefix + "/gimbal/pan_cmd@std_msgs/msg/Float64]gz.msgs.Double",
-                bridge_prefix + "/gimbal/tilt_cmd@std_msgs/msg/Float64]gz.msgs.Double",
-                # Sensor data (Gazebo → ROS)
-                bridge_prefix + "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
                 bridge_prefix + "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
-                bridge_prefix + "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
-                bridge_prefix + "/gps/fix@gps_msgs/msg/GPSFix[gz.msgs.NavSat",
-                bridge_prefix + "/imu/data@sensor_msgs/msg/Imu[gz.msgs.IMU",
+                bridge_prefix + "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
                 bridge_prefix + "/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
-                bridge_prefix + "/rgb_camera/image_raw@sensor_msgs/msg/Image[gz.msgs.Image",
-                bridge_prefix + "/ir_camera/image_raw@sensor_msgs/msg/Image[gz.msgs.Image",
             ],
             remappings=[
                 (bridge_prefix + "/tf", "/tf"),
             ],
             parameters=[
                 {"use_sim_time": use_sim_time_value},
-                {"qos_overrides./tf.publisher.reliability": "best_effort"},
-                {"qos_overrides./tf_static.publisher.durability": "transient_local"},
+                # Force Reliable transforms so the Follower node accepts them
+                {"qos_overrides./tf.publisher.reliability": "reliable"},
             ],
             output="screen",
         )

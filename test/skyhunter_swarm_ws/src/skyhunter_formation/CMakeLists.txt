@@ -5,24 +5,33 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+# Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(skyhunter_msgs REQUIRED)
-# --- ADD THESE LINES ---
 find_package(tf2 REQUIRED)
-find_package(tf2_geometry_msgs REQUIRED)
-# ---------------------
-find_package(sensor_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
-
 find_package(grid_map_ros REQUIRED)
 find_package(grid_map_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 
-# Leader Node
+# PCL Dependencies
+find_package(pcl_conversions REQUIRED)
+find_package(PCL REQUIRED)
+
+find_package(grid_map_core REQUIRED)
+
+# Add PCL Include Directories (Crucial for PCL)
+include_directories(${PCL_INCLUDE_DIRS})
+
+# ==========================
+# 1. Leader Node
+# ==========================
 add_executable(leader_node src/leader_node.cpp)
 ament_target_dependencies(leader_node
   rclcpp
@@ -32,7 +41,9 @@ ament_target_dependencies(leader_node
   visualization_msgs
 )
 
-# Follower Node
+# ==========================
+# 2. Follower Node
+# ==========================
 add_executable(follower_node src/follower_node.cpp)
 ament_target_dependencies(
   follower_node
@@ -41,16 +52,28 @@ ament_target_dependencies(
   nav_msgs
   skyhunter_msgs
   tf2               
+  tf2_ros
   tf2_geometry_msgs
   sensor_msgs
-  tf2_ros
   std_srvs
   grid_map_ros  
   grid_map_msgs 
   visualization_msgs
+  pcl_conversions
 )
 
-# Swarm Monitor Node
+# CRITICAL FIX: Link the actual PCL and TF2 libraries to the Follower Node
+# This solves the "undefined reference" error
+target_link_libraries(follower_node 
+  ${PCL_LIBRARIES}
+  tf2::tf2
+  tf2_ros::tf2_ros
+  tf2_geometry_msgs::tf2_geometry_msgs
+)
+
+# ==========================
+# 3. Swarm Monitor Node
+# ==========================
 add_executable(swarm_monitor_node src/swarm_monitor_node.cpp)
 ament_target_dependencies(swarm_monitor_node
   rclcpp
@@ -58,10 +81,29 @@ ament_target_dependencies(swarm_monitor_node
   nav_msgs
 )
 
+
+add_executable(lidar_test_node src/lidar_test_node.cpp)
+
+# 2. Add dependencies
+ament_target_dependencies(lidar_test_node
+  rclcpp
+  sensor_msgs
+  pcl_conversions
+  grid_map_core 
+  grid_map_ros  
+)
+target_include_directories(lidar_test_node PUBLIC ${grid_map_core_INCLUDE_DIRS})
+# 3. Link PCL libraries (Crucial)
+target_link_libraries(lidar_test_node ${PCL_LIBRARIES})
+
+# ==========================
+# Installation
+# ==========================
 install(TARGETS
   leader_node
   follower_node
   swarm_monitor_node
+  lidar_test_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
