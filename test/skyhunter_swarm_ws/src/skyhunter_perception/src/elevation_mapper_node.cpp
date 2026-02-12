@@ -704,21 +704,19 @@ private:
 
         // 6. Traversability (Parallelizable)
         for (grid_map::GridMapIterator iterator(grid_map_); !iterator.isPastEnd(); ++iterator) {
-            
-            // Check the high-density layer (points above 0.25m)
             float d_high = grid_map_.at("density_high", *iterator);
             
-            // If the cell has never been seen by LiDAR, keep it safe (0.0) or skip
             if (std::isnan(d_high)) {
+                grid_map_.at("traversability", *iterator) = 0.0; // Unknown is safe for now
                 continue; 
             }
 
-            // REASON FOR STUCK: We lowered threshold from 1.0 to 0.0
-            // If even 1 filtered point is there, it's an obstacle.
-            if (d_high > 0.0) {
-                grid_map_.at("traversability", *iterator) = 1.0; // Lethal Obstacle
+            // Only mark as obstacle if we see more than 3 points in a cell 
+            // This prevents "Ghost" obstacles from single noise points
+            if (d_high > 3.0) { 
+                grid_map_.at("traversability", *iterator) = 1.0; // LETHAL
             } else {
-                grid_map_.at("traversability", *iterator) = 0.0; // Safe Ground
+                grid_map_.at("traversability", *iterator) = 0.0; // SAFE
             }
         }
         
