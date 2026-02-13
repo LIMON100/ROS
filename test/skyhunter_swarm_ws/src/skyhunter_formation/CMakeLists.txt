@@ -25,6 +25,8 @@ find_package(pcl_conversions REQUIRED)
 find_package(PCL REQUIRED)
 
 find_package(grid_map_core REQUIRED)
+find_package(OpenMP REQUIRED)
+
 
 # Add PCL Include Directories (Crucial for PCL)
 include_directories(${PCL_INCLUDE_DIRS})
@@ -95,6 +97,22 @@ ament_target_dependencies(lidar_test_node
 target_include_directories(lidar_test_node PUBLIC ${grid_map_core_INCLUDE_DIRS})
 # 3. Link PCL libraries (Crucial)
 target_link_libraries(lidar_test_node ${PCL_LIBRARIES})
+
+
+add_executable(location_tracker src/location_tracker.cpp)
+ament_target_dependencies(location_tracker 
+  rclcpp 
+  tf2_ros 
+  geometry_msgs 
+  nav_msgs     
+  tf2_geometry_msgs
+)
+target_link_libraries(location_tracker
+  tf2::tf2
+  tf2_ros::tf2_ros
+  tf2_geometry_msgs::tf2_geometry_msgs
+)
+install(TARGETS location_tracker DESTINATION lib/${PROJECT_NAME})
 
 # ==========================
 # Installation

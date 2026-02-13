@@ -22,7 +22,7 @@ def launch_setup(context, *args, **kwargs):
     # ====================================================
     sim_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, 'launch', 'sim.launch.py')),
-        launch_arguments={'num_robots': '1', 'lidar_mode': 'half', 'use_sim_time': use_sim_time}.items()
+        launch_arguments={'num_robots': '1', 'lidar_mode': 'low', 'use_sim_time': use_sim_time}.items()
     )
     nodes_to_start.append(sim_launch)
 
@@ -98,7 +98,8 @@ def launch_setup(context, *args, **kwargs):
                     remappings=[
                         ('scan/points', f'/{follower_ns}/scan/points'), 
                         ('cmd_vel', f'/{follower_ns}/cmd_vel'),
-                        ('odom', f'/{follower_ns}/odom'),
+                        # ('odom', f'/{follower_ns}/odom'),
+                        ('odom', f'/{follower_ns}/odometry/filtered'), 
                         ('leader_state', '/leader_state'),
                         ('/tf', '/tf'),
                         ('/tf_static', '/tf_static')
