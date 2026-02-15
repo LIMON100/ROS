@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tin3_bot">
+
+  <!-- Macros -->
+  <xacro:include filename="$(find tin3_description)/urdf/macros.xacro" />
+  <xacro:include filename="$(find tin3_description)/urdf/materials.xacro" />
+
+  <!-- Robot body -->
+  <xacro:include filename="$(find tin3_description)/urdf/chassis.xacro" />
+  <xacro:include filename="$(find tin3_description)/urdf/gimbal.xacro" />
+  <xacro:include filename="$(find tin3_description)/urdf/camera.xacro" />
+  <xacro:include filename="$(find tin3_description)/urdf/rifle.xacro" />
+  <xacro:include filename="$(find tin3_description)/urdf/sensors.xacro" />
+
+  <!-- Gazebo -->
+  <xacro:include filename="$(find tin3_description)/urdf/gazebo.xacro" />
+  <xacro:include filename="$(find tin3_description)/urdf/gazebo_control.xacro" />
+
+</robot>
