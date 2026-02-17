@@ -133,40 +133,43 @@
     <!-- LiDAR SENSOR -->
     <xacro:if value="${lidar_mode != 'none'}">
         <gazebo reference="lidar_link">
-            <sensor name="lidar_sensor" type="gpu_lidar">
-                <always_on>true</always_on>
-                <update_rate>${lidar_update_rate}</update_rate>
-                <topic>${topic_prefix}/scan</topic>
-                <gz_frame_id>${frame_prefix}lidar_link</gz_frame_id>
-                <lidar>
-                    <scan>
-                        <horizontal>
-                            <samples>${lidar_h_samples}</samples>
-                            <resolution>1</resolution>
-                            <min_angle>-1.0472</min_angle>  <!-- -60° -->
-                            <max_angle>1.0472</max_angle>   <!-- +60° -->
-                        </horizontal>
-                        <vertical>
-                            <samples>${lidar_v_samples}</samples>
-                            <resolution>1</resolution>
-                            <min_angle>-0.7854</min_angle>  <!-- -45° -->
-                            <max_angle>0.7854</max_angle>   <!-- +45° -->
-                        </vertical>
-                    </scan>
-                    <range>
-                        <min>0.1</min>
-                        <max>30.0</max>
-                        <resolution>0.01</resolution>
-                    </range>
-                    <noise>
-                        <type>gaussian</type>
-                        <mean>0.0</mean>
-                        <stddev>0.05</stddev>  <!-- ±5cm accuracy -->
-                    </noise>
-                </lidar>
-                <visualize>true</visualize>
-            </sensor>
-        </gazebo>
+        <sensor name="lidar_sensor" type="gpu_lidar">
+        <always_on>true</always_on>
+        <update_rate>${lidar_update_rate}</update_rate>
+        <topic>${topic_prefix}/scan</topic>
+        
+        <gz_frame_id>${frame_prefix}lidar_link</gz_frame_id>
+        
+        <visualize>true</visualize>
+        
+        <lidar>
+            <scan>
+            <horizontal>
+                <samples>${lidar_h_samples}</samples>
+                <resolution>1</resolution>
+                <min_angle>-2.0</min_angle>
+                <max_angle>2.0</max_angle>
+            </horizontal>
+            <vertical>
+                <samples>${lidar_v_samples}</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.8</min_angle>
+                <max_angle>0.8</max_angle>
+            </vertical>
+            </scan>
+            <range>
+            <min>0.3</min>
+            <max>20.0</max>
+            <resolution>0.01</resolution>
+            </range>
+            <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+            </noise>
+        </lidar>
+        </sensor>
+    </gazebo>
     </xacro:if>
     <!-- IMU SENSOR -->
     <gazebo reference="imu_link">

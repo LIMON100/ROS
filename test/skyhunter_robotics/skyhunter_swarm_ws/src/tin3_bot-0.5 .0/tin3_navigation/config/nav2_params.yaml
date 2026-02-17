@@ -406,7 +406,7 @@ bt_navigator:
     use_sim_time: true
     global_frame: map
     robot_base_frame: base_footprint
-    odom_topic: /odom_filtered
+    odom_topic: /odometry/filtered
     bt_loop_duration: 10
     default_server_timeout: 20
     wait_for_service_timeout: 5
@@ -423,10 +423,11 @@ bt_navigator:
 controller_server:
   ros__parameters:
     use_sim_time: true
-    controller_frequency: 10.0
+    controller_frequency: 5.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
     min_theta_velocity_threshold: 0.001
+    transform_tolerance: 2.0
     failure_tolerance: 0.3
     progress_checker_plugins: ["progress_checker"]
     goal_checker_plugins: ["general_goal_checker"]
@@ -470,7 +471,7 @@ controller_server:
 planner_server:
   ros__parameters:
     use_sim_time: true
-    expected_planner_frequency: 5.0
+    expected_planner_frequency: 1.0
     planner_plugins: ["GridBased"]
 
     GridBased:
@@ -528,7 +529,7 @@ global_costmap:
           max_obstacle_height: 2.0
           min_obstacle_height: 0.1
           obstacle_max_range: 25.0
-          obstacle_min_range: 0.2
+          obstacle_min_range: 0.7
           clearing: true
           marking: true
           raytrace_max_range: 30.0
@@ -633,7 +634,7 @@ velocity_smoother:
     min_velocity: [-0.5, 0.0, -1.0]
     max_accel: [1.0, 0.0, 1.5]
     max_decel: [-1.5, 0.0, -2.0]
-    odom_topic: /odom_filtered
+    odom_topic: /odometry/filtered
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
 

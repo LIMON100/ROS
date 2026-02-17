@@ -115,6 +115,24 @@ target_link_libraries(location_tracker
 )
 install(TARGETS location_tracker DESTINATION lib/${PROJECT_NAME})
 
+add_executable(direct_mover src/direct_mover.cpp)
+ament_target_dependencies(direct_mover 
+  rclcpp 
+  geometry_msgs 
+  nav_msgs 
+  tf2
+  tf2_ros             
+  tf2_geometry_msgs 
+)
+
+# 2. CRITICAL HUMBLE FIX: Explicitly link the libraries to the binary
+target_link_libraries(direct_mover 
+  tf2::tf2
+  tf2_ros::tf2_ros
+  tf2_geometry_msgs::tf2_geometry_msgs
+)
+
+
 # ==========================
 # Installation
 # ==========================
@@ -123,6 +141,7 @@ install(TARGETS
   follower_node
   swarm_monitor_node
   lidar_test_node
+  direct_mover
   DESTINATION lib/${PROJECT_NAME}
 )
 
