@@ -178,197 +178,6 @@
 //   return 0;
 // }
 
-// workable gemini-r1
-#include <chrono>
-#include <cmath>
-#include <memory>
-#include <string>
-#include <algorithm>
-#include <vector>
-#include <omp.h> 
-
-#include "rclcpp/rclcpp.hpp"
-#include "geometry_msgs/msg/twist.hpp"
-#include "sensor_msgs/msg/point_cloud2.hpp"
-#include "skyhunter_msgs/msg/leader_state.hpp"
-#include "tf2/utils.h"
-#include "tf2_ros/buffer.h"
-#include "tf2_ros/transform_listener.h"
-#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
-#include <pcl_conversions/pcl_conversions.h>
-#include <pcl/point_cloud.h>
-#include <pcl/point_types.h>
-
-using namespace std::chrono_literals;
-
-class RobustFollower : public rclcpp::Node {
-public:
-  RobustFollower() : Node("follower_node") {
-    this->declare_parameter<double>("offset_dist", -2.5);
-    
-    tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
-    tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
-
-    // Resolve Namespace and Frame
-    std::string ns = std::string(this->get_namespace());
-    if (ns.length() > 1 && ns[0] == '/') ns = ns.substr(1);
-    my_ns_ = ns;
-    my_frame_ = my_ns_ + "/base_footprint";
-
-    auto qos = rclcpp::SensorDataQoS();
-    sub_leader_ = this->create_subscription<skyhunter_msgs::msg::LeaderState>(
-        "/leader_state", qos, std::bind(&RobustFollower::leader_cb, this, std::placeholders::_1));
-    sub_scan_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-        "scan/points", qos, std::bind(&RobustFollower::scan_cb, this, std::placeholders::_1));
-
-    pub_cmd_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
-    timer_ = this->create_wall_timer(50ms, std::bind(&RobustFollower::control_loop, this));
-
-    RCLCPP_INFO(this->get_logger(), "SOLID Follower [%s] Online. Target Frame: %s", my_ns_.c_str(), my_frame_.c_str());
-    
-  }
-
-private:
-  void leader_cb(const skyhunter_msgs::msg::LeaderState::SharedPtr msg) {
-    last_leader_msg_ = *msg;
-    has_leader_ = true;
-    last_leader_time_ = this->get_clock()->now();
-  }
-
-  void scan_cb(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
-    pcl::PointCloud<pcl::PointXYZ>::Ptr raw_cloud(new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::fromROSMsg(*msg, *raw_cloud);
-    if (raw_cloud->empty() || !has_leader_) return;
-
-    // Get Leader relative to ME to ignore its points
-    geometry_msgs::msg::TransformStamped tf_l;
-    try {
-        tf_l = tf_buffer_->lookupTransform(my_frame_, "map", tf2::TimePointZero);
-    } catch (...) { return; }
-
-    double lx_local = last_leader_msg_.pose.position.x + tf_l.transform.translation.x;
-    double ly_local = last_leader_msg_.pose.position.y + tf_l.transform.translation.y;
-
-    std::vector<pcl::PointXYZ> obs;
-    #pragma omp parallel
-    {
-        std::vector<pcl::PointXYZ> t_pts;
-        #pragma omp for nowait
-        for (size_t i = 0; i < raw_cloud->size(); i += 10) {
-            const auto& p = raw_cloud->points[i];
-            if (p.z < -0.4 || p.z > 0.4) continue;
-            if ((p.x*p.x + p.y*p.y) < 0.25) continue; // Self filter
-
-            // LEADER CLEARING (Don't avoid the leader!)
-            double dx_l = p.x - lx_local;
-            double dy_l = p.y - ly_local;
-            if ((dx_l*dx_l + dy_l*dy_l) < 1.44) continue; // 1.2m radius
-
-            t_pts.push_back(p);
-        }
-        #pragma omp critical
-        obs.insert(obs.end(), t_pts.begin(), t_pts.end());
-    }
-    obstacle_points_ = obs;
-    has_scan_ = true;
-  }
-
-  void control_loop() {
-    if (!has_leader_ || !has_scan_) return;
-    if ((this->get_clock()->now() - last_leader_time_).seconds() > 1.5) { stop_robot(); return; }
-
-    // 1. Calculate Target in Map
-    double l_yaw = tf2::getYaw(last_leader_msg_.pose.orientation);
-    
-    double target_wx = last_leader_msg_.pose.position.x + (this->get_parameter("offset_dist").as_double() * cos(l_yaw));
-    double target_wy = last_leader_msg_.pose.position.y + (this->get_parameter("offset_dist").as_double() * sin(l_yaw));
-
-    // 2. Get My Position in Map (The Bug Fix)
-    geometry_msgs::msg::TransformStamped tf_now;
-    try {
-        tf_now = tf_buffer_->lookupTransform("map", my_frame_, tf2::TimePointZero);
-    } catch (...) { return; }
-
-    double my_x = tf_now.transform.translation.x;
-    double my_y = tf_now.transform.translation.y;
-    double my_yaw = tf2::getYaw(tf_now.transform.rotation);
-
-    // 3. Vector to Target
-    double dx = target_wx - my_x;
-    double dy = target_wy - my_y;
-    double dist_err = std::hypot(dx, dy);
-    double angle_to_target = std::atan2(dy, dx);
-
-    // 4. Ray Sampling for Gaps
-    double best_yaw = my_yaw;
-    double min_score = 9999.0;
-    bool path_found = false;
-
-    for (double angle = -1.57; angle <= 1.57; angle += 0.15) {
-        double check_yaw = my_yaw + angle;
-        double diff = check_yaw - angle_to_target;
-        while(diff > M_PI) diff -= 2*M_PI;
-        while(diff < -M_PI) diff += 2*M_PI;
-        
-        double score = std::abs(diff);
-        bool collision = false;
-
-        for (const auto& p : obstacle_points_) {
-            double px_r = p.x * cos(-angle) - p.y * sin(-angle);
-            double py_r = p.x * sin(-angle) + p.y * cos(-angle);
-            if (px_r > 0.0 && px_r < 3.5 && std::abs(py_r) < 0.6) { // 1.2m corridor
-                collision = true; break;
-            }
-        }
-
-        if (!collision && score < min_score) {
-            min_score = score;
-            best_yaw = check_yaw;
-            path_found = true;
-        }
-    }
-
-    // 5. Execution
-    geometry_msgs::msg::Twist cmd;
-    if (dist_err < 0.5) {
-        stop_robot();
-    } else {
-        double steer = best_yaw - my_yaw;
-        while(steer > M_PI) steer -= 2*M_PI;
-        while(steer < -M_PI) steer += 2*M_PI;
-
-        double v_base = (dist_err > 4.0) ? 1.2 : 0.5 * dist_err;
-        cmd.linear.x = std::min(1.2, v_base);
-        cmd.angular.z = 1.8 * steer;
-        if (std::abs(steer) > 0.8) cmd.linear.x = 0.05; 
-    }
-    pub_cmd_->publish(cmd);
-
-    RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000, 
-        "[%s] Dist: %.2fm | Steering: %.2f", my_ns_.c_str(), dist_err, cmd.angular.z);
-  }
-
-  void stop_robot() { pub_cmd_->publish(geometry_msgs::msg::Twist()); }
-
-  std::string my_ns_, my_frame_;
-  skyhunter_msgs::msg::LeaderState last_leader_msg_;
-  std::vector<pcl::PointXYZ> obstacle_points_;
-  rclcpp::Time last_leader_time_;
-  bool has_leader_ = false, has_scan_ = false;
-  rclcpp::Subscription<skyhunter_msgs::msg::LeaderState>::SharedPtr sub_leader_;
-  rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_scan_;
-  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_cmd_;
-  rclcpp::TimerBase::SharedPtr timer_;
-  std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
-  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
-};
-
-int main(int argc, char * argv[]) {
-  rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<RobustFollower>());
-  rclcpp::shutdown();
-  return 0;
-}
 
 
 // //GPT
@@ -636,3 +445,225 @@ int main(int argc, char * argv[]) {
 //   rclcpp::shutdown();
 //   return 0;
 // }
+
+
+
+// workable gemini-r1
+#include <chrono>
+#include <cmath>
+#include <memory>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <omp.h> 
+
+#include "rclcpp/rclcpp.hpp"
+#include "geometry_msgs/msg/twist.hpp"
+#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "skyhunter_msgs/msg/leader_state.hpp"
+#include "tf2/utils.h"
+#include "tf2_ros/buffer.h"
+#include "tf2_ros/transform_listener.h"
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
+#include <pcl_conversions/pcl_conversions.h>
+#include <pcl/point_cloud.h>
+#include <pcl/point_types.h>
+
+using namespace std::chrono_literals;
+
+class RobustFollower : public rclcpp::Node {
+public:
+  RobustFollower() : Node("follower_node") {
+    // --- Parameters ---
+    this->declare_parameter<double>("offset_dist", -2.5);
+    this->declare_parameter<double>("ttc_danger_dist", 4.1); // Requirement: 4.1m
+    this->declare_parameter<double>("blocking_radius", 0.8);
+    
+    tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
+    tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
+
+    std::string ns = std::string(this->get_namespace());
+    if (ns.length() > 1 && ns[0] == '/') ns = ns.substr(1);
+    my_ns_ = ns;
+    my_frame_ = my_ns_ + "/base_footprint";
+
+    auto qos = rclcpp::SensorDataQoS();
+    sub_leader_ = this->create_subscription<skyhunter_msgs::msg::LeaderState>(
+        "/leader_state", qos, std::bind(&RobustFollower::leader_cb, this, std::placeholders::_1));
+    sub_scan_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
+        "scan/points", qos, std::bind(&RobustFollower::scan_cb, this, std::placeholders::_1));
+
+    pub_cmd_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+    timer_ = this->create_wall_timer(50ms, std::bind(&RobustFollower::control_loop, this));
+
+    RCLCPP_INFO(this->get_logger(), "TTC-CONTROLLED Follower [%s] Online.", my_ns_.c_str());
+  }
+
+private:
+  // Check if a map point is blocked
+  bool is_point_blocked(double map_x, double map_y) {
+    if (obstacle_points_.empty()) return false;
+    geometry_msgs::msg::PointStamped p_map, p_local;
+    p_map.header.frame_id = "map";
+    p_map.point.x = map_x; p_map.point.y = map_y;
+    try {
+        auto tf = tf_buffer_->lookupTransform(my_frame_, "map", tf2::TimePointZero);
+        tf2::doTransform(p_map, p_local, tf);
+    } catch (...) { return false; }
+    double r_sq = std::pow(this->get_parameter("blocking_radius").as_double(), 2);
+    for (const auto& obs : obstacle_points_) {
+        double dx = obs.x - p_local.point.x;
+        double dy = obs.y - p_local.point.y;
+        if ((dx*dx + dy*dy) < r_sq) return true; 
+    }
+    return false;
+  }
+
+  void leader_cb(const skyhunter_msgs::msg::LeaderState::SharedPtr msg) {
+    last_leader_msg_ = *msg;
+    has_leader_ = true;
+    last_leader_time_ = this->get_clock()->now();
+  }
+
+  void scan_cb(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
+    pcl::PointCloud<pcl::PointXYZ>::Ptr raw_cloud(new pcl::PointCloud<pcl::PointXYZ>);
+    pcl::fromROSMsg(*msg, *raw_cloud);
+    if (raw_cloud->empty() || !has_leader_) return;
+
+    geometry_msgs::msg::TransformStamped tf_l;
+    try { tf_l = tf_buffer_->lookupTransform(my_frame_, "map", tf2::TimePointZero); } 
+    catch (...) { return; }
+
+    double lx_l = last_leader_msg_.pose.position.x + tf_l.transform.translation.x;
+    double ly_l = last_leader_msg_.pose.position.y + tf_l.transform.translation.y;
+
+    std::vector<pcl::PointXYZ> obs;
+    #pragma omp parallel
+    {
+        std::vector<pcl::PointXYZ> t_pts;
+        #pragma omp for nowait
+        for (size_t i = 0; i < raw_cloud->size(); i += 8) {
+            const auto& p = raw_cloud->points[i];
+            if (p.z < -0.4 || p.z > 0.4) continue;
+            if ((p.x*p.x + p.y*p.y) < 0.25) continue; 
+            if (std::hypot(p.x - lx_l, p.y - ly_l) < 1.2) continue; 
+            t_pts.push_back(p);
+        }
+        #pragma omp critical
+        obs.insert(obs.end(), t_pts.begin(), t_pts.end());
+    }
+    obstacle_points_ = obs;
+    has_scan_ = true;
+  }
+
+  void control_loop() {
+    if (!has_leader_ || !has_scan_) return;
+    if ((this->get_clock()->now() - last_leader_time_).seconds() > 1.5) { stop_robot(); return; }
+
+    // 1. Target Selection (Slicing Logic)
+    double target_x, target_y;
+    if (last_leader_msg_.next_waypoints.size() >= 2) {
+        auto wp1 = last_leader_msg_.next_waypoints[0].position;
+        auto wp2 = last_leader_msg_.next_waypoints[1].position;
+        target_x = is_point_blocked(wp1.x, wp1.y) ? wp2.x : wp1.x;
+        target_y = is_point_blocked(wp1.x, wp1.y) ? wp2.y : wp1.y;
+    } else {
+        double l_yaw = tf2::getYaw(last_leader_msg_.pose.orientation);
+        target_x = last_leader_msg_.pose.position.x + (this->get_parameter("offset_dist").as_double() * cos(l_yaw));
+        target_y = last_leader_msg_.pose.position.y + (this->get_parameter("offset_dist").as_double() * sin(l_yaw));
+    }
+
+    // 2. Localization
+    geometry_msgs::msg::TransformStamped tf_now;
+    try { tf_now = tf_buffer_->lookupTransform("map", my_frame_, tf2::TimePointZero); } catch (...) { return; }
+    double my_x = tf_now.transform.translation.x;
+    double my_y = tf_now.transform.translation.y;
+    double my_yaw = tf2::getYaw(tf_now.transform.rotation);
+
+    double dx = target_x - my_x; double dy = target_y - my_y;
+    double dist_err = std::hypot(dx, dy);
+    double angle_to_target = std::atan2(dy, dx);
+
+    // 3. TTC CALCULATION (Client Rule: 4.1m)
+    // Find the closest obstacle in our current path corridor
+    double min_front_dist = 10.0;
+    for (const auto& p : obstacle_points_) {
+        // If point is in front of us (within 40 degree cone)
+        float angle = std::atan2(p.y, p.x);
+        if (std::abs(angle) < 0.7) { // ~40 deg
+            double d = std::hypot(p.x, p.y);
+            if (d < min_front_dist) min_front_dist = d;
+        }
+    }
+
+    // TTC Speed Multiplier
+    double ttc_limit = this->get_parameter("ttc_danger_dist").as_double();
+    double ttc_scale = 1.0;
+    if (min_front_dist < ttc_limit) {
+        // Scale speed linearly: 4.1m = 100% speed, 1.0m = 20% speed
+        ttc_scale = std::max(0.2, min_front_dist / ttc_limit);
+    }
+
+    // 4. Corridor Sampling (Steering)
+    double best_yaw = my_yaw; double min_score = 9999.0; bool path_found = false;
+    for (double angle = -1.57; angle <= 1.57; angle += 0.15) {
+        double check_yaw = my_yaw + angle;
+        double diff = check_yaw - angle_to_target;
+        while(diff > M_PI) diff -= 2*M_PI; while(diff < -M_PI) diff += 2*M_PI;
+        bool collision = false;
+        for (const auto& p : obstacle_points_) {
+            double px_r = p.x * cos(-angle) - p.y * sin(-angle);
+            double py_r = p.x * sin(-angle) + p.y * cos(-angle);
+            if (px_r > 0.0 && px_r < 3.5 && std::abs(py_r) < 0.6) { collision = true; break; }
+        }
+        if (!collision && std::abs(diff) < min_score) {
+            min_score = std::abs(diff); best_yaw = check_yaw; path_found = true;
+        }
+    }
+
+    // 5. Execution with TTC Scaling
+    geometry_msgs::msg::Twist cmd;
+    double l_vel = std::abs(last_leader_msg_.velocity.linear.x);
+
+    if (dist_err < 0.6) {
+        stop_robot();
+    } else {
+        double steer = best_yaw - my_yaw;
+        while(steer > M_PI) steer -= 2*M_PI; while(steer < -M_PI) steer += 2*M_PI;
+
+        double base_speed = l_vel + (0.3 * dist_err);
+        
+        // --- APPLY TTC SCALE ---
+        cmd.linear.x = std::min(1.1, base_speed) * ttc_scale;
+        
+        cmd.angular.z = 1.8 * steer;
+        if (std::abs(steer) > 0.8) cmd.linear.x = 0.05; 
+    }
+    pub_cmd_->publish(cmd);
+
+    RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000, 
+        "TTC Status: %s | Dist: %.2fm | Speed Scale: %.1f%%", 
+        (ttc_scale < 0.9 ? "BRAKING" : "CLEAR"), min_front_dist, ttc_scale * 100.0);
+  }
+
+  void stop_robot() { pub_cmd_->publish(geometry_msgs::msg::Twist()); }
+
+  std::string my_ns_, my_frame_;
+  skyhunter_msgs::msg::LeaderState last_leader_msg_;
+  std::vector<pcl::PointXYZ> obstacle_points_;
+  rclcpp::Time last_leader_time_;
+  bool has_leader_ = false, has_scan_ = false;
+  rclcpp::Subscription<skyhunter_msgs::msg::LeaderState>::SharedPtr sub_leader_;
+  rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_scan_;
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_cmd_;
+  rclcpp::TimerBase::SharedPtr timer_;
+  std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
+  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
+};
+
+int main(int argc, char * argv[]) {
+  rclcpp::init(argc, argv);
+  rclcpp::spin(std::make_shared<RobustFollower>());
+  rclcpp::shutdown();
+  return 0;
+}
