@@ -1,0 +1,113 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+  - Class: rviz_common/Tool Properties
+    Name: Tool Properties
+
+Visualization Manager:
+  Class: ""
+  Displays:
+    # Grid (1m cells for distance reference)
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 1
+      Plane Cell Count: 50
+      Color: 100; 100; 100
+      Line Style:
+        Value: Lines
+      Reference Frame: map
+
+    # Robot Model
+    - Class: rviz_default_plugins/RobotModel
+      Name: RobotModel
+      Enabled: true
+      Description Topic:
+        Value: /robot_description
+      TF Prefix: ""
+
+    # TF
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: false
+      Frame Timeout: 15
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+
+    # Global Costmap
+    - Class: rviz_default_plugins/Map
+      Name: Global Costmap
+      Enabled: true
+      Topic:
+        Value: /global_costmap/costmap
+      Color Scheme: costmap
+
+    # Local Costmap
+    - Class: rviz_default_plugins/Map
+      Name: Local Costmap
+      Enabled: true
+      Topic:
+        Value: /local_costmap/costmap
+      Color Scheme: costmap
+
+    # Global Plan
+    - Class: rviz_default_plugins/Path
+      Name: Global Plan
+      Enabled: true
+      Topic:
+        Value: /plan
+      Color: 0; 255; 0
+
+    # Local Plan
+    - Class: rviz_default_plugins/Path
+      Name: Local Plan
+      Enabled: true
+      Topic:
+        Value: /local_plan
+      Color: 255; 255; 0
+
+    # 3D PointCloud (LiDAR)
+    - Class: rviz_default_plugins/PointCloud2
+      Name: PointCloud 3D
+      Enabled: true
+      Topic:
+        Value: /scan/points
+      Size (m): 0.03
+
+    # Waypoint Markers (Nav2 panel waypoints)
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Waypoint Markers
+      Enabled: true
+      Topic:
+        Value: /waypoints
+
+    # Goal Pose Marker
+    - Class: rviz_default_plugins/PoseArray
+      Name: Goals
+      Enabled: true
+      Topic:
+        Value: /goal_pose
+
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: map
+    Frame Rate: 30
+
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/PublishPoint
+
+  Views:
+    Current:
+      Class: rviz_default_plugins/ThirdPersonFollower
+      Distance: 20
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Pitch: 0.7
+      Target Frame: base_footprint
+      Yaw: 3.14
