@@ -1,3 +1,357 @@
+# Work only for empty+Obstacle world
+# import os
+# from ament_index_python.packages import get_package_share_directory
+# from launch import LaunchDescription
+# from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, TimerAction, OpaqueFunction
+# from launch.launch_description_sources import PythonLaunchDescriptionSource
+# from launch.substitutions import LaunchConfiguration
+# from launch_ros.actions import Node
+
+# def launch_setup(context, *args, **kwargs):
+#     # --- 1. Setup Paths and Config ---
+#     pkg_tin3_gz_simulation = get_package_share_directory('tin3_gz_simulation')
+#     pkg_tin3_navigation = get_package_share_directory('tin3_navigation')
+    
+#     # Convert LaunchConfiguration to actual Python types
+#     num_robots = int(context.perform_substitution(LaunchConfiguration('num_robots')))
+#     use_sim_time = LaunchConfiguration('use_sim_time')
+
+#     nodes_to_start = []
+
+#     # ====================================================
+#     # 1. WORLD & LEADER (Always Global Namespace)
+#     # ====================================================
+#     sim_launch = IncludeLaunchDescription(
+#         PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, 'launch', 'sim.launch.py')),
+#         launch_arguments={'num_robots': '1', 'lidar_mode': 'full', 'use_sim_time': use_sim_time}.items()
+#     )
+#     nodes_to_start.append(sim_launch)
+
+#     nav2_launch = IncludeLaunchDescription(
+#         PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
+#         launch_arguments={'use_sim_time': use_sim_time, 'autostart': 'true'}.items()
+#     )
+#     nodes_to_start.append(nav2_launch)
+
+#     leader_node = Node(
+#         package='skyhunter_formation', executable='leader_node',
+#         output='screen', parameters=[{'use_sim_time': True}],
+#         remappings=[('odom', '/odom'), ('leader_state', '/leader_state')]
+#     )
+#     nodes_to_start.append(leader_node)
+
+#     # ====================================================
+#     # 2. DYNAMIC FOLLOWERS (Robot 02 to Robot N)
+#     # ====================================================
+#     # We loop from 2 up to num_robots
+#     for i in range(2, num_robots + 1):
+#         follower_ns = f'robot_{i:02d}'
+        
+#         # Calculate a V-Shape Formation position for spawning
+#         # Robot 2: (-2, 2), Robot 3: (-2, -2), Robot 4: (-4, 4), etc.
+#         row = i // 2
+#         side = 1 if i % 2 == 0 else -1
+#         spawn_x = -2.5 * row
+#         spawn_y = 2.5 * side
+        
+#         # Calculate Following Offset (where they should be while moving)
+#         # We want them in a V-shape behind the leader
+#         off_x = -3.0 * row
+#         off_y = 2.0 * side
+
+#         # Stagger the spawn delay so Gazebo doesn't crash (2 seconds between robots)
+#         delay = float(i) * 2.0 + 5.0
+
+#         follower_action = TimerAction(
+#             period=delay,
+#             actions=[
+#                 # A. Spawn Robot Model
+#                 IncludeLaunchDescription(
+#                     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, "launch", "spawn_robot.launch.py")),
+#                     launch_arguments={
+#                         "robot_ns": follower_ns,
+#                         "pose": f"{spawn_x} {spawn_y} 0.1 0 0 0",
+#                         "use_sim_time": use_sim_time,
+#                         "lidar_mode": "half",
+#                         "use_ekf": "true"
+#                     }.items(),
+#                 ),
+
+#                 # B. Map Link (map -> robot_XX/odom)
+#                 Node(
+#                     package='tf2_ros', executable='static_transform_publisher',
+#                     name=f'link_{follower_ns}',
+#                     arguments=['0', '0', '0', '0', '0', '0', 'map', f'{follower_ns}/odom'],
+#                     parameters=[{'use_sim_time': True}]
+#                 ),
+
+#                 # C. Follower Node (The Brain)
+#                 Node(
+#                     package='skyhunter_formation',
+#                     executable='follower_node',
+#                     namespace=follower_ns,
+#                     output='screen',
+#                     parameters=[{
+#                         'use_sim_time': True,
+#                         'offset_dist': float(off_x), # Note: using offset_dist from your robust C++
+#                         'leader_topic': '/leader_state'
+#                     }],
+#                     remappings=[
+#                         ('scan/points', f'/{follower_ns}/scan/points'), 
+#                         ('cmd_vel', f'/{follower_ns}/cmd_vel'),
+#                         # ('odom', f'/{follower_ns}/odom'),
+#                         ('odom', f'/{follower_ns}/odometry/filtered'), 
+#                         ('leader_state', '/leader_state'),
+#                         ('/tf', '/tf'),
+#                         ('/tf_static', '/tf_static')
+#                     ]
+#                 )
+#             ]
+#         )
+#         nodes_to_start.append(follower_action)
+
+#     goal_sender_node = Node(
+#         package='skyhunter_nav_tools',
+#         executable='waypoint_sender',
+#         name='waypoint_sender',
+#         output='screen',
+#         parameters=[{'use_sim_time': use_sim_time}],
+#     )
+
+
+#     nodes_to_start.append(goal_sender_node)
+
+#     return nodes_to_start
+
+# def generate_launch_description():
+#     return LaunchDescription([
+#         DeclareLaunchArgument('num_robots', default_value='2', description='Total robots (Leader + Followers)'),
+#         DeclareLaunchArgument('use_sim_time', default_value='true'),
+#         OpaqueFunction(function=launch_setup)
+#     ])
+
+
+
+
+
+### work all world + v-shape + lateral_offset - 02-19
+# import os
+# from ament_index_python.packages import get_package_share_directory
+# from launch import LaunchDescription
+# from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, TimerAction, OpaqueFunction
+# from launch.launch_description_sources import PythonLaunchDescriptionSource
+# from launch.substitutions import LaunchConfiguration
+# from launch_ros.actions import Node
+# import math
+
+# def launch_setup(context, *args, **kwargs):
+#     # --- 1. Setup Paths and Config ---
+#     pkg_tin3_gz_simulation = get_package_share_directory('tin3_gz_simulation')
+#     pkg_tin3_navigation = get_package_share_directory('tin3_navigation')
+    
+#     num_robots = int(context.perform_substitution(LaunchConfiguration('num_robots')))
+#     use_sim_time = LaunchConfiguration('use_sim_time')
+#     world_file = context.perform_substitution(LaunchConfiguration('world'))
+    
+#     # --- 2. AUTOMATIC WORLD DETECTION ---
+#     # Get the pose string from the launch argument
+#     pose_str = context.perform_substitution(LaunchConfiguration('pose'))
+    
+#     # Logic: If world is Route 66 and the user didn't provide a custom pose, 
+#     # we automatically use the Route 66 starting point.
+#     if 'route_66' in world_file and pose_str == '0.0 0.0 0.5 0.0 0.0 0.0':
+#         pose_str = "2445.0 293.5 55.0 0 0 -3.023"
+#         print(f"[INFO] Route 66 detected. Auto-setting pose to: {pose_str}")
+
+#     # Parse the final pose string
+#     pose_parts = pose_str.split()
+#     b_x = float(pose_parts[0])
+#     b_y = float(pose_parts[1])
+#     b_z = float(pose_parts[2])
+#     b_yaw = float(pose_parts[5]) if len(pose_parts) > 5 else 0.0
+
+#     nodes_to_start = []
+
+#     # ====================================================
+#     # 1. WORLD & LEADER (Always Global Namespace)
+#     # ====================================================
+#     sim_launch = IncludeLaunchDescription(
+#         PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, 'launch', 'sim.launch.py')),
+#         launch_arguments={
+#             'num_robots': '1', 
+#             'lidar_mode': 'half', 
+#             'use_sim_time': use_sim_time,
+#             'world': world_file,
+#             'pose': pose_str 
+#         }.items()
+#     )
+#     nodes_to_start.append(sim_launch)
+
+#     nav2_launch = IncludeLaunchDescription(
+#         PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
+#         launch_arguments={'use_sim_time': use_sim_time, 'autostart': 'true'}.items()
+#     )
+#     nodes_to_start.append(nav2_launch)
+
+#     leader_node = Node(
+#         package='skyhunter_formation', executable='leader_node',
+#         output='screen', parameters=[{'use_sim_time': True}],
+#         remappings=[('odom', '/odom'), ('leader_state', '/leader_state')]
+#     )
+#     nodes_to_start.append(leader_node)
+
+#     # ====================================================
+#     # 2. DYNAMIC FOLLOWERS
+#     # ====================================================
+#     # FULL WORKABLE
+#     # for i in range(2, num_robots + 1):
+#     #     follower_ns = f'robot_{i:02d}'
+#     #     row = i // 2
+#     #     side = 1 if i % 2 == 0 else -1
+
+#     #     # --- TIGHTER SPAWN MATH ---
+#     #     # Spawning: 2.5m behind each row, 2.0m lateral width
+#     #     dist_behind = -2.0 * row 
+#     #     dist_side = 2.0 * side
+        
+#     #     spawn_x = b_x + (dist_behind * math.cos(b_yaw) - dist_side * math.sin(b_yaw))
+#     #     spawn_y = b_y + (dist_behind * math.sin(b_yaw) + dist_side * math.cos(b_yaw))
+        
+#     #     # --- DRIVING OFFSETS ---
+#     #     drive_off_back = -3.0 * row  # 3m behind leader path
+#     #     drive_off_side = 2.5 * side  # 2.5m to the left/right of the path
+
+#     #     follower_action = TimerAction(
+#     #         period=float(i) * 1.5 + 4.0,
+#     #         actions=[
+#     #             IncludeLaunchDescription(
+#     #                 PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, "launch", "spawn_robot.launch.py")),
+#     #                 launch_arguments={
+#     #                     "robot_ns": follower_ns,
+#     #                     "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}", # Lower drop
+#     #                     "use_sim_time": use_sim_time,
+#     #                     "lidar_mode": "half", # Use LOW for 7 robots to prevent CPU lag
+#     #                     "use_ekf": "true"
+#     #                 }.items(),
+#     #             ),
+#     #             Node(
+#     #                 package='tf2_ros', executable='static_transform_publisher',
+#     #                 name=f'link_{follower_ns}',
+#     #                 arguments=['0', '0', '0', '0', '0', '0', 'map', f'{follower_ns}/odom'],
+#     #                 parameters=[{'use_sim_time': True}]
+#     #             ),
+#     #             Node(
+#     #                 package='skyhunter_formation',
+#     #                 executable='follower_node',
+#     #                 namespace=follower_ns,
+#     #                 output='screen',
+#     #                 parameters=[{
+#     #                     'use_sim_time': True,
+#     #                     'offset_dist': float(drive_off_back),
+#     #                     'offset_lateral': float(drive_off_side), 
+#     #                     'leader_topic': '/leader_state'
+#     #                 }],
+#     #                 remappings=[
+#     #                     ('scan/points', f'/{follower_ns}/scan/points'), 
+#     #                     ('cmd_vel', f'/{follower_ns}/cmd_vel'),
+#     #                     ('odom', f'/{follower_ns}/odom_filtered'), 
+#     #                     ('leader_state', '/leader_state'),
+#     #                     ('/tf', '/tf'),
+#     #                     ('/tf_static', '/tf_static')
+#     #                 ]
+#     #             )
+#     #         ]
+#     #     )
+#     for i in range(2, num_robots + 1):
+#         follower_ns = f'robot_{i:02d}'
+#         row = i // 2
+#         side = 1 if i % 2 == 0 else -1
+
+#         spawn_dist_back = -2.5 * row 
+#         spawn_dist_side = 1.5 * side
+#         spawn_x = b_x + (spawn_dist_back * math.cos(b_yaw) - spawn_dist_side * math.sin(b_yaw))
+#         spawn_y = b_y + (spawn_dist_back * math.sin(b_yaw) + spawn_dist_side * math.cos(b_yaw))
+        
+#         # Driving Offsets (The C++ parameters)
+#         # Tight tactical spacing
+#         drive_off_back = -3.0 * row  # 3m behind for first row
+#         drive_off_side = 1.5 * side  # 1.5m to the side
+
+#         follower_action = TimerAction(
+#             period=float(i) * 1.5 + 4.0,
+#             actions=[
+#                 IncludeLaunchDescription(
+#                     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, "launch", "spawn_robot.launch.py")),
+#                     launch_arguments={
+#                         "robot_ns": follower_ns,
+#                         "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}", # Lower drop
+#                         "use_sim_time": use_sim_time,
+#                         "lidar_mode": "half", # Use LOW for 7 robots to prevent CPU lag
+#                         "use_ekf": "true"
+#                     }.items(),
+#                 ),
+#                 Node(
+#                     package='tf2_ros', executable='static_transform_publisher',
+#                     name=f'link_{follower_ns}',
+#                     arguments=['0', '0', '0', '0', '0', '0', 'map', f'{follower_ns}/odom'],
+#                     parameters=[{'use_sim_time': True}]
+#                 ),
+#                 Node(
+#                     package='skyhunter_formation',
+#                     executable='follower_node',
+#                     namespace=follower_ns,
+#                     output='screen',
+#                     parameters=[{
+#                         'use_sim_time': True,
+#                         'offset_dist': float(drive_off_back),
+#                         'offset_lateral': float(drive_off_side), 
+#                         'leader_topic': '/leader_state'
+#                     }],
+#                     remappings=[
+#                         ('scan/points', f'/{follower_ns}/scan/points'), 
+#                         ('cmd_vel', f'/{follower_ns}/cmd_vel'),
+#                         ('odom', f'/{follower_ns}/odom_filtered'), 
+#                         ('leader_state', '/leader_state'),
+#                         ('/tf', '/tf'),
+#                         ('/tf_static', '/tf_static')
+#                     ]
+#                 )
+#             ]
+#         )
+#         nodes_to_start.append(follower_action)
+
+#     # 3. GOAL SENDER
+#     nodes_to_start.append(Node(
+#         package='skyhunter_nav_tools', executable='waypoint_sender',
+#         output='screen', parameters=[{'use_sim_time': use_sim_time}]
+#     ))
+
+#     return nodes_to_start
+
+# def generate_launch_description():
+#     return LaunchDescription([
+#         DeclareLaunchArgument('num_robots', default_value='1'),
+#         DeclareLaunchArgument('use_sim_time', default_value='true'),
+#         # Set default world to obstacle world
+#         DeclareLaunchArgument('world', default_value='obstacle_world.sdf'),
+#         # Set default pose to 0,0,0.5
+#         DeclareLaunchArgument('pose', default_value='0.0 0.0 0.5 0.0 0.0 0.0'),
+#         OpaqueFunction(function=launch_setup)
+#     ])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -5,126 +359,139 @@ from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, Time
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+import math
 
 def launch_setup(context, *args, **kwargs):
     # --- 1. Setup Paths and Config ---
     pkg_tin3_gz_simulation = get_package_share_directory('tin3_gz_simulation')
     pkg_tin3_navigation = get_package_share_directory('tin3_navigation')
     
-    # Convert LaunchConfiguration to actual Python types
     num_robots = int(context.perform_substitution(LaunchConfiguration('num_robots')))
     use_sim_time = LaunchConfiguration('use_sim_time')
+    world_file = context.perform_substitution(LaunchConfiguration('world'))
+    
+    # --- 2. AUTOMATIC WORLD DETECTION ---
+    pose_str = context.perform_substitution(LaunchConfiguration('pose'))
+    
+    # Auto-setting Route 66 coordinates if world is selected
+    if 'route_66' in world_file and pose_str == '0.0 0.0 0.5 0.0 0.0 0.0':
+        pose_str = "2445.0 293.5 53.2 0 0 -3.023"
+        print(f"[INFO] Route 66 detected. Auto-setting pose to: {pose_str}")
+
+    pose_parts = pose_str.split()
+    b_x = float(pose_parts[0])
+    b_y = float(pose_parts[1])
+    b_z = float(pose_parts[2])
+    b_yaw = float(pose_parts[5]) if len(pose_parts) > 5 else 0.0
 
     nodes_to_start = []
 
     # ====================================================
-    # 1. WORLD & LEADER (Always Global Namespace)
+    # SECTION 1: THE LEADER (Global Namespace for Stability)
     # ====================================================
-    sim_launch = IncludeLaunchDescription(
+    # Sim + Robot 1
+    nodes_to_start.append(IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, 'launch', 'sim.launch.py')),
-        launch_arguments={'num_robots': '1', 'lidar_mode': 'half', 'use_sim_time': use_sim_time}.items()
-    )
-    nodes_to_start.append(sim_launch)
+        launch_arguments={
+            'num_robots': '1', 
+            'lidar_mode': 'half', 
+            'use_sim_time': use_sim_time,
+            'world': world_file,
+            'pose': pose_str 
+        }.items()
+    ))
 
-    nav2_launch = IncludeLaunchDescription(
+    # Nav2 (The Brain)
+    nodes_to_start.append(IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
         launch_arguments={'use_sim_time': use_sim_time, 'autostart': 'true'}.items()
-    )
-    nodes_to_start.append(nav2_launch)
+    ))
 
-    leader_node = Node(
+    # Leader Node (Global)
+    nodes_to_start.append(Node(
         package='skyhunter_formation', executable='leader_node',
         output='screen', parameters=[{'use_sim_time': True}],
         remappings=[('odom', '/odom'), ('leader_state', '/leader_state')]
-    )
-    nodes_to_start.append(leader_node)
+    ))
 
     # ====================================================
-    # 2. DYNAMIC FOLLOWERS (Robot 02 to Robot N)
+    # SECTION 2: DYNAMIC FOLLOWERS (SH_02 TO SH_07)
     # ====================================================
-    # We loop from 2 up to num_robots
+    # We loop to create a 7-unit swarm total
     for i in range(2, num_robots + 1):
-        follower_ns = f'robot_{i:02d}'
+        follower_ns = f'SH_{i:02d}' # SH_02, SH_03...
         
-        # Calculate a V-Shape Formation position for spawning
-        # Robot 2: (-2, 2), Robot 3: (-2, -2), Robot 4: (-4, 4), etc.
         row = i // 2
         side = 1 if i % 2 == 0 else -1
-        spawn_x = -2.5 * row
-        spawn_y = 2.5 * side
-        
-        # Calculate Following Offset (where they should be while moving)
-        # We want them in a V-shape behind the leader
-        off_x = -3.0 * row
-        off_y = 2.0 * side
 
-        # Stagger the spawn delay so Gazebo doesn't crash (2 seconds between robots)
-        delay = float(i) * 2.0 + 5.0
+        # Spawning coordinates
+        spawn_dist_back = -2.5 * row 
+        spawn_dist_side = 1.5 * side
+        spawn_x = b_x + (spawn_dist_back * math.cos(b_yaw) - spawn_dist_side * math.sin(b_yaw))
+        spawn_y = b_y + (spawn_dist_back * math.sin(b_yaw) + spawn_dist_side * math.cos(b_yaw))
+        
+        # Driving Formation Offsets
+        off_dist = -3.0 * row  # Distance behind Leader path
+        off_side = 1.2 * side  # Lateral offset (V-Shape)
+
+        # STAGGERED SPAWN (5s Delay to prevent CPU crash)
+        delay = float(i) * 5.0 
 
         follower_action = TimerAction(
             period=delay,
             actions=[
-                # A. Spawn Robot Model
+                # A. Spawn physical model in namespace SH_02...
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, "launch", "spawn_robot.launch.py")),
                     launch_arguments={
                         "robot_ns": follower_ns,
-                        "pose": f"{spawn_x} {spawn_y} 0.1 0 0 0",
+                        "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}",
                         "use_sim_time": use_sim_time,
-                        "lidar_mode": "half",
+                        "lidar_mode": "low", # Low density for followers saves CPU
                         "use_ekf": "true"
                     }.items(),
                 ),
-
-                # B. Map Link (map -> robot_XX/odom)
+                # B. Static TF link (map -> SH_02/odom)
                 Node(
                     package='tf2_ros', executable='static_transform_publisher',
                     name=f'link_{follower_ns}',
                     arguments=['0', '0', '0', '0', '0', '0', 'map', f'{follower_ns}/odom'],
                     parameters=[{'use_sim_time': True}]
                 ),
-
-                # C. Follower Node (The Brain)
+                # C. Follower Node
                 Node(
-                    package='skyhunter_formation',
-                    executable='follower_node',
-                    namespace=follower_ns,
-                    output='screen',
+                    package='skyhunter_formation', executable='follower_node',
+                    namespace=follower_ns, output='screen',
                     parameters=[{
-                        'use_sim_time': True,
-                        'offset_dist': float(off_x), # Note: using offset_dist from your robust C++
-                        'leader_topic': '/leader_state'
+                        'use_sim_time': True, 
+                        'offset_dist': float(off_dist),
+                        'offset_lateral': float(off_side) 
                     }],
                     remappings=[
                         ('scan/points', f'/{follower_ns}/scan/points'), 
                         ('cmd_vel', f'/{follower_ns}/cmd_vel'),
-                        # ('odom', f'/{follower_ns}/odom'),
-                        ('odom', f'/{follower_ns}/odometry/filtered'), 
+                        ('odom', f'/{follower_ns}/odom_filtered'), 
                         ('leader_state', '/leader_state'),
-                        ('/tf', '/tf'),
-                        ('/tf_static', '/tf_static')
+                        ('/tf', '/tf'), ('/tf_static', '/tf_static')
                     ]
                 )
             ]
         )
         nodes_to_start.append(follower_action)
 
-    goal_sender_node = Node(
-        package='skyhunter_nav_tools',
-        executable='waypoint_sender',
-        name='waypoint_sender',
-        output='screen',
-        parameters=[{'use_sim_time': use_sim_time}],
-    )
-
-
-    nodes_to_start.append(goal_sender_node)
+    # SECTION 3: GOAL SENDER
+    nodes_to_start.append(Node(
+        package='skyhunter_nav_tools', executable='waypoint_sender',
+        output='screen', parameters=[{'use_sim_time': use_sim_time}]
+    ))
 
     return nodes_to_start
 
 def generate_launch_description():
     return LaunchDescription([
-        DeclareLaunchArgument('num_robots', default_value='2', description='Total robots (Leader + Followers)'),
+        DeclareLaunchArgument('num_robots', default_value='2'),
         DeclareLaunchArgument('use_sim_time', default_value='true'),
+        DeclareLaunchArgument('world', default_value='obstacle_world.sdf'),
+        DeclareLaunchArgument('pose', default_value='0.0 0.0 0.5 0.0 0.0 0.0'),
         OpaqueFunction(function=launch_setup)
     ])
