@@ -41,6 +41,21 @@ ament_target_dependencies(leader_node
   nav_msgs
   skyhunter_msgs
   visualization_msgs
+  sensor_msgs
+  pcl_conversions
+  grid_map_core    # <--- ADD THIS
+  grid_map_ros     # <--- ADD THIS
+)
+
+# Link PCL and Grid Map libraries
+target_link_libraries(leader_node 
+  ${PCL_LIBRARIES}
+)
+
+# Ensure Grid Map include directories are visible
+target_include_directories(leader_node PUBLIC 
+  ${grid_map_core_INCLUDE_DIRS}
+  ${grid_map_ros_INCLUDE_DIRS}
 )
 
 # ==========================

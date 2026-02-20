@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'waypoint_sender = skyhunter_nav_tools.waypoint_sender:main',
+            'formation_switcher = skyhunter_nav_tools.formation_switcher:main',
         ],
     },
 )
