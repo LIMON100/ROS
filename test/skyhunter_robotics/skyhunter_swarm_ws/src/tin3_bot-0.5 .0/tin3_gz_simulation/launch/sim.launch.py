@@ -131,7 +131,7 @@ def generate_launch_description():
    
     world_arg = DeclareLaunchArgument(
         "world",
-        default_value=os.path.join(pkg_tin3_gz_worlds, "worlds", "obstacle_world.sdf"),
+        default_value=os.path.join(pkg_tin3_gz_worlds, "worlds", "empty_world.sdf"),
         description="World file path",
     )
 
@@ -170,8 +170,8 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, "launch", "gz_sim.launch.py")
         ),
-        launch_arguments={"gz_args": LaunchConfiguration("world")}.items(),
-        # launch_arguments={"gz_args": [LaunchConfiguration("world"), " -r"]}.items(),
+        # launch_arguments={"gz_args": LaunchConfiguration("world")}.items(),
+        launch_arguments={"gz_args": [LaunchConfiguration("world"), " -r"]}.items(),
     )
 
     # ==================== Clock Bridge ====================

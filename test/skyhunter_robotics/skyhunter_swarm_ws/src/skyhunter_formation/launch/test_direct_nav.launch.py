@@ -438,7 +438,8 @@ def launch_setup(context, *args, **kwargs):
         delay = float(i) * 5.0 
 
         follower_action = TimerAction(
-            period=delay,
+            # period=delay,
+            period=float(i) * 1.5 + 4.0,
             actions=[
                 # A. Spawn physical model in namespace SH_02...
                 IncludeLaunchDescription(
@@ -447,7 +448,7 @@ def launch_setup(context, *args, **kwargs):
                         "robot_ns": follower_ns,
                         "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}",
                         "use_sim_time": use_sim_time,
-                        "lidar_mode": "low", # Low density for followers saves CPU
+                        "lidar_mode": "half", # Low density for followers saves CPU
                         "use_ekf": "true"
                     }.items(),
                 ),
@@ -484,6 +485,13 @@ def launch_setup(context, *args, **kwargs):
         package='skyhunter_nav_tools', executable='waypoint_sender',
         output='screen', parameters=[{'use_sim_time': use_sim_time}]
     ))
+    swarm_monitor_node = Node(
+        package='skyhunter_formation',
+        executable='swarm_monitor_node',
+        output='screen',
+        parameters=[{'use_sim_time': True}]
+    )
+    nodes_to_start.append(swarm_monitor_node)
 
     return nodes_to_start
 

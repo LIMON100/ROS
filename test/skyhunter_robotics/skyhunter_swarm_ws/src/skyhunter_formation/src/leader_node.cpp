@@ -5,83 +5,85 @@
 // #include <cmath>
 // #include <limits>
 // #include <vector>
+// #include <numeric>
 
 // #include "rclcpp/rclcpp.hpp"
 // #include "nav_msgs/msg/odometry.hpp"
 // #include "nav_msgs/msg/path.hpp"
 // #include "skyhunter_msgs/msg/leader_state.hpp"
 // #include "geometry_msgs/msg/pose.hpp"
-// #include "visualization_msgs/msg/marker_array.hpp" 
+// #include "visualization_msgs/msg/marker_array.hpp"
+
+// #include "std_msgs/msg/int8.hpp"
 
 // using namespace std::chrono_literals;
+
+// // State Constants
+// const int8_t STATE_NAVIGATING = 0;
+// const int8_t STATE_GOAL_REACHED = 1;
+// const int8_t STATE_TRANSITIONING = 2;
 
 // class LeaderNode : public rclcpp::Node
 // {
 // public:
-//   LeaderNode()
-//   : Node("leader_node")
+//   LeaderNode() : Node("leader_node")
 //   {
-//     // --- Parameters ---
-//     this->declare_parameter<std::string>("leader_state_topic", "leader_state");
-//     this->declare_parameter<std::string>("odom_topic", "odom");
-//     this->declare_parameter<std::string>("plan_topic", "plan");
-    
-//     this->declare_parameter<double>("lookahead_dist_1", 2.0); 
-//     this->declare_parameter<double>("lookahead_dist_2", 4.0); 
+//     this->declare_parameter<double>("waypoint_spacing", 10.0);
+//     this->declare_parameter<std::string>("map_frame", "map");
 
-//     std::string state_topic = this->get_parameter("leader_state_topic").as_string();
-//     std::string odom_topic = this->get_parameter("odom_topic").as_string();
-//     std::string plan_topic = this->get_parameter("plan_topic").as_string();
+//     spacing_config_ = this->get_parameter("waypoint_spacing").as_double();
+//     map_frame_ = this->get_parameter("map_frame").as_string();
 
-//     lookahead_dist_1_ = this->get_parameter("lookahead_dist_1").as_double();
-//     lookahead_dist_2_ = this->get_parameter("lookahead_dist_2").as_double();
-
-//     // --- Publishers & Subscribers ---
-//     auto qos_best_effort = rclcpp::SensorDataQoS();
-//     auto qos_reliable = rclcpp::QoS(rclcpp::KeepLast(1)).reliable();
-
-//     publisher_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>(state_topic, 10);
-    
-//     // NEW: Debug Publisher for RViz
+//     publisher_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("/leader_state", 10);
 //     viz_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("leader_waypoints_viz", 10);
 
 //     sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
-//       odom_topic, qos_best_effort, std::bind(&LeaderNode::odom_callback, this, std::placeholders::_1));
+//       "odom", rclcpp::SensorDataQoS(), std::bind(&LeaderNode::odom_callback, this, std::placeholders::_1));
 
 //     sub_plan_ = this->create_subscription<nav_msgs::msg::Path>(
-//       plan_topic, qos_reliable, std::bind(&LeaderNode::plan_callback, this, std::placeholders::_1));
+//       "plan", rclcpp::QoS(10).reliable(), std::bind(&LeaderNode::plan_callback, this, std::placeholders::_1));
 
-//     timer_ = this->create_wall_timer(
-//       50ms, std::bind(&LeaderNode::timer_callback, this));
+//     // --- ADD THIS BLOCK HERE ---
+//     sub_form_cmd_ = this->create_subscription<std_msgs::msg::Int8>(
+//       "/swarm/formation_command", 10, 
+//       [this](const std_msgs::msg::Int8::SharedPtr msg) {
+//         this->cmd_formation_type_ = msg->data;
+//         RCLCPP_INFO(this->get_logger(), "COMMAND RECEIVED: Switching Swarm to Mode %d", msg->data);
+//       });
+//     // ----------------------------
 
-//     RCLCPP_INFO(this->get_logger(), "Leader Node Active with Visualization.");
+//     timer_ = this->create_wall_timer(100ms, std::bind(&LeaderNode::timer_callback, this));
+
+//     RCLCPP_INFO(this->get_logger(), "Tactical Leader [Phase 1 Instrumentation] Online.");
 //   }
 
 // private:
-//   void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
-//     latest_odom_ = *msg;
-//     has_odom_ = true;
-//   }
+//   int8_t cmd_formation_type_ = 0;
+//   rclcpp::Subscription<std_msgs::msg::Int8>::SharedPtr sub_form_cmd_;
+//   void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg) { latest_odom_ = *msg; has_odom_ = true; }
+//   void plan_callback(const nav_msgs::msg::Path::SharedPtr msg) { latest_path_ = *msg; has_path_ = true; }
 
-//   void plan_callback(const nav_msgs::msg::Path::SharedPtr msg) {
-//     latest_path_ = *msg;
-//     has_path_ = true;
-//   }
-
-//   double get_distance(const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2) {
-//     return std::hypot(p1.x - p2.x, p1.y - p2.y);
-//   }
-
-//   bool get_lookahead_point(double target_dist, size_t start_idx, geometry_msgs::msg::Pose& out_pose) {
-//     if (!has_path_ || latest_path_.poses.empty()) return false;
-//     for (size_t i = start_idx; i < latest_path_.poses.size(); ++i) {
-//         double d = get_distance(latest_odom_.pose.pose.position, latest_path_.poses[i].pose.position);
-//         if (d >= target_dist) {
-//             out_pose = latest_path_.poses[i].pose;
-//             return true;
-//         }
+//   // Helper to calculate distance remaining from a specific index on the path to the end
+//   double calculate_remaining_dist(size_t start_idx) {
+//     if (!has_path_ || start_idx >= latest_path_.poses.size() - 1) return 0.0;
+//     double dist = 0.0;
+//     for (size_t i = start_idx; i < latest_path_.poses.size() - 1; ++i) {
+//       dist += std::hypot(latest_path_.poses[i+1].pose.position.x - latest_path_.poses[i].pose.position.x,
+//                          latest_path_.poses[i+1].pose.position.y - latest_path_.poses[i].pose.position.y);
 //     }
-//     out_pose = latest_path_.poses.back().pose; // End of path
+//     return dist;
+//   }
+
+//   bool get_waypoint_at_dist(double target_m, size_t start_idx, geometry_msgs::msg::Pose& out_pose, size_t& out_idx) {
+//     if (!has_path_ || latest_path_.poses.size() < 2) return false;
+//     double acc = 0.0;
+//     for (size_t i = start_idx; i < latest_path_.poses.size() - 1; ++i) {
+//       acc += std::hypot(latest_path_.poses[i+1].pose.position.x - latest_path_.poses[i].pose.position.x,
+//                         latest_path_.poses[i+1].pose.position.y - latest_path_.poses[i].pose.position.y);
+//       if (acc >= target_m) { out_pose = latest_path_.poses[i+1].pose; out_idx = i + 1; return true; }
+//     }
+//     out_pose = latest_path_.poses.back().pose;
+//     out_idx = latest_path_.poses.size() - 1;
 //     return true;
 //   }
 
@@ -89,83 +91,92 @@
 //   {
 //     if (!has_odom_) return;
 
-//     auto message = skyhunter_msgs::msg::LeaderState();
-//     message.header.stamp = latest_odom_.header.stamp;
-//     message.header.frame_id = "map"; 
-//     message.pose = latest_odom_.pose.pose;
-//     message.velocity = latest_odom_.twist.twist;
+//     // Detect State
+//     double vel = std::abs(latest_odom_.twist.twist.linear.x);
+//     if (vel > 0.1) current_state_ = STATE_NAVIGATING;
+//     else if (has_path_ && calculate_remaining_dist(0) < 0.5) current_state_ = STATE_GOAL_REACHED;
+//     else current_state_ = STATE_TRANSITIONING;
 
-//     // Visualization Array
+//     auto state_msg = skyhunter_msgs::msg::LeaderState();
+//     state_msg.formation_type = cmd_formation_type_;
+//     state_msg.header.stamp = this->get_clock()->now();
+//     state_msg.pose = latest_odom_.pose.pose;
+//     state_msg.velocity = latest_odom_.twist.twist;
+//     state_msg.swarm_state = current_state_;
+
 //     visualization_msgs::msg::MarkerArray markers;
 
 //     if (has_path_ && !latest_path_.poses.empty()) {
-//         size_t closest_idx = 0;
-//         double min_dist = std::numeric_limits<double>::max();
-
-//         // Find closest point on path
+//         // Find closest point
+//         size_t closest_idx = 0; double min_d = 1e9;
 //         for (size_t i = 0; i < latest_path_.poses.size(); ++i) {
-//             double d = get_distance(latest_odom_.pose.pose.position, latest_path_.poses[i].pose.position);
-//             if (d < min_dist) { min_dist = d; closest_idx = i; }
+//             double d = std::hypot(latest_odom_.pose.pose.position.x - latest_path_.poses[i].pose.position.x,
+//                                   latest_odom_.pose.pose.position.y - latest_path_.poses[i].pose.position.y);
+//             if (d < min_d) { min_d = d; closest_idx = i; }
 //         }
+
+//         double remaining = calculate_remaining_dist(closest_idx);
+        
+//         // CLIENT REQUIREMENT: Clamp spacing to min(10m, remaining - 2m)
+//         double tactical_spacing = std::min(spacing_config_, std::max(0.0, remaining - 2.0));
 
 //         geometry_msgs::msg::Pose wp1, wp2;
+//         size_t wp1_idx, wp2_idx;
         
-//         // --- WAYPOINT 1 (Blue) ---
-//         if (get_lookahead_point(lookahead_dist_1_, closest_idx, wp1)) {
-//             message.next_waypoints.push_back(wp1);
-//             markers.markers.push_back(create_marker(0, wp1, 1.0, 0.0, 0.0)); // Blue
+//         if (get_waypoint_at_dist(tactical_spacing, closest_idx, wp1, wp1_idx)) {
+//             state_msg.next_waypoints.push_back(wp1);
+//             markers.markers.push_back(create_marker(0, wp1, 0.0, 0.0, 1.0)); // Blue
+            
+//             if (get_waypoint_at_dist(tactical_spacing, wp1_idx, wp2, wp2_idx)) {
+//                 state_msg.next_waypoints.push_back(wp2);
+//                 markers.markers.push_back(create_marker(1, wp2, 1.0, 0.0, 0.0)); // Red
+//             }
 //         }
 
-//         // --- WAYPOINT 2 (Red) ---
-//         if (get_lookahead_point(lookahead_dist_2_, closest_idx, wp2)) {
-//             message.next_waypoints.push_back(wp2);
-//             markers.markers.push_back(create_marker(1, wp2, 0.0, 1.0, 0.0)); // Red (Green actually, RGB: 0,1,0)
+//         // CLIENT REQUIREMENT: Debug Logging
+//         if (state_msg.next_waypoints.size() >= 2) {
+//             RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
+//                 "[DEBUG] State: %d | RemainingPath: %.2fm | WP1: (%.1f, %.1f) | WP2: (%.1f, %.1f)",
+//                 current_state_, remaining, wp1.position.x, wp1.position.y, wp2.position.x, wp2.position.y);
 //         }
 //     }
 
-//     // Publish State and Markers
-//     publisher_->publish(message);
+//     publisher_->publish(state_msg);
 //     viz_pub_->publish(markers);
 //   }
 
 //   visualization_msgs::msg::Marker create_marker(int id, geometry_msgs::msg::Pose pose, float r, float g, float b) {
-//       visualization_msgs::msg::Marker marker;
-//       marker.header.frame_id = "map";
-//       marker.header.stamp = this->get_clock()->now();
-//       marker.ns = "leader_lookahead";
-//       marker.id = id;
-//       marker.type = visualization_msgs::msg::Marker::SPHERE;
-//       marker.action = visualization_msgs::msg::Marker::ADD;
-//       marker.pose = pose;
-//       marker.scale.x = 0.5; marker.scale.y = 0.5; marker.scale.z = 0.5; // 0.5m size
-//       marker.color.a = 1.0; marker.color.r = r; marker.color.g = g; marker.color.b = b;
-//       return marker;
+//     visualization_msgs::msg::Marker m;
+//     m.header.frame_id = map_frame_; m.header.stamp = this->get_clock()->now();
+//     m.ns = "tactical_wp"; m.id = id; m.type = visualization_msgs::msg::Marker::CYLINDER;
+//     m.action = visualization_msgs::msg::Marker::ADD; m.pose = pose;
+//     m.scale.x = 0.5; m.scale.y = 0.5; m.scale.z = 0.1;
+//     m.color.a = 0.8; m.color.r = r; m.color.g = g; m.color.b = b;
+//     return m;
 //   }
 
-//   rclcpp::TimerBase::SharedPtr timer_;
-//   rclcpp::Publisher<skyhunter_msgs::msg::LeaderState>::SharedPtr publisher_;
-//   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr viz_pub_; // Viz Publisher
-  
-//   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
-//   rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_plan_;
-
+//   double spacing_config_;
+//   std::string map_frame_;
+//   int8_t current_state_ = STATE_TRANSITIONING;
+//   bool has_odom_ = false, has_path_ = false;
 //   nav_msgs::msg::Odometry latest_odom_;
 //   nav_msgs::msg::Path latest_path_;
-  
-//   bool has_odom_ = false;
-//   bool has_path_ = false;
-  
-//   double lookahead_dist_1_;
-//   double lookahead_dist_2_;
+//   rclcpp::Publisher<skyhunter_msgs::msg::LeaderState>::SharedPtr publisher_;
+//   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr viz_pub_;
+//   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
+//   rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_plan_;
+//   rclcpp::TimerBase::SharedPtr timer_;
 // };
 
-// int main(int argc, char * argv[])
-// {
+// int main(int argc, char * argv[]) {
 //   rclcpp::init(argc, argv);
 //   rclcpp::spin(std::make_shared<LeaderNode>());
 //   rclcpp::shutdown();
 //   return 0;
 // }
+
+
+
 
 #include <chrono>
 #include <functional>
@@ -174,6 +185,7 @@
 #include <cmath>
 #include <limits>
 #include <vector>
+#include <numeric>
 
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/odometry.hpp"
@@ -181,70 +193,100 @@
 #include "skyhunter_msgs/msg/leader_state.hpp"
 #include "geometry_msgs/msg/pose.hpp"
 #include "visualization_msgs/msg/marker_array.hpp"
+#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "std_msgs/msg/int8.hpp"
+
+// CRITICAL: Added missing PCL headers for the narrow gap logic
+#include <pcl_conversions/pcl_conversions.h>
+#include <pcl/point_cloud.h>
+#include <pcl/point_types.h>
 
 using namespace std::chrono_literals;
+
+const int8_t STATE_NAVIGATING = 0;
+const int8_t STATE_GOAL_REACHED = 1;
+const int8_t STATE_TRANSITIONING = 2;
 
 class LeaderNode : public rclcpp::Node
 {
 public:
   LeaderNode() : Node("leader_node")
   {
-    // --- Parameters ---
-    this->declare_parameter<double>("waypoint_spacing", 10.0); // Strict 10m requirement
+    this->declare_parameter<double>("waypoint_spacing", 10.0);
     this->declare_parameter<std::string>("map_frame", "map");
 
-    spacing_ = this->get_parameter("waypoint_spacing").as_double();
+    spacing_config_ = this->get_parameter("waypoint_spacing").as_double();
     map_frame_ = this->get_parameter("map_frame").as_string();
 
-    auto qos = rclcpp::SensorDataQoS();
-
-    // Publishers
     publisher_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("/leader_state", 10);
     viz_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("leader_waypoints_viz", 10);
 
-    // Subscribers
     sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
-      "odom", qos, std::bind(&LeaderNode::odom_callback, this, std::placeholders::_1));
+      "odom", rclcpp::SensorDataQoS(), std::bind(&LeaderNode::odom_callback, this, std::placeholders::_1));
 
     sub_plan_ = this->create_subscription<nav_msgs::msg::Path>(
-      "plan", qos, std::bind(&LeaderNode::plan_callback, this, std::placeholders::_1));
+      "plan", rclcpp::QoS(10).reliable(), std::bind(&LeaderNode::plan_callback, this, std::placeholders::_1));
 
-    timer_ = this->create_wall_timer(100ms, std::bind(&LeaderNode::timer_callback, this));
+    // NEW: Leader LiDAR Subscriber (To detect narrow gaps)
+    sub_scan_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
+      "scan/points", rclcpp::SensorDataQoS(), std::bind(&LeaderNode::scan_callback, this, std::placeholders::_1));
 
-    RCLCPP_INFO(this->get_logger(), "Tactical Leader Online. Slicing path into %fm segments.", spacing_);
+    sub_form_cmd_ = this->create_subscription<std_msgs::msg::Int8>(
+      "/swarm/formation_command", 10, 
+      [this](const std_msgs::msg::Int8::SharedPtr msg) {
+        this->cmd_formation_type_ = msg->data;
+        RCLCPP_INFO(this->get_logger(), "COMMAND RECEIVED: Switching Swarm to Mode %d", msg->data);
+      });
+
+    // CLIENT REQUIREMENT: Broadcast at 20 Hz (50ms)
+    timer_ = this->create_wall_timer(50ms, std::bind(&LeaderNode::timer_callback, this));
+
+    RCLCPP_INFO(this->get_logger(), "Tactical Intelligent Leader Online.");
   }
 
 private:
-  void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
-    latest_odom_ = *msg;
-    has_odom_ = true;
-  }
+  void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg) { latest_odom_ = *msg; has_odom_ = true; }
+  void plan_callback(const nav_msgs::msg::Path::SharedPtr msg) { latest_path_ = *msg; has_path_ = true; }
 
-  void plan_callback(const nav_msgs::msg::Path::SharedPtr msg) {
-    latest_path_ = *msg;
-    has_path_ = true;
-  }
+  void scan_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
+    pcl::PointCloud<pcl::PointXYZ> cloud;
+    pcl::fromROSMsg(*msg, cloud);
+    
+    bool narrow = false;
+    for (const auto& p : cloud.points) {
+        // --- THE FIX: ADD Z-AXIS CHECK ---
+        // We only care about points that are "Robot Height" 
+        // ignore points near the ground (p.z < -0.3)
+        // ignore points way above the robot (p.z > 0.5)
+        if (p.z < -0.3 || p.z > 0.5) continue; 
 
-  // --- TACTICAL ALGORITHM: Distance-Along-Path ---
-  // This finds a point exactly X meters along the path, following every curve.
-  bool get_waypoint_at_distance(double target_metres, size_t start_idx, geometry_msgs::msg::Pose& out_pose, size_t& out_idx) {
-    if (!has_path_ || latest_path_.poses.size() < 2) return false;
-
-    double accumulated_dist = 0.0;
-    for (size_t i = start_idx; i < latest_path_.poses.size() - 1; ++i) {
-        double d = std::hypot(
-            latest_path_.poses[i+1].pose.position.x - latest_path_.poses[i].pose.position.x,
-            latest_path_.poses[i+1].pose.position.y - latest_path_.poses[i].pose.position.y
-        );
-        accumulated_dist += d;
-
-        if (accumulated_dist >= target_metres) {
-            out_pose = latest_path_.poses[i+1].pose;
-            out_idx = i + 1;
-            return true;
+        // Now check the X and Y "Narrow Passage" area
+        if (p.x > 0.5 && p.x < 4.0 && std::abs(p.y) < 1.8) {
+            narrow = true;
+            break;
         }
     }
-    // If path is shorter than requested distance, return the final goal
+    narrow_gap_detected_ = narrow;
+  }
+
+  double calculate_remaining_dist(size_t start_idx) {
+    if (!has_path_ || start_idx >= latest_path_.poses.size() - 1) return 0.0;
+    double dist = 0.0;
+    for (size_t i = start_idx; i < latest_path_.poses.size() - 1; ++i) {
+      dist += std::hypot(latest_path_.poses[i+1].pose.position.x - latest_path_.poses[i].pose.position.x,
+                         latest_path_.poses[i+1].pose.position.y - latest_path_.poses[i].pose.position.y);
+    }
+    return dist;
+  }
+
+  bool get_waypoint_at_dist(double target_m, size_t start_idx, geometry_msgs::msg::Pose& out_pose, size_t& out_idx) {
+    if (!has_path_ || latest_path_.poses.size() < 2) return false;
+    double acc = 0.0;
+    for (size_t i = start_idx; i < latest_path_.poses.size() - 1; ++i) {
+      acc += std::hypot(latest_path_.poses[i+1].pose.position.x - latest_path_.poses[i].pose.position.x,
+                        latest_path_.poses[i+1].pose.position.y - latest_path_.poses[i].pose.position.y);
+      if (acc >= target_m) { out_pose = latest_path_.poses[i+1].pose; out_idx = i + 1; return true; }
+    }
     out_pose = latest_path_.poses.back().pose;
     out_idx = latest_path_.poses.size() - 1;
     return true;
@@ -254,71 +296,75 @@ private:
   {
     if (!has_odom_) return;
 
+    // Detect State
+    double vel = std::abs(latest_odom_.twist.twist.linear.x);
+    if (vel > 0.1) current_state_ = STATE_NAVIGATING;
+    else if (has_path_ && calculate_remaining_dist(0) < 0.5) current_state_ = STATE_GOAL_REACHED;
+    else current_state_ = STATE_TRANSITIONING;
+
     auto state_msg = skyhunter_msgs::msg::LeaderState();
     state_msg.header.stamp = this->get_clock()->now();
-    state_msg.header.frame_id = map_frame_;
     state_msg.pose = latest_odom_.pose.pose;
     state_msg.velocity = latest_odom_.twist.twist;
+    state_msg.swarm_state = current_state_;
+
+    // --- FORMATION LOGIC OVERRIDE ---
+    if (narrow_gap_detected_) {
+        state_msg.formation_type = 1; // FORCE COLUMN
+        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 2000, "AUTO-SWITCH: Narrow Gap! Forcing Column.");
+    } else {
+        state_msg.formation_type = cmd_formation_type_; 
+    }
 
     visualization_msgs::msg::MarkerArray markers;
-
     if (has_path_ && !latest_path_.poses.empty()) {
-        // 1. Find the index on the path closest to the robot's current position
-        size_t closest_idx = 0;
-        double min_dist = std::numeric_limits<double>::max();
+        size_t closest_idx = 0; double min_d = 1e9;
         for (size_t i = 0; i < latest_path_.poses.size(); ++i) {
-            double d = std::hypot(
-                latest_odom_.pose.pose.position.x - latest_path_.poses[i].pose.position.x,
-                latest_odom_.pose.pose.position.y - latest_path_.poses[i].pose.position.y
-            );
-            if (d < min_dist) { min_dist = d; closest_idx = i; }
+            double d = std::hypot(latest_odom_.pose.pose.position.x - latest_path_.poses[i].pose.position.x,
+                                  latest_odom_.pose.pose.position.y - latest_path_.poses[i].pose.position.y);
+            if (d < min_d) { min_d = d; closest_idx = i; }
         }
-
-        // 2. Slice path: Waypoint 1 (at 10m)
+        double remaining = calculate_remaining_dist(closest_idx);
+        double tactical_spacing = std::min(spacing_config_, std::max(0.0, remaining - 2.0));
         geometry_msgs::msg::Pose wp1, wp2;
-        size_t wp1_idx;
-        if (get_waypoint_at_distance(spacing_, closest_idx, wp1, wp1_idx)) {
+        size_t wp1_idx, wp2_idx;
+        if (get_waypoint_at_dist(tactical_spacing, closest_idx, wp1, wp1_idx)) {
             state_msg.next_waypoints.push_back(wp1);
-            markers.markers.push_back(create_marker(0, wp1, 0.0, 0.0, 1.0)); // Blue
-            
-            // 3. Slice path: Waypoint 2 (at 20m - start from wp1)
-            size_t wp2_idx;
-            if (get_waypoint_at_distance(spacing_, wp1_idx, wp2, wp2_idx)) {
+            markers.markers.push_back(create_marker(0, wp1, 0.0, 0.0, 1.0));
+            if (get_waypoint_at_dist(tactical_spacing, wp1_idx, wp2, wp2_idx)) {
                 state_msg.next_waypoints.push_back(wp2);
-                markers.markers.push_back(create_marker(1, wp2, 1.0, 0.0, 0.0)); // Red
+                markers.markers.push_back(create_marker(1, wp2, 1.0, 0.0, 0.0));
             }
         }
     }
-
     publisher_->publish(state_msg);
     viz_pub_->publish(markers);
   }
 
   visualization_msgs::msg::Marker create_marker(int id, geometry_msgs::msg::Pose pose, float r, float g, float b) {
-      visualization_msgs::msg::Marker m;
-      m.header.frame_id = map_frame_;
-      m.header.stamp = this->get_clock()->now();
-      m.ns = "tactical_waypoints";
-      m.id = id;
-      m.type = visualization_msgs::msg::Marker::CYLINDER;
-      m.action = visualization_msgs::msg::Marker::ADD;
-      m.pose = pose;
-      m.scale.x = 0.6; m.scale.y = 0.6; m.scale.z = 0.1;
-      m.color.a = 0.8; m.color.r = r; m.color.g = g; m.color.b = b;
-      return m;
+    visualization_msgs::msg::Marker m;
+    m.header.frame_id = map_frame_; m.header.stamp = this->get_clock()->now();
+    m.ns = "tactical_wp"; m.id = id; m.type = visualization_msgs::msg::Marker::CYLINDER;
+    m.action = visualization_msgs::msg::Marker::ADD; m.pose = pose;
+    m.scale.x = 0.5; m.scale.y = 0.5; m.scale.z = 0.1;
+    m.color.a = 0.8; m.color.r = r; m.color.g = g; m.color.b = b;
+    return m;
   }
 
-  // Members
-  double spacing_;
+  // --- MEMBER DECLARATIONS (CRITICAL FIX) ---
+  double spacing_config_;
   std::string map_frame_;
-  bool has_odom_ = false, has_path_ = false;
+  int8_t current_state_ = STATE_TRANSITIONING;
+  int8_t cmd_formation_type_ = 0;
+  bool has_odom_ = false, has_path_ = false, narrow_gap_detected_ = false;
   nav_msgs::msg::Odometry latest_odom_;
   nav_msgs::msg::Path latest_path_;
-  
   rclcpp::Publisher<skyhunter_msgs::msg::LeaderState>::SharedPtr publisher_;
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr viz_pub_;
   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
   rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_plan_;
+  rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_scan_; // Missing before
+  rclcpp::Subscription<std_msgs::msg::Int8>::SharedPtr sub_form_cmd_;
   rclcpp::TimerBase::SharedPtr timer_;
 };
 
