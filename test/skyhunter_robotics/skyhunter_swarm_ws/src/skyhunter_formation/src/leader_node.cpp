@@ -238,6 +238,12 @@ public:
         RCLCPP_INFO(this->get_logger(), "COMMAND RECEIVED: Switching Swarm to Mode %d", msg->data);
       });
 
+    sub_mission_ = this->create_subscription<nav_msgs::msg::Path>(
+      "/swarm/global_mission", 10, [this](const nav_msgs::msg::Path::SharedPtr msg) {
+        this->global_mission_poses_ = msg->poses;
+        RCLCPP_INFO(this->get_logger(), "Mission Synchronized: %zu goals loaded.", msg->poses.size());
+      });
+
     // CLIENT REQUIREMENT: Broadcast at 20 Hz (50ms)
     timer_ = this->create_wall_timer(50ms, std::bind(&LeaderNode::timer_callback, this));
 
@@ -254,8 +260,6 @@ private:
     
     bool narrow = false;
     for (const auto& p : cloud.points) {
-        // --- THE FIX: ADD Z-AXIS CHECK ---
-        // We only care about points that are "Robot Height" 
         // ignore points near the ground (p.z < -0.3)
         // ignore points way above the robot (p.z > 0.5)
         if (p.z < -0.3 || p.z > 0.5) continue; 
@@ -296,14 +300,20 @@ private:
   {
     if (!has_odom_) return;
 
+    auto state_msg = skyhunter_msgs::msg::LeaderState();
+    state_msg.header.stamp = this->get_clock()->now();
+
+    state_msg.next_waypoints.clear();
+    for (size_t i = 0; i < global_mission_poses_.size(); ++i) {
+        state_msg.next_waypoints.push_back(global_mission_poses_[i].pose);
+    }
+
     // Detect State
     double vel = std::abs(latest_odom_.twist.twist.linear.x);
     if (vel > 0.1) current_state_ = STATE_NAVIGATING;
     else if (has_path_ && calculate_remaining_dist(0) < 0.5) current_state_ = STATE_GOAL_REACHED;
     else current_state_ = STATE_TRANSITIONING;
 
-    auto state_msg = skyhunter_msgs::msg::LeaderState();
-    state_msg.header.stamp = this->get_clock()->now();
     state_msg.pose = latest_odom_.pose.pose;
     state_msg.velocity = latest_odom_.twist.twist;
     state_msg.swarm_state = current_state_;
@@ -352,6 +362,9 @@ private:
   }
 
   // --- MEMBER DECLARATIONS (CRITICAL FIX) ---
+  std::vector<geometry_msgs::msg::PoseStamped> global_mission_poses_;
+
+
   double spacing_config_;
   std::string map_frame_;
   int8_t current_state_ = STATE_TRANSITIONING;
@@ -359,6 +372,9 @@ private:
   bool has_odom_ = false, has_path_ = false, narrow_gap_detected_ = false;
   nav_msgs::msg::Odometry latest_odom_;
   nav_msgs::msg::Path latest_path_;
+
+  rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_mission_;
+
   rclcpp::Publisher<skyhunter_msgs::msg::LeaderState>::SharedPtr publisher_;
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr viz_pub_;
   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
@@ -366,6 +382,7 @@ private:
   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_scan_; // Missing before
   rclcpp::Subscription<std_msgs::msg::Int8>::SharedPtr sub_form_cmd_;
   rclcpp::TimerBase::SharedPtr timer_;
+  
 };
 
 int main(int argc, char * argv[]) {

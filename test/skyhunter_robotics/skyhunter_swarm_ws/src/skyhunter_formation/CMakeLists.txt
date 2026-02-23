@@ -26,7 +26,7 @@ find_package(PCL REQUIRED)
 
 find_package(grid_map_core REQUIRED)
 find_package(OpenMP REQUIRED)
-
+find_package(std_msgs REQUIRED)
 
 # Add PCL Include Directories (Crucial for PCL)
 include_directories(${PCL_INCLUDE_DIRS})
@@ -43,8 +43,9 @@ ament_target_dependencies(leader_node
   visualization_msgs
   sensor_msgs
   pcl_conversions
-  grid_map_core    # <--- ADD THIS
-  grid_map_ros     # <--- ADD THIS
+  grid_map_core   
+  grid_map_ros    
+  std_msgs
 )
 
 # Link PCL and Grid Map libraries
@@ -77,6 +78,7 @@ ament_target_dependencies(
   grid_map_msgs 
   visualization_msgs
   pcl_conversions
+  std_msgs
 )
 
 # CRITICAL FIX: Link the actual PCL and TF2 libraries to the Follower Node
@@ -130,6 +132,8 @@ target_link_libraries(location_tracker
 )
 install(TARGETS location_tracker DESTINATION lib/${PROJECT_NAME})
 
+
+## direct_mover
 add_executable(direct_mover src/direct_mover.cpp)
 ament_target_dependencies(direct_mover 
   rclcpp 
@@ -140,13 +144,26 @@ ament_target_dependencies(direct_mover
   tf2_geometry_msgs 
 )
 
-# 2. CRITICAL HUMBLE FIX: Explicitly link the libraries to the binary
+# 2. Explicitly link the libraries to the binary
 target_link_libraries(direct_mover 
   tf2::tf2
   tf2_ros::tf2_ros
   tf2_geometry_msgs::tf2_geometry_msgs
 )
 
+## leadership_manager
+add_executable(leadership_manager src/leadership_manager.cpp)
+ament_target_dependencies(leadership_manager
+  rclcpp
+  std_msgs
+  skyhunter_msgs
+)
+
+# Ensure it is installed so the launch file can find it
+install(TARGETS
+  leadership_manager
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 # ==========================
 # Installation
@@ -156,7 +173,8 @@ install(TARGETS
   follower_node
   swarm_monitor_node
   lidar_test_node
-  direct_mover
+  # direct_mover
+  leadership_manager
   DESTINATION lib/${PROJECT_NAME}
 )
 
