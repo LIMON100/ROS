@@ -14,6 +14,8 @@ find_package(geometry_msgs REQUIRED)
 # Generate the interfaces
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/LeaderState.msg"
+  "msg/SwarmHeartbeat.msg"
+  "msg/ElectionVote.msg"
   DEPENDENCIES std_msgs geometry_msgs
 )
 

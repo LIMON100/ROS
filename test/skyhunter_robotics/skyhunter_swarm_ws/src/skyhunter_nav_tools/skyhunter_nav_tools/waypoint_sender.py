@@ -273,18 +273,23 @@ import time
 import std_srvs.srv
 from nav2_msgs.srv import ClearEntireCostmap
 
+from nav_msgs.msg import Path
+from geometry_msgs.msg import PoseStamped
+
 class WaypointFollower(Node):
     def __init__(self):
         super().__init__('waypoint_follower')
         
         self._action_client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
+
+        self.mission_pub = self.create_publisher(Path, '/swarm/global_mission', 10)
         
         # --- WAYPOINTS (X, Y) ---
         self.waypoints = [
             (10.0, 0.0),   # 1. Straight 30m
             (20.0, 15.0),  # 2. Left 10m
             (30.0, 10.0),  # 3. Straight 10m
-            # (30.0, -20.0)  # 4. Right 30m
+            (30.0, -20.0)  # 4. Right 30m
         ]
 
         # self.waypoints = [
@@ -313,6 +318,34 @@ class WaypointFollower(Node):
         self.get_logger().info('MISSION STARTING...')
         self.send_next_goal()
 
+    # def send_next_goal(self):
+    #     # --- MISSION COMPLETE LOGIC ---
+    #     if self.current_wp_index >= len(self.waypoints):
+    #         self.get_logger().info('=============================================')
+    #         self.get_logger().info('MISSION COMPLETE: All Waypoints Reached!    ')
+    #         self.get_logger().info('=============================================')
+    #         return
+        
+    #     if self.is_busy:
+    #         return
+        
+    #     self.is_busy = True 
+
+    #     target_x, target_y = self.waypoints[self.current_wp_index]
+    #     self.get_logger().info(f'MOVING TO: WP {self.current_wp_index + 1} (x={target_x}, y={target_y})')
+
+    #     self._action_client.wait_for_server()
+
+    #     goal_msg = NavigateToPose.Goal()
+    #     goal_msg.pose.header.frame_id = 'map'
+    #     goal_msg.pose.header.stamp = self.get_clock().now().to_msg()
+    #     goal_msg.pose.pose.position.x = float(target_x)
+    #     goal_msg.pose.pose.position.y = float(target_y)
+    #     goal_msg.pose.pose.orientation.w = 1.0 
+        
+    #     self._send_goal_future = self._action_client.send_goal_async(goal_msg)
+    #     self._send_goal_future.add_done_callback(self.goal_response_callback)
+
     def send_next_goal(self):
         # --- MISSION COMPLETE LOGIC ---
         if self.current_wp_index >= len(self.waypoints):
@@ -325,6 +358,25 @@ class WaypointFollower(Node):
             return
         
         self.is_busy = True 
+
+        # --- NEW: BROADCAST FULL MISSION FOR MIRRORING ---
+        # We create a Path message containing ALL waypoints for SH_02 to save
+        mission_msg = Path()
+        mission_msg.header.frame_id = 'map'
+        mission_msg.header.stamp = self.get_clock().now().to_msg()
+        
+        for wp in self.waypoints:
+            p = PoseStamped()
+            p.pose.position.x = float(wp[0])
+            p.pose.position.y = float(wp[1])
+            p.pose.orientation.w = 1.0
+            mission_msg.poses.append(p)
+        
+        # We publish to the global mission topic
+        if not hasattr(self, 'mission_pub'):
+            self.mission_pub = self.create_publisher(Path, '/swarm/global_mission', 10)
+        self.mission_pub.publish(mission_msg)
+        # ------------------------------------------------
 
         target_x, target_y = self.waypoints[self.current_wp_index]
         self.get_logger().info(f'MOVING TO: WP {self.current_wp_index + 1} (x={target_x}, y={target_y})')

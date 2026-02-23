@@ -475,7 +475,7 @@ def launch_setup(context, *args, **kwargs):
                         ('leader_state', '/leader_state'),
                         ('/tf', '/tf'), ('/tf_static', '/tf_static')
                     ]
-                )
+                ),
             ]
         )
         nodes_to_start.append(follower_action)
