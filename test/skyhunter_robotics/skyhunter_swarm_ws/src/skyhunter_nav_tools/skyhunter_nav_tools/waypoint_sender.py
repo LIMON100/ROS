@@ -318,34 +318,6 @@ class WaypointFollower(Node):
         self.get_logger().info('MISSION STARTING...')
         self.send_next_goal()
 
-    # def send_next_goal(self):
-    #     # --- MISSION COMPLETE LOGIC ---
-    #     if self.current_wp_index >= len(self.waypoints):
-    #         self.get_logger().info('=============================================')
-    #         self.get_logger().info('MISSION COMPLETE: All Waypoints Reached!    ')
-    #         self.get_logger().info('=============================================')
-    #         return
-        
-    #     if self.is_busy:
-    #         return
-        
-    #     self.is_busy = True 
-
-    #     target_x, target_y = self.waypoints[self.current_wp_index]
-    #     self.get_logger().info(f'MOVING TO: WP {self.current_wp_index + 1} (x={target_x}, y={target_y})')
-
-    #     self._action_client.wait_for_server()
-
-    #     goal_msg = NavigateToPose.Goal()
-    #     goal_msg.pose.header.frame_id = 'map'
-    #     goal_msg.pose.header.stamp = self.get_clock().now().to_msg()
-    #     goal_msg.pose.pose.position.x = float(target_x)
-    #     goal_msg.pose.pose.position.y = float(target_y)
-    #     goal_msg.pose.pose.orientation.w = 1.0 
-        
-    #     self._send_goal_future = self._action_client.send_goal_async(goal_msg)
-    #     self._send_goal_future.add_done_callback(self.goal_response_callback)
-
     def send_next_goal(self):
         # --- MISSION COMPLETE LOGIC ---
         if self.current_wp_index >= len(self.waypoints):
