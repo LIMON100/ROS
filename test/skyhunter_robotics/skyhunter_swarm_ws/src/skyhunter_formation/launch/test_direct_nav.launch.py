@@ -437,6 +437,16 @@ def launch_setup(context, *args, **kwargs):
         # STAGGERED SPAWN (5s Delay to prevent CPU crash)
         delay = float(i) * 5.0 
 
+        if follower_ns == 'SH_02':
+            nav2_sh02 = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
+                launch_arguments={
+                    'use_sim_time': use_sim_time,
+                    'autostart': 'true',
+                    'namespace': 'SH_02' # Start Nav2 inside SH_02
+                }.items()
+            )
+
         follower_action = TimerAction(
             # period=delay,
             period=float(i) * 1.5 + 4.0,
