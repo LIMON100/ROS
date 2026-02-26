@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             'waypoint_sender = skyhunter_nav_tools.waypoint_sender:main',
             'formation_switcher = skyhunter_nav_tools.formation_switcher:main',
+            'swarm_chaos = skyhunter_nav_tools.swarm_chaos:main',
         ],
     },
 )
