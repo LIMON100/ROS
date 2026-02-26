@@ -239,14 +239,22 @@ def launch_setup(context, *args, **kwargs):
         delay = float(i) * 5.0 
 
         if follower_ns == 'SH_02':
-            nav2_sh02 = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
+            # nav2_sh02 = IncludeLaunchDescription(
+            #     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
+            #     launch_arguments={
+            #         'use_sim_time': use_sim_time,
+            #         'autostart': 'false',
+            #         'namespace': 'SH_02' # Start Nav2 inside SH_02
+            #     }.items()
+            # )
+            nodes_to_start.append(IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2_sh02.launch.py')),
                 launch_arguments={
-                    'use_sim_time': use_sim_time,
-                    'autostart': 'true',
-                    'namespace': 'SH_02' # Start Nav2 inside SH_02
+                    'use_sim_time': 'true',
+                    'namespace': 'SH_02',
+                    'autostart': 'false' # DO NOT START MOVING YET
                 }.items()
-            )
+            ))
 
         follower_action = TimerAction(
             # period=delay,
@@ -264,10 +272,17 @@ def launch_setup(context, *args, **kwargs):
                     }.items(),
                 ),
                 # B. Static TF link (map -> SH_02/odom)
+                # Node(
+                #     package='tf2_ros', executable='static_transform_publisher',
+                #     name=f'link_{follower_ns}',
+                #     arguments=['0', '0', '0', '0', '0', '0', 'map', f'{follower_ns}/odom'],
+                #     parameters=[{'use_sim_time': True}]
+                # ),
                 Node(
                     package='tf2_ros', executable='static_transform_publisher',
                     name=f'link_{follower_ns}',
-                    arguments=['0', '0', '0', '0', '0', '0', 'map', f'{follower_ns}/odom'],
+                    # <-- FIX THIS LINE TO USE SPAWN COORDS:
+                    arguments=[str(spawn_x), str(spawn_y), '0', '0', '0', str(b_yaw), 'map', f'{follower_ns}/odom'],
                     parameters=[{'use_sim_time': True}]
                 ),
                 # C. Follower Node

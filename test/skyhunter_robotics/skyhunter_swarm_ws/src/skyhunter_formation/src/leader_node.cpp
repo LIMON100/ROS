@@ -230,6 +230,7 @@
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include "std_msgs/msg/bool.hpp"
+#include "std_msgs/msg/empty.hpp"
 
 using namespace std::chrono_literals;
 
@@ -270,22 +271,38 @@ public:
 
     // Subscribe to the raw waypoints sent by the Python script
     sub_mission_ = this->create_subscription<nav_msgs::msg::Path>(
-      "/swarm/global_mission", 10, [this](const nav_msgs::msg::Path::SharedPtr msg) {
+    "/swarm/global_mission", 10, [this](const nav_msgs::msg::Path::SharedPtr msg) {
         this->global_mission_poses_ = msg->poses;
+        this->total_mission_count_ = msg->poses.size(); // SAVE TOTAL
         RCLCPP_INFO(this->get_logger(), "Mission Synchronized: %zu goals loaded.", msg->poses.size());
-      });
+    });
+
+    sub_mute_ = this->create_subscription<std_msgs::msg::Empty>(
+        "/simulate_fail", 10, [this](const std_msgs::msg::Empty::SharedPtr) {
+            this->is_muted_ = true;
+            RCLCPP_ERROR(this->get_logger(), "SIMULATED FAILURE: Muting Leader and Stopping Nav2!");
+            
+            // 1. Send an immediate stop command to the wheels
+            geometry_msgs::msg::Twist stop_msg;
+            this->stop_pub_->publish(stop_msg);
+            
+            // 2. CRITICAL FIX: Source the ROS 2 environment so the system command works!
+            // This cleanly deactivates the GLOBAL Nav2 driving Robot-1.
+            system("bash -c 'source /opt/ros/humble/setup.bash && ros2 lifecycle set /controller_server deactivate' &");
+            system("bash -c 'source /opt/ros/humble/setup.bash && ros2 lifecycle set /bt_navigator deactivate' &");
+            system("bash -c 'source /opt/ros/humble/setup.bash && ros2 lifecycle set /planner_server deactivate' &");
+        });
+
+    stop_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
+
 
     // --- ADD THIS BLOCK INSIDE CONSTRUCTOR ---
-    sub_mute_ = this->create_subscription<std_msgs::msg::Bool>(
-      "/swarm/leader_mute", 10, 
-      [this](const std_msgs::msg::Bool::SharedPtr msg) {
-        this->is_muted_ = msg->data;
-        if (this->is_muted_) {
-            RCLCPP_WARN(this->get_logger(), "RADIO SILENCE: Leader SH-01 is now a GHOST.");
-        } else {
-            RCLCPP_INFO(this->get_logger(), "RADIO ACTIVE: Leader SH-01 resumed broadcast.");
-        }
-      });
+    // sub_mission_ = this->create_subscription<nav_msgs::msg::Path>(
+    // "/swarm/global_mission", 10, [this](const nav_msgs::msg::Path::SharedPtr msg) {
+    //     this->global_mission_poses_ = msg->poses;
+    //     this->total_mission_count_ = msg->poses.size(); // SAVE TOTAL
+    //     RCLCPP_INFO(this->get_logger(), "Mission Synchronized: %zu goals loaded.", msg->poses.size());
+    // });
 
     // CLIENT REQUIREMENT: Broadcast at 20 Hz (50ms)
     timer_ = this->create_wall_timer(50ms, std::bind(&LeaderNode::timer_callback, this));
@@ -343,8 +360,16 @@ private:
   {
     if (!has_odom_) return;
 
-    if (is_muted_) return;
+    // If muted, we stop broadcasting completely (Ghost Mode)
+    // if (is_muted_) return;
 
+    if (is_muted_) {
+        stop_pub_->publish(geometry_msgs::msg::Twist()); // Freeze the robot
+        return; // Stop the broadcast entirely
+    }
+
+    // --- 1. Mission Progress Tracker ---
+    // If we have waypoints, check if we reached the first one
     if (!global_mission_poses_.empty()) {
         double d_to_wp = std::hypot(
             latest_odom_.pose.pose.position.x - global_mission_poses_[0].pose.position.x,
@@ -356,19 +381,38 @@ private:
         }
     }
 
-    // Detect State
+    // --- 2. State Detection ---
     double vel = std::abs(latest_odom_.twist.twist.linear.x);
     if (vel > 0.1) current_state_ = STATE_NAVIGATING;
     else if (has_path_ && calculate_remaining_dist(0) < 0.5) current_state_ = STATE_GOAL_REACHED;
     else current_state_ = STATE_TRANSITIONING;
 
+    // --- 3. Message Construction ---
     auto state_msg = skyhunter_msgs::msg::LeaderState();
     state_msg.header.stamp = this->get_clock()->now();
     state_msg.pose = latest_odom_.pose.pose;
     state_msg.velocity = latest_odom_.twist.twist;
     state_msg.swarm_state = current_state_;
 
-    // --- FORMATION LOGIC OVERRIDE ---
+    state_msg.next_waypoints.clear();
+    for(const auto & p : global_mission_poses_) {
+        state_msg.next_waypoints.push_back(p.pose);
+    }
+    // --------------------------------------
+
+    state_msg.current_waypoint_index = 4 - (int32_t)global_mission_poses_.size();
+
+    // NEW: Tell SH_02 which waypoint we are on!
+    // We send 0 if the list is empty, or the current 'step' in the mission
+    // state_msg.current_waypoint_index = 4 - (int32_t)global_mission_poses_.size();
+
+    if (total_mission_count_ > 0) {
+        state_msg.current_waypoint_index = (int32_t)(total_mission_count_ - global_mission_poses_.size());
+    } else {
+        state_msg.current_waypoint_index = 0;
+    }
+
+    // --- 4. Formation Logic ---
     if (narrow_gap_detected_) {
         state_msg.formation_type = 1; // FORCE COLUMN
         RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 2000, "AUTO-SWITCH: Narrow Gap! Forcing Column.");
@@ -376,6 +420,7 @@ private:
         state_msg.formation_type = cmd_formation_type_; 
     }
 
+    // --- 5. Waypoint Slicing (The Blue/Red markers) ---
     visualization_msgs::msg::MarkerArray markers;
     if (has_path_ && !latest_path_.poses.empty()) {
         size_t closest_idx = 0; double min_d = 1e9;
@@ -386,6 +431,7 @@ private:
         }
         double remaining = calculate_remaining_dist(closest_idx);
         double tactical_spacing = std::min(spacing_config_, std::max(0.0, remaining - 2.0));
+        
         geometry_msgs::msg::Pose wp1, wp2;
         size_t wp1_idx, wp2_idx;
         if (get_waypoint_at_dist(tactical_spacing, closest_idx, wp1, wp1_idx)) {
@@ -397,6 +443,8 @@ private:
             }
         }
     }
+
+    // --- 6. Publish ---
     publisher_->publish(state_msg);
     viz_pub_->publish(markers);
   }
@@ -413,7 +461,8 @@ private:
 
   // --- MEMBER DECLARATIONS (CRITICAL FIX) ---
   std::vector<geometry_msgs::msg::PoseStamped> global_mission_poses_;
-  bool is_muted_ = false; // Add this
+  bool is_muted_ = false; 
+  size_t total_mission_count_ = 0;
 
 
 
@@ -434,7 +483,8 @@ private:
   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_scan_; // Missing before
   rclcpp::Subscription<std_msgs::msg::Int8>::SharedPtr sub_form_cmd_;
   rclcpp::TimerBase::SharedPtr timer_;
-  rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr sub_mute_; 
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr stop_pub_;
+  rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr sub_mute_;
 };
 
 int main(int argc, char * argv[]) {

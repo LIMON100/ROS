@@ -241,12 +241,17 @@
 #include <geometry_msgs/msg/pose_array.hpp> 
 #include "nav2_msgs/action/navigate_to_pose.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
+#include "nav2_msgs/srv/manage_lifecycle_nodes.hpp"
+#include "nav2_msgs/srv/clear_entire_costmap.hpp"
+#include "nav_msgs/msg/odometry.hpp"
+#include "nav2_msgs/action/navigate_through_poses.hpp"
 
 using namespace std::chrono_literals;
 
 class RobustFollower : public rclcpp::Node {
 public:
   using NavigateToPose = nav2_msgs::action::NavigateToPose;
+//   using NavigateThroughPoses = nav2_msgs::action::NavigateThroughPoses;
 
   RobustFollower() : Node("follower_node") {
     this->declare_parameter<double>("offset_dist", -2.5);      
@@ -275,6 +280,14 @@ public:
     succession_timer_ = this->create_wall_timer(
         1s, std::bind(&RobustFollower::check_leader_health, this));
 
+    lifecycle_client_ = this->create_client<nav2_msgs::srv::ManageLifecycleNodes>(
+    "/SH_02/lifecycle_manager_sh02/manage_nodes");
+
+    sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
+        "odom", qos, [this](const nav_msgs::msg::Odometry::SharedPtr msg) {
+            this->my_current_twist_ = msg->twist.twist;
+        });
+
     pub_cmd_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
     timer_ = this->create_wall_timer(50ms, std::bind(&RobustFollower::control_loop, this));
 
@@ -285,11 +298,20 @@ private:
   void swarm_cb(const geometry_msgs::msg::PoseArray::SharedPtr msg) { swarm_poses_ = *msg; has_swarm_ = true; }
   
   void leader_cb(const skyhunter_msgs::msg::LeaderState::SharedPtr msg) {
+    // 1. Save the full message for formation math
     last_leader_msg_ = *msg;
     has_leader_ = true;
     last_leader_time_ = this->get_clock()->now();
-    if (!msg->next_waypoints.empty()) { shadow_mission_buffer_ = msg->next_waypoints; }
-  }
+
+    // 2. NEW: Save the index of the goal the leader is currently chasing
+    // This allows SH_02 to resume the mission exactly where the leader left off.
+    this->current_mission_index_ = msg->current_waypoint_index;
+
+    // 3. Keep the shadow buffer updated with upcoming waypoints for local pathing
+    if (!msg->next_waypoints.empty()) { 
+        shadow_mission_buffer_ = msg->next_waypoints; 
+    }
+ }
 
   void check_leader_health() {
     if (is_promoted_to_leader_) return;
@@ -303,36 +325,45 @@ private:
   }
 
   void initiate_succession() {
-      if (is_promoted_to_leader_) return;
-      is_promoted_to_leader_ = true;
+    if (is_promoted_to_leader_) return;
+    is_promoted_to_leader_ = true;
 
-      RCLCPP_WARN(this->get_logger(), "!!! LEADER LOST !!! SH_02 is taking command.");
+    RCLCPP_WARN(this->get_logger(), "SH_02: Initiating Lifecycle Transition...");
 
-      // Start the Leader Broadcast immediately so others follow me
-      takeover_pub_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("/leader_state", 10);
+    auto request = std::make_shared<nav2_msgs::srv::ManageLifecycleNodes::Request>();
+    request->command = nav2_msgs::srv::ManageLifecycleNodes::Request::STARTUP;
+    lifecycle_client_->async_send_request(request);
 
-      // Give Nav2 a moment to finish its auto-activation from the launch file
-      std::this_thread::sleep_for(std::chrono::seconds(3));
-
-      if (!shadow_mission_buffer_.empty()) {
-          std::string action_path = "/" + my_ns_ + "/navigate_to_pose";
-          auto action_client = rclcpp_action::create_client<NavigateToPose>(this, action_path);
-          
-          RCLCPP_INFO(this->get_logger(), "Connecting to SH_02 Action Server...");
-
-          // Increase wait time to 15 seconds to allow for Lifecycle Manager completion
-          if (action_client->wait_for_action_server(std::chrono::seconds(15))) {
-              auto goal = NavigateToPose::Goal();
-              goal.pose.header.frame_id = "map";
-              goal.pose.pose = shadow_mission_buffer_[0]; 
-              
-              action_client->async_send_goal(goal);
-              RCLCPP_INFO(this->get_logger(), "SUCCESSION: Navigating to next mission waypoint.");
-          } else {
-              RCLCPP_ERROR(this->get_logger(), "TAKEOVER FAILED: SH_02 Action Server not found. Check lifecycle status!");
-          }
-      }
-  }
+    // Save timer to a member variable so we can cancel it!
+    wait_timer_ = this->create_wall_timer(2s, [this]() {
+        // We use NavigateToPose but we will feed it the LAST waypoint 
+        // Or you can use a loop for NavigateThroughPoses if your Nav2 config supports it.
+        // For standard Nav2, let's send the final goal to ensure it finishes the path.
+        auto action_client = rclcpp_action::create_client<NavigateToPose>(this, "/SH_02/navigate_to_pose");
+        
+        RCLCPP_INFO(this->get_logger(), "Waiting for SH_02 Nav2 Action Server...");
+        
+        if (action_client->wait_for_action_server(std::chrono::seconds(1))) {
+            
+            if (!this->shadow_mission_buffer_.empty()) {
+                auto goal = NavigateToPose::Goal();
+                goal.pose.header.frame_id = "map";
+                goal.pose.header.stamp = this->get_clock()->now();
+                
+                // CRITICAL FIX: Send the FAR target (the last waypoint in the buffer)
+                // Nav2's Smac/Navfn planner will automatically calculate the path 
+                // through the intermediate space.
+                goal.pose.pose = this->shadow_mission_buffer_.back(); 
+                
+                RCLCPP_INFO(this->get_logger(), "SH_02 taking over mission. Heading to final goal.");
+                action_client->async_send_goal(goal);
+            }
+            
+            takeover_pub_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("/leader_state", 10);
+            this->wait_timer_->cancel(); // STOP the timer so we don't spam goals
+        }
+    });
+ }
 
   void scan_cb(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
     pcl::PointCloud<pcl::PointXYZ>::Ptr raw_cloud(new pcl::PointCloud<pcl::PointXYZ>);
@@ -382,7 +413,8 @@ private:
         msg.pose.position.z = tf_now.transform.translation.z;
         msg.pose.orientation = tf_now.transform.rotation;
         
-        msg.velocity = last_leader_msg_.velocity; 
+        // msg.velocity = last_leader_msg_.velocity; 
+        msg.velocity = my_current_twist_;
         msg.next_waypoints = shadow_mission_buffer_; 
         msg.formation_type = 1; // Force Column
         
@@ -475,6 +507,11 @@ private:
   void stop_robot() { pub_cmd_->publish(geometry_msgs::msg::Twist()); }
 
   // --- MEMBERS ---
+  int32_t current_mission_index_ = 0;
+  geometry_msgs::msg::Twist my_current_twist_;
+
+  std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
+  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
   std::vector<geometry_msgs::msg::Pose> shadow_mission_buffer_;
   bool is_promoted_to_leader_ = false, has_leader_ = false, has_scan_ = false, has_swarm_ = false;
   std::string my_ns_, my_frame_;
@@ -488,8 +525,12 @@ private:
   rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr sub_swarm_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_cmd_;
   rclcpp::Publisher<skyhunter_msgs::msg::LeaderState>::SharedPtr takeover_pub_;
-  std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
-  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
+
+  rclcpp::Client<nav2_msgs::srv::ManageLifecycleNodes>::SharedPtr lifecycle_client_;
+  rclcpp::TimerBase::SharedPtr recovery_timer_;
+  rclcpp::TimerBase::SharedPtr wait_timer_;
+rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
+
 };
 
 int main(int argc, char * argv[]) { rclcpp::init(argc, argv); rclcpp::spin(std::make_shared<RobustFollower>()); rclcpp::shutdown(); return 0; }
