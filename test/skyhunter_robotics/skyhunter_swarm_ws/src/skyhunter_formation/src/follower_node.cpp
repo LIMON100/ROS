@@ -1,5 +1,5 @@
 
-// FULL WORKABLE with BOIDS 02-23
+// // FULL WORKABLE with BOIDS 02-23
 // #include <chrono>
 // #include <cmath>
 // #include <memory>
@@ -219,6 +219,8 @@
 
 
 
+
+// 02-27
 #include <chrono>
 #include <cmath>
 #include <memory>
@@ -239,26 +241,18 @@
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include <geometry_msgs/msg/pose_array.hpp> 
-#include "nav2_msgs/action/navigate_to_pose.hpp"
-#include "rclcpp_action/rclcpp_action.hpp"
-#include "nav2_msgs/srv/manage_lifecycle_nodes.hpp"
-#include "nav2_msgs/srv/clear_entire_costmap.hpp"
-#include "nav_msgs/msg/odometry.hpp"
-#include "nav2_msgs/action/navigate_through_poses.hpp"
+#include "std_msgs/msg/int8.hpp"
 
 using namespace std::chrono_literals;
 
 class RobustFollower : public rclcpp::Node {
 public:
-  using NavigateToPose = nav2_msgs::action::NavigateToPose;
-//   using NavigateThroughPoses = nav2_msgs::action::NavigateThroughPoses;
-
   RobustFollower() : Node("follower_node") {
-    this->declare_parameter<double>("offset_dist", -2.5);      
-    this->declare_parameter<double>("offset_lateral", 0.0);   
-    this->declare_parameter<double>("ttc_danger_dist", 4.1);  
+    this->declare_parameter<double>("offset_dist", -2.5);
+    this->declare_parameter<double>("offset_lateral", 0.0);
+    this->declare_parameter<double>("ttc_danger_dist", 4.1);
     this->declare_parameter<double>("blocking_radius", 0.8);
-    this->declare_parameter<double>("separation_dist", 1.5); 
+    this->declare_parameter<double>("separation_dist", 1.5); // Boids Bubble
 
     tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
     tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
@@ -271,99 +265,46 @@ public:
     auto qos = rclcpp::SensorDataQoS();
     sub_swarm_ = this->create_subscription<geometry_msgs::msg::PoseArray>(
         "/swarm/poses", qos, std::bind(&RobustFollower::swarm_cb, this, std::placeholders::_1));
+
     sub_leader_ = this->create_subscription<skyhunter_msgs::msg::LeaderState>(
-        "/leader_state", qos, std::bind(&RobustFollower::leader_cb, this, std::placeholders::_1));
+    "/swarm/virtual_leader/state", qos, std::bind(&RobustFollower::leader_cb, this, std::placeholders::_1));
+
     sub_scan_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
         "scan/points", qos, std::bind(&RobustFollower::scan_cb, this, std::placeholders::_1));
 
-    // Monitor the leader every 1 second
-    succession_timer_ = this->create_wall_timer(
-        1s, std::bind(&RobustFollower::check_leader_health, this));
-
-    lifecycle_client_ = this->create_client<nav2_msgs::srv::ManageLifecycleNodes>(
-    "/SH_02/lifecycle_manager_sh02/manage_nodes");
-
-    sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
-        "odom", qos, [this](const nav_msgs::msg::Odometry::SharedPtr msg) {
-            this->my_current_twist_ = msg->twist.twist;
-        });
+    sub_role_ = this->create_subscription<std_msgs::msg::Int8>(
+    "local_role", 10, [this](const std_msgs::msg::Int8::SharedPtr msg) {
+        this->current_local_role_ = msg->data;
+    });
 
     pub_cmd_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
     timer_ = this->create_wall_timer(50ms, std::bind(&RobustFollower::control_loop, this));
 
-    RCLCPP_INFO(this->get_logger(), "TACTICAL Follower [%s] Online.", my_ns_.c_str());
+    RCLCPP_INFO(this->get_logger(), "BOIDS Follower [%s] Online.", my_ns_.c_str());
   }
 
 private:
   void swarm_cb(const geometry_msgs::msg::PoseArray::SharedPtr msg) { swarm_poses_ = *msg; has_swarm_ = true; }
-  
-  void leader_cb(const skyhunter_msgs::msg::LeaderState::SharedPtr msg) {
-    // 1. Save the full message for formation math
-    last_leader_msg_ = *msg;
-    has_leader_ = true;
-    last_leader_time_ = this->get_clock()->now();
-
-    // 2. NEW: Save the index of the goal the leader is currently chasing
-    // This allows SH_02 to resume the mission exactly where the leader left off.
-    this->current_mission_index_ = msg->current_waypoint_index;
-
-    // 3. Keep the shadow buffer updated with upcoming waypoints for local pathing
-    if (!msg->next_waypoints.empty()) { 
-        shadow_mission_buffer_ = msg->next_waypoints; 
-    }
- }
-
-  void check_leader_health() {
-    if (is_promoted_to_leader_) return;
-    auto now = this->get_clock()->now();
-    double seconds_since_last_msg = (now - last_leader_time_).seconds();
-
-    // 10 second timeout check (Requirement 2.13)
-    if (has_leader_ && seconds_since_last_msg > 10.0 && my_ns_ == "SH_02") {
-        initiate_succession();
-    }
+  void leader_cb(const skyhunter_msgs::msg::LeaderState::SharedPtr msg) 
+  { 
+    last_leader_msg_ = *msg; 
+    has_leader_ = true; 
+    last_leader_time_ = this->get_clock()->now(); 
   }
 
-  void initiate_succession() {
-    if (is_promoted_to_leader_) return;
-    is_promoted_to_leader_ = true;
 
-    RCLCPP_WARN(this->get_logger(), "SH_02: Initiating Lifecycle Transition...");
-
-    auto request = std::make_shared<nav2_msgs::srv::ManageLifecycleNodes::Request>();
-    request->command = nav2_msgs::srv::ManageLifecycleNodes::Request::STARTUP;
-    lifecycle_client_->async_send_request(request);
-
-    // Save timer to a member variable so we can cancel it!
-    wait_timer_ = this->create_wall_timer(2s, [this]() {
-        // We use NavigateToPose but we will feed it the LAST waypoint 
-        // Or you can use a loop for NavigateThroughPoses if your Nav2 config supports it.
-        // For standard Nav2, let's send the final goal to ensure it finishes the path.
-        auto action_client = rclcpp_action::create_client<NavigateToPose>(this, "/SH_02/navigate_to_pose");
-        
-        RCLCPP_INFO(this->get_logger(), "Waiting for SH_02 Nav2 Action Server...");
-        
-        if (action_client->wait_for_action_server(std::chrono::seconds(1))) {
-            
-            if (!this->shadow_mission_buffer_.empty()) {
-                auto goal = NavigateToPose::Goal();
-                goal.pose.header.frame_id = "map";
-                goal.pose.header.stamp = this->get_clock()->now();
-                
-                // CRITICAL FIX: Send the FAR target (the last waypoint in the buffer)
-                // Nav2's Smac/Navfn planner will automatically calculate the path 
-                // through the intermediate space.
-                goal.pose.pose = this->shadow_mission_buffer_.back(); 
-                
-                RCLCPP_INFO(this->get_logger(), "SH_02 taking over mission. Heading to final goal.");
-                action_client->async_send_goal(goal);
-            }
-            
-            takeover_pub_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("/leader_state", 10);
-            this->wait_timer_->cancel(); // STOP the timer so we don't spam goals
-        }
-    });
- }
+  bool is_point_blocked(double map_x, double map_y) {
+    if (obstacle_points_.empty()) return false;
+    geometry_msgs::msg::PointStamped p_map, p_local;
+    p_map.header.frame_id = "map"; p_map.point.x = map_x; p_map.point.y = map_y;
+    try { auto tf = tf_buffer_->lookupTransform(my_frame_, "map", tf2::TimePointZero); tf2::doTransform(p_map, p_local, tf); } catch (...) { return false; }
+    double r_sq = std::pow(this->get_parameter("blocking_radius").as_double(), 2);
+    for (const auto& obs : obstacle_points_) {
+        double dx = obs.x - p_local.point.x; double dy = obs.y - p_local.point.y;
+        if ((dx*dx + dy*dy) < r_sq) return true; 
+    }
+    return false;
+  }
 
   void scan_cb(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
     pcl::PointCloud<pcl::PointXYZ>::Ptr raw_cloud(new pcl::PointCloud<pcl::PointXYZ>);
@@ -393,39 +334,17 @@ private:
   }
 
   void control_loop() {
-
-    geometry_msgs::msg::TransformStamped tf_now;
-    try {
-        tf_now = tf_buffer_->lookupTransform("map", my_frame_, tf2::TimePointZero);
-    } catch (...) {
-        return; // Wait for TF to be available
-    }
-
-    // --- 2. TAKEOVER BROADCAST (If I am now the Leader) ---
-    if (is_promoted_to_leader_ && takeover_pub_) {
-        auto msg = skyhunter_msgs::msg::LeaderState();
-        msg.header.stamp = this->get_clock()->now();
-        msg.header.frame_id = "map";
-        
-        // Use the tf_now we looked up at the start
-        msg.pose.position.x = tf_now.transform.translation.x;
-        msg.pose.position.y = tf_now.transform.translation.y;
-        msg.pose.position.z = tf_now.transform.translation.z;
-        msg.pose.orientation = tf_now.transform.rotation;
-        
-        // msg.velocity = last_leader_msg_.velocity; 
-        msg.velocity = my_current_twist_;
-        msg.next_waypoints = shadow_mission_buffer_; 
-        msg.formation_type = 1; // Force Column
-        
-        takeover_pub_->publish(msg);
-        return; // EXIT: We stop the follower math so Nav2 can drive the wheels
-    }
-
     if (!has_leader_ || !has_scan_) return;
-
     if ((this->get_clock()->now() - last_leader_time_).seconds() > 1.5) { stop_robot(); return; }
 
+    if (current_local_role_ == 2) { // 2 = LEADER role
+        // I am the leader now. I must stop following and let my LeaderNode take over.
+        stop_robot(); 
+        return; 
+    }
+
+    geometry_msgs::msg::TransformStamped tf_now;
+    try { tf_now = tf_buffer_->lookupTransform("map", my_frame_, tf2::TimePointZero); } catch (...) { return; }
     double my_x = tf_now.transform.translation.x;
     double my_y = tf_now.transform.translation.y;
     double my_yaw = tf2::getYaw(tf_now.transform.rotation);
@@ -436,16 +355,17 @@ private:
     double leader_speed = std::abs(last_leader_msg_.velocity.linear.x);
     double current_off_side = (last_leader_msg_.formation_type == 1) ? 0.0 : off_side;
 
+    // BOIDS: SEPARATION MATH
     double repulse_x = 0.0, repulse_y = 0.0;
     double min_teammate_dist = 10.0;
+    double sep_limit = this->get_parameter("separation_dist").as_double();
     if (has_swarm_) {
         for (const auto& other_pose : swarm_poses_.poses) {
             double dx = other_pose.position.x - my_x;
             double dy = other_pose.position.y - my_y;
             double d = std::hypot(dx, dy);
-            if (d < 0.5) continue; 
+            if (d < 0.1) continue; 
             if (d < min_teammate_dist) min_teammate_dist = d;
-            double sep_limit = this->get_parameter("separation_dist").as_double();
             if (d < sep_limit) {
                 double force = (sep_limit - d) / d;
                 repulse_x -= dx * force; repulse_y -= dy * force;
@@ -479,8 +399,8 @@ private:
     for (double angle = -1.57; angle <= 1.57; angle += 0.15) {
         double check_yaw = my_yaw + angle;
         double diff = check_yaw - angle_to_target;
-        while(diff > M_PI) { diff -= 2*M_PI; }
-        while(diff < -M_PI) { diff += 2*M_PI; }
+        while(diff > M_PI) diff -= 2*M_PI; 
+        while(diff < -M_PI) diff += 2*M_PI;
         bool collision = false;
         for (const auto& p : obstacle_points_) {
             double px_r = p.x * cos(-angle) - p.y * sin(-angle);
@@ -491,46 +411,45 @@ private:
     }
 
     geometry_msgs::msg::Twist cmd;
-    if (dist_err < 0.6 || (leader_speed < 0.05 && dist_err < 1.0)) {
-        stop_robot();
-    } else {
+    if (dist_err < 0.6 || (leader_speed < 0.05 && dist_err < 1.0)) { stop_robot(); } 
+    else {
         double steer = best_yaw - my_yaw;
-        while(steer > M_PI) { steer -= 2*M_PI; } 
-        while(steer < -M_PI) { steer += 2*M_PI; }
+        while(steer > M_PI) steer -= 2*M_PI; 
+        while(steer < -M_PI) steer += 2*M_PI;
         cmd.linear.x = std::min(1.1, leader_speed + (0.25 * dist_err)) * ttc_scale;
         cmd.angular.z = 1.8 * steer;
         if (std::abs(steer) > 0.8) cmd.linear.x = 0.05; 
     }
     pub_cmd_->publish(cmd);
+
+    RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000, 
+    "Form: %s | Spd: %.2f | TeamDist: %.2f | TTC: %s", 
+    (current_off_side == 0.0 ? "Column" : "V-Shape"), cmd.linear.x, min_teammate_dist, (ttc_scale == 0.0 ? "HALT" : "OK"));
   }
 
   void stop_robot() { pub_cmd_->publish(geometry_msgs::msg::Twist()); }
 
   // --- MEMBERS ---
-  int32_t current_mission_index_ = 0;
-  geometry_msgs::msg::Twist my_current_twist_;
-
-  std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
-  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
   std::vector<geometry_msgs::msg::Pose> shadow_mission_buffer_;
-  bool is_promoted_to_leader_ = false, has_leader_ = false, has_scan_ = false, has_swarm_ = false;
+
   std::string my_ns_, my_frame_;
   skyhunter_msgs::msg::LeaderState last_leader_msg_;
   std::vector<pcl::PointXYZ> obstacle_points_;
-  geometry_msgs::msg::PoseArray swarm_poses_;
   rclcpp::Time last_leader_time_;
-  rclcpp::TimerBase::SharedPtr timer_, succession_timer_;
+  bool has_leader_ = false, has_scan_ = false, has_swarm_ = false;
+  geometry_msgs::msg::PoseArray swarm_poses_;
+
+  int8_t current_local_role_ = 0;
+  rclcpp::Subscription<std_msgs::msg::Int8>::SharedPtr sub_role_;
+
   rclcpp::Subscription<skyhunter_msgs::msg::LeaderState>::SharedPtr sub_leader_;
   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_scan_;
   rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr sub_swarm_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_cmd_;
-  rclcpp::Publisher<skyhunter_msgs::msg::LeaderState>::SharedPtr takeover_pub_;
-
-  rclcpp::Client<nav2_msgs::srv::ManageLifecycleNodes>::SharedPtr lifecycle_client_;
-  rclcpp::TimerBase::SharedPtr recovery_timer_;
-  rclcpp::TimerBase::SharedPtr wait_timer_;
-rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
-
+  rclcpp::TimerBase::SharedPtr timer_;
+  std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
+  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 };
 
 int main(int argc, char * argv[]) { rclcpp::init(argc, argv); rclcpp::spin(std::make_shared<RobustFollower>()); rclcpp::shutdown(); return 0; }
+

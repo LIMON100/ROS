@@ -28,6 +28,8 @@ find_package(grid_map_core REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(std_msgs REQUIRED)
 
+find_package(nav2_msgs REQUIRED)
+find_package(rclcpp_action REQUIRED)
 # Add PCL Include Directories (Crucial for PCL)
 include_directories(${PCL_INCLUDE_DIRS})
 
@@ -99,8 +101,15 @@ ament_target_dependencies(swarm_monitor_node
   rclcpp
   geometry_msgs
   nav_msgs
+  tf2               
+  tf2_ros           
+  tf2_geometry_msgs 
 )
-
+target_link_libraries(swarm_monitor_node 
+  tf2::tf2
+  tf2_ros::tf2_ros
+  tf2_geometry_msgs::tf2_geometry_msgs
+)
 
 add_executable(lidar_test_node src/lidar_test_node.cpp)
 
@@ -157,6 +166,8 @@ ament_target_dependencies(leadership_manager
   rclcpp
   std_msgs
   skyhunter_msgs
+  nav2_msgs       # <--- ADD THIS
+  rclcpp_action   # <--- ADD THIS
 )
 
 # Ensure it is installed so the launch file can find it

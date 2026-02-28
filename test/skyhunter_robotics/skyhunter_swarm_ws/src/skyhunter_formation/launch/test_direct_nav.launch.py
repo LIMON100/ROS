@@ -191,34 +191,141 @@ def launch_setup(context, *args, **kwargs):
     # SECTION 1: THE LEADER (Global Namespace for Stability)
     # ====================================================
     # Sim + Robot 1
+    # nodes_to_start.append(IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, 'launch', 'sim.launch.py')),
+    #     launch_arguments={
+    #         'num_robots': '1', 
+    #         'lidar_mode': 'half', 
+    #         'use_sim_time': use_sim_time,
+    #         'world': world_file,
+    #         'pose': pose_str 
+    #     }.items()
+    # ))
+
+    # # Nav2 (The Brain)
+    # nodes_to_start.append(IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
+    #     launch_arguments={'use_sim_time': use_sim_time, 'autostart': 'true'}.items()
+    # ))
+
+    # # Leader Node (Global)
+    # nodes_to_start.append(Node(
+    #     package='skyhunter_formation', executable='leader_node',
+    #     output='screen', parameters=[{'use_sim_time': True}],
+    #     remappings=[('odom', '/odom'), ('leader_state', '/leader_state')]
+    # ))
+
+    # # ====================================================
+    # # SECTION 2: DYNAMIC FOLLOWERS (SH_02 TO SH_07)
+    # # ====================================================
+    # # We loop to create a 7-unit swarm total
+    # for i in range(2, num_robots + 1):
+    #     follower_ns = f'SH_{i:02d}' # SH_02, SH_03...
+        
+    #     row = i // 2
+    #     side = 1 if i % 2 == 0 else -1
+
+    #     # Spawning coordinates
+    #     spawn_dist_back = -2.5 * row 
+    #     spawn_dist_side = 1.5 * side
+    #     spawn_x = b_x + (spawn_dist_back * math.cos(b_yaw) - spawn_dist_side * math.sin(b_yaw))
+    #     spawn_y = b_y + (spawn_dist_back * math.sin(b_yaw) + spawn_dist_side * math.cos(b_yaw))
+        
+    #     # Driving Formation Offsets
+    #     off_dist = -3.0 * row  # Distance behind Leader path
+    #     off_side = 1.2 * side  # Lateral offset (V-Shape)
+
+    #     # STAGGERED SPAWN (5s Delay to prevent CPU crash)
+    #     delay = float(i) * 5.0 
+
+    #     follower_action = TimerAction(
+    #         # period=delay,
+    #         period=float(i) * 1.5 + 4.0,
+    #         actions=[
+    #             # A. Spawn physical model in namespace SH_02...
+    #             IncludeLaunchDescription(
+    #                 PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, "launch", "spawn_robot.launch.py")),
+    #                 launch_arguments={
+    #                     "robot_ns": follower_ns,
+    #                     "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}",
+    #                     "use_sim_time": use_sim_time,
+    #                     "lidar_mode": "half", # Low density for followers saves CPU
+    #                     "use_ekf": "true"
+    #                 }.items(),
+    #             ),
+    #             # B. Static TF link (map -> SH_02/odom)
+    #             Node(
+    #                 package='tf2_ros', executable='static_transform_publisher',
+    #                 name=f'link_{follower_ns}',
+    #                 arguments=['0', '0', '0', '0', '0', '0', 'map', f'{follower_ns}/odom'],
+    #                 parameters=[{'use_sim_time': True}]
+    #             ),
+    #             # Node(
+    #             #     package='tf2_ros', executable='static_transform_publisher',
+    #             #     name=f'link_{follower_ns}',
+    #             #     # <-- FIX THIS LINE TO USE SPAWN COORDS:
+    #             #     arguments=[str(spawn_x), str(spawn_y), '0', '0', '0', str(b_yaw), 'map', f'{follower_ns}/odom'],
+    #             #     parameters=[{'use_sim_time': True}]
+    #             # ),
+    #             # C. Follower Node
+    #             Node(
+    #                 package='skyhunter_formation', executable='follower_node',
+    #                 namespace=follower_ns, output='screen',
+    #                 parameters=[{
+    #                     'use_sim_time': True, 
+    #                     'offset_dist': float(off_dist),
+    #                     'offset_lateral': float(off_side) 
+    #                 }],
+    #                 remappings=[
+    #                     ('scan/points', f'/{follower_ns}/scan/points'), 
+    #                     ('cmd_vel', f'/{follower_ns}/cmd_vel'),
+    #                     ('odom', f'/{follower_ns}/odom_filtered'), 
+    #                     ('leader_state', '/leader_state'),
+    #                     ('/tf', '/tf'), ('/tf_static', '/tf_static')
+    #                 ]
+    #             ),
+    #         ]
+    #     )
+    #     nodes_to_start.append(follower_action)
+
     nodes_to_start.append(IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, 'launch', 'sim.launch.py')),
+        launch_arguments={'num_robots': '1', 'lidar_mode': 'half', 'use_sim_time': use_sim_time, 'world': world_file, 'pose': pose_str}.items()
+    ))
+
+
+    nodes_to_start.append(IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
         launch_arguments={
-            'num_robots': '1', 
-            'lidar_mode': 'half', 
             'use_sim_time': use_sim_time,
-            'world': world_file,
-            'pose': pose_str 
+            'autostart': 'true',
+            'namespace': '', # LEAVE EMPTY FOR GLOBAL
+            'use_rviz': 'true'
         }.items()
     ))
 
-    # Nav2 (The Brain)
-    nodes_to_start.append(IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
-        launch_arguments={'use_sim_time': use_sim_time, 'autostart': 'true'}.items()
-    ))
-
-    # Leader Node (Global)
+    # 3. Leader Node (Produces waypoints for R1)
     nodes_to_start.append(Node(
         package='skyhunter_formation', executable='leader_node',
         output='screen', parameters=[{'use_sim_time': True}],
         remappings=[('odom', '/odom'), ('leader_state', '/leader_state')]
     ))
 
+    # 4. Global Leadership Manager (Heartbeat + Relay for R1)
+    # Note: We only use THIS, not the 'leader_relay' script.
+    nodes_to_start.append(Node(
+        package='skyhunter_formation', executable='leadership_manager',
+        name='leadership_manager_R1',
+        parameters=[{'robot_int_id': 1}],
+        remappings=[
+            ('leader_state', '/leader_state'), 
+            ('/swarm/virtual_leader/state', '/swarm/virtual_leader/state')
+        ]
+    ))
+
     # ====================================================
     # SECTION 2: DYNAMIC FOLLOWERS (SH_02 TO SH_07)
     # ====================================================
-    # We loop to create a 7-unit swarm total
     for i in range(2, num_robots + 1):
         follower_ns = f'SH_{i:02d}' # SH_02, SH_03...
         
@@ -238,67 +345,66 @@ def launch_setup(context, *args, **kwargs):
         # STAGGERED SPAWN (5s Delay to prevent CPU crash)
         delay = float(i) * 5.0 
 
-        if follower_ns == 'SH_02':
-            # nav2_sh02 = IncludeLaunchDescription(
-            #     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
-            #     launch_arguments={
-            #         'use_sim_time': use_sim_time,
-            #         'autostart': 'false',
-            #         'namespace': 'SH_02' # Start Nav2 inside SH_02
-            #     }.items()
-            # )
-            nodes_to_start.append(IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2_sh02.launch.py')),
-                launch_arguments={
-                    'use_sim_time': 'true',
-                    'namespace': 'SH_02',
-                    'autostart': 'false' # DO NOT START MOVING YET
-                }.items()
-            ))
-
         follower_action = TimerAction(
-            # period=delay,
             period=float(i) * 1.5 + 4.0,
             actions=[
-                # A. Spawn physical model in namespace SH_02...
+                # A. Spawn Robot
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, "launch", "spawn_robot.launch.py")),
+                    launch_arguments={"robot_ns": follower_ns, "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}", "use_sim_time": use_sim_time, "lidar_mode": "half", "use_ekf": "true"}.items(),
+                ),
+
+                # B. Nav2 (NAMESPACED & NO RVIZ)
+                IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource(os.path.join(pkg_tin3_navigation, 'launch', 'nav2.launch.py')),
                     launch_arguments={
-                        "robot_ns": follower_ns,
-                        "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}",
-                        "use_sim_time": use_sim_time,
-                        "lidar_mode": "half", # Low density for followers saves CPU
-                        "use_ekf": "true"
-                    }.items(),
+                        'use_sim_time': use_sim_time,
+                        'autostart': 'true',
+                        'params_file': os.path.join(pkg_tin3_navigation, 'config', 'nav2_params.yaml'),
+                        'namespace': follower_ns,
+                        'use_namespace': 'true',
+                        'use_rviz': 'false' # FIX: Only Robot-01 gets RViz
+                    }.items()
                 ),
-                # B. Static TF link (map -> SH_02/odom)
-                # Node(
-                #     package='tf2_ros', executable='static_transform_publisher',
-                #     name=f'link_{follower_ns}',
-                #     arguments=['0', '0', '0', '0', '0', '0', 'map', f'{follower_ns}/odom'],
-                #     parameters=[{'use_sim_time': True}]
-                # ),
+
+                # C. Leadership Manager (The ID switcher)
                 Node(
-                    package='tf2_ros', executable='static_transform_publisher',
-                    name=f'link_{follower_ns}',
-                    # <-- FIX THIS LINE TO USE SPAWN COORDS:
-                    arguments=[str(spawn_x), str(spawn_y), '0', '0', '0', str(b_yaw), 'map', f'{follower_ns}/odom'],
-                    parameters=[{'use_sim_time': True}]
+                    package='skyhunter_formation', executable='leadership_manager',
+                    namespace=follower_ns,
+                    parameters=[{'robot_int_id': i}],
+                    remappings=[
+                        ('leader_state', f'/{follower_ns}/leader_state'), # In: My local logic
+                        ('/swarm/virtual_leader/state', '/swarm/virtual_leader/state') # Out: Global Virtual
+                    ]
                 ),
-                # C. Follower Node
+
+                # D. Local Leader Node (CRITICAL FIX: Missing in your code!)
+                # This node MUST be ready if this robot is elected as leader
+                Node(
+                    package='skyhunter_formation', executable='leader_node',
+                    namespace=follower_ns,
+                    # remappings=[
+                    #     ('odom', f'/{follower_ns}/odom_filtered'),
+                    #     ('leader_state', f'/{follower_ns}/leader_state')
+                    # ]
+                    remappings=[
+                        ('odom', f'/{follower_ns}/odom_filtered'),
+                        ('leader_state', f'/{follower_ns}/leader_state'),
+                        ('plan', f'/{follower_ns}/plan')  # <--- ADD THIS LINE !!!
+                    ]
+                ),
+
+                # E. Follower Node
                 Node(
                     package='skyhunter_formation', executable='follower_node',
-                    namespace=follower_ns, output='screen',
-                    parameters=[{
-                        'use_sim_time': True, 
-                        'offset_dist': float(off_dist),
-                        'offset_lateral': float(off_side) 
-                    }],
+                    namespace=follower_ns,
+                    parameters=[{'use_sim_time': True, 'offset_dist': -3.0}],
                     remappings=[
-                        ('scan/points', f'/{follower_ns}/scan/points'), 
+                        # This is why they didn't move: they must look at the VIRTUAL topic
+                        ('leader_state', '/swarm/virtual_leader/state'), 
+                        ('odom', f'/{follower_ns}/odom_filtered'),
                         ('cmd_vel', f'/{follower_ns}/cmd_vel'),
-                        ('odom', f'/{follower_ns}/odom_filtered'), 
-                        ('leader_state', '/leader_state'),
+                        ('scan/points', f'/{follower_ns}/scan/points'),
                         ('/tf', '/tf'), ('/tf_static', '/tf_static')
                     ]
                 ),
