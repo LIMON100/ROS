@@ -339,7 +339,7 @@ private:
 
     if (current_local_role_ == 2) { // 2 = LEADER role
         // I am the leader now. I must stop following and let my LeaderNode take over.
-        stop_robot(); 
+        // stop_robot(); 
         return; 
     }
 

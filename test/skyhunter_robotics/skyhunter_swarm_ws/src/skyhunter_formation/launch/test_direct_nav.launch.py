@@ -342,6 +342,9 @@ def launch_setup(context, *args, **kwargs):
         off_dist = -3.0 * row  # Distance behind Leader path
         off_side = 1.2 * side  # Lateral offset (V-Shape)
 
+        drive_off_back = -3.0 * row  # 3m behind for first row
+        drive_off_side = 1.5 * side  # 1.5m to the side
+
         # STAGGERED SPAWN (5s Delay to prevent CPU crash)
         delay = float(i) * 5.0 
 
@@ -351,7 +354,7 @@ def launch_setup(context, *args, **kwargs):
                 # A. Spawn Robot
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, "launch", "spawn_robot.launch.py")),
-                    launch_arguments={"robot_ns": follower_ns, "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}", "use_sim_time": use_sim_time, "lidar_mode": "half", "use_ekf": "true"}.items(),
+                    launch_arguments={"robot_ns": follower_ns, "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}", "use_sim_time": use_sim_time, "lidar_mode": "half", "use_ekf": "false"}.items(),
                 ),
 
                 # B. Nav2 (NAMESPACED & NO RVIZ)
@@ -385,24 +388,37 @@ def launch_setup(context, *args, **kwargs):
                     namespace=follower_ns,
                     # remappings=[
                     #     ('odom', f'/{follower_ns}/odom_filtered'),
-                    #     ('leader_state', f'/{follower_ns}/leader_state')
+                    #     ('leader_state', f'/{follower_ns}/leader_state'),
+                    #     ('plan', f'/{follower_ns}/plan')  # <--- ADD THIS LINE !!!
                     # ]
                     remappings=[
-                        ('odom', f'/{follower_ns}/odom_filtered'),
+                        ('odom', f'/{follower_ns}/odom'), # <--- FIXED: Removed _filtered
                         ('leader_state', f'/{follower_ns}/leader_state'),
-                        ('plan', f'/{follower_ns}/plan')  # <--- ADD THIS LINE !!!
+                        ('plan', f'/{follower_ns}/plan')  
                     ]
+                ),
+
+                Node(
+                    package='tf2_ros', executable='static_transform_publisher',
+                    name=f'link_{follower_ns}',
+                    # <-- CRITICAL FIX: The transform must match the spawn coordinates!
+                    arguments=[str(spawn_x), str(spawn_y), '0', '0', '0', str(b_yaw), 'map', f'{follower_ns}/odom'],
+                    parameters=[{'use_sim_time': True}]
                 ),
 
                 # E. Follower Node
                 Node(
                     package='skyhunter_formation', executable='follower_node',
                     namespace=follower_ns,
-                    parameters=[{'use_sim_time': True, 'offset_dist': -3.0}],
+                    parameters=[{
+                        'use_sim_time': True,
+                        'offset_dist': float(drive_off_back),
+                        'offset_lateral': float(drive_off_side), 
+                    }],
                     remappings=[
                         # This is why they didn't move: they must look at the VIRTUAL topic
                         ('leader_state', '/swarm/virtual_leader/state'), 
-                        ('odom', f'/{follower_ns}/odom_filtered'),
+                        ('odom', f'/{follower_ns}/odom'),
                         ('cmd_vel', f'/{follower_ns}/cmd_vel'),
                         ('scan/points', f'/{follower_ns}/scan/points'),
                         ('/tf', '/tf'), ('/tf_static', '/tf_static')
@@ -431,7 +447,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('num_robots', default_value='2'),
         DeclareLaunchArgument('use_sim_time', default_value='true'),
-        DeclareLaunchArgument('world', default_value='obstacle_world.sdf'),
+        DeclareLaunchArgument('world', default_value='empty_world.sdf'),
         DeclareLaunchArgument('pose', default_value='0.0 0.0 0.5 0.0 0.0 0.0'),
         OpaqueFunction(function=launch_setup)
     ])

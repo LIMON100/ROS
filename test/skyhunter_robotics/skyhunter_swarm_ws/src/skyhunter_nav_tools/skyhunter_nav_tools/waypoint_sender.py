@@ -286,13 +286,13 @@ class WaypointFollower(Node):
         self.role_sub = self.create_subscription(Int8, '/SH_02/local_role', self.succession_cb, 10)
         
         # Define Mission
-        # self.waypoints = [
-        #         (10.0, 0.0),   # 1. Straight 30m
-        #         (20.0, 15.0),  # 2. Left 10m
-        #         (30.0, 10.0),  # 3. Straight 10m
-        #         (30.0, -20.0)  # 4. Right 30m
-        # ]
-        self.waypoints = [(10.0, 0.0), (20.0, 0.0), (30.0, 0.0), (40.0, 0.0)]
+        self.waypoints = [
+                (10.0, 0.0),   # 1. Straight 30m
+                (20.0, 15.0),  # 2. Left 10m
+                (30.0, 10.0),  # 3. Straight 10m
+                (30.0, -20.0)  # 4. Right 30m
+        ]
+        # self.waypoints = [(10.0, 0.0), (20.0, 0.0), (30.0, 0.0), (40.0, 0.0)]
         self.current_wp_index = 0
         self.is_busy = False
         
