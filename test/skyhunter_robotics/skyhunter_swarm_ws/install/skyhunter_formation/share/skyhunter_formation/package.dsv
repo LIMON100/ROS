@@ -1,0 +1,8 @@
+source;share/skyhunter_formation/hook/cmake_prefix_path.ps1
+source;share/skyhunter_formation/hook/cmake_prefix_path.dsv
+source;share/skyhunter_formation/hook/cmake_prefix_path.sh
+source;share/skyhunter_formation/local_setup.bash
+source;share/skyhunter_formation/local_setup.dsv
+source;share/skyhunter_formation/local_setup.ps1
+source;share/skyhunter_formation/local_setup.sh
+source;share/skyhunter_formation/local_setup.zsh

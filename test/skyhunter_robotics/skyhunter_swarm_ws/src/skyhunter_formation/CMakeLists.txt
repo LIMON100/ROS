@@ -48,11 +48,18 @@ ament_target_dependencies(leader_node
   grid_map_core   
   grid_map_ros    
   std_msgs
+  tf2               # <--- ADDED
+  tf2_ros           # <--- ADDED
+  tf2_geometry_msgs # <--- ADDED
 )
+
 
 # Link PCL and Grid Map libraries
 target_link_libraries(leader_node 
   ${PCL_LIBRARIES}
+  tf2::tf2
+  tf2_ros::tf2_ros
+  tf2_geometry_msgs::tf2_geometry_msgs
 )
 
 # Ensure Grid Map include directories are visible
@@ -168,6 +175,14 @@ ament_target_dependencies(leadership_manager
   skyhunter_msgs
   nav2_msgs       # <--- ADD THIS
   rclcpp_action   # <--- ADD THIS
+  tf2               # <--- ADDED
+  tf2_ros           # <--- ADDED
+  tf2_geometry_msgs # <--- ADDED
+)
+target_link_libraries(leadership_manager
+  tf2::tf2
+  tf2_ros::tf2_ros
+  tf2_geometry_msgs::tf2_geometry_msgs
 )
 
 # Ensure it is installed so the launch file can find it

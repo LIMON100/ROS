@@ -1,0 +1,48 @@
+[0.470s] Invoking command in '/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_nav_tools': PYTHONPATH=/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/skyhunter_nav_tools build --build-base /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build install --record /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/install.log --single-version-externally-managed install_data
+[0.604s] running egg_info
+[0.604s] creating ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info
+[0.612s] writing ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/PKG-INFO
+[0.621s] writing dependency_links to ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/dependency_links.txt
+[0.621s] writing entry points to ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/entry_points.txt
+[0.622s] writing requirements to ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/requires.txt
+[0.622s] writing top-level names to ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/top_level.txt
+[0.622s] writing manifest file '../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/SOURCES.txt'
+[0.638s] reading manifest file '../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/SOURCES.txt'
+[0.639s] writing manifest file '../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info/SOURCES.txt'
+[0.639s] running build
+[0.639s] running build_py
+[0.639s] creating /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build
+[0.639s] creating /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib
+[0.639s] creating /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools
+[0.639s] copying skyhunter_nav_tools/leader_relay.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools
+[0.639s] copying skyhunter_nav_tools/waypoint_sender.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools
+[0.639s] copying skyhunter_nav_tools/swarm_chaos.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools
+[0.639s] copying skyhunter_nav_tools/formation_switcher.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools
+[0.639s] copying skyhunter_nav_tools/__init__.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools
+[0.639s] running install
+[0.642s] running install_lib
+[0.650s] creating /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools
+[0.650s] copying /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools/leader_relay.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools
+[0.650s] copying /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools/waypoint_sender.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools
+[0.650s] copying /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools/swarm_chaos.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools
+[0.650s] copying /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools/formation_switcher.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools
+[0.650s] copying /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build/lib/skyhunter_nav_tools/__init__.py -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools
+[0.651s] byte-compiling /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools/leader_relay.py to leader_relay.cpython-310.pyc
+[0.651s] byte-compiling /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools/waypoint_sender.py to waypoint_sender.cpython-310.pyc
+[0.651s] byte-compiling /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools/swarm_chaos.py to swarm_chaos.cpython-310.pyc
+[0.651s] byte-compiling /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools/formation_switcher.py to formation_switcher.cpython-310.pyc
+[0.652s] byte-compiling /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools/__init__.py to __init__.cpython-310.pyc
+[0.652s] running install_data
+[0.652s] creating /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/ament_index
+[0.652s] creating /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/ament_index/resource_index
+[0.652s] creating /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/ament_index/resource_index/packages
+[0.652s] copying resource/skyhunter_nav_tools -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/ament_index/resource_index/packages
+[0.652s] copying package.xml -> /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/share/skyhunter_nav_tools
+[0.652s] running install_egg_info
+[0.661s] Copying ../../build/skyhunter_nav_tools/skyhunter_nav_tools.egg-info to /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages/skyhunter_nav_tools-0.0.0-py3.10.egg-info
+[0.661s] running install_scripts
+[0.732s] Installing formation_switcher script to /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/skyhunter_nav_tools
+[0.732s] Installing swarm_chaos script to /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/skyhunter_nav_tools
+[0.732s] Installing waypoint_sender script to /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/skyhunter_nav_tools
+[0.732s] writing list of installed files to '/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/install.log'
+[0.746s] Invoked command in '/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_nav_tools' returned '0': PYTHONPATH=/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/skyhunter_nav_tools build --build-base /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/build install --record /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_nav_tools/install.log --single-version-externally-managed install_data

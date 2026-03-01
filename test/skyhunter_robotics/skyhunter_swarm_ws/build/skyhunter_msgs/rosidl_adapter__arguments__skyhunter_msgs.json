@@ -1,0 +1,8 @@
+{
+  "package_name": "skyhunter_msgs",
+  "non_idl_tuples": [
+    "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_msgs:msg/LeaderState.msg",
+    "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_msgs:msg/SwarmHeartbeat.msg",
+    "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_msgs:msg/ElectionVote.msg"
+  ]
+}

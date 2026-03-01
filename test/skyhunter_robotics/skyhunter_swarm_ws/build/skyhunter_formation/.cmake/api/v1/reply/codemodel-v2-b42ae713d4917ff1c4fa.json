@@ -1,0 +1,133 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-129dba09471f4831df98.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "skyhunter_formation",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "direct_mover::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-direct_mover-d2b4063d0cb7edc738c9.json",
+					"name" : "direct_mover",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "follower_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-follower_node-f3e8cd4a71e9a4e4c9be.json",
+					"name" : "follower_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "leader_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-leader_node-bb683d3675a9d9ee8633.json",
+					"name" : "leader_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "leadership_manager::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-leadership_manager-a52726520e56eea6abac.json",
+					"name" : "leadership_manager",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "lidar_test_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-lidar_test_node-9abe3cf1d01b607760e1.json",
+					"name" : "lidar_test_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "location_tracker::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-location_tracker-74019b0659b4b919e729.json",
+					"name" : "location_tracker",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "skyhunter_formation_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-skyhunter_formation_uninstall-787fce7f09a1b42e96a8.json",
+					"name" : "skyhunter_formation_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "swarm_monitor_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-swarm_monitor_node-d276e9e0c986a68f0e20.json",
+					"name" : "swarm_monitor_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-2e6e947a22fc5fbb5b63.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_formation",
+		"source" : "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_formation"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

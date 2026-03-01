@@ -39,7 +39,7 @@ public:
     spacing_config_ = this->get_parameter("waypoint_spacing").as_double();
     map_frame_ = this->get_parameter("map_frame").as_string();
 
-    publisher_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("/leader_state", 10);
+    publisher_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("leader_state", 10);
     viz_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("leader_waypoints_viz", 10);
 
     sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
