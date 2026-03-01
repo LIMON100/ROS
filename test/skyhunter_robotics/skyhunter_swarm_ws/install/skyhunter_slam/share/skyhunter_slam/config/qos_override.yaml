@@ -1,6 +1,0 @@
-pointcloud_to_laserscan:
-  ros__parameters:
-    qos_overrides:
-      scan_out:
-        publisher:
-          reliability: best_effort

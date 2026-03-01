@@ -1,9 +1,0 @@
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation/CMakeFiles/uninstall.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation/CMakeFiles/tin3_navigation_uninstall.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation/CMakeFiles/test.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation/CMakeFiles/edit_cache.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation/CMakeFiles/rebuild_cache.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation/CMakeFiles/list_install_components.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation/CMakeFiles/install.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation/CMakeFiles/install/local.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation/CMakeFiles/install/strip.dir
