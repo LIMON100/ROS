@@ -1,9 +1,0 @@
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_gz_worlds/CMakeFiles/uninstall.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_gz_worlds/CMakeFiles/tin3_gz_worlds_uninstall.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_gz_worlds/CMakeFiles/test.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_gz_worlds/CMakeFiles/edit_cache.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_gz_worlds/CMakeFiles/rebuild_cache.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_gz_worlds/CMakeFiles/list_install_components.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_gz_worlds/CMakeFiles/install.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_gz_worlds/CMakeFiles/install/local.dir
-/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_gz_worlds/CMakeFiles/install/strip.dir
