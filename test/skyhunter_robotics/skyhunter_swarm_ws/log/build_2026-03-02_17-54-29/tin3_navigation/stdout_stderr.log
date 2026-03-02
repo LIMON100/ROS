@@ -1,0 +1,45 @@
+-- The C compiler identification is GNU 12.3.0
+-- The CXX compiler identification is GNU 12.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.13 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /home/limonubuntu/.pyenv/shims/python3 (found version "3.10.12") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/tin3_navigation
+-- Install configuration: ""
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//config
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//config/follower_ekf.yaml
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//config/nav2_params.yaml
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//config/ekf.yaml
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//launch
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//launch/ekf.launch.py
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//launch/nav2.launch.py
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//maps
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//maps/empty_world_map.yaml
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//maps/empty_world_map.pgm
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//rviz
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation//rviz/nav2_config.rviz
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/ament_index/resource_index/package_run_dependencies/tin3_navigation
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/ament_index/resource_index/parent_prefix_path/tin3_navigation
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/environment/ament_prefix_path.sh
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/environment/ament_prefix_path.dsv
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/environment/path.sh
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/environment/path.dsv
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/local_setup.bash
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/local_setup.sh
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/local_setup.zsh
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/local_setup.dsv
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/package.dsv
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/ament_index/resource_index/packages/tin3_navigation
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/cmake/tin3_navigationConfig.cmake
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/cmake/tin3_navigationConfig-version.cmake
+-- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/tin3_navigation/share/tin3_navigation/package.xml

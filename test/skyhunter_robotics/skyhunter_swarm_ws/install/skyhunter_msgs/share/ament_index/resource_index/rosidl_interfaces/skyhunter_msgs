@@ -1,0 +1,6 @@
+msg/ElectionVote.idl
+msg/ElectionVote.msg
+msg/LeaderState.idl
+msg/LeaderState.msg
+msg/SwarmHeartbeat.idl
+msg/SwarmHeartbeat.msg

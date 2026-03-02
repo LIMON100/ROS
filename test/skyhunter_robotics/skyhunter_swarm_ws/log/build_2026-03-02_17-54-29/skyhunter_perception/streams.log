@@ -1,0 +1,178 @@
+[0.135s] Invoking command in '/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_perception -DCMAKE_INSTALL_PREFIX=/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception
+[0.169s] -- The C compiler identification is GNU 12.3.0
+[0.204s] -- The CXX compiler identification is GNU 12.3.0
+[0.207s] -- Detecting C compiler ABI info
+[0.240s] -- Detecting C compiler ABI info - done
+[0.243s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.243s] -- Detecting C compile features
+[0.244s] -- Detecting C compile features - done
+[0.245s] -- Detecting CXX compiler ABI info
+[0.291s] -- Detecting CXX compiler ABI info - done
+[0.295s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.295s] -- Detecting CXX compile features
+[0.295s] -- Detecting CXX compile features - done
+[0.297s] -- Found ament_cmake: 1.3.13 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.622s] -- Found Python3: /home/limonubuntu/.pyenv/shims/python3 (found version "3.10.12") found components: Interpreter 
+[0.693s] -- Found rclcpp: 16.0.18 (/opt/ros/humble/share/rclcpp/cmake)
+[0.718s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.721s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.725s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.732s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.740s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.764s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.766s] -- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.818s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.834s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.864s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.869s] -- Looking for pthread.h
+[0.915s] -- Looking for pthread.h - found
+[0.915s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.958s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.959s] -- Found Threads: TRUE  
+[0.987s] -- Found sensor_msgs: 4.9.1 (/opt/ros/humble/share/sensor_msgs/cmake)
+[1.002s] -- Found pcl_conversions: 2.4.5 (/opt/ros/humble/share/pcl_conversions/cmake)
+[1.024s] -- Checking for module 'eigen3'
+[1.031s] --   Found eigen3, version 3.4.0
+[1.049s] -- Found Eigen: /usr/include/eigen3 (Required is at least version "3.1") 
+[1.049s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[1.071s] -- Checking for module 'flann'
+[1.079s] --   Found flann, version 1.9.1
+[1.101s] -- Found FLANN: /usr/lib/x86_64-linux-gnu/libflann_cpp.so  
+[1.101s] -- FLANN found (include: /usr/include, lib: /usr/lib/x86_64-linux-gnu/libflann_cpp.so)
+[1.644s] -- Checking for module 'libusb-1.0'
+[1.652s] --   Found libusb-1.0, version 1.0.25
+[1.672s] -- Found libusb: /usr/lib/x86_64-linux-gnu/libusb-1.0.so  
+[1.673s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[1.704s] -- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)
+[1.788s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[1.792s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[1.795s] -- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)
+[1.875s] -- Found Qhull version 8.0.2
+[1.966s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[2.079s] -- Found PCL_COMMON: /usr/lib/x86_64-linux-gnu/libpcl_common.so  
+[2.079s] -- Found PCL_KDTREE: /usr/lib/x86_64-linux-gnu/libpcl_kdtree.so  
+[2.080s] -- Found PCL_OCTREE: /usr/lib/x86_64-linux-gnu/libpcl_octree.so  
+[2.080s] -- Found PCL_SEARCH: /usr/lib/x86_64-linux-gnu/libpcl_search.so  
+[2.081s] -- Found PCL_SAMPLE_CONSENSUS: /usr/lib/x86_64-linux-gnu/libpcl_sample_consensus.so  
+[2.081s] -- Found PCL_FILTERS: /usr/lib/x86_64-linux-gnu/libpcl_filters.so  
+[2.081s] -- Found PCL_2D: /usr/include/pcl-1.12  
+[2.082s] -- Found PCL_GEOMETRY: /usr/include/pcl-1.12  
+[2.082s] -- Found PCL_IO: /usr/lib/x86_64-linux-gnu/libpcl_io.so  
+[2.083s] -- Found PCL_FEATURES: /usr/lib/x86_64-linux-gnu/libpcl_features.so  
+[2.083s] -- Found PCL_ML: /usr/lib/x86_64-linux-gnu/libpcl_ml.so  
+[2.084s] -- Found PCL_SEGMENTATION: /usr/lib/x86_64-linux-gnu/libpcl_segmentation.so  
+[2.084s] -- Found PCL_VISUALIZATION: /usr/lib/x86_64-linux-gnu/libpcl_visualization.so  
+[2.085s] -- Found PCL_SURFACE: /usr/lib/x86_64-linux-gnu/libpcl_surface.so  
+[2.086s] -- Found PCL_REGISTRATION: /usr/lib/x86_64-linux-gnu/libpcl_registration.so  
+[2.086s] -- Found PCL_KEYPOINTS: /usr/lib/x86_64-linux-gnu/libpcl_keypoints.so  
+[2.087s] -- Found PCL_TRACKING: /usr/lib/x86_64-linux-gnu/libpcl_tracking.so  
+[2.087s] -- Found PCL_RECOGNITION: /usr/lib/x86_64-linux-gnu/libpcl_recognition.so  
+[2.088s] -- Found PCL_STEREO: /usr/lib/x86_64-linux-gnu/libpcl_stereo.so  
+[2.088s] -- Found PCL_APPS: /usr/lib/x86_64-linux-gnu/libpcl_apps.so  
+[2.089s] -- Found PCL_IN_HAND_SCANNER: /usr/include/pcl-1.12  
+[2.089s] -- Found PCL_MODELER: /usr/include/pcl-1.12  
+[2.089s] -- Found PCL_POINT_CLOUD_EDITOR: /usr/include/pcl-1.12  
+[2.089s] -- Found PCL_OUTOFCORE: /usr/lib/x86_64-linux-gnu/libpcl_outofcore.so  
+[2.090s] -- Found PCL_PEOPLE: /usr/lib/x86_64-linux-gnu/libpcl_people.so  
+[2.091s] [33mCMake Warning (dev) at CMakeLists.txt:15 (find_package):
+[2.091s]   Policy CMP0074 is not set: find_package uses <PackageName>_ROOT variables.
+[2.091s]   Run "cmake --help-policy CMP0074" for policy details.  Use the cmake_policy
+[2.091s]   command to set the policy and suppress this warning.
+[2.091s] 
+[2.091s]   CMake variable PCL_ROOT is set to:
+[2.091s] 
+[2.091s]     /usr
+[2.091s] 
+[2.091s]   For compatibility, CMake is ignoring the variable.
+[2.091s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[2.091s] [0m
+[2.097s] -- Found grid_map_ros: 2.0.1 (/opt/ros/humble/share/grid_map_ros/cmake)
+[2.212s] -- Found tf2_ros: 0.25.19 (/opt/ros/humble/share/tf2_ros/cmake)
+[2.243s] -- Found tf2_eigen: 0.25.19 (/opt/ros/humble/share/tf2_eigen/cmake)
+[2.245s] -- Found tf2_sensor_msgs: 0.25.19 (/opt/ros/humble/share/tf2_sensor_msgs/cmake)
+[2.249s] -- Found tf2_geometry_msgs: 0.25.19 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+[2.255s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[2.255s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[2.257s] -- Found nav2_costmap_2d: 1.1.20 (/opt/ros/humble/share/nav2_costmap_2d/cmake)
+[2.471s] -- Found OpenMP_C: -fopenmp (found version "4.5") 
+[2.533s] -- Found OpenMP_CXX: -fopenmp (found version "4.5") 
+[2.533s] -- Found OpenMP: TRUE (found version "4.5")  
+[2.595s] -- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[2.663s] -- Added test 'copyright' to check source files copyright and LICENSE
+[2.664s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.664s] -- Configured cppcheck include dirs: 
+[2.664s] -- Configured cppcheck exclude dirs and/or files: 
+[2.665s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[2.665s] -- Configured cpplint exclude dirs and/or files: 
+[2.665s] -- Added test 'lint_cmake' to check CMake code style
+[2.666s] -- Added test 'uncrustify' to check C / C++ code style
+[2.666s] -- Configured uncrustify additional arguments: 
+[2.666s] -- Added test 'xmllint' to check XML markup files
+[2.667s] -- Configuring done
+[2.738s] -- Generating done
+[2.753s] -- Build files have been written to: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception
+[2.766s] Invoked command in '/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_perception -DCMAKE_INSTALL_PREFIX=/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception
+[2.767s] Invoking command in '/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake --build /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception -- -j24 -l24
+[2.798s] [ 10%] [32mBuilding CXX object CMakeFiles/lidar_debug_node.dir/src/lidar_debug_node.cpp.o[0m
+[2.799s] [ 20%] [32mBuilding CXX object CMakeFiles/imu_processor_node.dir/src/imu_processor_node.cpp.o[0m
+[2.801s] [ 30%] [32mBuilding CXX object CMakeFiles/e1_preprocessor_node.dir/src/e1_preprocessor_node.cpp.o[0m
+[2.801s] [ 50%] [32mBuilding CXX object CMakeFiles/terrain_layer_plugin.dir/src/terrain_costmap_layer.cpp.o[0m
+[2.801s] [ 50%] [32mBuilding CXX object CMakeFiles/elevation_mapper_node.dir/src/elevation_mapper_node.cpp.o[0m
+[3.959s] [01m[K/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_perception/src/imu_processor_node.cpp:[m[K In member function ‘[01m[Kvoid ImuProcessorNode::imu_callback(sensor_msgs::msg::Imu_<std::allocator<void> >::SharedPtr)[m[K’:
+[3.959s] [01m[K/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_perception/src/imu_processor_node.cpp:40:16:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kroll_deg[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+[3.959s]    40 |         double [01;35m[Kroll_deg[m[K = roll * 180.0 / M_PI;
+[3.959s]       |                [01;35m[K^~~~~~~~[m[K
+[5.339s] [01m[K/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_perception/src/lidar_debug_node.cpp:[m[K In member function ‘[01m[Kvoid LidarDebugNode::cloud_cb(sensor_msgs::msg::PointCloud2_<std::allocator<void> >::SharedPtr)[m[K’:
+[5.339s] [01m[K/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_perception/src/lidar_debug_node.cpp:61:34:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kstd::vector<long unsigned int>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} and ‘[01m[Kint[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+[5.339s]    61 |         if ([01;35m[Kpoint_counts_.size() > stats_window_[m[K) {
+[5.339s]       |             [01;35m[K~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~[m[K
+[5.340s] [01m[K/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/src/skyhunter_perception/src/lidar_debug_node.cpp:195:13:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kstep[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+[5.340s]   195 |         int [01;35m[Kstep[m[K = std::max(1, kept_points / sample_count);
+[5.340s]       |             [01;35m[K^~~~[m[K
+[7.232s] [ 60%] [32m[1mLinking CXX executable imu_processor_node[0m
+[7.483s] [ 60%] Built target imu_processor_node
+[8.633s] [ 70%] [32m[1mLinking CXX shared library libterrain_layer_plugin.so[0m
+[9.343s] [ 70%] Built target terrain_layer_plugin
+[9.558s] [ 80%] [32m[1mLinking CXX executable lidar_debug_node[0m
+[9.606s] [ 90%] [32m[1mLinking CXX executable e1_preprocessor_node[0m
+[10.216s] [ 90%] Built target lidar_debug_node
+[10.435s] [ 90%] Built target e1_preprocessor_node
+[11.816s] [100%] [32m[1mLinking CXX executable elevation_mapper_node[0m
+[12.570s] /usr/bin/ld: warning: libopencv_photo.so.4.5d, needed by /opt/ros/humble/lib/libgrid_map_cv.so, may conflict with libopencv_photo.so.406
+[12.893s] [100%] Built target elevation_mapper_node
+[12.903s] Invoked command in '/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake --build /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception -- -j24 -l24
+[12.904s] Invoking command in '/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake --install /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception
+[12.910s] -- Install configuration: ""
+[12.910s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/plugins.xml
+[12.910s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/libterrain_layer_plugin.so
+[12.913s] -- Set runtime path of "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/libterrain_layer_plugin.so" to ""
+[12.913s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/skyhunter_perception/e1_preprocessor_node
+[12.915s] -- Set runtime path of "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/skyhunter_perception/e1_preprocessor_node" to ""
+[12.915s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/skyhunter_perception/elevation_mapper_node
+[12.917s] -- Set runtime path of "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/skyhunter_perception/elevation_mapper_node" to ""
+[12.917s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/skyhunter_perception/imu_processor_node
+[12.919s] -- Set runtime path of "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/skyhunter_perception/imu_processor_node" to ""
+[12.919s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/skyhunter_perception/lidar_debug_node
+[12.921s] -- Set runtime path of "/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/lib/skyhunter_perception/lidar_debug_node" to ""
+[12.921s] -- Up-to-date: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/plugins.xml
+[12.921s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/environment/library_path.sh
+[12.921s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/environment/library_path.dsv
+[12.921s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/ament_index/resource_index/package_run_dependencies/skyhunter_perception
+[12.921s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/ament_index/resource_index/parent_prefix_path/skyhunter_perception
+[12.921s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/environment/ament_prefix_path.sh
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/environment/ament_prefix_path.dsv
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/environment/path.sh
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/environment/path.dsv
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/local_setup.bash
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/local_setup.sh
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/local_setup.zsh
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/local_setup.dsv
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/package.dsv
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/ament_index/resource_index/packages/skyhunter_perception
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/ament_index/resource_index/nav2_costmap_2d__pluginlib__plugin/skyhunter_perception
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/cmake/ament_cmake_export_libraries-extras.cmake
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/cmake/ament_cmake_export_dependencies-extras.cmake
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/cmake/skyhunter_perceptionConfig.cmake
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/cmake/skyhunter_perceptionConfig-version.cmake
+[12.922s] -- Installing: /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_perception/share/skyhunter_perception/package.xml
+[12.924s] Invoked command in '/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/install/skyhunter_nav_tools:/opt/ros/humble /usr/bin/cmake --install /home/limonubuntu/Work/Limon/ros2_work/swarm_robots/skyhunter_swarm_ws/build/skyhunter_perception

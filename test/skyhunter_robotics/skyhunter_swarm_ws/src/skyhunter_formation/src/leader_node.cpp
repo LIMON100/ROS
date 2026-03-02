@@ -39,7 +39,7 @@ public:
     spacing_config_ = this->get_parameter("waypoint_spacing").as_double();
     map_frame_ = this->get_parameter("map_frame").as_string();
 
-    publisher_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("leader_state", 10);
+    publisher_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("/leader_state", 10);
     viz_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("leader_waypoints_viz", 10);
 
     sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
@@ -58,6 +58,12 @@ public:
         this->cmd_formation_type_ = msg->data;
         RCLCPP_INFO(this->get_logger(), "COMMAND RECEIVED: Switching Swarm to Mode %d", msg->data);
       });
+    
+    sub_role_ = this->create_subscription<std_msgs::msg::Int8>(
+      "local_role", 10, 
+      [this](const std_msgs::msg::Int8::SharedPtr msg) {
+        this->current_role_ = msg->data;
+      });
 
     // CLIENT REQUIREMENT: Broadcast at 20 Hz (50ms)
     timer_ = this->create_wall_timer(50ms, std::bind(&LeaderNode::timer_callback, this));
@@ -75,18 +81,41 @@ private:
     
     bool narrow = false;
     for (const auto& p : cloud.points) {
-        // ignore points near the ground (p.z < -0.3)
-        // ignore points way above the robot (p.z > 0.5)
         if (p.z < -0.3 || p.z > 0.5) continue; 
-
-        // Now check the X and Y "Narrow Passage" area
-        if (p.x > 0.5 && p.x < 4.0 && std::abs(p.y) < 1.8) {
+        // Keep the 0.9 width fix if you want to avoid the "Narrow Gap" panic
+        if (p.x > 0.5 && p.x < 4.0 && std::abs(p.y) < 0.9) {
             narrow = true;
             break;
         }
     }
     narrow_gap_detected_ = narrow;
-  }
+}
+
+  // void scan_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
+  //     if (current_role_ != 2 && this->get_namespace() != "/") { 
+  //         // Special check: If namespace is empty (global R1), it might not have local_role yet, 
+  //         // but typically R1 is always active. 
+  //         // Better logic: If I am a follower, return immediately.
+  //         return; 
+  //     }
+
+  //     pcl::PointCloud<pcl::PointXYZ> cloud;
+  //     pcl::fromROSMsg(*msg, cloud);
+      
+  //     bool narrow = false;
+  //     for (const auto& p : cloud.points) {
+  //         // ignore points near the ground (p.z < -0.3)
+  //         // ignore points way above the robot (p.z > 0.5)
+  //         if (p.z < -0.3 || p.z > 0.5) continue; 
+
+  //         // FIX: Reduced width check from 1.8 to 0.9 to ignore formation partners
+  //         if (p.x > 0.5 && p.x < 4.0 && std::abs(p.y) < 0.9) {
+  //             narrow = true;
+  //             break;
+  //         }
+  //     }
+  //     narrow_gap_detected_ = narrow;
+  // }
 
   double calculate_remaining_dist(size_t start_idx) {
     if (!has_path_ || start_idx >= latest_path_.poses.size() - 1) return 0.0;
@@ -113,6 +142,17 @@ private:
 
   void timer_callback()
   {
+    // // [OPTIMIZATION] Do not calculate swarm paths if I am just a follower
+    // if (current_role_ != 2) {
+    //     // Exception: Robot 1 (global namespace) usually starts as leader 
+    //     // even before role messages flow.
+    //     // You can check if string(this->get_namespace()) == "/" or "" to keep R1 active.
+    //     std::string ns = this->get_namespace();
+    //     bool is_global_r1 = (ns == "/" || ns == "");
+        
+    //     if (!is_global_r1) return; 
+    // }
+
     if (!has_odom_) return;
 
     // Detect State
@@ -172,6 +212,7 @@ private:
 
   // --- MEMBER DECLARATIONS (CRITICAL FIX) ---
   std::vector<geometry_msgs::msg::PoseStamped> global_mission_poses_;
+  int8_t current_role_ = 0;
 
 
   double spacing_config_;
@@ -183,6 +224,7 @@ private:
   nav_msgs::msg::Path latest_path_;
 
   rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_mission_;
+  rclcpp::Subscription<std_msgs::msg::Int8>::SharedPtr sub_role_;
 
   rclcpp::Publisher<skyhunter_msgs::msg::LeaderState>::SharedPtr publisher_;
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr viz_pub_;
