@@ -187,6 +187,7 @@ def launch_setup(context, *args, **kwargs):
 
     nodes_to_start = []
 
+    # WITHOUT using the leader brain switch
     # ====================================================
     # SECTION 1: THE LEADER (Global Namespace for Stability)
     # ====================================================
@@ -354,7 +355,7 @@ def launch_setup(context, *args, **kwargs):
                 # A. Spawn Robot
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource(os.path.join(pkg_tin3_gz_simulation, "launch", "spawn_robot.launch.py")),
-                    launch_arguments={"robot_ns": follower_ns, "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}", "use_sim_time": use_sim_time, "lidar_mode": "half", "use_ekf": "false"}.items(),
+                    launch_arguments={"robot_ns": follower_ns, "pose": f"{spawn_x} {spawn_y} {b_z + 0.15} 0 0 {b_yaw}", "use_sim_time": use_sim_time, "lidar_mode": "half", "use_ekf": "true"}.items(),
                 ),
 
                 # B. Nav2 (NAMESPACED & NO RVIZ)
@@ -386,16 +387,16 @@ def launch_setup(context, *args, **kwargs):
                 Node(
                     package='skyhunter_formation', executable='leader_node',
                     namespace=follower_ns,
-                    # remappings=[
-                    #     ('odom', f'/{follower_ns}/odom_filtered'),
-                    #     ('leader_state', f'/{follower_ns}/leader_state'),
-                    #     ('plan', f'/{follower_ns}/plan')  # <--- ADD THIS LINE !!!
-                    # ]
                     remappings=[
-                        ('odom', f'/{follower_ns}/odom'), # <--- FIXED: Removed _filtered
+                        ('odom', f'/{follower_ns}/odom_filtered'),
                         ('leader_state', f'/{follower_ns}/leader_state'),
-                        ('plan', f'/{follower_ns}/plan')  
+                        ('plan', f'/{follower_ns}/plan')  # <--- ADD THIS LINE !!!
                     ]
+                    # remappings=[
+                    #     ('odom', f'/{follower_ns}/odom'), # <--- FIXED: Removed _filtered
+                    #     ('leader_state', f'/{follower_ns}/leader_state'),
+                    #     ('plan', f'/{follower_ns}/plan')  
+                    # ]
                 ),
 
                 Node(
@@ -418,7 +419,7 @@ def launch_setup(context, *args, **kwargs):
                     remappings=[
                         # This is why they didn't move: they must look at the VIRTUAL topic
                         ('leader_state', '/swarm/virtual_leader/state'), 
-                        ('odom', f'/{follower_ns}/odom'),
+                        ('odom', f'/{follower_ns}/odom_filtered'),
                         ('cmd_vel', f'/{follower_ns}/cmd_vel'),
                         ('scan/points', f'/{follower_ns}/scan/points'),
                         ('/tf', '/tf'), ('/tf_static', '/tf_static')
@@ -447,7 +448,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('num_robots', default_value='2'),
         DeclareLaunchArgument('use_sim_time', default_value='true'),
-        DeclareLaunchArgument('world', default_value='empty_world.sdf'),
+        DeclareLaunchArgument('world', default_value='obstacle_world.sdf'),
         DeclareLaunchArgument('pose', default_value='0.0 0.0 0.5 0.0 0.0 0.0'),
         OpaqueFunction(function=launch_setup)
     ])

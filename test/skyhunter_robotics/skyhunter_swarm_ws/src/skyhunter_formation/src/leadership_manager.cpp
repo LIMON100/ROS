@@ -97,37 +97,6 @@ private:
     return (1.0 * battery_level_) + (0.5 * connectivity) - (0.01 * int_id_);
   }
 
-//   void logic_loop() {
-//     if (is_failed_) {
-//         // DO NOTHING. No heartbeats sent. Swarm will think I am dead.
-//         std_msgs::msg::Int8 role_msg;
-//         role_msg.data = -1; // Special "DEAD" state
-//         state_pub_->publish(role_msg);
-//         return; 
-//     }
-    
-//     battery_level_ -= this->get_parameter("battery_drain_rate").as_double();
-//     auto now = this->get_clock()->now();
-
-//     if (current_role_ == RobotState::FOLLOWER) {
-//         if ((now - last_leader_heartbeat_).seconds() > 4.0) {
-//             start_election();
-//         }
-//     }
-
-//     skyhunter_msgs::msg::SwarmHeartbeat hb;
-//     hb.header.stamp = now;
-//     hb.robot_id = my_id_;
-//     hb.term = current_term_;
-//     hb.is_leader = (current_role_ == RobotState::LEADER);
-//     hb.battery_level = battery_level_;
-//     heartbeat_pub_->publish(hb);
-
-//     std_msgs::msg::Int8 role_msg;
-//     role_msg.data = static_cast<int8_t>(current_role_);
-//     state_pub_->publish(role_msg);
-//   }
-
   void logic_loop() {
     if (is_failed_) {
         std_msgs::msg::Int8 role_msg; role_msg.data = -1;
@@ -141,8 +110,8 @@ private:
     if (current_role_ == RobotState::FOLLOWER && int_id_ > 1) {
         double time_since_heartbeat = (now - last_leader_heartbeat_).seconds();
         
-        // SH_02 starts takeover after 4.0 seconds of silence
-        if (time_since_heartbeat > 4.0) { 
+        // CHANGED FROM 4.0 to 8.0 seconds to prevent false alarms during CPU spikes
+        if (time_since_heartbeat > 8.0) { 
             current_role_ = RobotState::CANDIDATE;
             takeover_start_time = now;
         }
