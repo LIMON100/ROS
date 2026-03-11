@@ -33,20 +33,22 @@ Multi-Terrain Stress Tests
 🟡 IN PROGRESS
 Empty and Obstacle worlds verified. Hill/Slope and the high-speed Route-66 map tests are pending.
 
-### Developer Testing Guidelines & Recommendations
+### Testing Guidelines & Recommendations
 
 Before running full-scale Swarm operations, please read the following testing protocols based on current code stability:
 
 1. Progressive Scaling:
-Full hardware and CPU optimization for a 7-robot swarm running simultaneous EKF, Nav2, and LiDAR is not yet finalized.
+Full hardware and CPU optimization for a 7-robot swarm running simultaneous EKF, Nav2, and LiDAR is not yet finalized. There might be you face robot slow movement or follower lost issue, we will handle all with optimized with testing.
+
     • Recommendation: Begin testing with 1 Leader + 1 Follower (num_robots:=2) in the empty_world.sdf.
     • Gradually increase the robot count and introduce obstacles only after confirming base stability on your specific hardware.
    
-2. Perception Testing Environment:
+3. Perception Testing Environment:
 The YOLOv8 tracking, Gimbal PID, and Sensor Fusion have been heavily validated in empty_world.sdf.
-    • Note: We have not yet run deep perception tests inside dense obstacle environments. Dense obstacles may occasionally trigger the LiDAR "Radar Snap" (false positives).
+
+    • Note: We have not yet run deep perception tests inside dense obstacle environments. Dense obstacles may occasionally trigger the LiDAR snap (false positives).
    
-3. The Succession Test (Kill Command):
+5. The Succession Test (Kill Command):
 If you use the ros2 run skyhunter_nav_tools terminate_leader command, be aware of the known bug documented above (Followers > 02 stop moving). A fix for the virtual-topic routing is scheduled for the next commit.
 
 
