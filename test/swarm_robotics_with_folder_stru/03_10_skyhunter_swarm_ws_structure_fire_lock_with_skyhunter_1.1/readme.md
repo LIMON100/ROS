@@ -98,6 +98,17 @@ After downloading the `.zip` file, extract the folders into your workspace exact
 
 ### Build
 
+Before building if you want to change the waypoint the robot should follow then open src/skyhunter_nav_tools/skyhunter_nav_tools/waypoint_sender.py and change the value according to your's,
+
+    self.waypoints = [
+                    (10.0, 0.0),   # 1. Straight 30m
+                    (20.0, 15.0),  # 2. Left 10m
+                    (30.0, 10.0),  # 3. Straight 10m
+                    (30.0, -20.0)  # 4. Right 
+            ]
+
+BUILD the project
+
     cd <your_workspace>
     colcon build 
     source install/setup.bash
