@@ -73,7 +73,9 @@ Run the following in your workspace src/ directory:
         ros-humble-cv-bridge \
         ros-humble-pcl-conversions \
         libpcl-all-dev \
-        libonnxruntime-dev
+        libonnxruntime-dev \
+        libeigen3-dev \
+        libomp-dev
 
 # Install workspace dependencies
     rosdep install --from-paths src --ignore-src -r -y
