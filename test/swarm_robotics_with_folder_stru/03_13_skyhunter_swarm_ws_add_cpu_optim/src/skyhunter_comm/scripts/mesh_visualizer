@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+from skyhunter_comm.mesh_visualizer import main
+main()
