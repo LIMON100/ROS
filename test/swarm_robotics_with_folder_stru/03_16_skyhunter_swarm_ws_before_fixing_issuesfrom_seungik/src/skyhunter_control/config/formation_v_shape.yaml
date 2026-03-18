@@ -1,0 +1,26 @@
+# V-Shape Formation Configuration
+# Leader is at (0,0)
+# Format: {id: [offset_x, offset_y]}
+
+swarm_config:
+  robot2:
+    offset_x: -2.0
+    offset_y: 2.0
+  robot3:
+    offset_x: -2.0
+    offset_y: -2.0
+  robot4:
+    offset_x: -4.0
+    offset_y: 4.0
+  robot5:
+    offset_x: -4.0
+    offset_y: -4.0
+  robot6:
+    offset_x: -6.0
+    offset_y: 6.0
+  robot7:
+    offset_x: -6.0
+    offset_y: -6.0
+  robot8:
+    offset_x: -8.0
+    offset_y: 0.0 
