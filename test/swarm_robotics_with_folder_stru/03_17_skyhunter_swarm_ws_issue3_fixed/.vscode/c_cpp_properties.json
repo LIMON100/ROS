@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/install/skyhunter_msgs/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/src/skyhunter_formation/include/**",
+        "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/src/skyhunter_localization/include/**",
+        "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/src/skyhunter_msgs/include/**",
+        "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/src/skyhunter_navigation/include/**",
+        "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/src/skyhunter_perception/include/**",
+        "/home/limonubuntu/Work/Limon/ros2_work/skyhunter_swarm_ws/src/skyhunter_slam/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
