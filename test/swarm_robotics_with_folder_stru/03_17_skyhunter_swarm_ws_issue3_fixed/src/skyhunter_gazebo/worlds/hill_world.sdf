@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<sdf version="1.8">
+  <world name="hill_world">
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.002</max_step_size>
+      <real_time_update_rate>500</real_time_update_rate>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu" />
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+    </light>
+
+    <!-- HEIGHTMAP TERRAIN -->
+    <model name="terrain">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <heightmap>
+              <!-- You need a grayscale .png file in your models folder -->
+              <uri>model://hill_world/media/heightmap_image.png</uri>
+              <size>100 100 10</size> <!-- 100x100 meters, 10 meters tall -->
+              <pos>0 0 0</pos>
+            </heightmap>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <heightmap>
+              <uri>model://hill_world/media/heightmap_image.png</uri>
+              <size>100 100 10</size>
+              <diffuse>file://media/materials/textures/dirt_diffuse.jpg</diffuse>
+            </heightmap>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
