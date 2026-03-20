@@ -1,0 +1,50 @@
+# =============================================================================
+# WiFi6 Mesh Simulation Parameters
+# =============================================================================
+# Node: wifi6_mesh_sim
+# Package: skyhunter_comm
+# =============================================================================
+
+wifi6_mesh_sim:
+  ros__parameters:
+     # Discovery
+    discovery:
+      auto_discover: true
+      interval_sec: 5.0
+      max_robots: 8
+    # --------------------------------------------------------------------------
+    # RF Path Loss Model (Log-distance)
+    # RSSI = reference_rssi - 10 * n * log10(d / reference_distance) + noise
+    # --------------------------------------------------------------------------
+    rf_model:
+      path_loss_exponent: 2.8       # n: 2.0=free space, 2.8=outdoor, 3.5=indoor
+      reference_rssi_dbm: -30.0     # RSSI at reference distance
+      reference_distance_m: 1.0     # Reference distance (typically 1m)
+      shadow_fading_std: 4.0        # Gaussian noise std dev (dB)
+      disconnect_threshold_dbm: -85.0  # Below this = link lost
+
+    # --------------------------------------------------------------------------
+    # Delay Model
+    # delay = base_delay + contention_per_robot * active_robot_count
+    # --------------------------------------------------------------------------
+    delay_model:
+      base_delay_ms: 2.0                  # Fixed processing delay
+      contention_delay_per_robot_ms: 0.5  # Added per active robot
+
+    # --------------------------------------------------------------------------
+    # Packet Loss Model (RSSI to loss % mapping)
+    # --------------------------------------------------------------------------
+    packet_loss:
+      thresholds_dbm: [-50.0, -60.0, -70.0, -80.0, -85.0]
+      loss_percentages: [0.0, 1.0, 5.0, 15.0, 30.0, 100.0]
+
+    # --------------------------------------------------------------------------
+    # Publish Rates
+    # --------------------------------------------------------------------------
+    rates:
+      metrics_hz: 10.0    # /mesh_metrics publish rate
+      states_hz: 1.0      # /mesh_link_states publish rate
+jammer_service:
+  ros__parameters:
+    publish_rate_hz: 10.0
+    default_attenuation_db: 50.0
