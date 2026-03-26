@@ -1,0 +1,485 @@
+// // WORABLE FULL 02-23
+// #include <chrono>
+// #include <functional>
+// #include <memory>
+// #include <string>
+// #include <cmath>
+// #include <limits>
+// #include <vector>
+// #include <numeric>
+
+// #include "rclcpp/rclcpp.hpp"
+// #include "nav_msgs/msg/odometry.hpp"
+// #include "nav_msgs/msg/path.hpp"
+// #include "skyhunter_msgs/msg/leader_state.hpp"
+// #include "geometry_msgs/msg/pose.hpp"
+// #include "visualization_msgs/msg/marker_array.hpp"
+// #include "sensor_msgs/msg/point_cloud2.hpp"
+// #include "std_msgs/msg/int8.hpp"
+
+// // CRITICAL: Added missing PCL headers for the narrow gap logic
+// #include <pcl_conversions/pcl_conversions.h>
+// #include <pcl/point_cloud.h>
+// #include <pcl/point_types.h>
+
+// using namespace std::chrono_literals;
+
+// const int8_t STATE_NAVIGATING = 0;
+// const int8_t STATE_GOAL_REACHED = 1;
+// const int8_t STATE_TRANSITIONING = 2;
+
+// class LeaderNode : public rclcpp::Node
+// {
+// public:
+//   LeaderNode() : Node("leader_node")
+//   {
+//     this->declare_parameter<double>("waypoint_spacing", 10.0);
+//     this->declare_parameter<std::string>("map_frame", "map");
+
+//     spacing_config_ = this->get_parameter("waypoint_spacing").as_double();
+//     map_frame_ = this->get_parameter("map_frame").as_string();
+
+//     publisher_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>("/leader_state", 10);
+//     viz_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("leader_waypoints_viz", 10);
+
+//     sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
+//       "odom", rclcpp::SensorDataQoS(), std::bind(&LeaderNode::odom_callback, this, std::placeholders::_1));
+
+//     sub_plan_ = this->create_subscription<nav_msgs::msg::Path>(
+//       "plan", rclcpp::QoS(10).reliable(), std::bind(&LeaderNode::plan_callback, this, std::placeholders::_1));
+
+//     // NEW: Leader LiDAR Subscriber (To detect narrow gaps)
+//     sub_scan_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
+//       "scan/points", rclcpp::SensorDataQoS(), std::bind(&LeaderNode::scan_callback, this, std::placeholders::_1));
+
+//     sub_form_cmd_ = this->create_subscription<std_msgs::msg::Int8>(
+//       "/swarm/formation_command", 10, 
+//       [this](const std_msgs::msg::Int8::SharedPtr msg) {
+//         this->cmd_formation_type_ = msg->data;
+//         RCLCPP_INFO(this->get_logger(), "COMMAND RECEIVED: Switching Swarm to Mode %d", msg->data);
+//       });
+    
+//     sub_role_ = this->create_subscription<std_msgs::msg::Int8>(
+//       "local_role", 10, 
+//       [this](const std_msgs::msg::Int8::SharedPtr msg) {
+//         this->current_role_ = msg->data;
+//       });
+
+//     // CLIENT REQUIREMENT: Broadcast at 20 Hz (50ms)
+//     timer_ = this->create_wall_timer(50ms, std::bind(&LeaderNode::timer_callback, this));
+
+//     RCLCPP_INFO(this->get_logger(), "Tactical Intelligent Leader Online.");
+//   }
+
+// private:
+//   void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg) { latest_odom_ = *msg; has_odom_ = true; }
+//   void plan_callback(const nav_msgs::msg::Path::SharedPtr msg) { latest_path_ = *msg; has_path_ = true; }
+
+//   void scan_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
+//     pcl::PointCloud<pcl::PointXYZ> cloud;
+//     pcl::fromROSMsg(*msg, cloud);
+    
+//     bool narrow = false;
+//     for (const auto& p : cloud.points) {
+//         if (p.z < -0.3 || p.z > 0.5) continue; 
+
+//         // ORIGINAL WIDTH CHECK
+//         if (p.x > 0.5 && p.x < 4.0 && std::abs(p.y) < 1.8) {
+//             narrow = true;
+//             break;
+//         }
+//     }
+//     narrow_gap_detected_ = narrow;
+//   }
+
+//   double calculate_remaining_dist(size_t start_idx) {
+//     if (!has_path_ || start_idx >= latest_path_.poses.size() - 1) return 0.0;
+//     double dist = 0.0;
+//     for (size_t i = start_idx; i < latest_path_.poses.size() - 1; ++i) {
+//       dist += std::hypot(latest_path_.poses[i+1].pose.position.x - latest_path_.poses[i].pose.position.x,
+//                          latest_path_.poses[i+1].pose.position.y - latest_path_.poses[i].pose.position.y);
+//     }
+//     return dist;
+//   }
+
+//   bool get_waypoint_at_dist(double target_m, size_t start_idx, geometry_msgs::msg::Pose& out_pose, size_t& out_idx) {
+//     if (!has_path_ || latest_path_.poses.size() < 2) return false;
+//     double acc = 0.0;
+//     for (size_t i = start_idx; i < latest_path_.poses.size() - 1; ++i) {
+//       acc += std::hypot(latest_path_.poses[i+1].pose.position.x - latest_path_.poses[i].pose.position.x,
+//                         latest_path_.poses[i+1].pose.position.y - latest_path_.poses[i].pose.position.y);
+//       if (acc >= target_m) { out_pose = latest_path_.poses[i+1].pose; out_idx = i + 1; return true; }
+//     }
+//     out_pose = latest_path_.poses.back().pose;
+//     out_idx = latest_path_.poses.size() - 1;
+//     return true;
+//   }
+
+//   void timer_callback()
+//   {
+  
+//     if (!has_odom_) return;
+
+//     // Detect State
+//     double vel = std::abs(latest_odom_.twist.twist.linear.x);
+//     if (vel > 0.1) current_state_ = STATE_NAVIGATING;
+//     else if (has_path_ && calculate_remaining_dist(0) < 0.5) current_state_ = STATE_GOAL_REACHED;
+//     else current_state_ = STATE_TRANSITIONING;
+
+//     auto state_msg = skyhunter_msgs::msg::LeaderState();
+//     state_msg.header.stamp = this->get_clock()->now();
+//     state_msg.pose = latest_odom_.pose.pose;
+//     state_msg.velocity = latest_odom_.twist.twist;
+//     state_msg.swarm_state = current_state_;
+
+//     // --- FORMATION LOGIC OVERRIDE ---
+//     if (narrow_gap_detected_) {
+//         state_msg.formation_type = 1; // FORCE COLUMN
+//         RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 2000, "AUTO-SWITCH: Narrow Gap! Forcing Column.");
+//     } else {
+//         state_msg.formation_type = cmd_formation_type_; 
+//     }
+
+//     visualization_msgs::msg::MarkerArray markers;
+//     if (has_path_ && !latest_path_.poses.empty()) {
+//         size_t closest_idx = 0; double min_d = 1e9;
+//         for (size_t i = 0; i < latest_path_.poses.size(); ++i) {
+//             double d = std::hypot(latest_odom_.pose.pose.position.x - latest_path_.poses[i].pose.position.x,
+//                                   latest_odom_.pose.pose.position.y - latest_path_.poses[i].pose.position.y);
+//             if (d < min_d) { min_d = d; closest_idx = i; }
+//         }
+//         double remaining = calculate_remaining_dist(closest_idx);
+//         double tactical_spacing = std::min(spacing_config_, std::max(0.0, remaining - 2.0));
+//         geometry_msgs::msg::Pose wp1, wp2;
+//         size_t wp1_idx, wp2_idx;
+//         if (get_waypoint_at_dist(tactical_spacing, closest_idx, wp1, wp1_idx)) {
+//             state_msg.next_waypoints.push_back(wp1);
+//             markers.markers.push_back(create_marker(0, wp1, 0.0, 0.0, 1.0));
+//             if (get_waypoint_at_dist(tactical_spacing, wp1_idx, wp2, wp2_idx)) {
+//                 state_msg.next_waypoints.push_back(wp2);
+//                 markers.markers.push_back(create_marker(1, wp2, 1.0, 0.0, 0.0));
+//             }
+//         }
+//     }
+//     publisher_->publish(state_msg);
+//     viz_pub_->publish(markers);
+//   }
+
+//   visualization_msgs::msg::Marker create_marker(int id, geometry_msgs::msg::Pose pose, float r, float g, float b) {
+//     visualization_msgs::msg::Marker m;
+//     m.header.frame_id = map_frame_; m.header.stamp = this->get_clock()->now();
+//     m.ns = "tactical_wp"; m.id = id; m.type = visualization_msgs::msg::Marker::CYLINDER;
+//     m.action = visualization_msgs::msg::Marker::ADD; m.pose = pose;
+//     m.scale.x = 0.5; m.scale.y = 0.5; m.scale.z = 0.1;
+//     m.color.a = 0.8; m.color.r = r; m.color.g = g; m.color.b = b;
+//     return m;
+//   }
+
+//   // --- MEMBER DECLARATIONS (CRITICAL FIX) ---
+//   std::vector<geometry_msgs::msg::PoseStamped> global_mission_poses_;
+//   int8_t current_role_ = 0;
+
+
+//   double spacing_config_;
+//   std::string map_frame_;
+//   int8_t current_state_ = STATE_TRANSITIONING;
+//   int8_t cmd_formation_type_ = 0;
+//   bool has_odom_ = false, has_path_ = false, narrow_gap_detected_ = false;
+//   nav_msgs::msg::Odometry latest_odom_;
+//   nav_msgs::msg::Path latest_path_;
+
+//   rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_mission_;
+//   rclcpp::Subscription<std_msgs::msg::Int8>::SharedPtr sub_role_;
+
+//   rclcpp::Publisher<skyhunter_msgs::msg::LeaderState>::SharedPtr publisher_;
+//   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr viz_pub_;
+//   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
+//   rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_plan_;
+//   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_scan_; // Missing before
+//   rclcpp::Subscription<std_msgs::msg::Int8>::SharedPtr sub_form_cmd_;
+//   rclcpp::TimerBase::SharedPtr timer_;
+  
+// };
+
+// int main(int argc, char * argv[]) {
+//   rclcpp::init(argc, argv);
+//   rclcpp::spin(std::make_shared<LeaderNode>());
+//   rclcpp::shutdown();
+//   return 0;
+// }
+
+
+
+
+#include "skyhunter_control/leader_node.hpp"
+
+#include <cmath>
+#include <limits>
+
+LeaderNode::LeaderNode(const rclcpp::NodeOptions & options)
+: Node("leader_node", options)
+{
+  // Parameters
+  this->declare_parameter<double>("waypoint_spacing", 10.0);
+  this->declare_parameter<std::string>("map_frame", "map");
+
+  spacing_config_ = this->get_parameter("waypoint_spacing").as_double();
+  map_frame_      = this->get_parameter("map_frame").as_string();
+
+  // Publishers
+  publisher_ = this->create_publisher<skyhunter_msgs::msg::LeaderState>(
+    "/leader_state", 10);
+
+  viz_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>(
+    "leader_waypoints_viz", 10);
+
+  // Subscribers
+  sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
+    "odom", rclcpp::SensorDataQoS(),
+    std::bind(&LeaderNode::odom_callback, this, std::placeholders::_1));
+
+  sub_plan_ = this->create_subscription<nav_msgs::msg::Path>(
+    "plan", rclcpp::QoS(10).reliable(),
+    std::bind(&LeaderNode::plan_callback, this, std::placeholders::_1));
+
+  sub_scan_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
+    "scan/points", rclcpp::SensorDataQoS(),
+    std::bind(&LeaderNode::scan_callback, this, std::placeholders::_1));
+
+  sub_form_cmd_ = this->create_subscription<std_msgs::msg::Int8>(
+    "/swarm/formation_command", 10,
+    std::bind(&LeaderNode::formation_command_callback, this, std::placeholders::_1));
+
+  sub_role_ = this->create_subscription<std_msgs::msg::Int8>(
+    "local_role", 10,
+    std::bind(&LeaderNode::role_callback, this, std::placeholders::_1));
+
+  // Main loop — 20 Hz
+  timer_ = this->create_wall_timer(
+    50ms, std::bind(&LeaderNode::timer_callback, this));
+
+  RCLCPP_INFO(this->get_logger(), "Tactical Intelligent Leader Online.");
+}
+
+void LeaderNode::odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg)
+{
+  latest_odom_ = *msg;
+  has_odom_ = true;
+}
+
+void LeaderNode::plan_callback(const nav_msgs::msg::Path::SharedPtr msg)
+{
+  latest_path_ = *msg;
+  has_path_ = true;
+}
+
+// void LeaderNode::scan_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
+// {
+//   pcl::PointCloud<pcl::PointXYZ> cloud;
+//   pcl::fromROSMsg(*msg, cloud);
+
+//   bool narrow = false;
+//   for (const auto& p : cloud.points)
+//   {
+//     if (p.z < -0.3 || p.z > 0.5) continue;
+
+//     // ORIGINAL WIDTH CHECK
+//     if (p.x > 0.5 && p.x < 4.0 && std::abs(p.y) < 1.8)
+//     {
+//       narrow = true;
+//       break;
+//     }
+//   }
+//   narrow_gap_detected_ = narrow;
+// }
+
+
+void LeaderNode::scan_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
+    pcl::PointCloud<pcl::PointXYZ> cloud;
+    pcl::fromROSMsg(*msg, cloud);
+    
+    bool narrow = false;
+    for (const auto& p : cloud.points) {
+        // Road surface on a slope usually appears between Z -0.4 and Z 0.2
+        // Only look for obstacles that are at "Chassis" level (0.4m to 0.8m)
+        if (p.z < 0.4 || p.z > 1.0) continue; // <--- STRICTER FILTER
+
+        if (p.x > 0.5 && p.x < 5.0 && std::abs(p.y) < 1.5) {
+            narrow = true;
+            break;
+        }
+    }
+    narrow_gap_detected_ = narrow;
+}
+
+void LeaderNode::formation_command_callback(const std_msgs::msg::Int8::SharedPtr msg)
+{
+  cmd_formation_type_ = msg->data;
+  RCLCPP_INFO(
+    this->get_logger(),
+    "COMMAND RECEIVED: Switching Swarm to Mode %d",
+    msg->data);
+}
+
+void LeaderNode::role_callback(const std_msgs::msg::Int8::SharedPtr msg)
+{
+  current_role_ = msg->data;
+}
+
+double LeaderNode::calculate_remaining_dist(size_t start_idx) const
+{
+  if (!has_path_ || start_idx >= latest_path_.poses.size() - 1)
+    return 0.0;
+
+  double dist = 0.0;
+  for (size_t i = start_idx; i < latest_path_.poses.size() - 1; ++i)
+  {
+    double dx = latest_path_.poses[i+1].pose.position.x -
+                latest_path_.poses[i].pose.position.x;
+    double dy = latest_path_.poses[i+1].pose.position.y -
+                latest_path_.poses[i].pose.position.y;
+    dist += std::hypot(dx, dy);
+  }
+  return dist;
+}
+
+bool LeaderNode::get_waypoint_at_dist(
+  double target_m,
+  size_t start_idx,
+  geometry_msgs::msg::Pose & out_pose,
+  size_t & out_idx) const
+{
+  if (!has_path_ || latest_path_.poses.size() < 2)
+    return false;
+
+  double acc = 0.0;
+  for (size_t i = start_idx; i < latest_path_.poses.size() - 1; ++i)
+  {
+    double dx = latest_path_.poses[i+1].pose.position.x -
+                latest_path_.poses[i].pose.position.x;
+    double dy = latest_path_.poses[i+1].pose.position.y -
+                latest_path_.poses[i].pose.position.y;
+    acc += std::hypot(dx, dy);
+
+    if (acc >= target_m)
+    {
+      out_pose = latest_path_.poses[i+1].pose;
+      out_idx = i + 1;
+      return true;
+    }
+  }
+
+  // If we reach here, return the last pose
+  out_pose = latest_path_.poses.back().pose;
+  out_idx = latest_path_.poses.size() - 1;
+  return true;
+}
+
+void LeaderNode::timer_callback()
+{
+  if (!has_odom_) return;
+
+  // Detect current state
+  double vel = std::abs(latest_odom_.twist.twist.linear.x);
+  if (vel > 0.1)
+    current_state_ = STATE_NAVIGATING;
+  else if (has_path_ && calculate_remaining_dist(0) < 0.5)
+    current_state_ = STATE_GOAL_REACHED;
+  else
+    current_state_ = STATE_TRANSITIONING;
+
+  auto state_msg = skyhunter_msgs::msg::LeaderState();
+  state_msg.header.stamp = this->get_clock()->now();
+  state_msg.pose = latest_odom_.pose.pose;
+  state_msg.velocity = latest_odom_.twist.twist;
+  state_msg.swarm_state = current_state_;
+
+  // Formation logic override (narrow gap detection has priority)
+  if (narrow_gap_detected_)
+  {
+    state_msg.formation_type = 1;  // FORCE COLUMN
+    RCLCPP_WARN_THROTTLE(
+      this->get_logger(), *this->get_clock(), 2000,
+      "AUTO-SWITCH: Narrow Gap! Forcing Column.");
+  }
+  else
+  {
+    state_msg.formation_type = cmd_formation_type_;
+  }
+
+  // Waypoint visualization & next waypoints
+  visualization_msgs::msg::MarkerArray markers;
+
+  if (has_path_ && !latest_path_.poses.empty())
+  {
+    // Find closest point on path
+    size_t closest_idx = 0;
+    double min_d = std::numeric_limits<double>::max();
+
+    for (size_t i = 0; i < latest_path_.poses.size(); ++i)
+    {
+      double dx = latest_odom_.pose.pose.position.x -
+                  latest_path_.poses[i].pose.position.x;
+      double dy = latest_odom_.pose.pose.position.y -
+                  latest_path_.poses[i].pose.position.y;
+      double d = std::hypot(dx, dy);
+      if (d < min_d)
+      {
+        min_d = d;
+        closest_idx = i;
+      }
+    }
+
+    double remaining = calculate_remaining_dist(closest_idx);
+    double tactical_spacing = std::min(spacing_config_, std::max(0.0, remaining - 2.0));
+
+    geometry_msgs::msg::Pose wp1, wp2;
+    size_t wp1_idx = 0, wp2_idx = 0;
+
+    if (get_waypoint_at_dist(tactical_spacing, closest_idx, wp1, wp1_idx))
+    {
+      state_msg.next_waypoints.push_back(wp1);
+      markers.markers.push_back(create_marker(0, wp1, 0.0f, 0.0f, 1.0f));
+
+      if (get_waypoint_at_dist(tactical_spacing, wp1_idx, wp2, wp2_idx))
+      {
+        state_msg.next_waypoints.push_back(wp2);
+        markers.markers.push_back(create_marker(1, wp2, 1.0f, 0.0f, 0.0f));
+      }
+    }
+  }
+
+  publisher_->publish(state_msg);
+  viz_pub_->publish(markers);
+}
+
+visualization_msgs::msg::Marker LeaderNode::create_marker(
+  int id,
+  const geometry_msgs::msg::Pose & pose,
+  float r, float g, float b)
+{
+  visualization_msgs::msg::Marker m;
+  m.header.frame_id = map_frame_;
+  m.header.stamp = this->get_clock()->now();
+  m.ns = "tactical_wp";
+  m.id = id;
+  m.type = visualization_msgs::msg::Marker::CYLINDER;
+  m.action = visualization_msgs::msg::Marker::ADD;
+  m.pose = pose;
+  m.scale.x = 0.5;
+  m.scale.y = 0.5;
+  m.scale.z = 0.1;
+  m.color.a = 0.8f;
+  m.color.r = r;
+  m.color.g = g;
+  m.color.b = b;
+  return m;
+}
+
+int main(int argc, char * argv[])
+{
+  rclcpp::init(argc, argv);
+  rclcpp::spin(std::make_shared<LeaderNode>());
+  rclcpp::shutdown();
+  return 0;
+}
