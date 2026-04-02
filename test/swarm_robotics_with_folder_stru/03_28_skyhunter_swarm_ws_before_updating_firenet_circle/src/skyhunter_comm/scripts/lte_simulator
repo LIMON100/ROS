@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+from skyhunter_comm.lte_simulator import main
+main()
