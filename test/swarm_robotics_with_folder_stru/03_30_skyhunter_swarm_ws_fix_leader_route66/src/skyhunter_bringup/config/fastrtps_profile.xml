@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dds xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+  <transport_descriptors>
+    <transport_descriptor>
+      <transport_id>shm_transport</transport_id>
+      <type>SHM</type>
+      <segment_size>524288</segment_size>      <!-- 512KB, fits camera frames -->
+      <max_message_size>524200</max_message_size>
+    </transport_descriptor>
+    <transport_descriptor>
+      <transport_id>udp_transport</transport_id>
+      <type>UDPv4</type>
+    </transport_descriptor>
+  </transport_descriptors>
+  <!-- ═══════════════════════════════════════════════════════════════
+         PARTICIPANT PROFILE
+         - Default for all nodes in this process
+         - Unicast discovery (no multicast) for swarm isolation
+         - SHM prioritized, UDP fallback
+         ═══════════════════════════════════════════════════════════════ -->
+  <profiles>
+    <participant profile_name="skyhunter_participant" is_default_profile="true">
+      <rtps>
+        <builtin>
+          <discovery_config>
+            <discoveryProtocol>SIMPLE</discoveryProtocol>
+            <use_WriterLivelinessProtocol>AUTOMATIC</use_WriterLivelinessProtocol>
+          </discovery_config>
+          <metatrafficUnicastLocatorList>
+            <!-- Robot 1-8 -->
+            <!-- <locator><udpv4><address>192.168.42.1</address></udpv4></locator>
+            <locator><udpv4><address>192.168.42.2</address></udpv4></locator>
+            <locator><udpv4><address>192.168.42.3</address></udpv4></locator>
+            <locator><udpv4><address>192.168.42.4</address></udpv4></locator>
+            <locator><udpv4><address>192.168.42.5</address></udpv4></locator>
+            <locator><udpv4><address>192.168.42.6</address></udpv4></locator>
+            <locator><udpv4><address>192.168.42.7</address></udpv4></locator>
+            <locator><udpv4><address>192.168.42.8</address></udpv4></locator> -->
+            <!-- Operator tablet -->
+            <!-- <locator><udpv4><address>192.168.42.10</address></udpv4></locator> -->
+            <!-- Localhost for simulation -->
+            <locator><udpv4><address>127.0.0.1</address></udpv4></locator>
+            <locator><udpv4><address>192.168.0.184</address></udpv4></locator> <!-- The PC (Gazebo) -->
+          </metatrafficUnicastLocatorList>
+        </builtin>
+        <useBuiltinTransports>false</useBuiltinTransports>
+        <userTransports>
+          <transport_id>shm_transport</transport_id>
+          <transport_id>udp_transport</transport_id>
+        </userTransports>
+
+      </rtps>
+    </participant>
+   <!-- ═══════════════════════════════════════════════════════════════
+         QoS PROFILES — WEEK 2 (L6)
+         
+         To be added:
+         - /robot_*/cmd_vel     → RELIABLE
+         - /robot_*/odom        → RELIABLE, depth 1
+         - /robot_*/camera/*    → BEST_EFFORT
+         - /mesh_metrics        → BEST_EFFORT
+         - /comm_state          → RELIABLE
+         - /lora/*              → RELIABLE
+         ═══════════════════════════════════════════════════════════════ -->
+    
+  </profiles>
+</dds>
