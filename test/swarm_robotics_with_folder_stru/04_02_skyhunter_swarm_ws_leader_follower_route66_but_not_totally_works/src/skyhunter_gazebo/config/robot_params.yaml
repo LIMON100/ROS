@@ -1,0 +1,14 @@
+# =============================================================================
+# SkyHunter Robot Parameters - Shared across all packages
+# =============================================================================
+/**:
+  ros__parameters:
+    robot:
+      prefix: "SH_"           # Namespace prefix
+      base_link: "base_link"  # Frame name (full: SH_01/base_link)
+      odom_frame: "odom"      # Odom frame (full: SH_01/odom)
+      
+    # TF tree structure
+    tf:
+      common_frame: "world"   # Root frame connecting all robots
+      

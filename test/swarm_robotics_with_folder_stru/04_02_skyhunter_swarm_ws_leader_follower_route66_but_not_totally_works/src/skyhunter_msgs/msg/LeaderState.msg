@@ -1,0 +1,11 @@
+std_msgs/Header header
+geometry_msgs/Pose pose              
+geometry_msgs/Twist velocity         
+geometry_msgs/Pose[] next_waypoints
+uint8 formation_mode
+uint8 formation_state
+int8 swarm_state  
+int8 formation_type 
+int32 current_waypoint_index
+geometry_msgs/Point target_pos
+bool target_locked
