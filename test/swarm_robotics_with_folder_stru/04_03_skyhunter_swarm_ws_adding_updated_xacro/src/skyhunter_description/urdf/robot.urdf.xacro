@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="skyhunter_bot">
+
+  <!-- Macros -->
+  <xacro:include filename="$(find skyhunter_description)/urdf/macros.xacro" />
+  <xacro:include filename="$(find skyhunter_description)/urdf/materials.xacro" />
+
+  <!-- Robot body -->
+  <xacro:include filename="$(find skyhunter_description)/urdf/chassis.xacro" />
+  <xacro:include filename="$(find skyhunter_description)/urdf/gimbal.xacro" />
+  <xacro:include filename="$(find skyhunter_description)/urdf/camera.xacro" />
+  <xacro:include filename="$(find skyhunter_description)/urdf/chassis_cameras.xacro"/>
+  <xacro:include filename="$(find skyhunter_description)/urdf/rifle.xacro" />
+  <xacro:include filename="$(find skyhunter_description)/urdf/sensors.xacro" />
+
+  <!-- Gazebo -->
+  <xacro:include filename="$(find skyhunter_description)/urdf/gazebo.xacro" />
+  <xacro:include filename="$(find skyhunter_description)/urdf/gazebo_control.xacro" />
+
+</robot>
