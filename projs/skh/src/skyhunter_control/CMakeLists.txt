@@ -19,6 +19,7 @@ find_package(std_srvs REQUIRED)
 find_package(grid_map_ros REQUIRED)
 find_package(grid_map_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
+find_package(tf2_eigen REQUIRED)
 
 # PCL Dependencies
 find_package(pcl_conversions REQUIRED)
@@ -91,10 +92,10 @@ ament_target_dependencies(
   visualization_msgs
   pcl_conversions
   std_msgs
+  tf2_eigen
 )
 
-# CRITICAL FIX: Link the actual PCL and TF2 libraries to the Follower Node
-# This solves the "undefined reference" error
+# Link the actual PCL and TF2 libraries to the Follower Node
 target_link_libraries(follower_node 
   ${PCL_LIBRARIES}
   OpenMP::OpenMP_CXX

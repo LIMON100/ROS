@@ -19,6 +19,7 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(PCL REQUIRED)
 find_package(pcl_conversions REQUIRED) 
+find_package(tf2_eigen REQUIRED)
 
 # 2. Paths
 set(ONNX_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/onnxruntime_gpu")
@@ -101,7 +102,8 @@ ament_target_dependencies(swarm_lidar_filter
   tf2                
   tf2_ros
   tf2_geometry_msgs    
-  pcl_conversions   
+  pcl_conversions
+  tf2_eigen
 )
 
 # =========================================================

@@ -371,18 +371,37 @@ void YoloDetectorNode::image_callback(const sensor_msgs::msg::Image::SharedPtr m
                     // state_msg.target_locked = true; 
 
                     // --- FIX 4: Use Global Position for Targets ---
+                    // double global_x = latest_odom_.pose.pose.position.x;
+                    // double global_y = latest_odom_.pose.pose.position.y;
+                    // double r_yaw = tf2::getYaw(latest_odom_.pose.pose.orientation);
+
+                    // try {
+                    //     auto tf_now = tf_buffer_->lookupTransform("map", "base_footprint", tf2::TimePointZero);
+                    //     global_x = tf_now.transform.translation.x;
+                    //     global_y = tf_now.transform.translation.y;
+                    //     r_yaw = tf2::getYaw(tf_now.transform.rotation);
+                    // } catch (...) {
+                    //     RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "TF map to base_footprint not ready, using odom");
+                    // }
+
+
+
                     double global_x = latest_odom_.pose.pose.position.x;
                     double global_y = latest_odom_.pose.pose.position.y;
                     double r_yaw = tf2::getYaw(latest_odom_.pose.pose.orientation);
 
                     try {
-                        auto tf_now = tf_buffer_->lookupTransform("map", "base_footprint", tf2::TimePointZero);
+                        // --- CRITICAL FIX 2: DYNAMIC FRAME FOR FOLLOWERS ---
+                        std::string my_frame = is_leader_ ? "base_footprint" : my_ns_ + "/base_footprint";
+                        auto tf_now = tf_buffer_->lookupTransform("map", my_frame, tf2::TimePointZero);
+                        
                         global_x = tf_now.transform.translation.x;
                         global_y = tf_now.transform.translation.y;
                         r_yaw = tf2::getYaw(tf_now.transform.rotation);
                     } catch (...) {
                         RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "TF map to base_footprint not ready, using odom");
                     }
+
 
                     double lead_angle_offset = std::atan2(320.0 - pred_cx, 550.0); 
                     double total_angle = r_yaw + current_pan_ - lead_angle_offset;

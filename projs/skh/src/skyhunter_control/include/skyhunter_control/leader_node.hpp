@@ -129,6 +129,10 @@
 #include <tf2_ros/transform_listener.h>
 #include <tf2/utils.h>
 
+#include <sensor_msgs/msg/imu.hpp>              
+#include <geometry_msgs/msg/twist.hpp>         
+#include <tf2_ros/transform_broadcaster.h>
+
 using namespace std::chrono_literals;
 
 class LeaderNode : public rclcpp::Node
@@ -148,6 +152,7 @@ private:
   void formation_command_callback(const std_msgs::msg::Int8::SharedPtr msg);
   void role_callback(const std_msgs::msg::Int8::SharedPtr msg);
   void timer_callback();
+  void handle_physical_recovery();
 
   double calculate_remaining_dist(size_t start_idx, double global_x, double global_y) const;
   bool get_waypoint_at_dist(double target_m, size_t start_idx, geometry_msgs::msg::Pose & out_pose, size_t & out_idx, double global_x, double global_y) const;
@@ -171,9 +176,19 @@ private:
   rclcpp::Subscription<skyhunter_msgs::msg::LeaderState>::SharedPtr sub_combat_state_;
   void combat_state_callback(const skyhunter_msgs::msg::LeaderState::SharedPtr msg);
 
-  // --- NEW: TF Variables ---
+  // TF Variables ---
   std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
   std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
+
+  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr sub_imu_;
+  rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr sub_nav_cmd_;
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_cmd_vel_;
+
+  double current_pitch_ = 0.0;
+  geometry_msgs::msg::Twist last_nav_cmd_;
+  int stall_counter_ = 0;
+  bool is_recovering_ = false;
+
 
   rclcpp::Publisher<skyhunter_msgs::msg::LeaderState>::SharedPtr publisher_;
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr viz_pub_;

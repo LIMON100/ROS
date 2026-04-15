@@ -18,7 +18,7 @@ def launch_setup(context, *args, **kwargs):
     world_file = context.perform_substitution(LaunchConfiguration('world'))
     formation_type = context.perform_substitution(LaunchConfiguration('formation'))
     
-    # --- 2. AUTOMATIC WORLD DETECTION ---
+    # --- AUTOMATIC WORLD DETECTION ---
     pose_str = context.perform_substitution(LaunchConfiguration('pose'))
     
     # Auto-setting Route 66 coordinates if world is selected
@@ -78,15 +78,21 @@ def launch_setup(context, *args, **kwargs):
         }.items()
     ))
 
+    nodes_to_start.append(IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('skyhunter_navigation'), 'launch', 'ekf.launch.py')
+        ),
+        launch_arguments={'namespace': ''}.items() # Empty for leader
+    ))
 
-    # 3. Leader Node (Produces waypoints for R1)
+    # Leader Node (Produces waypoints for R1)
     nodes_to_start.append(Node(
         package='skyhunter_control', executable='leader_node',
         output='screen', parameters=[{
             'use_sim_time': True,
             'initial_formation': int(formation_type)
         }],
-        remappings=[('odom', '/odom'), ('leader_state', '/leader_state')]
+        remappings=[('odom', '/odom_filtered'), ('leader_state', '/leader_state')]
     ))
 
     nodes_to_start.append(Node(
@@ -114,8 +120,8 @@ def launch_setup(context, *args, **kwargs):
         ]
     ))
 
-    # 4. Global Leadership Manager (Heartbeat + Relay for R1)
-    # Note: We only use THIS, not the 'leader_relay' script.
+    # Global Leadership Manager (Heartbeat + Relay for R1)
+
     nodes_to_start.append(Node(
         package='skyhunter_control', executable='leadership_manager',
         name='leadership_manager_R1',
@@ -127,7 +133,7 @@ def launch_setup(context, *args, **kwargs):
     ))
 
     # ====================================================
-    # SECTION 4: SWARM COMMUNICATION & MESH SIMULATION
+    # SWARM COMMUNICATION & MESH SIMULATION
     # ====================================================
 
     nodes_to_start.append(IncludeLaunchDescription(
@@ -135,7 +141,7 @@ def launch_setup(context, *args, **kwargs):
     ))
 
     # ====================================================
-    # SECTION 2: DYNAMIC FOLLOWERS (SH_02 TO SH_07)
+    #  DYNAMIC FOLLOWERS (SH_02 TO SH_07)
     # ====================================================
     for i in range(2, num_robots + 1):
         follower_ns = f'SH_{i:02d}' # SH_02, SH_03...
@@ -188,6 +194,13 @@ def launch_setup(context, *args, **kwargs):
                     }.items()
                 ),
 
+                IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource(
+                        os.path.join(get_package_share_directory('skyhunter_navigation'), 'launch', 'ekf.launch.py')
+                    ),
+                    launch_arguments={'namespace': follower_ns}.items()
+                ),
+
                 # C. Leadership Manager (The ID switcher)
                 Node(
                     package='skyhunter_control', executable='leadership_manager',
@@ -206,7 +219,7 @@ def launch_setup(context, *args, **kwargs):
                     remappings=[
                         ('odom', f'/{follower_ns}/odom_filtered'),
                         ('leader_state', f'/{follower_ns}/leader_state'),
-                        ('plan', f'/{follower_ns}/plan')  # <--- ADD THIS LINE !!!
+                        ('plan', f'/{follower_ns}/plan') 
                     ]
                 ),
 
@@ -230,19 +243,38 @@ def launch_setup(context, *args, **kwargs):
                     ]
                 ),
 
+                # Node(
+                #     package='nav2_collision_monitor',
+                #     executable='collision_monitor',
+                #     namespace=follower_ns,
+                #     output='screen',
+                #     parameters=[os.path.join(pkg_tin3_navigation, 'config', 'collision_monitor.yaml')],
+                #     remappings=[
+                #         # This node listens to the 'nav' topic we just created
+                #         ('cmd_vel_in', f'/{follower_ns}/cmd_vel_nav'), 
+                #         # And outputs to the REAL motor topic
+                #         ('cmd_vel_out', f'/{follower_ns}/cmd_vel'),
+                #         # Use the filtered scan from your C++ node
+                #         ('scan/points_filtered', f'/{follower_ns}/scan/points_filtered')
+                #     ]
+                # ),
+
                 Node(
                     package='nav2_collision_monitor',
                     executable='collision_monitor',
                     namespace=follower_ns,
                     output='screen',
-                    parameters=[os.path.join(pkg_tin3_navigation, 'config', 'collision_monitor.yaml')],
+                    parameters=[
+                        os.path.join(pkg_tin3_navigation, 'config', 'collision_monitor.yaml'),
+                        {
+                            'base_frame_id': f'{follower_ns}/base_footprint',
+                            'odom_frame_id': f'{follower_ns}/odom'
+                        }
+                    ],
                     remappings=[
-                        # This node listens to the 'nav' topic we just created
                         ('cmd_vel_in', f'/{follower_ns}/cmd_vel_nav'), 
-                        # And outputs to the REAL motor topic
                         ('cmd_vel_out', f'/{follower_ns}/cmd_vel'),
-                        # Use the filtered scan from your C++ node
-                        ('scan/points_filtered', f'/{follower_ns}/scan/points_filtered')
+                        ('scan/points_filtered', f'/{follower_ns}/scan/points') 
                     ]
                 ),
 
@@ -252,7 +284,7 @@ def launch_setup(context, *args, **kwargs):
                     executable='yolo_detector_node',
                     namespace=follower_ns,
                     parameters=[{'robot_ns': follower_ns}]
-                )
+                ),
             ]
         )
         nodes_to_start.append(follower_action)

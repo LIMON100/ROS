@@ -27,16 +27,17 @@
   gz_type_name: "gz.msgs.Model"
   direction: GZ_TO_ROS
 
-# GPS
+# # GPS
 # - ros_topic_name: "gps/fix"
 #   gz_topic_name: "gps/fix"
 #   ros_type_name: "gps_msgs/msg/GPSFix"
 #   gz_type_name: "gz.msgs.NavSat"
 #   direction: GZ_TO_ROS
 
+# GPS
 - ros_topic_name: "gps/fix"
   gz_topic_name: "gps/fix"
-  ros_type_name: "sensor_msgs/msg/NavSatFix" 
+  ros_type_name: "sensor_msgs/msg/NavSatFix"  # MUST BE THIS
   gz_type_name: "gz.msgs.NavSat"
   direction: GZ_TO_ROS
 

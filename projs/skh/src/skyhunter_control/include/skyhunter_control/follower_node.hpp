@@ -78,6 +78,10 @@ private:
   int8_t current_local_role_ = 0;
   double smoothed_path_yaw_ = 0.0;
   bool has_smoothed_path_ = false;
+  int floor_points_ahead_ = 100; 
+
+  // --- Convoy Breadcrumb Trail ---
+  std::vector<geometry_msgs::msg::Point> leader_breadcrumbs_;
 
   // Publishers
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_cmd_;
