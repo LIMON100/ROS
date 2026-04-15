@@ -335,14 +335,50 @@ void LeaderNode::plan_callback(const nav_msgs::msg::Path::SharedPtr msg) { lates
 void LeaderNode::formation_command_callback(const std_msgs::msg::Int8::SharedPtr msg) { cmd_formation_type_ = msg->data; }
 void LeaderNode::role_callback(const std_msgs::msg::Int8::SharedPtr msg) { current_role_ = msg->data; }
 
+// void LeaderNode::scan_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
+//     pcl::PointCloud<pcl::PointXYZ> cloud;
+//     pcl::fromROSMsg(*msg, cloud);
+//     bool narrow = false;
+//     for (const auto& p : cloud.points) {
+//         if (p.z < 0.4 || p.z > 1.0) continue; 
+//         if (p.x > 0.5 && p.x < 5.0 && std::abs(p.y) < 1.5) { narrow = true; break; }
+//     }
+//     narrow_gap_detected_ = narrow;
+// }
+
+
 void LeaderNode::scan_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
     pcl::PointCloud<pcl::PointXYZ> cloud;
     pcl::fromROSMsg(*msg, cloud);
+    
     bool narrow = false;
+    int ground_left = 0;
+    int ground_right = 0;
+
     for (const auto& p : cloud.points) {
-        if (p.z < 0.4 || p.z > 1.0) continue; 
-        if (p.x > 0.5 && p.x < 5.0 && std::abs(p.y) < 1.5) { narrow = true; break; }
+        // 1. WALL DETECTION (Obstacles beside the robot)
+        if (p.z >= 0.4 && p.z <= 1.0) { 
+            if (p.x > 0.5 && p.x < 5.0 && std::abs(p.y) < 1.5) { 
+                narrow = true; 
+            }
+        }
+        
+        // 2. CLIFF DETECTION (Checking for ground points on the left and right)
+        // Normal ground is around z = 0.0 in base_footprint
+        if (p.z > -0.5 && p.z < 0.3) {
+            if (p.x > 1.0 && p.x < 4.0) { // Look 1m to 4m ahead
+                if (p.y > 0.8 && p.y < 2.5) ground_left++;       // Scan Left side
+                if (p.y < -0.8 && p.y > -2.5) ground_right++;    // Scan Right side
+            }
+        }
     }
+
+    // If either side has fewer than 10 ground points, we are driving on a cliff edge!
+    // Force the swarm into a tight single-file column.
+    if (ground_left < 10 || ground_right < 10) {
+        narrow = true;
+    }
+
     narrow_gap_detected_ = narrow;
 }
 

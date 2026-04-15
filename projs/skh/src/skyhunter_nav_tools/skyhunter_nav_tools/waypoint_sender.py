@@ -30,7 +30,7 @@ class WaypointFollower(Node):
         self.current_goal_handle = None    
         self.mission_ended = False           
 
-        # NEW: listen to Fire Net state
+        # listen to Fire Net state
         self.state_sub = self.create_subscription(
             LeaderState,
             '/swarm/virtual_leader/state',   # this carries the YOLO combat state
@@ -46,11 +46,10 @@ class WaypointFollower(Node):
         # ]
 
         self.waypoints = [
-            (-80.5,  90.0),  # 1. Straight ~15m down the highway
-            (-70.0,  64.0),  # 2. Straight ~30m down the highway
-            (-60.5,  51.0),  # 3. Straight ~45m down the highway
-            (-37.0,  38.0),   # 4. Straight ~60m down the highway
-            (-20.0,  70.0)
+            (20.0,  0.0),   # Drive 15m straight ahead
+            (35.0, -20.0), # Drive 30m ahead, slightly right
+            (45.0, -35.0), # Drive 45m ahead, further right
+            (60.0, -20.0)  # Drive 60m ahead
         ]
 
         # self.waypoints = [(10.0, 0.0), (20.0, 0.0), ] #(30.0, 0.0), (40.0, 0.0)]
@@ -136,22 +135,6 @@ class WaypointFollower(Node):
         self.get_logger().info("Goal Accepted. Leader Moving...")
         self.current_goal_handle = goal_handle          # <-- ADD THIS LINE
         goal_handle.get_result_async().add_done_callback(self.get_result_callback)
-
-    # def get_result_callback(self, future):
-    #     status = future.result().status
-    #     if status == GoalStatus.STATUS_SUCCEEDED:
-    #         self.get_logger().info("Waypoint Reached!")
-    #         self.get_logger().info("=============================================")
-    #         self.current_wp_index += 1
-    #         self.is_busy = False
-
-    #         # time.sleep(0.5)
-    #         time.sleep(20.0)
-
-    #         self.send_next_goal()
-    #     else:
-    #         self.get_logger().warn(f"Goal failed with status: {status}")
-    #         self.is_busy = False
 
     def get_result_callback(self, future):
         status = future.result().status

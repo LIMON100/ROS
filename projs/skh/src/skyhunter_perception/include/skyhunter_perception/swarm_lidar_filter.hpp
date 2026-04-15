@@ -25,6 +25,7 @@ private:
     rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_scan_;
     rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr sub_swarm_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub_scan_;
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub_ground_;
 
     // TF2 for Coordinate Transformations
     std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
