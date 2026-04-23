@@ -1,0 +1,4 @@
+uint32 term
+string candidate_id
+string voter_id
+float32 fitness_score
