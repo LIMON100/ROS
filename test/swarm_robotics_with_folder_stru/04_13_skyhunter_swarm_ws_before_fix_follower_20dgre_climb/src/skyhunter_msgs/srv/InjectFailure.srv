@@ -1,0 +1,7 @@
+# Generic failure injection for any communication tier
+uint8 target_tier              # 1=WIFI6, 2=LTE, 3=LORA
+string failure_type            # "disconnect", "degrade", "latency"
+float32 duration_s             # 0 = permanent until cleared
+---
+bool success
+string message
