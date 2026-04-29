@@ -1,0 +1,32 @@
+collision_monitor:
+  ros__parameters:
+    use_sim_time: true
+    base_frame_id: "base_footprint"
+    odom_frame_id: "odom"
+    transform_tolerance: 0.2
+    source_timeout: 1.0
+    stop_pub_timeout: 2.0
+    observation_sources: ["pointcloud"]
+    pointcloud:
+      type: "scan"
+      topic: "scan/points_filtered"
+    
+    polygons: ["path_ttc_zone", "stop_zone"]
+
+    # --- 3.0s TTC ZONE ---
+    path_ttc_zone:
+      type: "velocity_polygons" # Predicts path based on current speed
+      prediction_time: 3.0       
+      simulation_time_step: 0.1
+      min_points: 3
+      visualize: true
+      action_type: "slowdown"    # Start slowing down at 3s
+      slowdown_ratio: 0.3
+
+    stop_zone:
+      type: "circle"
+      radius: 0.8                # Hard stop if anything is within 0.8m
+      prediction_time: 0.0
+      min_points: 3
+      visualize: true
+      action_type: "stop"

@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="tile1">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>0.5 0.5 0.5 1</specular>
+      <direction>-0.5 0.5 -1</direction>
+    </light>
+
+    <model name="my_mesh_map">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://my_map/meshes/tile1/tile1.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.0</mu>        <!-- primary friction -->
+                <mu2>1.0</mu2>      <!-- secondary (anisotropic) -->
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://my_map/meshes/tile1/tile1.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>
