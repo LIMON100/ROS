@@ -1,0 +1,203 @@
+<svg width="1200" height="620" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif" font-size="11">
+<defs>
+  <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#333"/>
+  </marker>
+</defs>
+
+<!-- background -->
+<rect width="1200" height="620" fill="#ffffff" rx="10" stroke="#e0e0e0" stroke-width="1"/>
+
+<!-- Title — pushed down to y=38 so route line at y=50 clears it -->
+<text x="600" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">SkyHunter Comm — Node Architecture</text>
+
+<!-- ══════════════════════════════════════
+     SUBGRAPH BOXES  (y=70 → y=460)
+══════════════════════════════════════ -->
+<rect x="20"  y="90" width="175" height="390" rx="10" fill="#eef4ff" stroke="#4a6fa5" stroke-width="1.8" stroke-dasharray="7,4"/>
+<text x="107" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a6fa5">Gazebo</text>
+
+<rect x="220" y="90" width="190" height="390" rx="10" fill="#edfff4" stroke="#27ae60" stroke-width="1.8" stroke-dasharray="7,4"/>
+<text x="315" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#27ae60">RF Layer</text>
+
+<rect x="435" y="90" width="190" height="390" rx="10" fill="#fff8ee" stroke="#e67e22" stroke-width="1.8" stroke-dasharray="7,4"/>
+<text x="530" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#e67e22">Bearers</text>
+
+<rect x="650" y="90" width="190" height="390" rx="10" fill="#f8f0ff" stroke="#8e44ad" stroke-width="1.8" stroke-dasharray="7,4"/>
+<text x="745" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#8e44ad">Decision</text>
+
+<rect x="865" y="90" width="195" height="390" rx="10" fill="#fff0f0" stroke="#c0392b" stroke-width="1.8" stroke-dasharray="7,4"/>
+<text x="962" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">Output</text>
+
+<!-- ══════════════════════════════════════
+     NODES — Gazebo
+══════════════════════════════════════ -->
+<rect x="30" y="103" width="155" height="68" rx="7" fill="white" stroke="#4a6fa5" stroke-width="2"/>
+<text x="107" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c3e50">SH_01 … SH_08</text>
+<text x="107" y="141" text-anchor="middle" font-size="10" fill="#555">robot_state_publisher</text>
+<text x="107" y="157" text-anchor="middle" font-size="10" fill="#555">parameter_bridge</text>
+
+<rect x="30" y="205" width="155" height="50" rx="7" fill="white" stroke="#4a6fa5" stroke-width="2"/>
+<text x="107" y="225" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c3e50">/tf · /tf_static</text>
+<text x="107" y="243" text-anchor="middle" font-size="10" fill="#555">TF tree</text>
+
+<rect x="30" y="292" width="155" height="82" rx="7" fill="white" stroke="#4a6fa5" stroke-width="2"/>
+<text x="107" y="313" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c3e50">/SH_NN/odom</text>
+<text x="107" y="330" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c3e50">/SH_NN/camera</text>
+<text x="107" y="347" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c3e50">/SH_NN/cmd_vel</text>
+<text x="107" y="366" text-anchor="middle" font-size="10" fill="#999">× 8 robots</text>
+
+<!-- ══════════════════════════════════════
+     NODES — RF Layer
+══════════════════════════════════════ -->
+<rect x="230" y="103" width="168" height="95" rx="7" fill="white" stroke="#27ae60" stroke-width="2"/>
+<text x="314" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c3e50">jammer_service</text>
+<line x1="230" y1="133" x2="398" y2="133" stroke="#27ae60" stroke-width="1"/>
+<text x="314" y="150" text-anchor="middle" font-size="10" fill="#555">/jam_link</text>
+<text x="314" y="166" text-anchor="middle" font-size="10" fill="#555">/unjam_link</text>
+<text x="314" y="182" text-anchor="middle" font-size="10" fill="#555">/clear_all_jams</text>
+
+<rect x="230" y="230" width="168" height="68" rx="7" fill="white" stroke="#27ae60" stroke-width="2"/>
+<text x="314" y="251" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c3e50">wifi6_mesh_sim</text>
+<line x1="230" y1="260" x2="398" y2="260" stroke="#27ae60" stroke-width="1"/>
+<text x="314" y="276" text-anchor="middle" font-size="10" fill="#555">/mesh_metrics  10 Hz</text>
+<text x="314" y="291" text-anchor="middle" font-size="10" fill="#555">/mesh_link_states  1 Hz</text>
+
+<!-- ══════════════════════════════════════
+     NODES — Bearers
+══════════════════════════════════════ -->
+<rect x="445" y="103" width="168" height="75" rx="7" fill="white" stroke="#e67e22" stroke-width="2"/>
+<text x="529" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c3e50">lte_simulator</text>
+<line x1="445" y1="133" x2="613" y2="133" stroke="#e67e22" stroke-width="1"/>
+<text x="529" y="150" text-anchor="middle" font-size="10" fill="#555">/lte_status  2 Hz</text>
+<text x="529" y="166" text-anchor="middle" font-size="10" fill="#555">failure injection</text>
+
+<rect x="445" y="218" width="168" height="90" rx="7" fill="white" stroke="#e67e22" stroke-width="2"/>
+<text x="529" y="238" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c3e50">lora_simulator</text>
+<line x1="445" y1="247" x2="613" y2="247" stroke="#e67e22" stroke-width="1"/>
+<text x="529" y="264" text-anchor="middle" font-size="10" fill="#555">/lora/status  0.2 Hz</text>
+<text x="529" y="279" text-anchor="middle" font-size="10" fill="#555">/lora/heartbeat</text>
+<text x="529" y="294" text-anchor="middle" font-size="10" fill="#555">/lora/estop</text>
+
+<!-- ══════════════════════════════════════
+     NODES — Decision
+══════════════════════════════════════ -->
+<rect x="660" y="175" width="168" height="75" rx="7" fill="white" stroke="#8e44ad" stroke-width="2"/>
+<text x="744" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c3e50">swarm_comm_manager</text>
+<line x1="660" y1="205" x2="828" y2="205" stroke="#8e44ad" stroke-width="1"/>
+<text x="744" y="221" text-anchor="middle" font-size="10" fill="#555">WiFi6 / LTE / LoRa FSM</text>
+<text x="744" y="237" text-anchor="middle" font-size="10" fill="#555">/comm_state  2 Hz</text>
+
+<!-- ══════════════════════════════════════
+     NODES — Output
+══════════════════════════════════════ -->
+<rect x="875" y="148" width="168" height="58" rx="7" fill="white" stroke="#c0392b" stroke-width="2"/>
+<text x="959" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c3e50">comm_traffic_filter</text>
+<line x1="875" y1="179" x2="1043" y2="179" stroke="#c0392b" stroke-width="1"/>
+<text x="959" y="196" text-anchor="middle" font-size="10" fill="#555">tier-aware relay</text>
+
+<rect x="875" y="242" width="168" height="80" rx="7" fill="white" stroke="#c0392b" stroke-width="2"/>
+<text x="959" y="263" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c3e50">/bridge/SH_NN/odom</text>
+<text x="959" y="281" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c3e50">/bridge/SH_NN/camera</text>
+<text x="959" y="299" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c3e50">/bridge/status</text>
+
+<!-- ══════════════════════════════════════
+     CONNECTIONS
+     Top route:    y=50  (above all boxes, below title)
+     Bottom route: y=480 and y=500
+══════════════════════════════════════ -->
+
+<!-- 1. ROBOTS → W6  (TF lookups) -->
+<polyline points="185,137 208,137 208,265 228,265"
+  fill="none" stroke="#4a6fa5" stroke-width="2" marker-end="url(#arr)"/>
+<text x="197" y="200" text-anchor="middle" font-size="10" fill="#4a6fa5" font-weight="bold" transform="rotate(-90,197,200)">TF lookup</text>
+
+<!-- 2. TF → W6 -->
+<polyline points="185,230 208,230 208,275 228,275"
+  fill="none" stroke="#4a6fa5" stroke-width="2" marker-end="url(#arr)"/>
+
+<!-- 3. JAM → W6  (vertical within RF) -->
+<line x1="314" y1="198" x2="314" y2="228" stroke="#27ae60" stroke-width="2" marker-end="url(#arr)"/>
+<text x="332" y="218" font-size="10" fill="#27ae60" font-weight="bold">/jammed_links</text>
+
+<!-- 4+8. W6 → FSM (/mesh_metrics) and W6 → FILTER (/mesh_link_states)
+     Shared bottom route with T-split at Decision column -->
+
+<!-- Stem: W6 bottom → down to shared horizontal -->
+<line x1="314" y1="298" x2="314" y2="480"
+  stroke="#27ae60" stroke-width="2"/>
+
+<!-- Shared horizontal backbone -->
+<line x1="314" y1="480" x2="959" y2="480"
+  stroke="#27ae60" stroke-width="2"/>
+
+<!-- Branch 1: up to FSM (Decision) — /mesh_metrics -->
+<line x1="744" y1="480" x2="744" y2="252"
+  stroke="#27ae60" stroke-width="2" marker-end="url(#arr)"/>
+<text x="757" y="370" font-size="10.5" fill="#27ae60" font-weight="bold">/mesh_metrics  10 Hz</text>
+
+<!-- Branch 2: /mesh_link_states — outside output box, enter filter from right -->
+<polyline points="930,480 1075,480 1075,168 1043,168"
+  fill="none" stroke="#27ae60" stroke-width="2" marker-end="url(#arr)"/>
+<text x="1087" y="330" text-anchor="middle" font-size="10.5" fill="#27ae60" font-weight="bold" transform="rotate(-90,1087,330)">/mesh_link_states  1 Hz</text>
+
+<!-- T-junction dots -->
+<circle cx="744" cy="480" r="4" fill="#27ae60"/>
+<circle cx="930" cy="480" r="4" fill="#27ae60"/>
+
+<!-- 5. LTE → FSM -->
+<polyline points="613,140 637,140 637,200 658,200"
+  fill="none" stroke="#e67e22" stroke-width="2" marker-end="url(#arr)"/>
+<text x="625" y="130" text-anchor="middle" font-size="10.5" fill="#e67e22" font-weight="bold">/lte_status  2 Hz</text>
+
+<!-- 6. LORA → FSM -->
+<polyline points="613,262 637,262 637,225 658,225"
+  fill="none" stroke="#e67e22" stroke-width="2" marker-end="url(#arr)"/>
+<text x="625" y="282" text-anchor="middle" font-size="10.5" fill="#e67e22" font-weight="bold">/lora/status</text>
+
+<!-- 7. FSM → FILTER -->
+<polyline points="828,212 851,212 851,178 873,178"
+  fill="none" stroke="#8e44ad" stroke-width="2" marker-end="url(#arr)"/>
+<text x="851" y="200" text-anchor="start" font-size="10.5" fill="#8e44ad" font-weight="bold"> /comm_state</text>
+
+
+
+<!-- 9. RT → FILTER — outside output box, enter filter from right -->
+<polyline points="185,333 207,333 207,500 1090,500 1090,185 1043,185"
+  fill="none" stroke="#4a6fa5" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arr)"/>
+<text x="583" y="516" text-anchor="middle" font-size="10.5" fill="#4a6fa5" font-weight="bold">/SH_NN/odom · /SH_NN/camera · /SH_NN/cmd_vel  (× 8)</text>
+
+<!-- 10. FILTER → OUT -->
+<line x1="959" y1="206" x2="959" y2="240" stroke="#c0392b" stroke-width="2" marker-end="url(#arr)"/>
+
+<!-- ══════════════════════════════════════
+     LEGEND — full width at bottom
+══════════════════════════════════════ -->
+<rect x="20" y="537" width="1160" height="68" rx="8" fill="white" stroke="#e0e0e0" stroke-width="1.5"/>
+<text x="600" y="556" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c3e50">Legend</text>
+
+<!-- item 1 -->
+<rect x="40" y="566" width="14" height="14" rx="3" fill="#eef4ff" stroke="#4a6fa5" stroke-width="2"/>
+<text x="62" y="578" font-size="10.5" fill="#4a6fa5" font-weight="bold">Gazebo / TF</text>
+
+<!-- item 2 -->
+<rect x="220" y="566" width="14" height="14" rx="3" fill="#edfff4" stroke="#27ae60" stroke-width="2"/>
+<text x="242" y="578" font-size="10.5" fill="#27ae60" font-weight="bold">WiFi6 RF Layer</text>
+
+<!-- item 3 -->
+<rect x="420" y="566" width="14" height="14" rx="3" fill="#fff8ee" stroke="#e67e22" stroke-width="2"/>
+<text x="442" y="578" font-size="10.5" fill="#e67e22" font-weight="bold">Bearers (LTE / LoRa)</text>
+
+<!-- item 4 -->
+<rect x="650" y="566" width="14" height="14" rx="3" fill="#f8f0ff" stroke="#8e44ad" stroke-width="2"/>
+<text x="672" y="578" font-size="10.5" fill="#8e44ad" font-weight="bold">FSM / Decision</text>
+
+<!-- item 5 -->
+<rect x="860" y="566" width="14" height="14" rx="3" fill="#fff0f0" stroke="#c0392b" stroke-width="2"/>
+<text x="882" y="578" font-size="10.5" fill="#c0392b" font-weight="bold">Bridge Output</text>
+
+<!-- item 6 -->
+<rect x="1060" y="566" width="14" height="14" rx="3" fill="#eef4ff" stroke="#4a6fa5" stroke-width="2" stroke-dasharray="4,2"/>
+<text x="1082" y="578" font-size="10.5" fill="#4a6fa5" font-weight="bold">Robot topics (× 8)</text>
+
+</svg>
