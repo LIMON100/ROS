@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="tactical_test_world">
+    <!-- 1. PHYSICS (Exact same as your working demo) -->
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>500</real_time_update_rate>
+    </physics>
+
+    <!-- 2. PLUGINS (CRITICAL: Added the Ogre2 Sensors plugin you need) -->
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    
+    <light type="directional" name="sun"><pose>0 0 10 0 0 0</pose></light>
+
+    <!-- 3. THE GROUND PLANE -->
+    <model name="ground_start">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>20 40</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>20 40</size></plane></geometry>
+          <material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material>
+        </visual>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+    </model>
+
+    <!-- 4. THE VOID (Hole between X=10 and X=18) -->
+    <model name="ground_end">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>30 40</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>30 40</size></plane></geometry>
+          <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+        </visual>
+      </link>
+      <pose>33 0 0 0 0 0</pose> <!-- Gap created here -->
+    </model>
+
+    <!-- 5. DENSE TEST: Red Box (Should be AVOIDED) -->
+    <model name="dense_box">
+      <static>true</static>
+      <pose>5 2 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>1 1 1</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>1 1 1</size></box></geometry>
+          <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 6. SPARSE TEST: Thin Pole (Should be IGNORED by Density Filter) -->
+    <model name="sparse_grass">
+      <static>true</static>
+      <pose>5 -2 1.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><cylinder><radius>0.03</radius><length>3</length></cylinder></geometry></collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.03</radius><length>3</length></cylinder></geometry>
+          <material><ambient>0 1 0 1</ambient><diffuse>0 1 0 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 7. SMALL DEBRIS: 10cm Brick (Should be PASSED OVER) -->
+    <model name="brick_1">
+      <static>true</static>
+      <pose>3 0 0.05 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.2 0.1 0.1</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.2 0.1 0.1</size></box></geometry>
+          <material><ambient>0.6 0.3 0 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
