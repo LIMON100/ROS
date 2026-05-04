@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+from skyhunter_comm.swarm_comm_manager import main
+main()
