@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+from skyhunter_comm.jammer_service import main
+main()
