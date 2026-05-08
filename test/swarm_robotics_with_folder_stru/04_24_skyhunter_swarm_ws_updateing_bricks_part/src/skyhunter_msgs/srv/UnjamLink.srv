@@ -1,0 +1,6 @@
+# Remove jam between two robots
+string robot_a
+string robot_b
+---
+bool success
+string message
