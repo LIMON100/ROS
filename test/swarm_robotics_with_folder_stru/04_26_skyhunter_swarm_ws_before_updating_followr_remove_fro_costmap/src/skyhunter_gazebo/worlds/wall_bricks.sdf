@@ -1,0 +1,113 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="debris_world">
+    <!-- PHYSICS -->
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>500</real_time_update_rate>
+    </physics>
+
+    <!-- PLUGINS -->
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    
+    <light type="directional" name="sun"><pose>0 0 10 0 0 0</pose></light>
+
+    <!-- GROUND PLANE (Light Gray Concrete) -->
+    <!-- THE BRIGHT WHITE GROUND PLANE -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+          <!-- Use the built-in Gazebo White material for guaranteed lighting -->
+          <material>
+            <ambient>0.9 0.9 0.9 1</ambient>
+            <diffuse>0.9 0.9 0.9 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+            <emissive>0 0 0 1</emissive>
+          </material>
+        </visual>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+    </model>
+
+    <!-- ============================================== -->
+    <!-- DEBRIS FIELD (Standard Bricks: 20cm x 10cm x 10cm) -->
+    <!-- ============================================== -->
+
+    <!-- Scenario A: Standard Horizontal Brick (Easy to see) -->
+    <model name="brick_1">
+      <static>true</static>
+      <pose>5 1 0.05 0 0 0</pose> 
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.2 0.1 0.1</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.2 0.1 0.1</size></box></geometry><material><ambient>0.6 0.2 0.1 1</ambient></material></visual>
+      </link>
+    </model>
+
+    <!-- Scenario B: Vertical Brick (Small footprint, but tall: 20cm) -->
+    <model name="brick_2">
+      <static>true</static>
+      <pose>7 -1 0.1 0 1.57 0</pose> 
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.2 0.1 0.1</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.2 0.1 0.1</size></box></geometry><material><ambient>0.6 0.2 0.1 1</ambient></material></visual>
+      </link>
+    </model>
+
+    <!-- Scenario C: Half-Buried Brick (Hardest to detect: only 5cm sticking out) -->
+    <model name="brick_3">
+      <static>true</static>
+      <pose>9 0 0.0 0 0 0.785</pose> <!-- Angled 45 deg, sunken -->
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.2 0.1 0.1</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.2 0.1 0.1</size></box></geometry><material><ambient>0.6 0.2 0.1 1</ambient></material></visual>
+      </link>
+    </model>
+
+    <!-- Scenario D: Brick Pile (Small cluster) -->
+    <model name="brick_4">
+      <static>true</static>
+      <pose>12 2 0.05 0 0 0.5</pose> 
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.2 0.1 0.1</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.2 0.1 0.1</size></box></geometry><material><ambient>0.6 0.2 0.1 1</ambient></material></visual>
+      </link>
+    </model>
+    <model name="brick_5">
+      <static>true</static>
+      <pose>12.1 2.1 0.15 0 0 -0.5</pose> 
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.2 0.1 0.1</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.2 0.1 0.1</size></box></geometry><material><ambient>0.6 0.2 0.1 1</ambient></material></visual>
+      </link>
+    </model>
+
+    <!-- Scenario E: A line of debris forcing the robot to zig-zag -->
+    <model name="brick_6">
+      <static>true</static>
+      <pose>15 -0.5 0.05 0 0 0</pose> 
+      <link name="link"><collision name="col"><geometry><box><size>0.2 0.1 0.1</size></box></geometry></collision><visual name="vis"><geometry><box><size>0.2 0.1 0.1</size></box></geometry><material><ambient>0.6 0.2 0.1 1</ambient></material></visual></link>
+    </model>
+    <model name="brick_7">
+      <static>true</static>
+      <pose>17 0.5 0.05 0 0 0</pose> 
+      <link name="link"><collision name="col"><geometry><box><size>0.2 0.1 0.1</size></box></geometry></collision><visual name="vis"><geometry><box><size>0.2 0.1 0.1</size></box></geometry><material><ambient>0.6 0.2 0.1 1</ambient></material></visual></link>
+    </model>
+    <model name="brick_8">
+      <static>true</static>
+      <pose>19 -0.5 0.05 0 0 0</pose> 
+      <link name="link"><collision name="col"><geometry><box><size>0.2 0.1 0.1</size></box></geometry></collision><visual name="vis"><geometry><box><size>0.2 0.1 0.1</size></box></geometry><material><ambient>0.6 0.2 0.1 1</ambient></material></visual></link>
+    </model>
+
+  </world>
+</sdf>

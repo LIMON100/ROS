@@ -1,0 +1,7 @@
+<library path="follower_clear_layer">
+  <class name="skyhunter_navigation::FollowerClearLayer" type="skyhunter_navigation::FollowerClearLayer" base_class_type="nav2_costmap_2d::Layer">
+    <description>
+      Forces the costmap to FREE_SPACE around all follower robots to prevent ghosting.
+    </description>
+  </class>
+</library>
