@@ -1,0 +1,115 @@
+# =============================================================================
+# SkyHunter Comm — Networking Stack Configuration
+# =============================================================================
+# Package : skyhunter_comm
+# Loaded by: networking.launch.py (passed to all nodes via parameters=[])
+# =============================================================================
+
+# ── Node: wifi6_mesh_sim ──────────────────────────────────────────────────────
+wifi6_mesh_sim:
+  ros__parameters:
+
+    robot:
+      prefix: "SH_"               # Your follower prefix
+      base_link: "base_footprint" # Your actual base frame
+    tf:
+      common_frame: "map"         # Your actual global frame
+
+    # Discovery
+    auto_discover: true
+    discovery_interval_sec: 5.0
+
+    # RF Path Loss Model (Log-distance)
+    # RSSI = reference_rssi - 10 * n * log10(d / reference_distance) + noise
+    path_loss_exponent: 2.8             # n: 2.0=free space, 2.8=outdoor, 3.5=indoor
+    reference_rssi_dbm: -30.0           # RSSI at reference distance
+    reference_distance_m: 1.0           # Reference distance (typically 1m)
+    shadow_fading_std: 4.0              # Gaussian noise std dev (dB)
+    disconnect_threshold_dbm: -85.0     # Below this = link lost
+
+    # Delay Model
+    # delay = base_delay + contention_per_robot * active_robot_count
+    base_delay_ms: 2.0                  # Fixed processing delay (ms)
+    contention_delay_per_robot_ms: 0.5  # Added per active robot (ms)
+
+    # Packet Loss Model (RSSI → loss % mapping)
+    loss_thresholds_dbm:   [-50.0, -60.0, -70.0, -80.0, -85.0]
+    loss_percentages:      [0.0,   1.0,   5.0,   15.0,  30.0,  100.0]
+
+    # Publish rates
+    metrics_hz: 10.0                    # /mesh_metrics
+    states_hz: 1.0                      # /mesh_link_states
+
+# ── Node: jammer_service (part of wifi6_mesh_sim) ────────────────────────────
+jammer_service:
+  ros__parameters:
+    publish_rate_hz: 10.0
+    default_attenuation_db: 50.0
+
+# ── Node: swarm_comm_manager ──────────────────────────────────────────────────
+swarm_comm_manager:
+  ros__parameters:
+
+    # WiFi6 failure thresholds
+    wifi6_rssi_fail_threshold: -75.0    # dBm — below = WiFi6 failing
+    wifi6_loss_fail_threshold: 30.0     # % — above = WiFi6 failing
+    wifi6_fail_duration_s: 3.0          # sustained failure before transition (s)
+
+    # WiFi6 recovery thresholds (hysteresis dead-band)
+    wifi6_recovery_rssi: -65.0          # dBm — above = WiFi6 recovered
+    wifi6_recovery_duration_s: 5.0      # sustained recovery before switching back (s)
+
+    # LTE thresholds
+    lte_timeout_s: 10.0                 # no LTE response → fail (s)
+    lte_rtt_fail_threshold_ms: 500.0    # RTT above this = failing (ms)
+
+    # LoRa thresholds
+    lora_heartbeat_timeout_s: 30.0      # no heartbeat → disconnected (s)
+
+    # Publish rate
+    publish_rate_hz: 2.0                # /comm_state
+
+# ── Node: lte_simulator ───────────────────────────────────────────────────────
+lte_simulator:
+  ros__parameters:
+
+    # Link quality
+    base_rtt_ms: 50.0                   # normal round-trip time (ms)
+    base_loss_pct: 2.0                  # normal packet loss (%)
+    bandwidth_mbps: 20.0                # simulated bandwidth cap (Mbps)
+
+    # Failure recovery
+    auto_reconnect_s: 15.0              # auto-reconnect after transient failure (s)
+    initial_state: "connected"          # starting state: "connected" | "disconnected"
+
+    # Publish rate
+    publish_rate_hz: 2.0                # /lte_status
+
+# ── Node: comm_traffic_filter ─────────────────────────────────────────────────
+comm_traffic_filter:
+  ros__parameters:
+
+    # Publish rate
+    status_rate_hz: 1.0                 # /bridge/status
+
+# ── Node: lora_simulator ─────────────────────────────────────────────────────
+lora_simulator:
+  ros__parameters:
+
+    # Heartbeat timing
+    heartbeat_interval_s: 5.0           # per-robot heartbeat period (s)
+
+    # RF propagation model
+    base_delay_ms: 350.0                # simulated LoRa airtime (ms)
+    delay_jitter_ms: 150.0              # random ± jitter applied to delay (ms)
+    base_loss_rate: 0.07                # baseline packet loss rate (7%)
+    spreading_factor: 10                # SF10 — affects airtime calculation
+
+    # Duty cycle
+    duty_cycle_limit: 0.01              # max TX duty cycle (1%)
+
+    # Payload
+    max_payload_bytes: 222              # max LoRa payload size (bytes)
+
+    # Publish rate
+    status_rate_hz: 0.2                 # /lora/status
