@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+from skyhunter_comm.lora_simulator import main
+main()
