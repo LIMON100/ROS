@@ -1,0 +1,79 @@
+# skyhunter_navigation — EKF Local Node (odom → base_link).
+#
+# PATCH 2026-05-13 (SkyAutoNet integration feedback):
+#   Splits the original single-EKF (world_frame=map) into a standard
+#   robot_localization dual-EKF pattern. This file is the LOCAL node,
+#   isolating GPS jumps from base_link velocity estimation.
+#
+# Pairs with ekf_global.yaml (map → odom, with GPS).
+#
+# Inputs:  IMU + wheel odometry only (NO GPS — keeps continuous output)
+# Outputs: /odometry/filtered/local + TF (odom → base_link)
+
+ekf_filter_node_local:
+  ros__parameters:
+    use_sim_time: true
+    frequency: 30.0
+    two_d_mode: true        # UGV planar operation (was 'false' in original;
+                            # 2D is more stable for ground robots)
+    sensor_timeout: 0.1
+    transform_time_offset: 0.0
+    transform_timeout: 0.0
+    print_diagnostics: true
+    debug: false
+
+    # ─── Frame setup (dual-EKF LOCAL pattern) ─────────────────────────
+    map_frame:       map
+    odom_frame:      odom
+    base_link_frame: base_footprint
+    world_frame:     odom    # ★ KEY CHANGE: was 'map' — now 'odom' to
+                             # isolate GPS jumps from base_link velocity
+
+    publish_tf: true         # Publishes ONLY odom → base_link
+    publish_acceleration: false
+
+    # ─── INPUT 1: Wheel Odometry (only velocities, NOT positions) ─────
+    odom0: odom
+    # Mask: [ x,  y,  z,  roll, pitch, yaw,
+    #        vx, vy, vz, vroll, vpitch, vyaw,
+    #        ax, ay, az ]
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true,  false, false,    # vx only — wheels slip on X/Y
+                   false, false, true,     # vyaw only
+                   false, false, false]
+    odom0_queue_size: 10
+    odom0_differential: false
+    odom0_relative: false
+    odom0_nodelay: true
+
+    # ─── INPUT 2: IMU (yaw rate + roll/pitch attitude) ────────────────
+    imu0: imu/data
+    imu0_config: [false, false, false,
+                  true,  true,  false,     # roll/pitch from gravity
+                  false, false, false,
+                  false, false, true,      # yaw rate
+                  false, false, false]
+    imu0_queue_size: 10
+    imu0_differential: false
+    imu0_relative: true                    # relative to startup orientation
+    imu0_remove_gravitational_acceleration: true
+
+    # NOTE: GPS input intentionally removed from LOCAL node.
+    # GPS is consumed by ekf_global.yaml only.
+
+    process_noise_covariance: [0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.06, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.03, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.03, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.06, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.025, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.025, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.04, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.02, 0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.015]
