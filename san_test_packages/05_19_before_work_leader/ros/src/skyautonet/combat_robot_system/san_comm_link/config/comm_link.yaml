@@ -1,0 +1,7 @@
+comm_link_node:
+  ros__parameters:
+    wifi6_probe_host:            "1.1.1.1"
+    wifi6_probe_port:            443
+    wifi6_probe_timeout_ms:      1500
+    consec_ok_to_upgrade:        5
+    consec_fail_to_downgrade:    3

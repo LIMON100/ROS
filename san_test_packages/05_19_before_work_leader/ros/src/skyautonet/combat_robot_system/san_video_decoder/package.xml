@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_video_decoder</name>
+  <version>1.5.1</version>
+  <description>
+    SAN v1.5.1 — H.265 video decoder node for the RK3588 hub stack.
+
+    Decodes /imx678_camera_node/image_compressed (sensor_msgs/CompressedImage,
+    format="h265") into sensor_msgs/Image (BGR8). On the production RK3588
+    SBC the GStreamer mppvideodec element uses the Rockchip MPP hardware
+    accelerator (zero-CPU H.265 decode via the VPU). On a CI host the
+    pipeline gracefully falls back to avdec_h265 (software libavcodec).
+
+    Created in response to DCN-2026-003 D-003 review (I-15 BLOCKER): the
+    v1.5 human_detector pipeline subscribed to H.265 directly and tried
+    cv::imdecode, which only handles still-image formats (JPEG/PNG/...).
+    This node sits between the camera publisher and any consumer that
+    needs raw frames (human_detector, future san_perception spatial
+    fusion, recording, snapshot OSD).
+
+    Refs:
+      * SAN-SDD-SWARM-001 v1.5 §4.2 (perception input chain)
+      * DCN-2026-003 D-003 + I-15 review
+      * Rockchip MPP user manual / gst-plugin-rockchip mppvideodec
+  </description>
+  <maintainer email="dev@skyautonet.com">SkyAutoNet</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>pkg-config</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+
+  <!-- GStreamer + plugins-base for appsrc / appsink + caps negotiation.
+       gstreamer1.0-rockchip / libmali / librockchip-mpp are board-side
+       runtime dependencies, NOT build-time, so we don't list them
+       (matching san_hub_comm's policy). -->
+  <depend>libgstreamer1.0-dev</depend>
+  <depend>libgstreamer-plugins-base1.0-dev</depend>
+  <depend>libgstreamer-plugins-bad1.0-dev</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

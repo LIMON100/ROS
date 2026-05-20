@@ -1,0 +1,8 @@
+comm_uplink_node:
+  ros__parameters:
+    server_url:               "https://telemetry.example.invalid/v1/upload"
+    probe_host:               "10.0.0.1"
+    probe_port:               443
+    probe_timeout_ms:         1500
+    probe_rate_hz:            1.0
+    wifi_recovery_threshold:  3

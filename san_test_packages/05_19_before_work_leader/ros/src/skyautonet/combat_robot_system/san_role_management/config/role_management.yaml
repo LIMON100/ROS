@@ -1,0 +1,31 @@
+# SAN v1.4 PHASE 8 - role management parameters.
+
+hub_role_manager:
+  ros__parameters:
+    robot_id: 0
+    hub_robot_id: 2
+    deputy_robot_id: 3
+    hub_heartbeat_timeout_ms: 5000   # 5 s missing RobotStatus from Hub
+    watchdog_period_ms: 500
+
+leader_role_manager:
+  ros__parameters:
+    robot_id: 0
+    leader_robot_id: 1
+    hub_robot_id: 2
+    deputy_robot_id: 3
+    leader_heartbeat_timeout_ms: 1400   # 200 ms × 7
+    watchdog_period_ms: 100
+    grace_step_ms: 200                  # Deputy=200, Hub=400, BatteryMax=600
+    min_battery_for_leader: 20.0
+    min_battery_follower: 10.0
+
+limp_mode_manager:
+  ros__parameters:
+    hub_robot_id: 2
+    deputy_robot_id: 3
+    hub_timeout_ms: 5000
+    deputy_timeout_ms: 5000
+    limp_guard_ms: 7000                 # 5 s timeout + 2 s takeover grace
+    watchdog_period_ms: 500
+    android_app_ip_seed: ""             # populated by mesh DHCP at runtime
