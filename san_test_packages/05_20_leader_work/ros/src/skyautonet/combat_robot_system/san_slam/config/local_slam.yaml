@@ -1,0 +1,7 @@
+# SAN v1.3 PHASE 3 — per-robot local SLAM parameters.
+
+local_slam_node:
+  ros__parameters:
+    robot_id: "0"            # 1..8 (set per-host at boot)
+    map_topic: "/map"        # slam_toolbox publishes here
+    publish_period_sec: 1.0

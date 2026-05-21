@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>human_detector</name>
+  <version>1.5.1</version>
+  <description>
+    SAN v1.5.1 PHASE 6 - AI inference backend abstraction +
+    full pipeline node (camera sub -> NPU infer -> DetectionArray pub).
+    Backends: RK3588 NPU (librknnrt + YOLOv5 post-process), Hailo-8 M.2,
+    stub. Detector node selects backend via yaml and auto-falls-back
+    when the requested SDK is absent.
+
+    DCN-2026-003 D-003 (2026-05-13): C++ wiring complete — replaces the
+    Python san_perception path on RK3588 hardware. Airys V6.13.5 RKNN
+    + YOLOv5 reference implementation ported to ROS 2.
+  </description>
+  <maintainer email="dev@skyautonet.com">SkyAutoNet</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>pkg-config</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>libopencv-dev</depend>
+  <depend>sensor_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>cv_bridge</depend>
+
+  <depend>nav_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>pcl_conversions</depend>
+  <depend>libpcl-all-dev</depend>
+  <depend>tf2_eigen</depend>
+
+  <!-- Vendor SDKs are intentionally NOT hard-depended on - the
+       package builds without them on a generic host. The CMakeLists
+       probes for them via pkg_check_modules / find_path. -->
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

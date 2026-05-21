@@ -1,0 +1,25 @@
+# RK3588 / ARM64 device-only dependencies.
+#
+# These are NOT on PyPI in usable form for our target, so a plain
+# `pip install` from a dev laptop will fail. Install only on the
+# device, after the system packages they depend on are present.
+#
+# Prereq (Ubuntu 22.04 arm64):
+#   sudo apt install python3-numpy python3-yaml libcyclonedds-dev
+#
+# Then:
+#   pip install -r requirements-arm64.txt
+
+# Unitree Go2 EDU SDK Python bindings — built from source.
+#   git clone https://github.com/unitreerobotics/unitree_sdk2_python
+#   cd unitree_sdk2_python && pip install .
+# (No PyPI release; pin via git ref if reproducibility matters.)
+
+# Rockchip NPU runtime for RKNN model inference.
+rknn-toolkit-lite2
+
+# DDS transport used by the Unitree SDK.
+cyclonedds==0.10.2
+
+# CPU-side image ops (thermal/RGB fusion fallback paths).
+opencv-python
