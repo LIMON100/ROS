@@ -1,0 +1,8 @@
+# Force link degradation between two robots
+string robot_a
+string robot_b
+float32 attenuation_db         # Extra dB loss. 100 = disconnect.
+float32 duration_s             # 0 = permanent until cleared
+---
+bool success
+string message

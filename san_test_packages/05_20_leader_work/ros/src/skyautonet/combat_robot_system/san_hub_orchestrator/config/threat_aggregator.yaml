@@ -1,0 +1,6 @@
+threat_aggregator_node:
+  ros__parameters:
+    dedup_window_s:    5.0
+    poll_period_s:     1.0
+    input_topic:       /swarm/threat_alert_raw
+    output_topic:      /hub/threat_alert

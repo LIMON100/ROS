@@ -1,0 +1,30 @@
+# SAN v1.5.2 — DCN-2026-011 D-035 Leader (Unitree Go2) systemd unit.
+
+[Unit]
+Description=SkyAutoNet Leader (Unitree Go2) (DCN-2026-011 D-035)
+Documentation=https://github.com/adasone/SH_Unitree_Patrol/blob/main/infra/systemd/README.md
+After=network-online.target NetworkManager-wait-online.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=skyautonet
+Group=skyautonet
+WorkingDirectory=/opt/skyautonet
+Environment="ROS_DOMAIN_ID=42"
+Environment="RMW_IMPLEMENTATION=rmw_cyclonedds_cpp"
+Environment="HOME=/home/skyautonet"
+ExecStart=/bin/bash -c 'source /opt/skyautonet/install/setup.bash && \
+                       exec ros2 launch san_bringup leader_go2.launch.py \
+                            deployment_mode:=production'
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=skyautonet-leader-go2
+
+MemoryMax=7G
+TasksMax=4096
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,7 @@
+formation_node:
+  ros__parameters:
+    initial_formation_id:    3       # V-Shape
+    initial_preset_id:       2       # recon_defence (d=5m, θ=90°)
+    realign_threshold_m:     2.0     # KPP-1 — re-plan if avg err > 2m
+    max_speed_recon_mps:     1.3
+    lead_bias_s:             0.1
