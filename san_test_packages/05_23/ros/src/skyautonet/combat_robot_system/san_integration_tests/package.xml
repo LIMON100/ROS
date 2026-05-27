@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_integration_tests</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — TST S20 series system integration tests using launch_testing.
+    Validates squadron-level behaviour beyond unit tests, mapped directly
+    to KPP §2.1.1 and PDR/TRR1 deliverables (SAN-TST-S20).
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <test_depend>launch</test_depend>
+  <test_depend>launch_ros</test_depend>
+  <test_depend>launch_testing</test_depend>
+  <test_depend>launch_testing_ros</test_depend>
+  <test_depend>rclpy</test_depend>
+  <test_depend>std_msgs</test_depend>
+  <test_depend>combat_robot_msgs</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <!-- Packages under test (need installed for launches to find them) -->
+  <test_depend>san_bringup</test_depend>
+  <test_depend>san_rtk_gnss</test_depend>
+  <test_depend>san_ntrip_client</test_depend>
+  <test_depend>san_comm_link</test_depend>
+  <test_depend>san_fire_authorization</test_depend>
+  <test_depend>san_role_management</test_depend>
+  <!-- PDR-6 — S20-7/8/9 dependencies -->
+  <test_depend>san_mission</test_depend>
+  <test_depend>san_follower_tier</test_depend>
+  <test_depend>san_reroute_planner</test_depend>
+  <test_depend>geometry_msgs</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

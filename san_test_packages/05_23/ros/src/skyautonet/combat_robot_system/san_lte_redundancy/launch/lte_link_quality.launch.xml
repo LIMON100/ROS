@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!-- SAN v1.3 PHASE 5b - LTE link-quality publisher (auto-rate feed). -->
+<launch>
+    <arg name="config_file"
+         default="$(find-pkg-share san_lte_redundancy)/config/lte_redundancy.yaml"/>
+
+    <node pkg="san_lte_redundancy" exec="lte_link_quality_node"
+          name="lte_link_quality_node" output="screen">
+        <param from="$(var config_file)"/>
+    </node>
+</launch>
