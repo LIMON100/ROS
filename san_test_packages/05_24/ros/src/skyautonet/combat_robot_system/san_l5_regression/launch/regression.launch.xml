@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- SAN v1.4 L5 regression - run S18-1..S18-6 against the live stack. -->
+<launch>
+    <arg name="report_dir" default="/var/log/san/regression"/>
+    <arg name="config_file"
+         default="$(find-pkg-share san_l5_regression)/config/regression_scenarios.yaml"/>
+
+    <node pkg="san_l5_regression" exec="regression_main"
+          name="san_l5_regression_runner" output="screen"
+          args="--report-dir $(var report_dir)">
+        <param from="$(var config_file)"/>
+    </node>
+</launch>

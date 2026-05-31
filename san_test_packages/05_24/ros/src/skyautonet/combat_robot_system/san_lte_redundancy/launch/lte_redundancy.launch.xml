@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- SAN v1.5 PHASE 2 v3 - LTERoleManager 노드 기동.
+     v1.5 (DCN-2026-001 D-001): all UGVs carry LTE modems → chain spans S3..S8. -->
+<launch>
+    <arg name="robot_id"           default="0"/>
+    <arg name="hub_robot_id"       default="2"/>
+    <arg name="lte_backup_chain"   default="[3, 4, 5, 6, 7, 8]"/>
+    <arg name="config_file"
+         default="$(find-pkg-share san_lte_redundancy)/config/lte_redundancy.yaml"/>
+
+    <node pkg="san_lte_redundancy" exec="lte_node" name="lte_role_manager"
+          output="screen">
+        <param from="$(var config_file)"/>
+        <param name="robot_id"         value="$(var robot_id)"/>
+        <param name="hub_robot_id"     value="$(var hub_robot_id)"/>
+        <param name="lte_backup_chain" value="$(var lte_backup_chain)"/>
+    </node>
+</launch>

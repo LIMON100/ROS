@@ -1,0 +1,18 @@
+# SAN v1.4 L5 regression - per-scenario deadline overrides + topology.
+#
+# Defaults match SAN-TST-INT-001 v1.4 §S18. Override here when running
+# against a slower HIL bench or a real-robot environment with higher
+# DDS discovery latency.
+
+san_l5_regression_runner:
+  ros__parameters:
+    hub_robot_id: 2
+    deputy_robot_id: 3
+    heartbeat_period_ms: 200
+
+    s18_1_deadline_ms: 5000      # Leader → Deputy
+    s18_2_deadline_ms: 8000      # Leader+Deputy → Hub
+    s18_3_deadline_ms: 7000      # Hub → Deputy (LTE+SLAM+Video)
+    s18_4_deadline_ms: 10000     # Three failed → BatteryMax follower
+    s18_5_deadline_ms: 8000      # Limp Mode enter
+    s18_6_deadline_ms: 5000      # Limp Mode exit
