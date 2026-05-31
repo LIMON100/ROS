@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_surveillance</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — 360° Surveillance Sector + Pan-Tilt Controller
+    (SDD-SWARM §8, SDD-SUR §3). Hub-side authority: subscribes
+    RobotStatus + ThreatAlert, publishes SurveillanceSectorAssignment
+    + PanTiltCommand per IDS-CMD v1.5 §5.10/§5.11.
+
+    KPP 정량 검증 가능:
+      * 팬틸트 추적 정확도 ≤ 0.05° (Track mode 수렴 측정)
+      * 360° 분담 = 100% (sector union check)
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

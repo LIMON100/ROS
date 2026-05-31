@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- SAN v1.5.1 (was v1.3 PHASE 6 — see DCN-2026-004 D-011) - human detector with selectable backend. -->
+<launch>
+    <arg name="inference_backend" default="rk3588"/>     <!-- rk3588 | hailo8 | stub -->
+    <arg name="model_path"        default=""/>
+    <arg name="config_file"
+         default="$(find-pkg-share human_detector)/config/human_detector.yaml"/>
+
+    <node pkg="human_detector" exec="human_detector_node"
+          name="human_detector_node" output="screen">
+        <param from="$(var config_file)"/>
+        <param name="inference_backend" value="$(var inference_backend)"/>
+        <param name="model_path"        value="$(var model_path)"/>
+    </node>
+</launch>
