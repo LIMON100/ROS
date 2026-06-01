@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- SAN v1.3 PHASE 5 - Hub UGV SBC#2 GStreamer relay. -->
+<launch>
+    <arg name="hub_ip" default="10.0.0.2"/>
+    <arg name="config_file"
+         default="$(find-pkg-share san_hub_comm)/config/hub_comm.yaml"/>
+
+    <node pkg="san_hub_comm" exec="gstreamer_relay_node"
+          name="gstreamer_relay_node" output="screen">
+        <param from="$(var config_file)"/>
+        <param name="hub_ip" value="$(var hub_ip)"/>
+    </node>
+</launch>

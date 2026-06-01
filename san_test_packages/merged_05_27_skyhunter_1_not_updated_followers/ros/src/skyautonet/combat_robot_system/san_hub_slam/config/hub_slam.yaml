@@ -1,0 +1,22 @@
+# SAN v1.3 PHASE 3 — Hub UGV SLAM aggregator parameters.
+
+hub_slam_node:
+  ros__parameters:
+    # v1.3 change: 30-60s → 5s aggregation (Wi-Fi 6 mesh has headroom).
+    aggregation_period_sec: 5.0
+    aggregation_period_min: 2.0       # 도심 / 실내 최단
+    aggregation_period_max: 5.0       # 광역 정찰 기본
+    max_robots: 8
+
+    # Master grid geometry.
+    width: 280
+    height: 280
+    resolution_m: 0.05
+
+    # g2o pose-graph optimizer (no-op when HAVE_G2O is off).
+    pose_graph_max_iterations: 50
+    pose_graph_convergence_threshold: 1.0e-6
+
+    # multirobot_map_merge integration parameters (consumed by the
+    # external launch when wired into the upstream node).
+    map_merge_known_init_poses: true

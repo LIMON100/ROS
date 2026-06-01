@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_follower_tier</name>
+  <version>1.5.1</version>
+  <description>
+    SAN v1.5 — Follower Tier FSM per SDD-SWARM §6.2 (6-state).
+    6-state FSM (T0/T1/T1.5/T2/T3/T4) determining follower tracking
+    behaviour from prediction quality, comm state, and δ. Publishes
+    TierStatusChange per IDS §4.5. KPP-2 (≤ 300ms) measurable via
+    T0→T1.5 transition timing.
+
+    PATCH 2026-05-13 (deep-dive review):
+      * step() takes EXPLICIT dt_ms — caller passes real elapsed time
+        (was hardcoded 100ms). KPP-2 measurement now reflects reality.
+      * BIDIRECTIONAL hysteresis on all δ thresholds (was downgrade-only).
+      * Anti-flap dwell extended to T2/T3/T4 (was T1.5 only).
+      * KPP-2 latency probe — steady_clock stamp at obstacle false→true
+        edge, surfaced in TierStatusChange.transition_latency_ms.
+      * Real /comm_link/status + /breadcrumb subscriptions via the new
+        CommHealth tracker (was hardcoded true → T4 unreachable).
+      * Tick handler measures actual elapsed dt (was nominal 100ms).
+      * FSM call moved INSIDE state_mu_ — safe under MultiThreadedExecutor.
+      * prediction_received threshold derives from tick_period_ms × 5
+        (was hardcoded 500ms regardless of tick).
+      * 단위 테스트 16 → 25 (★ 9 PATCH 검증 testcase 추가).
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+
+  <depend>nav_msgs</depend>                                                                                              
+  <depend>geometry_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
