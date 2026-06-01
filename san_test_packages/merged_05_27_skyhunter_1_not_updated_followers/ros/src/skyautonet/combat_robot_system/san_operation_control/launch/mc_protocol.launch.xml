@@ -1,0 +1,24 @@
+<!--
+  [DCN-2026-019] MC ACK protocol bring-up.
+
+  Composes mc_protocol_node (receiver) + mc_sender_node (sender) so an
+  operator can publish raw commands on /mc/raw_command and watch the
+  full seq+crc32 retransmit lifecycle.
+-->
+<launch>
+  <arg name="use_sim_time"   default="false"/>
+  <arg name="ack_timeout_ms" default="500"/>
+  <arg name="max_retries"    default="3"/>
+
+  <node pkg="san_operation_control" exec="mc_protocol_node"
+        name="mc_protocol_node" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
+
+  <node pkg="san_operation_control" exec="mc_sender_node"
+        name="mc_sender_node" output="screen">
+    <param name="use_sim_time"   value="$(var use_sim_time)"/>
+    <param name="ack_timeout_ms" value="$(var ack_timeout_ms)"/>
+    <param name="max_retries"    value="$(var max_retries)"/>
+  </node>
+</launch>
