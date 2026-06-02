@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<!--
+  Unitree Go2 stub model for Phase D week-1 sim bring-up.
+
+  A box + diff-drive plugin good enough to validate the launch graph,
+  cmd_vel routing, and DDS topic plumbing. Real Go2 inertia, leg
+  kinematics, IMU/LiDAR sensors are loaded from the vendor SDF that
+  ships separately (see doc/phase_d_hw_bringup.md for the asset path).
+-->
+<sdf version="1.6">
+  <model name="unitree_go2_stub">
+    <pose>0 0 0.3 0 0 0</pose>
+    <static>false</static>
+
+    <link name="base_link">
+      <inertial>
+        <mass>15.0</mass>
+        <inertia>
+          <ixx>0.5</ixx><iyy>0.5</iyy><izz>0.5</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="body">
+        <geometry>
+          <box><size>0.6 0.3 0.3</size></box>
+        </geometry>
+      </collision>
+      <visual name="body">
+        <geometry>
+          <box><size>0.6 0.3 0.3</size></box>
+        </geometry>
+        <material>
+          <ambient>0.3 0.3 0.3 1</ambient>
+        </material>
+      </visual>
+    </link>
+
+    <!-- Minimal odom + cmd_vel plugin so multi_robot_5 launch graph
+         can publish/subscribe per-robot. -->
+    <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+      <ros>
+        <remapping>cmd_vel:=cmd_vel</remapping>
+        <remapping>odom:=odom</remapping>
+      </ros>
+      <update_rate>30</update_rate>
+      <wheel_separation>0.3</wheel_separation>
+      <wheel_diameter>0.1</wheel_diameter>
+    </plugin>
+  </model>
+</sdf>

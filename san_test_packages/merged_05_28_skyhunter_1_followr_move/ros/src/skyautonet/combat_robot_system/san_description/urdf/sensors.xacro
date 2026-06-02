@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="skyhunter_bot">
+
+
+    <!-- Namespace configuration for multi-robot support -->
+    <xacro:arg name="robot_ns" default="" />
+    <xacro:property name="ns" value="$(arg robot_ns)" />
+    <xacro:property name="topic_prefix" value="${'/' + ns if ns != '' else ''}" />
+    <xacro:property name="frame_prefix" value="${ns + '/' if ns != '' else ''}" />
+    <!-- ==================== -->
+    <!-- LiDAR Configuration  -->
+    <!-- ==================== -->
+    <!-- Mode: full (single robot), half (2-4 robots), low (8+ robots) -->
+    <xacro:arg name="lidar_mode" default="full" />
+    <xacro:property name="lidar_mode" value="$(arg lidar_mode)" />
+
+    <!-- Full resolution (27,648 points/scan) -->
+    <xacro:property name="lidar_h_samples_full" value="192" />
+    <xacro:property name="lidar_v_samples_full" value="144" />
+    <xacro:property name="lidar_update_rate_full" value="10" />
+
+    <!-- Half resolution (6,912 points/scan) -->
+    <xacro:property name="lidar_h_samples_half" value="96" />
+    <xacro:property name="lidar_v_samples_half" value="72" />
+    <xacro:property name="lidar_update_rate_half" value="10" />
+
+    <!-- Low resolution (1,728 points/scan) -->
+    <xacro:property name="lidar_h_samples_low" value="48" />
+    <xacro:property name="lidar_v_samples_low" value="36" />
+    <xacro:property name="lidar_update_rate_low" value="5" />
+
+    <!-- Select based on mode -->
+    <xacro:if value="${lidar_mode == 'full'}">
+        <xacro:property name="lidar_h_samples" value="${lidar_h_samples_full}" />
+        <xacro:property name="lidar_v_samples" value="${lidar_v_samples_full}" />
+        <xacro:property name="lidar_update_rate" value="${lidar_update_rate_full}" />
+    </xacro:if>
+    <xacro:if value="${lidar_mode == 'half'}">
+        <xacro:property name="lidar_h_samples" value="${lidar_h_samples_half}" />
+        <xacro:property name="lidar_v_samples" value="${lidar_v_samples_half}" />
+        <xacro:property name="lidar_update_rate" value="${lidar_update_rate_half}" />
+    </xacro:if>
+    <xacro:if value="${lidar_mode == 'low'}">
+        <xacro:property name="lidar_h_samples" value="${lidar_h_samples_low}" />
+        <xacro:property name="lidar_v_samples" value="${lidar_v_samples_low}" />
+        <xacro:property name="lidar_update_rate" value="${lidar_update_rate_low}" />
+    </xacro:if>
+
+
+    <!-- LiDAR dimensions (for reference) -->
+    <xacro:property name="lidar_x" value="0.063" />
+    <xacro:property name="lidar_y" value="0.175" />
+    <xacro:property name="lidar_z" value="0.118" />
+    <!-- LiDAR mount height above base_link (spec: 0.50m above ground) -->
+    <xacro:property name="lidar_z_offset" value="0.113" />
+    <!-- LiDAR tilt to meet 0.25m ground scan requirement -->
+    <xacro:property name="lidar_pitch" value="-0.272" />  <!-- -15.6° forward tilt in radians -->
+
+    <!-- GPS LINK -->
+    <link name="gps_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="0.1" />
+            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
+        </inertial>
+    </link>
+    <joint name="gps_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="gps_link" />
+        <origin xyz="-0.4 0 0.35" rpy="0 0 0" />
+    </joint>
+
+    <!-- IMU LINK -->
+    <link name="imu_link">
+        <inertial>
+            <mass value="0.01" />
+            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
+        </inertial>
+    </link>
+    <joint name="imu_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="imu_link" />
+        <origin xyz="0 0 0.05" rpy="0 0 0" />
+    </joint>
+
+    <!-- LiDAR LINK -->
+    <xacro:if value="${lidar_mode != 'none'}">
+        <link name="lidar_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://san_description/meshes/lidar.dae" scale="1 1 1" />
+                </geometry>
+                <material name="dark_gray" />
+            </visual>
+            <inertial>
+                <mass value="0.5" />
+                <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
+            </inertial>
+        </link>
+        <joint name="lidar_joint" type="fixed">
+            <parent link="base_link" />
+            <child link="lidar_link" />
+            <!-- <origin xyz="0.626 -0.01 -0.06" rpy="0 0 0" /> before -->
+            <origin xyz="0.626 -0.01 ${lidar_z_offset}" rpy="0 ${lidar_pitch} 0" />
+        </joint>
+    </xacro:if>
+    <!-- GPS SENSOR -->
+    <gazebo reference="gps_link">
+        <sensor name="gps_sensor" type="navsat">
+            <always_on>true</always_on>
+            <update_rate>5</update_rate>
+            <topic>${topic_prefix}/gps/fix</topic>
+            <gz_frame_id>${frame_prefix}gps_link</gz_frame_id>
+            <navsat>
+                <position_sensing>
+                    <horizontal>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.00001</stddev> <!-- ~1 meter in degrees -->
+                        </noise>
+                    </horizontal>
+                    <vertical>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>2.0</stddev> <!-- 2m altitude - this is OK -->
+                        </noise>
+                    </vertical>
+                </position_sensing>
+            </navsat>
+        </sensor>
+    </gazebo>
+    <!-- LiDAR SENSOR -->
+    <xacro:if value="${lidar_mode != 'none'}">
+        <gazebo reference="lidar_link">
+        <sensor name="lidar_sensor" type="gpu_lidar">
+        <always_on>true</always_on>
+        <update_rate>${lidar_update_rate}</update_rate>
+        <topic>${topic_prefix}/scan</topic>
+        
+        <gz_frame_id>${frame_prefix}lidar_link</gz_frame_id>
+        
+        <visualize>true</visualize>
+        
+        <lidar>
+            <scan>
+            <horizontal>
+                <samples>${lidar_h_samples}</samples>
+                <resolution>1</resolution>
+                <min_angle>-2.0</min_angle>
+                <max_angle>2.0</max_angle>
+            </horizontal>
+            <vertical>
+                <samples>${lidar_v_samples}</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.8</min_angle>
+                <max_angle>0.8</max_angle>
+            </vertical>
+            </scan>
+            <range>
+            <min>0.3</min>
+            <max>20.0</max>
+            <resolution>0.01</resolution>
+            </range>
+            <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+            </noise>
+        </lidar>
+        </sensor>
+    </gazebo>
+    
+    </xacro:if>
+    <!-- IMU SENSOR -->
+    <gazebo reference="imu_link">
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>100</update_rate>
+            <topic>${topic_prefix}/imu/data</topic>
+            <gz_frame_id>${frame_prefix}imu_link</gz_frame_id>
+            <imu>
+                <angular_velocity>
+                    <x>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0002</stddev>
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0002</stddev>
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0002</stddev>
+                        </noise>
+                    </z>
+                </angular_velocity>
+                <linear_acceleration>
+                    <x>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.017</stddev>
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.017</stddev>
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.017</stddev>
+                        </noise>
+                    </z>
+                </linear_acceleration>
+            </imu>
+        </sensor>
+    </gazebo>
+
+</robot>

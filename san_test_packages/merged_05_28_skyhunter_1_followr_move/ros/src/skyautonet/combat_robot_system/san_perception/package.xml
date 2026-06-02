@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_perception</name>
+  <version>1.5.1</version>
+  <description>
+    SAN v1.5 Phase 2-E Turn 11-12 — Perception (Tier 3 rclpy).
+
+    NPU-driven object detection + thermal/RGB sensor fusion.
+    Replaces perception/perception_process.py per DCN-2026-002 D-007
+    (Tier 3 = "rclpy 권장", Python dynamism matches inference workflow,
+    NPU SDK is Python-binding-first, 1-30 Hz rate is fine for rclpy).
+
+    Architecture:
+      camera (sensor_msgs/CompressedImage) ─┐
+      thermal (sensor_msgs/Image)           ├─→ PerceptionNode ─→ ~/detections
+      pose (geometry_msgs/PoseStamped)      ┘
+
+    Internal modules:
+      * fusion.py        — pinhole projection, RGB↔thermal alignment
+                           (pure NumPy, standalone pytest)
+      * detection.py     — NMS, confidence filter, class mapping
+                           (pure logic, standalone pytest)
+      * rknn_runner.py   — NPU abstraction (Real RKNN + Stub for CI)
+      * perception_node.py — rclpy.Node wrapping the above
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>combat_robot_msgs</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
