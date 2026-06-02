@@ -1,0 +1,22 @@
+# SAN v1.5 PHASE 9 — FireAuthorizationNode parameters.
+# DCN-2026-001 D-004 (Limp Mode 발사 정책 Option A).
+#
+# Per-host overrides via the launch overlay yaml. The systemd unit
+# injects the actual operator station / robot context.
+
+fire_authorization_node:
+  ros__parameters:
+    # Mesh shared secret. 32 bytes, mode 0400 (owner read only).
+    # Distributed via secure provisioning — NOT in this repo.
+    # SDD-SWARM v1.5 §10.1.1 standard path.
+    secret_path: /etc/san/mesh_secret.bin
+
+    # Append-only audit log. logrotate.d handles the size rotation;
+    # this parameter is a hint to the in-process logger only.
+    # File mode is enforced to 0640 on every open.
+    audit_log_path: /var/log/san/fire_audit.log
+
+    # Per-file rotation hint for diagnostics. The real rotation is
+    # done by /etc/logrotate.d/san-fire-audit. Total cap ≈ 7 GB
+    # (700 files × 10 MB) — matches v1.4 Python prototype policy.
+    rotation_bytes: 10485760    # 10 MiB

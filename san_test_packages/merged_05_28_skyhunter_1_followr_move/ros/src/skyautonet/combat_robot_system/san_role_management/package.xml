@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_role_management</name>
+  <version>1.5.1</version>
+  <description>
+    SAN v1.4 PHASE 8 - Hub-Deputy 이중화 + 4-tier Leader 승계 + Limp Mode.
+    Deputy UGV (S3) pre-designation: Leader-succession 1st-priority,
+    Hub backup 1st-priority (LTE + SLAM + video relay). Limp Mode
+    enables Android mesh-direct fire authorization + video direct to
+    Android when both Hub and Deputy fail.
+  </description>
+  <maintainer email="dev@skyautonet.com">SkyAutoNet</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>san_lte_redundancy</depend>
+  <depend>std_msgs</depend>
+  <depend>lifecycle_msgs</depend>
+  <depend>rcl_interfaces</depend>
+  <!-- [DCN-2026-006 EXT D-024] RobotStatus audit (1 Hz). -->
+  <depend>diagnostic_msgs</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
