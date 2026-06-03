@@ -1,0 +1,19 @@
+# SAN v1.5.1 (was v1.3 PHASE 6 — see DCN-2026-004 D-011) - AI inference backend selection.
+
+human_detector_node:
+  ros__parameters:
+    # rk3588 | hailo8 | stub
+    # Phase 1 deploys rk3588 (6 TOPS, YOLOv5n/v8n quantized, ~15 fps).
+    # PoC stage flips this to hailo8 (26 TOPS, YOLO11s, ~30 fps).
+    inference_backend: "rk3588"
+
+    # Model path for the primary backend. Format must match the SDK:
+    #   rk3588  -> .rknn
+    #   hailo8  -> .hef
+    model_path: "/opt/san/models/yolov8n_640.rknn"
+
+    # When the primary backend fails to initialize the node falls
+    # back to rk3588. If `inference_backend == hailo8` and the .hef
+    # path above won't load on the RKNN runtime, set the .rknn path
+    # explicitly here.
+    rk3588_fallback_model_path: "/opt/san/models/yolov8n_640.rknn"
