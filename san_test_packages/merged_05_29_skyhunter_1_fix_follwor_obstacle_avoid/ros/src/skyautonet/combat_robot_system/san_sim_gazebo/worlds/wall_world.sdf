@@ -1,0 +1,84 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="tall_wall_world">
+    <!-- PHYSICS -->
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>500</real_time_update_rate>
+    </physics>
+
+    <!-- PLUGINS -->
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    
+    <light type="directional" name="sun"><pose>0 0 10 0 0 0</pose></light>
+
+    <!-- THE BRIGHT WHITE GROUND PLANE -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+          <!-- Changed ambient and diffuse to near-white -->
+          <material>
+            <ambient>0.9 0.9 0.9 1</ambient>
+            <diffuse>0.9 0.9 0.9 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+    </model>
+
+    <!-- ============================================== -->
+    <!-- THE TACTICAL MAZE WALLS (You can move these)   -->
+    <!-- ============================================== -->
+
+    <!-- FRONT WALL: Split in the middle with a 4m gap -->
+    <model name="wall_front_left">
+      <static>true</static>
+      <pose>15 12 1.5 0 0 0</pose> 
+      <link name="link">
+        <collision name="collision"><geometry><box><size>1.0 20.0 3.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>1.0 20.0 3.0</size></box></geometry><material><ambient>0.2 0.4 0.8 1</ambient></material></visual>
+      </link>
+    </model>
+
+    <model name="wall_front_right">
+      <static>true</static>
+      <pose>15 -12 1.5 0 0 0</pose> 
+      <link name="link">
+        <collision name="collision"><geometry><box><size>1.0 20.0 3.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>1.0 20.0 3.0</size></box></geometry><material><ambient>0.2 0.4 0.8 1</ambient></material></visual>
+      </link>
+    </model>
+
+    <!-- LEFT WALL: Block the left flank -->
+    <model name="wall_left_flank">
+      <static>true</static>
+      <pose>20 15 1.5 0 0 1.57</pose> <!-- Rotated 90 degrees -->
+      <link name="link">
+        <collision name="collision"><geometry><box><size>1.0 30.0 3.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>1.0 30.0 3.0</size></box></geometry><material><ambient>0.8 0.4 0.2 1</ambient></material></visual>
+      </link>
+    </model>
+
+    <!-- RIGHT WALL: Block the right flank -->
+    <model name="wall_right_flank">
+      <static>true</static>
+      <pose>20 -15 1.5 0 0 1.57</pose> <!-- Rotated 90 degrees -->
+      <link name="link">
+        <collision name="collision"><geometry><box><size>1.0 30.0 3.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>1.0 30.0 3.0</size></box></geometry><material><ambient>0.8 0.4 0.2 1</ambient></material></visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>

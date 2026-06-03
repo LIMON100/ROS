@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- SAN v1.3 PHASE 2 v2 - mwan3_init oneshot. -->
+<!-- 부팅 시 1회 실행되어 mwan3.wan_lte UCI 섹션을 구성. -->
+<launch>
+    <arg name="robot_id" default="3"/>
+    <arg name="role"     default="backup"/>      <!-- primary | backup -->
+    <arg name="track_ip" default="8.8.8.8"/>
+
+    <node pkg="san_lte_redundancy" exec="mwan3_init" name="mwan3_init_node"
+          output="screen">
+        <param name="robot_id"  value="$(var robot_id)"/>
+        <param name="role"      value="$(var role)"/>
+        <param name="track_ip"  value="$(var track_ip)"/>
+    </node>
+</launch>
