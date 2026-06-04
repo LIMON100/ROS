@@ -1,0 +1,23 @@
+# SAN v1.5.1 — san_video_decoder default parameters.
+# Override in squadron.launch.py as needed (e.g. for thermal stream
+# which uses mono16 raw and bypasses this node entirely).
+
+video_decoder_node:
+  ros__parameters:
+    # Inputs / outputs (overridden via remap in the launch file)
+    compressed_topic: "~/compressed_in"
+    decoded_topic:    "~/decoded_out"
+    decoded_frame_id: "imx678_decoded"
+
+    # Backend selection. true = prefer mppvideodec (RK3588 VPU);
+    # falls back to avdec_h265 (software libavcodec) automatically.
+    # Set to false to force the software path even on a board with MPP
+    # — useful for L4 bench A/B comparison.
+    prefer_hw: true
+
+    # appsrc queue cap. 8 MB ≈ 16 frames worth of 4K H.265 at 2 Mbps.
+    appsrc_max_bytes: 8388608
+
+    # Wait this long after PLAY for the decoder to settle before
+    # accepting the first push. Reduce to 0 in unit tests.
+    pipeline_warmup_ms: 200

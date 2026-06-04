@@ -1,0 +1,41 @@
+# SAN v1.5 PHASE 2 v3 — LTE 이중화 ROS2 노드 파라미터.
+# v1.5 (DCN-2026-001 D-001): all UGVs (S2..S8) carry LTE modems by default,
+# so the backup chain spans S3..S8 with S3 (Deputy UGV) as 1st backup.
+# Robot별로 robot_id 만 override 한 overlay yaml을 launch에서 지정.
+
+lte_role_manager:
+  ros__parameters:
+    # 0=hub, 3..8=designated backup, otherwise non-participating.
+    # The systemd unit injects the actual id per host.
+    robot_id: 0
+    hub_robot_id: 2
+
+    # Promotion order. The chain head (first entry) promotes first;
+    # subsequent entries activate only if a higher-rank peer fails.
+    # SDD v1.5 §5.5: S3 (Deputy UGV) primary backup, S4..S8 secondary..sextenary.
+    lte_backup_chain: [3, 4, 5, 6, 7, 8]
+
+    # Total promotion budget = down detect 8 s + UCI/ubus 2 s ≤ 10 s.
+    hub_lte_down_timeout_s: 8.0
+    ppp_activation_timeout_s: 2.0
+
+    # Watchdog tick. 1 Hz is enough — mwan3 hotplug events drive the
+    # fast path, the timer is only for grace-period bookkeeping.
+    watchdog_period_s: 1.0
+
+mwan3_init_node:
+  ros__parameters:
+    # role: "primary" (Hub S2, weight 100) | "backup" (S3/S5, weight 0).
+    robot_id: 3
+    role: "backup"
+    track_ip: "8.8.8.8"
+
+# PHASE 5b: 1 Hz LTE signal quality publisher feeding the Hub's
+# AutoRateController. The status file is written by an OS-level poller
+# (qmicli / mmcli / ModemManager D-Bus client) running outside this
+# process; this node only reads + grades + publishes.
+lte_link_quality_node:
+  ros__parameters:
+    status_file_path: "/var/run/san/lte_link_quality"
+    source_iface: "lte0"
+    publish_period_ms: 1000

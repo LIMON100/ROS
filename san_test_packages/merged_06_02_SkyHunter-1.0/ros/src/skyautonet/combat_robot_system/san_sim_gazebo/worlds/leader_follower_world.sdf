@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<!--
+  SAN v1.5 — lightweight world for leader_follower_demo.launch.py.
+
+  Deliberately OMITS the gz-sim-sensors-system plugin. On hosts without GPU
+  passthrough (e.g. WSL) that system renders every camera + gpu_lidar in
+  software (llvmpipe), which collapses the real-time factor to ~0.0015 and
+  makes the robots crawl. The leader/follower demo needs only odom +
+  diff-drive, so dropping sensor rendering restores RTF ~1.0. The robots'
+  camera/lidar links still exist (their bridges simply carry no data here).
+
+  Also omits the Fuel model include from empty_world.sdf so the demo has no
+  network dependency. Keeps physics / scene-broadcaster / user-commands and
+  the cheap (non-rendering) IMU + NavSat systems.
+-->
+<sdf version="1.8">
+  <world name="leader_follower_world">
+
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>500</real_time_update_rate>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu" />
+    <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat" />
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>36.61002559225</latitude_deg>
+      <longitude_deg>127.28772570583</longitude_deg>
+      <elevation>0.0</elevation>
+      <heading_deg>0.0</heading_deg>
+    </spherical_coordinates>
+
+    <!-- Sunlight -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>200 200</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.0</mu>
+                <mu2>1.0</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>200 200</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Walled arena (44 x 44, centred at origin) so the demo has a visible
+         "world" the robots drive across. Walls at +/-22 m. Static, no sensors. -->
+    <model name="arena_walls">
+      <static>true</static>
+      <link name="link">
+        <!-- North (+Y) -->
+        <collision name="n_col"><pose>0 22 0.75 0 0 0</pose>
+          <geometry><box><size>44.6 0.3 1.5</size></box></geometry></collision>
+        <visual name="n_vis"><pose>0 22 0.75 0 0 0</pose>
+          <geometry><box><size>44.6 0.3 1.5</size></box></geometry>
+          <material><ambient>0.25 0.35 0.55 1</ambient><diffuse>0.3 0.45 0.7 1</diffuse></material></visual>
+        <!-- South (-Y) -->
+        <collision name="s_col"><pose>0 -22 0.75 0 0 0</pose>
+          <geometry><box><size>44.6 0.3 1.5</size></box></geometry></collision>
+        <visual name="s_vis"><pose>0 -22 0.75 0 0 0</pose>
+          <geometry><box><size>44.6 0.3 1.5</size></box></geometry>
+          <material><ambient>0.25 0.35 0.55 1</ambient><diffuse>0.3 0.45 0.7 1</diffuse></material></visual>
+        <!-- East (+X) -->
+        <collision name="e_col"><pose>22 0 0.75 0 0 0</pose>
+          <geometry><box><size>0.3 44.6 1.5</size></box></geometry></collision>
+        <visual name="e_vis"><pose>22 0 0.75 0 0 0</pose>
+          <geometry><box><size>0.3 44.6 1.5</size></box></geometry>
+          <material><ambient>0.25 0.35 0.55 1</ambient><diffuse>0.3 0.45 0.7 1</diffuse></material></visual>
+        <!-- West (-X) -->
+        <collision name="w_col"><pose>-22 0 0.75 0 0 0</pose>
+          <geometry><box><size>0.3 44.6 1.5</size></box></geometry></collision>
+        <visual name="w_vis"><pose>-22 0 0.75 0 0 0</pose>
+          <geometry><box><size>0.3 44.6 1.5</size></box></geometry>
+          <material><ambient>0.25 0.35 0.55 1</ambient><diffuse>0.3 0.45 0.7 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Leader driving route, drawn IN the Gazebo world (RViz markers do not
+         appear in Gazebo). Straight ground line (0,0)->(18,0) with a post at
+         each waypoint. Must match leader_path_nav 'waypoints' in the launch. -->
+    <model name="route_path">
+      <static>true</static>
+      <link name="link">
+        <!-- green loop route on the ground:
+             (0,0)->(10,0)->(10,10)->(-10,10)->(-10,-10)->(10,-10)->(0,0) -->
+        <visual name="seg1"><pose>5 0 0.02 0 0 0</pose>
+          <geometry><box><size>10 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg2"><pose>10 5 0.02 0 0 1.5708</pose>
+          <geometry><box><size>10 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg3"><pose>0 10 0.02 0 0 0</pose>
+          <geometry><box><size>20 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg4"><pose>-10 0 0.02 0 0 1.5708</pose>
+          <geometry><box><size>20 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg5"><pose>0 -10 0.02 0 0 0</pose>
+          <geometry><box><size>20 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg6"><pose>5 -5 0.02 0 0 2.3562</pose>
+          <geometry><box><size>14.14 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <!-- yellow waypoint posts -->
+        <visual name="wp1"><pose>10 0 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="wp2"><pose>10 10 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="wp3"><pose>-10 10 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="wp4"><pose>-10 -10 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="wp5"><pose>10 -10 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <!-- red start/goal post at the centre -->
+        <visual name="goal"><pose>0 0 0.4 0 0 0</pose>
+          <geometry><cylinder><radius>0.45</radius><length>0.8</length></cylinder></geometry>
+          <material><ambient>1 0.15 0.1 1</ambient><diffuse>1 0.15 0.1 1</diffuse><emissive>0.4 0.05 0.03 1</emissive></material></visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
