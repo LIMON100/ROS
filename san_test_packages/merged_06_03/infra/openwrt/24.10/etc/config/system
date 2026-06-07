@@ -1,0 +1,14 @@
+config system
+    option hostname 'san-mesh-router'
+    option timezone 'KST-9'
+    option zonename 'Asia/Seoul'
+    option log_size '256'
+    option log_proto 'udp'
+    option conloglevel '7'
+    option cronloglevel '5'
+
+config timeserver 'ntp'
+    list server 'time.bora.net'
+    list server 'kr.pool.ntp.org'
+    option enabled '1'
+    option enable_server '0'

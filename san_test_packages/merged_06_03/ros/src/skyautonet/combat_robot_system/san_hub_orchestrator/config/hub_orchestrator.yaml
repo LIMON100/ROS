@@ -1,0 +1,4 @@
+hub_orchestrator_node:
+  ros__parameters:
+    disconnect_threshold_ms:  5000
+    aggregation_hz:           1.0
