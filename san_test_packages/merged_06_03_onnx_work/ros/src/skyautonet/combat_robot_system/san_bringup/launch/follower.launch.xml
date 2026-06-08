@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+  Follower UGV — fixed-role launch wrapper (DCN-2026-011 D-034).
+  Default robot_id=4; operators provisioning followers 5/6/7/8 override
+  on the command line or in the systemd Environment.
+-->
+<launch>
+  <arg name="robot_id"           default="4"
+       description="Follower slot 4-8 in the squadron (v1.5 IDS)"/>
+  <arg name="deployment_mode"    default="production"
+       description="production | demo | lab_test | bench | development"/>
+  <arg name="include_regression" default="auto"
+       description="auto | true | false"/>
+  <arg name="use_sim_time"       default="false"/>
+  <!-- DCN-2026-012 v2 D-043 passthrough -->
+  <arg name="sim_startup_offset_sec" default="5.0"
+       description="DCN-2026-012 v2 D-043: per-robot sim startup stagger"/>
+
+  <log message="[follower] Launching Follower UGV profile (id=$(var robot_id))"/>
+
+  <include file="$(find-pkg-share san_bringup)/launch/squadron.launch.xml">
+    <arg name="robot_id"               value="$(var robot_id)"/>
+    <arg name="robot_role"             value="follower"/>
+    <arg name="sbc_id"                 value="0"/>
+    <arg name="hub_features"           value="false"/>
+    <arg name="include_regression"     value="$(var include_regression)"/>
+    <arg name="deployment_mode"        value="$(var deployment_mode)"/>
+    <arg name="use_sim_time"           value="$(var use_sim_time)"/>
+    <arg name="sim_startup_offset_sec" value="$(var sim_startup_offset_sec)"/>
+  </include>
+</launch>

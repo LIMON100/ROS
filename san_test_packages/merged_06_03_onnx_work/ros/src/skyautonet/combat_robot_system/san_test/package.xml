@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_test</name>
+  <version>0.1.0</version>
+  <description>
+    SkyHunter v1.5.3 — DCN-2026-022 Gate-1 regression test automation
+    (Tier 3 per ADR-008 — test/tool, C++ for performance + CI
+    integration).
+
+    Hosts the integrated regression suite that exercises multiple
+    modules together, simulating Gate-1 (2026-06-05) acceptance
+    conditions. Complements the per-package gtests by validating
+    cross-module behavior (Deputy boot, RTK + Nav2 + RTH chain,
+    mission BT loop closure, etc.).
+
+    Scope vs san_l5_regression
+      san_l5_regression: Hub-Deputy / 4-tier Leader / Limp Mode
+                          scenarios (S18-1~6 from SAN-TST-INT-001
+                          v1.5 §11) — DCN-2026-001 D-006.
+      san_test (this):   Gate-1 acceptance scenarios L5-26~33 —
+                          DCN-2026-022. Coexists with san_l5_regression;
+                          different scenario sets, different DCNs.
+
+    Components:
+      * gate1_regression_runner   standalone executable with
+                                  --gtest_output=xml: for JUnit XML;
+                                  filters tests to L5_* prefix.
+      * test/test_l5_scenarios    8-case gtest (L5_26~33). Run via
+                                  colcon test or via the runner.
+      * launch/gate1_regression   sim-time launch orchestrating the
+                                  deps (deputy + rth) + TimerAction
+                                  to invoke the runner after 30s
+                                  stabilization.
+
+    Note on D-118 CI workflow
+      The DCN-022 spec listed a .github/workflows/gate1-regression.yml.
+      That conflicts with commit 14dd940 (chore(ci): remove all
+      GitHub Actions workflows) — the recent PM decision to remove
+      CI workflows from this repo. CI integration is DEFERRED in
+      this DCN per the C1 countermeasure agreed in the audit
+      session (2026-05-23). The runner is fully usable locally and
+      from any external CI that doesn't depend on this repo's
+      .github/.
+
+    Note on L5_33 (Gate-1 demo E2E)
+      Backend (DCN-2026-016 gate_demo_orchestrator) is not yet
+      implemented. L5_33 is a STUB that GTEST_SKIPs with TODO until
+      DCN-2026-016 lands.
+
+    Refs:
+      * DCN-2026-022 — this DCN
+      * [[ADR-008]] — Tier 3 (test/tool, C++ preferred)
+      * commit 14dd940 — CI workflow removal (D-118 conflict source)
+      * DCN-2026-016 — gate_demo_orchestrator (L5_33 prerequisite)
+      * DCN-2026-017 — /rth action (L5_30 prerequisite, landed)
+      * SAN-TST-INT-001 v1.5 §11 — S18 scenarios in san_l5_regression
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>nav2_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>diagnostic_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+
+  <!-- Phase-7 P1-1 fix — gate1_regression.launch.xml includes
+       san_bringup/launch/deputy.launch.xml via $(find-pkg-share),
+       and L5_30 talks to /rth (san_rth action server). ros2 launch
+       requires these packages to be in exec_depends so package
+       resolution works on a fresh colcon install + so colcon
+       orders the build correctly. -->
+  <exec_depend>san_bringup</exec_depend>
+  <exec_depend>san_rth</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

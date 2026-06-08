@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_sim_gazebo_helpers</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — Gazebo simulation helper nodes (C++).
+
+    PATCH 2026-05-13 (Gazebo deep-dive review):
+      Adds the helpers the existing san_sim_gazebo package was missing:
+        * drone_target_simulator — spawns FPV-style drone targets so
+          the perception → fire_authorization → effector pipeline
+          (KPP-2 ≤ 300ms) is actually testable end-to-end. Previous
+          sim had only static obstacles.
+        * gps_jump_injector — disturbs /robot_N/gps/fix with jumps,
+          drift, noise, and dropout windows. Tests the Limon dual-EKF
+          patches (ekf_local + ekf_global isolation) that we just
+          delivered. Without this, the EKF resilience claim is
+          untested.
+
+    Both nodes follow the Tier 1 C++ / rclcpp pattern (DCN-2026-002
+    D-007) and split pure-logic (gtest) from rclcpp wiring.
+
+    Internal modules:
+      * drone_trajectory.{hpp,cpp}   — 4 trajectory kinds, pure logic
+      * gps_disturbance.{hpp,cpp}    — jump/drift/noise/dropout engine
+      * drone_target_simulator_node  — rclcpp Node wrapper + scenarios
+      * gps_jump_injector_node       — rclcpp Node wrapper
+
+    Executables:
+      drone_target_simulator   — ros2 run san_sim_gazebo_helpers ...
+      gps_jump_injector
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

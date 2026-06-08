@@ -1,0 +1,11 @@
+comm_uplink_node:
+  ros__parameters:
+    server_url:                  "https://telemetry.example.invalid/v1/upload"
+    probe_host:                  "10.0.0.1"
+    probe_port:                  443
+    probe_timeout_ms:            1500
+    probe_rate_hz:               1.0
+    wifi_recovery_threshold:     3       # legacy mode only
+    # PATCH 2026-05-13:
+    use_external_link_status:    true    # use san_comm_link CommLinkStatus (canonical)
+    use_stub_backend:            false   # production: real probe + HTTP (CDR)
