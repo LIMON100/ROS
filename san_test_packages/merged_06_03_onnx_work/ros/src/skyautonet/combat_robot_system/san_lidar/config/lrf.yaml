@@ -1,0 +1,8 @@
+lrf_node:
+  ros__parameters:
+    device:              /dev/ttyUSB0
+    baud:                115200
+    frame_id:            lrf
+    rate_hz:             5.0
+    max_range_m:         200.0
+    stub_on_no_serial:   true

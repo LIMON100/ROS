@@ -1,0 +1,46 @@
+[Unit]
+Description=SAN Patrol Stack
+After=network-online.target
+Wants=network-online.target chronyd.service
+
+[Service]
+Type=simple
+# 'patrol' user/group must be created by the installer (postinst, ansible,
+# or RK3588J image builder): `useradd -r -s /usr/sbin/nologin patrol`.
+# See doc/phase_d_hw_bringup.md step 6 for the install procedure.
+User=patrol
+Group=patrol
+WorkingDirectory=/opt/patrol
+ExecStartPre=/bin/sleep 5
+ExecStart=/usr/bin/python3 /opt/patrol/main.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Resource limits
+MemoryHigh=4G
+MemoryMax=6G
+CPUQuota=400%
+
+# systemd-managed dirs: /run/patrol, /var/log/patrol, and persistent
+# /etc/patrol/state -- created with mode 0755 owned by patrol:patrol
+# before the service starts. This replaces the previous brittle setup
+# where ProtectSystem=strict was paired with ReadWritePaths pointing at
+# directories that didn't exist on first boot.
+RuntimeDirectory=patrol
+RuntimeDirectoryMode=0755
+LogsDirectory=patrol
+LogsDirectoryMode=0755
+StateDirectory=patrol
+StateDirectoryMode=0755
+
+# Security
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+NoNewPrivileges=true
+ReadWritePaths=/etc/patrol
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+# SAN v1.3 PHASE 0 - DEMO mode overlay (DAPA / public demonstration).
+# Weapons simulated, DEMO 6-phase sequencer enabled.
+
+combat_robot_operation_system:
+  ros__parameters:
+    deployment_mode: "demo"
+    safety:
+      gun_trigger_permission: "SIMULATED"
+      hw_watchdog_enabled: true
+      operator_screen_banner: "DEMO"
+      operator_screen_color: "orange"

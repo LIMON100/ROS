@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!-- SAN v1.3 PHASE 0 - swarm_coordinator node. -->
+<launch>
+    <node pkg="swarm_coordinator" exec="swarm_coordinator"
+          name="swarm_coordinator" output="screen"/>
+</launch>
