@@ -1,0 +1,72 @@
+# SAN v1.3 PHASE 4 — Hub UGV SBC #1 (SLAM 전담)
+#
+# Hardware: RK3588J 16 GB / 256 GB NVMe (또는 Jetson Orin).
+# 노드 분담:
+#   * san_hub_slam       — multirobot_map_merge + g2o (PHASE 3)
+#   * san_lidar          — Hub UGV 자체 Robosense E1 (PHASE 1)
+#   * san_costmap        — Hub UGV local cost map (PHASE 1)
+# 외부 노출 인터페이스: 내부 GbE (eth0) → SBC #2 만 communicate.
+# 외부 Wi-Fi 6 / LTE 는 SBC #2 담당.
+
+services:
+  san_hub_slam:
+    image: san/hub_slam:v1.3
+    container_name: san_hub_slam
+    network_mode: host
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///opt/san/cyclonedds.xml
+      - DEPLOYMENT_MODE=production
+      - ROBOT_ID=2
+    volumes:
+      - ../cyclonedds/cyclonedds_sbc1.xml:/opt/san/cyclonedds.xml:ro
+      - /var/log/san:/var/log/san
+    restart: unless-stopped
+
+  san_lidar_sbc1:
+    image: san/lidar:v1.3
+    container_name: san_lidar_sbc1
+    network_mode: host
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///opt/san/cyclonedds.xml
+    volumes:
+      - ../cyclonedds/cyclonedds_sbc1.xml:/opt/san/cyclonedds.xml:ro
+      - /var/log/san:/var/log/san
+    devices:
+      - /dev/lidar:/dev/lidar    # Robosense E1
+    restart: unless-stopped
+
+  san_costmap_sbc1:
+    image: san/costmap:v1.3
+    container_name: san_costmap_sbc1
+    network_mode: host
+    depends_on:
+      - san_lidar_sbc1
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///opt/san/cyclonedds.xml
+      - ROBOT_ID=2
+    volumes:
+      - ../cyclonedds/cyclonedds_sbc1.xml:/opt/san/cyclonedds.xml:ro
+      - /var/log/san:/var/log/san
+    restart: unless-stopped
+
+  san_local_slam_sbc1:
+    image: san/local_slam:v1.3
+    container_name: san_local_slam_sbc1
+    network_mode: host
+    depends_on:
+      - san_lidar_sbc1
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///opt/san/cyclonedds.xml
+      - ROBOT_ID=2
+    volumes:
+      - ../cyclonedds/cyclonedds_sbc1.xml:/opt/san/cyclonedds.xml:ro
+      - /var/log/san:/var/log/san
+    restart: unless-stopped

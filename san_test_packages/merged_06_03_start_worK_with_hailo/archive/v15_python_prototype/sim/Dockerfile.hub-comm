@@ -1,0 +1,41 @@
+# Hub UGV SBC#2 — Comm + video relay container.
+#
+# Runs the tablet WS endpoint, BLE bridge, and the GStreamer relay that
+# bridges follower UDP/RTP streams to the tablet over SRT.
+
+FROM ros:humble-ros-base-jammy
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# GStreamer is the heavy dependency here:
+#   • gstreamer1.0-tools          — gst-launch-1.0 binary
+#   • gstreamer1.0-plugins-base   — udpsrc / queue / tee / etc.
+#   • gstreamer1.0-plugins-good   — rtp* payloaders/depayloaders
+#   • gstreamer1.0-plugins-bad    — mpegtsmux/tsparse/srtsink (SRT plugin)
+#   • gstreamer1.0-libav          — avdec_h264/h265 fallback
+#   • libsrt-openssl              — SRT transport
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-yaml \
+    gstreamer1.0-tools \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-libav \
+    libsrt-openssl-dev \
+    iproute2 \
+    iptables \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/patrol
+
+COPY requirements.txt /opt/patrol/requirements.txt
+RUN pip install --break-system-packages -r /opt/patrol/requirements.txt
+
+COPY . /opt/patrol/
+
+ENV PYTHONUNBUFFERED=1
+ENV HUB_ROLE=comm
+
+CMD ["python3", "scripts/run_hub_comm.py"]

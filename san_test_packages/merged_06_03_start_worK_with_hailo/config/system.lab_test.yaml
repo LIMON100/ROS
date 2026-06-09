@@ -1,0 +1,40 @@
+# Overlay: deployment_mode=lab_test (SAN v1.3 §11)
+#
+# Real robots, indoor laboratory. Production safety still applies, but
+# RTK is allowed to operate in Float (sky occluded indoors) and the
+# kinematics envelope is reduced so the swarm cannot exceed the test
+# arena.
+
+system:
+  deployment_mode: "lab_test"
+
+go2:
+  # Lab arena uses the standard Go2 EDU network; same DDS interface as
+  # production. Kept here for symmetry / explicitness.
+  interface: "eth0"
+
+rtk:
+  # Indoors: RTK Fixed is rarely achievable. Float is acceptable for
+  # localization fallback during lab bring-up.
+  ntrip:
+    enabled: false
+
+localization:
+  # Allow looser RTK quality indoors (cm-grade fix not required).
+  rtk_max_age_s:       5.0
+  rtk_fixed_sigma_max: 0.30
+  # Higher dead-reckoning drift estimate because lab tests deliberately
+  # exercise the DR fallback path.
+  odom_drift_per_s:    0.05
+  odom_drift_per_m:    0.02
+
+mission:
+  # No timed patrol schedule in lab — missions are launched manually
+  # by the bench operator.
+  patrol_schedule: []
+  default_mission_type: "recon"
+
+safety:
+  # Lab arena is small; tighter comm-loss window protects bystanders.
+  comm_loss_timeout_s: 10
+  fall_detect_acc_g:   2.0
