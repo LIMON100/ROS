@@ -1,0 +1,26 @@
+# SAN v1.3 PHASE 7 - operation_control parameters.
+
+operation_control_node:
+  ros__parameters:
+    # development | bench | lab_test | demo | production
+    # Drives DEMO sequencer + watchdog policy (SAN v1.3 §11).
+    deployment_mode: "production"
+
+    # Yaml override. Honored ONLY when deployment_mode == development;
+    # production / demo / lab_test / bench force-enable regardless.
+    hw_watchdog_enabled: true
+
+    # If any tracked sensor has not produced data for this many
+    # seconds, checkSensorState() returns false.
+    sensor_stale_threshold_sec: 3.0
+
+    # DEMO sequencer phase cadence. 10 s/phase x 6 phases = 60 s total
+    # for the public DEMO. Set to 1.0 in lab_test for HIL bench runs.
+    demo_phase_duration_sec: 10.0
+
+    # Per-host id used in /swarm/robot_<id>/status topic.
+    # The "robot_" prefix is required: ROS 2 rejects topic-name tokens
+    # that start with a digit.
+    robot_id: 1
+
+    tick_period_sec: 1.0

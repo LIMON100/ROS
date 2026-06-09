@@ -1,0 +1,727 @@
+<?xml version="1.0"?>
+<!--
+  SAN v1.5.3 — Squadron-level launch composition (XML form).
+
+  Converted from squadron.launch.py per DCN-2026-014 D-050 (RMW
+  unification on FastDDS) + project C++/XML/gtest policy. The .py
+  version is moved to deprecated/ under the same directory; behaviour
+  matches 1:1 with the prior Python launch.
+
+  Usage (manual, dev / smoke test):
+    ros2 launch san_bringup squadron.launch.xml \
+        robot_id:=1 robot_role:=leader deployment_mode:=production
+
+  Usage (production via systemd):
+    sudo systemctl start skyautonet-leader.service
+    # (5 per-robot units under infra/systemd/skyautonet-*.service)
+
+  Arguments mirror the prior .py file:
+    robot_id            1-8 (1=Leader Go2, 2=Hub UGV, 3=Deputy UGV,
+                              4-8=Followers)
+    robot_role          leader | hub | deputy | follower
+    deployment_mode     production(prod) | demo | lab_test(lab) | bench |
+                        development(dev)
+    hub_features        auto|true|false (auto-true iff robot_role==hub)
+    include_regression  auto|true|false (auto-true iff deployment_mode
+                                          in {bench, dev})
+    sbc_id              -1 (auto via /etc/skyautonet/sbc_id) | 0 | 1 | 2
+    use_sim_time        false (default) — true switches the FastDDS
+                                           profile to sim and enables
+                                           sequential-startup hooks.
+    discovery_server    false (default) — DCN-2026-014 D-054 opt-in for
+                                           Phase-7 large-scale swarms.
+
+  Refs:
+    * DCN-2026-014 D-050 (RMW unification), D-051/052/054 (profiles)
+    * DCN-2026-002 D-007 / D-008 (3-Tier toolchain, IPC unification)
+    * ADR-006 (IPC unification), ADR-007 (FastDDS migration)
+    * SDD-SWARM v1.5 §10.1.1
+-->
+<launch>
+
+  <!-- ─── DCN-2026-014 D-050: RMW unification ────────────────────────
+       Force rmw_fastrtps_cpp regardless of inherited shell env. The
+       systemd units in infra/systemd/skyautonet-*.service already
+       export this, but `ros2 launch` from a developer shell could be
+       running CycloneDDS (stale env from before the migration). -->
+  <set_env name="RMW_IMPLEMENTATION" value="rmw_fastrtps_cpp"/>
+
+  <!-- ─── Launch arguments ──────────────────────────────────────── -->
+  <arg name="robot_id"           default="1"
+       description="Robot ID 1-8 (1=Leader Go2, 2=Hub UGV, 3=Deputy UGV, 4-8=Followers)"/>
+  <arg name="robot_role"         default="leader"
+       description="leader | hub | deputy | follower"/>
+  <arg name="deployment_mode"    default="production"
+       description="production(prod) | demo | lab_test(lab) | bench | development(dev) (OPS-SOP v1.5 §3.1)"/>
+  <arg name="hub_features"       default="auto"
+       description="auto | true | false — 'auto' = robot_role=='hub'"/>
+  <arg name="include_regression" default="auto"
+       description="auto | true | false — 'auto' = deployment_mode in {bench,dev}"/>
+  <arg name="sbc_id"             default="-1"
+       description="Dual-SBC slot ID -1=auto via /etc/skyautonet/sbc_id, 0=N/A, 1=primary, 2=secondary (DCN-2026-011 D-032)"/>
+  <arg name="use_sim_time"       default="false"
+       description="Sim-time + sim FastDDS profile selection"/>
+  <arg name="discovery_server"   default="false"
+       description="DCN-2026-014 D-054 opt-in: FastDDS Discovery Server (Phase-7 only)"/>
+  <!-- ─── DCN-2026-012 v2 — Multi-Robot Sim Hardening ─────────────── -->
+  <arg name="sim_startup_offset_sec" default="5.0"
+       description="DCN-2026-012 v2 D-043: per-robot sim startup stagger (seconds)"/>
+  <arg name="include_rosbridge"      default="true"
+       description="DCN-2026-012 v2 D-041: include rosbridge_websocket (gated for sim collisions)"/>
+  <arg name="mesh_secret_path"       default="/etc/san/mesh_secret.bin"
+       description="Path to the 32-byte HMAC mesh secret for fire_authorization. Override in hardware-less CI to a test fixture (must be 32 bytes, perms 0400/0600)."/>
+  <arg name="fire_audit_log_path"    default="/var/log/san/fire_audit.log"
+       description="Append-path for the fire_authorization tamper-evident audit log. Override in CI to a writable location (the default /var/log/san dir is production-provisioned)."/>
+  <arg name="include_nav2_lifecycle" default="true"
+       description="Include the Nav2 lifecycle_manager. Disable in hardware-less CI: with autostart=true and the managed nav2 servers (controller/planner/etc.) absent, it hangs on shutdown and gets SIGKILLed (-9)."/>
+
+  <arg name="detector_model_path"
+       default="$(find-pkg-share human_detector)/models/yolov8m.onnx"
+       description="Detector model. Sim=ONNX. On RK3588/Hailo override to the .rknn/.hef."/>
+
+  <!-- ─── DCN-2026-014 D-051/052/054: FastDDS profile selection ─────
+       Three mutually-exclusive branches via if/unless on
+       discovery_server and use_sim_time. Production is the default. -->
+  <let name="fastrtps_profile"
+       value="$(find-pkg-share san_bringup)/config/fastrtps_profile.xml"
+       unless="$(var use_sim_time)"/>
+  <let name="fastrtps_profile"
+       value="$(find-pkg-share san_bringup)/config/fastrtps_sim_profile.xml"
+       if="$(var use_sim_time)"/>
+  <!-- <set_env name="FASTRTPS_DEFAULT_PROFILES_FILE" value="$(var fastrtps_profile)"
+           unless="$(var discovery_server)"/>
+  <set_env name="FASTRTPS_DEFAULT_PROFILES_FILE"
+           value="$(find-pkg-share san_bringup)/config/fastrtps_discovery_server.xml"
+           if="$(var discovery_server)"/> -->
+
+  <!-- ─── Per-package config files ──────────────────────────────── -->
+  <let name="fire_auth_config"
+       value="$(find-pkg-share san_fire_authorization)/config/fire_authorization.yaml"/>
+  <let name="squadron_config"
+       value="$(find-pkg-share san_bringup)/config/squadron.yaml"/>
+
+  <!-- ─── DCN-2026-012 v2 D-041/D-043/D-044: sim hardening lets ──── -->
+  <!-- Robot namespace string (was an inline literal in push-ros-namespace;
+       now factored out for reuse by static_transform_publisher D-044). -->
+  <!-- <let name="robot_namespace" value="robot_$(var robot_id)"/> -->
+
+  <let name="robot_namespace"
+       value="$(eval '\'\' if int(\'$(var robot_id)\') == 1 else \'robot_\' + \'$(var robot_id)\'')"/>
+
+  <!-- D-041: per-robot rosbridge port = 9090 + robot_id. On real
+       hardware each robot has its own host, so the offset is harmless;
+       on a multi-robot localhost sim it prevents EADDRINUSE collisions. -->
+  <let name="rosbridge_port"
+       value="$(eval '9090 + int(\'$(var robot_id)\')')"/>
+
+  <!-- D-043: per-robot sim startup stagger. robot_id N waits
+       (N-1) * sim_startup_offset_sec before bringing up the
+       lifecycle_manager — avoids discovery/lifecycle storms in
+       multi-robot localhost sims. Real-hw mode skips the timer
+       (each robot's lifecycle_manager comes up immediately). -->
+  <let name="sim_startup_delay"
+       value="$(eval 'float(\'$(var sim_startup_offset_sec)\') * (int(\'$(var robot_id)\') - 1)')"/>
+
+  <!-- Hub-only feature gate. 'auto' resolves at this point — XML
+       launch supports $(eval ...) Python-string evaluation for this
+       kind of computed truthiness. -->
+  <let name="hub_active"
+       value="$(eval '\'$(var robot_role)\' == \'hub\' if \'$(var hub_features)\' == \'auto\' else \'$(var hub_features)\'.lower() == \'true\'')"/>
+
+  <!-- Regression gate, same auto-derivation pattern. -->
+  <let name="regression_active"
+       value="$(eval '\'$(var deployment_mode)\' in (\'bench\', \'dev\', \'development\') if \'$(var include_regression)\' == \'auto\' else \'$(var include_regression)\'.lower() == \'true\'')"/>
+
+  <!-- Camera stub gate. The CameraNodeBase (Phase 0 PR-B) refuses to
+       start on a STUB V4L2 backend unless explicitly told it is safe.
+       In production a stub means "no real sensor" → fail-fast. In
+       non-production modes (demo/lab_test/bench/development, e.g.
+       hardware-less CI and sim), allow the stub so the squadron can
+       boot end-to-end. -->
+  <let name="allow_stub_v4l2"
+       value="$(eval '\'$(var deployment_mode)\' not in (\'production\', \'prod\')')"/>
+  
+  <!-- Sim vs real-HW perception backend + image source.
+         Sim  (use_sim_time=true): ONNX backend reading the Gazebo RGB camera.
+         Real HW: RKNN on RK3588 reading the san_video_decoder output.
+         NOTE: relative topic 'rgb_camera/image_raw' (no leading slash) so it
+         resolves per-robot under the push-ros-namespace — robot_1 -> global,
+         robot_2 -> /robot_2/rgb_camera/image_raw. -->
+  <let name="detector_backend"       value="onnx"                              if="$(var use_sim_time)"/>
+  <let name="detector_backend"       value="rk3588"                        unless="$(var use_sim_time)"/>
+  <let name="detector_decoded_topic" value="rgb_camera/image_raw"               if="$(var use_sim_time)"/>
+  <let name="detector_decoded_topic" value="/imx678_camera_node/image_decoded" unless="$(var use_sim_time)"/>
+  <let name="detector_model_sel"     value="$(var detector_model_path)"         if="$(var use_sim_time)"/>
+  <let name="detector_model_sel"     value=""                              unless="$(var use_sim_time)"/>
+
+
+  <log message="[san_bringup] robot_id=$(var robot_id) role=$(var robot_role) mode=$(var deployment_mode) sbc=$(var sbc_id) hub=$(var hub_active) regression=$(var regression_active) allow_stub_v4l2=$(var allow_stub_v4l2)"/>
+
+  <!-- ─── Multi-robot namespace ─────────────────────────────────── -->
+  <group>
+    <push-ros-namespace namespace="$(var robot_namespace)"/>
+
+    <!-- =========================================================
+         Tier 1 ALWAYS-ON nodes (Phase 1 + 2-D delivered packages)
+         ========================================================= -->
+    <log message="[san_bringup] starting Tier 1 always-on nodes"/>
+
+    <node pkg="san_role_management" exec="role_management_node"
+          name="role_management_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_lte_redundancy" exec="lte_node"
+          name="lte_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_lte_redundancy" exec="lte_link_quality_node"
+          name="lte_link_quality_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_lte_redundancy" exec="lte_modem_node"
+          name="lte_modem_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <!-- /rtcm_corrections and /gga_latest are global so NtripClient +
+         RtkGnss pair work without per-robot namespace prefixes. -->
+    <node pkg="san_rtk_gnss" exec="rtk_gnss_node"
+          name="rtk_gnss_node" output="screen">
+      <param from="$(find-pkg-share san_rtk_gnss)/config/rtk_gnss.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+      <remap from="~/rtcm_corrections" to="/rtcm_corrections"/>
+      <remap from="~/gga_latest" to="/gga_latest"/>
+      <!-- Feed the RTK fix to the conventional gps/fix topic that
+           navsat_transform consumes (same name the sim Gazebo bridge
+           uses). Without this the EKF never sees the real RTK position
+           (heading already lands on the EKF via rtk_gnss_node/heading). -->
+      <remap from="~/fix" to="gps/fix"/>
+    </node>
+
+    <node pkg="san_ntrip_client" exec="ntrip_client_node"
+          name="ntrip_client_node" output="screen">
+      <param from="$(find-pkg-share san_ntrip_client)/config/ntrip_client.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+      <remap from="~/rtcm_corrections" to="/rtcm_corrections"/>
+      <remap from="~/gga_latest" to="/gga_latest"/>
+    </node>
+
+    <node pkg="san_imu_driver" exec="imu_driver_node"
+          name="imu_driver_node" output="screen">
+      <param from="$(find-pkg-share san_imu_driver)/config/imu_driver.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_cameras" exec="imx678_camera_node"
+          name="imx678_camera_node" output="screen">
+      <param from="$(find-pkg-share san_cameras)/config/imx678.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="allow_stub_v4l2" value="$(var allow_stub_v4l2)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_cameras" exec="thermal_camera_node"
+          name="thermal_camera_node" output="screen">
+      <param from="$(find-pkg-share san_cameras)/config/thermal.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="allow_stub_v4l2" value="$(var allow_stub_v4l2)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_lidar" exec="lrf_node" name="lrf_node" output="screen">
+      <param from="$(find-pkg-share san_lidar)/config/lrf.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_comm" exec="comm_uplink_node"
+          name="comm_uplink_node" output="screen">
+      <param from="$(find-pkg-share san_comm)/config/comm_uplink.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+      <remap from="/robot_lte_status" to="lte_modem_node/modem_status"/>
+    </node>
+
+    <node pkg="san_comm_link" exec="comm_link_node"
+          name="comm_link_node" output="screen">
+      <param from="$(find-pkg-share san_comm_link)/config/comm_link.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <!-- Mission orchestrator (Tier 2 rclpy — first rclpy node).
+         DCN-2026-002 D-007 hybrid policy. -->
+    <node pkg="san_mission" exec="mission_node"
+          name="mission_node" output="screen">
+      <param from="$(find-pkg-share san_mission)/config/mission.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <!-- DCN-2026-017 — Return-to-Home action server (Tier 1 C++).
+         mission_node (above) holds a /rth ActionClient that delegates
+         RTH execution to san_rth. rth.launch.xml's authors deferred
+         this wiring (see rth.launch.xml header comment); this is the
+         post-merge integration. Thresholds default to Gate-1 (6/5)
+         acceptance criteria (±2m / ±10° / 5s RTK hold). -->
+    <include file="$(find-pkg-share san_rth)/launch/rth.launch.xml">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <!-- Phase-7 P1-4 fix: pass robot_id so rth.launch.xml derives
+           a per-robot home_pose_path default (otherwise all robots
+           on the same host clobber /run/skyautonet/home_pose.yaml). -->
+      <arg name="robot_id"     value="$(var robot_id)"/>
+    </include>
+
+    <!-- [v1.5.1.A F-2 fix] san_perception::perception_node DISABLED.
+         Rationale: v1.5.1 D-003 introduced full C++ human_detector
+         with RKNN/YOLOv5; san_perception (Python Tier-3) would have
+         produced an ambiguous second DetectionArray stream. See
+         DCN-2026-005 §3.2 — re-enable by adding a <node> entry here
+         if RGB/thermal fusion needs revival. -->
+
+    <!-- Android App operator link (DCN-2026-008 v2 D-WIFI-002).
+         BLE removed in DCN-2026-008 v2 D-WIFI-001.
+
+         DCN-2026-012 v2 D-041: port = 9090 + robot_id avoids
+         localhost EADDRINUSE collisions when running 2+ robots in
+         the same sim; include_rosbridge=false lets test harnesses
+         skip rosbridge entirely if not needed. -->
+    <node pkg="rosbridge_server" exec="rosbridge_websocket"
+          name="rosbridge_websocket" output="screen"
+          if="$(var include_rosbridge)">
+      <param name="port" value="$(var rosbridge_port)"/>
+      <param name="address" value=""/>
+      <param name="max_message_size" value="10000000"/>
+      <param name="fragment_timeout" value="600"/>
+      <!-- rosbridge declares delay_between_messages as DOUBLE; the
+           integer literal '0' would crash with InvalidParameterType. -->
+      <param name="delay_between_messages" value="0.0"/>
+      <!-- Glob MUST cover the Android contract (Aban rosbridge schema v2,
+           DCN-2026-021) or the app silently can't see/publish those
+           topics. The earlier [/operator/*, /swarm/*, /robot_*] blocked
+           /emergency_stop, /diagnostics/*, /rtk_gnss_node/*, /hub_internal/*,
+           /gate1/*, /gun_trigger/*, /attack_permission, /mc/* — including
+           the E-Stop. Kept in sync by san_external_mocks schema validator. -->
+      <param name="topics_glob"
+             value="[/operator/*, /swarm/*, /robot_*, /diagnostics/*, /rtk_gnss_node/*, /hub_internal/*, /gate1/*, /gun_trigger/*, /emergency_stop, /attack_permission, /mc/*]"/>
+      <param name="services_glob" value="[/gate1/start_demo]"/>
+    </node>
+
+    <node pkg="san_slam" exec="local_slam_node"
+          name="local_slam_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_costmap" exec="cost_map_node"
+          name="cost_map_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="swarm_coordinator" exec="swarm_coordinator"
+          name="swarm_coordinator_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <!-- DCN-2026-013 — swarm_monitor_node aggregates per-robot poses
+         via TF and publishes /swarm/poses (PoseArray) @ 10 Hz. The
+         Hub-only PUBLISHER gate (built into the node) ensures exactly
+         one publisher per swarm: Hub/Leader create publisher,
+         Follower/Deputy stay subscribe-only. The node is instantiated
+         on EVERY robot so promotion (Deputy → Hub) does not require
+         re-spawn. PR #180 landed the executable but deferred the
+         launch wiring; this is the post-merge integration. -->
+    <node pkg="swarm_coordinator" exec="swarm_monitor_node"
+          name="swarm_monitor_node" output="screen">
+      <param name="robot_role" value="$(var robot_role)"/>
+      <param name="use_sim_time" value="$(var use_sim_time)"/>
+    </node>
+
+    <node pkg="san_fire_authorization" exec="fire_authorization_node"
+          name="fire_authorization_node" output="screen">
+      <param from="$(var fire_auth_config)"/>
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <!-- Override the config's secret_path / audit_log_path last so
+           CI can point at writable fixtures. Defaults keep the
+           production /etc/san and /var/log/san locations. -->
+      <param name="secret_path" value="$(var mesh_secret_path)"/>
+      <param name="audit_log_path" value="$(var fire_audit_log_path)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="combat_robot_operation_system"
+          exec="combat_robot_operation_system"
+          name="operation_system_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_operation_control" exec="operation_control_node"
+          name="operation_control_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <node pkg="san_lidar" exec="robosense_e1_driver"
+          name="lidar_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+      <param name="input_topic" value="scan/points"/>
+      <param name="obstacle_topic" value="scan/points_filtered"/>
+      <param name="ground_topic" value="scan/ground"/>
+
+    </node>
+
+    <node pkg="san_video_sender" exec="video_sender_node"
+          name="video_sender_node" output="screen">
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <!-- v1.5.1 DCN-2026-003 D-003 + I-15 fix — HW H.265 decoder.
+         imx678 → mppvideodec (RK3588) → raw sensor_msgs/Image
+         consumed by human_detector. -->
+    <node pkg="san_video_decoder" exec="video_decoder_node"
+          name="video_decoder_node" output="screen">
+      <param from="$(find-pkg-share san_video_decoder)/config/video_decoder.yaml"/>
+      <param from="$(var squadron_config)"/>
+      <param name="compressed_topic" value="/imx678_camera_node/image_compressed"/>
+      <param name="decoded_topic" value="/imx678_camera_node/image_decoded"/>
+      <param name="prefer_hw" value="true"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <!-- Object detection (v1.5.1 D-003 + I-15 fix). Consumes the
+         video_decoder raw output, not the H.265 CompressedImage. -->
+    <node pkg="human_detector" exec="human_detector_node"
+          name="human_detector_node" output="screen">
+      <param name="image_mode" value="raw"/>
+      <param name="camera_topic" value="/imx678_camera_node/image_compressed"/>
+      <param name="decoded_topic" value="$(var detector_decoded_topic)"/>
+      <param name="detections_topic" value="~/detections"/>
+      <param name="max_inference_hz" value="15"/>
+      <param name="drop_when_busy" value="true"/>
+      <param name="inference_backend" value="$(var detector_backend)"/>
+      <param name="model_path" value="$(var detector_model_sel)"/> 
+      <param from="$(var squadron_config)"/>
+      <param name="robot_id" value="$(var robot_id)"/>
+      <param name="deployment_mode" value="$(var deployment_mode)"/>
+      <param name="sbc_id" value="$(var sbc_id)"/>
+    </node>
+
+    <!-- =========================================================
+         Hub-only conditional nodes
+         ========================================================= -->
+    <group if="$(var hub_active)">
+      <log message="[san_bringup] starting hub-only nodes"/>
+
+      <node pkg="san_hub_slam" exec="hub_slam_node"
+            name="hub_slam_node" output="screen">
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+
+      <node pkg="san_hub_comm" exec="gstreamer_relay_node"
+            name="hub_comm_relay_node" output="screen">
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+
+      <node pkg="san_hub_orchestrator" exec="hub_orchestrator_node"
+            name="hub_orchestrator_node" output="screen">
+        <param from="$(find-pkg-share san_hub_orchestrator)/config/hub_orchestrator.yaml"/>
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+
+      <node pkg="san_hub_orchestrator" exec="threat_aggregator_node"
+            name="threat_aggregator_node" output="screen">
+        <param from="$(find-pkg-share san_hub_orchestrator)/config/threat_aggregator.yaml"/>
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+
+      <!-- PDR-prep — SDD §7: 9 formations + Hungarian slot assignment.
+           Owns KPP-1 (alignment ≤ 2m). -->
+      <node pkg="san_formation" exec="formation_node"
+            name="formation_node" output="screen">
+        <param from="$(find-pkg-share san_formation)/config/formation.yaml"/>
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+
+      <!-- PDR-prep — SDD §8: 360° Surveillance + Pan-Tilt.
+           Owns KPP pan-tilt tracking ≤ 0.05°. -->
+      <node pkg="san_surveillance" exec="surveillance_node"
+            name="surveillance_node" output="screen">
+        <param from="$(find-pkg-share san_surveillance)/config/surveillance.yaml"/>
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+    </group>
+
+    <!-- =========================================================
+         Leader-only nodes (Unitree Go2 quadruped is Leader S1)
+         ========================================================= -->
+    <group if="$(eval '\'$(var robot_role)\' == \'leader\'')">
+      <log message="[san_bringup] starting leader-only nodes (Unitree Go2)"/>
+
+      <node pkg="san_unitree_driver" exec="unitree_go2_node"
+            name="unitree_go2_node" output="screen">
+        <param from="$(find-pkg-share san_unitree_driver)/config/unitree_go2.yaml"/>
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+    </group>
+
+    <!-- =========================================================
+         Follower-only nodes (Tier FSM — KPP-2)
+         ========================================================= -->
+    <group if="$(eval '\'$(var robot_role)\' == \'follower\'')">
+      <log message="[san_bringup] starting follower-only nodes (Tier FSM + Reroute Planner)"/>
+
+      <node pkg="san_follower_tier" exec="tier_node"
+            name="tier_node" output="screen">
+        <param from="$(find-pkg-share san_follower_tier)/config/tier.yaml"/>
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+
+      <node pkg="san_reroute_planner" exec="reroute_node"
+            name="reroute_node" output="screen">
+        <param from="$(find-pkg-share san_reroute_planner)/config/reroute.yaml"/>
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+
+      <node pkg="san_follower_tier" exec="follower_pursuit_node"
+              name="follower_pursuit_node" output="screen">
+          <param name="robot_id" value="$(var robot_id)"/>
+          <param name="use_sim_time" value="$(var use_sim_time)"/>
+          <param name="obstacle_brake_dist_m" value="4.0"/>
+          <param name="obstacle_stop_dist_m" value="1.2"/>
+          <param name="obstacle_cone_rad" value="0.7"/>
+      </node>
+
+    </group>
+
+    <!-- =========================================================
+         L5 regression node (bench / dev modes)
+         ========================================================= -->
+    <group if="$(var regression_active)">
+      <log message="[san_bringup] starting regression node (test mode)"/>
+
+      <node pkg="san_l5_regression" exec="regression_main"
+            name="l5_regression_node" output="screen">
+        <param from="$(var squadron_config)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="sbc_id" value="$(var sbc_id)"/>
+      </node>
+
+       <!-- Track-A bring-up: normal-pursuit cmd_vel controller. SAN's split                                             
+                follower stack (formation_node/tier_node/reroute_node) has no node                                           
+                 that drives the follower toward its slot on a clear path; this                                               
+                 fills that gap so the swarm moves in sim. Reads /odom (leader) +                                             
+                 odom (own) directly and publishes cmd_vel -> /robot_N/cmd_vel.                                               
+                 To be folded into reroute_node in the proper integration pass. -->                                           
+     <!-- <node pkg="san_follower_tier" exec="follower_pursuit_node"                                                        
+          name="follower_pursuit_node" output="screen">                                                               
+          <param name="robot_id" value="$(var robot_id)"/>                                                                
+          <param name="use_sim_time" value="$(var use_sim_time)"/>                                                        
+     </node>  -->
+    </group>
+
+    <!-- =========================================================
+         DCN-2026-012 v2 D-042 + D-043 — Nav2 lifecycle_manager
+         =========================================================
+         Manages controller_server / planner_server / behavior_server /
+         bt_navigator / waypoint_follower / velocity_smoother lifecycle
+         transitions. Lives INSIDE the robot_$(robot_id) namespace —
+         node_names below are bare (no namespace prefix) because
+         lifecycle calls become /robot_N/<name>/* once namespaced.
+
+         Sim mode: deferred start via <timer> (D-043 staggered startup)
+         + bond_timeout=0.0 (lifecycle bond watchdog disabled, prevents
+         localhost-induced hangs that Limon's 2026-05-14 report flagged).
+
+         Real-hw mode: immediate start, default bond_timeout retained. -->
+    <!-- <group if="$(var use_sim_time)">
+      <timer period="$(var sim_startup_delay)">
+        <node pkg="nav2_lifecycle_manager" exec="lifecycle_manager"
+              name="lifecycle_manager_navigation" output="screen"
+              if="$(var include_nav2_lifecycle)">
+          <param name="use_sim_time" value="true"/>
+          <param name="autostart"    value="true"/>
+          <param name="bond_timeout" value="0.0"/>
+          <param name="node_names"
+                 value="[controller_server, planner_server, behavior_server, bt_navigator, waypoint_follower, velocity_smoother]"/>
+        </node>
+      </timer>
+    </group>
+
+    <group unless="$(var use_sim_time)">
+      <node pkg="nav2_lifecycle_manager" exec="lifecycle_manager"
+            name="lifecycle_manager_navigation" output="screen"
+            if="$(var include_nav2_lifecycle)">
+        <param name="use_sim_time" value="false"/>
+        <param name="autostart"    value="true"/>
+        <param name="node_names"
+               value="[controller_server, planner_server, behavior_server, bt_navigator, waypoint_follower, velocity_smoother]"/>
+      </node>
+    </group> -->
+
+    <!-- Nav2 servers: controller_server, planner_server, behavior_server,
+       bt_navigator, waypoint_follower, velocity_smoother + their own
+       lifecycle_manager. nav2_bringup/navigation_launch.py takes care of
+       the namespace + RewrittenYaml for the frame_ids. -->
+
+     <!-- <include file="$(find-pkg-share nav2_bringup)/launch/navigation_launch.py">
+          <arg name="namespace"     value="$(var robot_namespace)"/>
+          <arg name="use_namespace" value="$(eval '\'true\' if \'$(var robot_namespace)\' != \'\' else \'false\'')"/>
+          <arg name="use_sim_time"  value="$(var use_sim_time)"/>
+          <arg name="params_file"   value="$(find-pkg-share san_nav2)/config/nav2_params.yaml"/>
+          <arg name="autostart"     value="true"/>
+     </include> -->
+
+
+    <!-- =========================================================
+         DCN-2026-012 v2 D-044 — static_transform_publisher
+         =========================================================
+         Sim-only: publishes map → robot_N/odom identity transform so
+         the per-robot TF tree connects to the shared 'map' frame.
+         On real hardware the dual-EKF below publishes this dynamically;
+         bringing up a duplicate static publisher would race it. -->
+    <!-- <group if="$(var use_sim_time)">
+      <node pkg="tf2_ros" exec="static_transform_publisher"
+            name="static_tf_map_to_odom"
+            args="0 0 0 0 0 0 1 map $(var robot_namespace)/odom"
+            output="screen">
+        <param name="use_sim_time" value="true"/>
+      </node>
+    </group> -->
+
+    <!-- =========================================================
+         Real-HW localization: dual-EKF + navsat_transform
+         =========================================================
+         Provides the dynamic map → odom transform on real hardware (the
+         intent the static publisher above documents but never supplied).
+         Mutually exclusive with the sim static TF via use_sim_time.
+           * ekf_local   — odom → base_footprint (wheel + IMU)
+           * ekf_global  — map → odom (fuses RTK position + RTK heading)
+           * navsat      — gps/fix (RTK, fix-quality covariance) → odometry/gps
+         All in the robot_$(robot_id) namespace, so the relative topics in
+         ekf_*.yaml resolve per-robot. -->
+    <group unless="$(var use_sim_time)">
+      <node pkg="robot_localization" exec="ekf_node"
+            name="ekf_filter_node_local" output="screen">
+        <param from="$(find-pkg-share san_localization)/config/ekf_local.yaml"/>
+        <param name="use_sim_time" value="false"/>
+        <remap from="odometry/filtered" to="odometry/filtered/local"/>
+      </node>
+      <node pkg="robot_localization" exec="ekf_node"
+            name="ekf_filter_node_global" output="screen">
+        <param from="$(find-pkg-share san_localization)/config/ekf_global.yaml"/>
+        <param name="use_sim_time" value="false"/>
+      </node>
+      <node pkg="robot_localization" exec="navsat_transform_node"
+            name="navsat_transform_node" output="screen">
+        <param from="$(find-pkg-share san_localization)/config/ekf_global.yaml"/>
+        <param name="use_sim_time" value="false"/>
+        <remap from="imu" to="imu/data"/>
+        <remap from="gps/fix" to="gps/fix"/>
+        <remap from="odometry/filtered" to="odometry/filtered"/>
+        <remap from="odometry/gps" to="odometry/gps"/>
+      </node>
+    </group>
+
+  </group>  <!-- /push-ros-namespace -->
+  <!-- Nav2 stack — leader only, GLOBAL namespace, NO double-push.
+         Outside the per-robot <group> so the outer push-ros-namespace
+         doesn't apply. Robots 2..N do not get Nav2 here — they will be
+         driven by san_follower_tier (formation controller). -->
+    <group if="$(eval 'int(\'$(var robot_id)\') == 1')">
+      <include file="$(find-pkg-share nav2_bringup)/launch/navigation_launch.py">
+        <arg name="namespace"     value=""/>
+        <arg name="use_namespace" value="false"/>
+        <arg name="use_sim_time"  value="$(var use_sim_time)"/>
+        <arg name="params_file"   value="$(find-pkg-share san_nav2)/config/nav2_params.yaml"/>
+        <arg name="autostart"     value="true"/>
+      </include>
+    </group>
+
+</launch>

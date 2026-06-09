@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_comm_msgs</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — Communication simulator messages and services.
+
+    Ported from skyhunter_msgs (Limon code). Contains messages used by
+    the WiFi6/LTE/LoRa comm simulators in san_comm_sim.
+
+    ★ Soft Kill 제외 — JammedLink, JammedLinks 메시지 및
+    JamLink.srv, UnjamLink.srv 서비스는 포팅하지 않음 (현재
+    개발 범위 외).
+
+    Messages:
+      CommState         — 3-tier comm FSM 상태 (WiFi6/LTE/LoRa)
+      MeshLink          — 단일 mesh 링크 RSSI/지연/패킷손실
+      MeshLinkStates    — 모든 mesh 링크 상태 배열
+      MeshMetrics       — mesh 전체 메트릭 집계
+      LteStatus         — LTE 모뎀 상태 (RSRP, SNR)
+      LoraStatus        — LoRa 링크 상태
+      LoraHeartbeat     — LoRa heartbeat (저전력 watchdog)
+      LoraEstop         — LoRa 비상정지 (저대역 fallback)
+      SwarmHeartbeat    — 군집 heartbeat 집계
+
+    Services:
+      InjectFailure     — 시뮬레이션 link 실패 주입 (테스트용)
+      SendEstop         — LoRa 비상정지 송신
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
