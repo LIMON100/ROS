@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SAN v1.5.1 (DCN-2026-004 D-010) — CycloneDDS config for Hub UGV SBC #1.
+
+  Binds the DDS transport to the internal GbE link (eth0) shared
+  with SBC #2. External Wi-Fi 6 / LTE traffic is owned by SBC #2.
+
+  Changes from v1.5 baseline (DCN-2026-004 C-10 fix):
+
+  * Multicast bounded to LAN segment (TTL=1) — eth0 is point-to-point
+    GbE between SBC1 and SBC2 inside the same UGV chassis, so this is
+    a hard LAN boundary anyway. Explicit setting documents intent.
+  * Explicit <Peers> entry for SBC2 over eth0 — eliminates SPDP
+    multicast dependency on the intra-UGV link.
+
+  See cyclonedds_sbc2.xml for full design rationale.
+-->
+<CycloneDDS xmlns="https://cdds.io/config"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://cdds.io/config
+                                https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+  <Domain id="42">
+    <General>
+      <Interfaces>
+        <NetworkInterface name="eth0" priority="default" multicast="true"/>
+      </Interfaces>
+      <AllowMulticast>spdp</AllowMulticast>
+      <MaxMessageSize>65500B</MaxMessageSize>
+    </General>
+    <Discovery>
+      <ParticipantIndex>auto</ParticipantIndex>
+      <Peers>
+        <Peer address="127.0.0.1"/>
+        <!-- SBC2 over the intra-UGV GbE -->
+        <Peer address="192.168.66.2"/>
+      </Peers>
+    </Discovery>
+    <Internal>
+      <Watermarks>
+        <WhcHigh>500kB</WhcHigh>
+      </Watermarks>
+    </Internal>
+  </Domain>
+</CycloneDDS>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+  Deputy UGV — fixed-role launch wrapper (DCN-2026-011 D-034).
+  Single-SBC backup that promotes into Hub on watchdog timeout
+  (san_role_management HubRoleManager). hub_features stays false at
+  boot — promotion enables them.
+-->
+<launch>
+  <arg name="deployment_mode"    default="production"
+       description="production | demo | lab_test | bench | development"/>
+  <arg name="include_regression" default="auto"
+       description="auto | true | false"/>
+  <arg name="use_sim_time"       default="false"/>
+  <!-- DCN-2026-012 v2 D-043 passthrough -->
+  <arg name="sim_startup_offset_sec" default="5.0"
+       description="DCN-2026-012 v2 D-043: per-robot sim startup stagger"/>
+
+  <log message="[deputy] Launching Deputy UGV profile"/>
+
+  <include file="$(find-pkg-share san_bringup)/launch/squadron.launch.xml">
+    <arg name="robot_id"               value="3"/>
+    <arg name="robot_role"             value="deputy"/>
+    <arg name="sbc_id"                 value="0"/>
+    <arg name="hub_features"           value="false"/>
+    <arg name="include_regression"     value="$(var include_regression)"/>
+    <arg name="deployment_mode"        value="$(var deployment_mode)"/>
+    <arg name="use_sim_time"           value="$(var use_sim_time)"/>
+    <arg name="sim_startup_offset_sec" value="$(var sim_startup_offset_sec)"/>
+  </include>
+</launch>
