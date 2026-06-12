@@ -1,0 +1,43 @@
+# Minimal firewall zones. Mesh + LAN trusted (the swarm runs inside);
+# WAN drop-by-default with explicit allow for ICMP echo (used by mwan3
+# tracking). DDS multicast traffic is marked for DSCP by
+# scripts/apply_dscp_marking.sh, not gated here.
+
+config defaults
+    option syn_flood '1'
+    option input 'ACCEPT'
+    option output 'ACCEPT'
+    option forward 'REJECT'
+    option flow_offloading '1'
+    option flow_offloading_hw '1'
+
+config zone
+    option name 'lan'
+    list network 'lan'
+    list network 'mesh0'
+    list network 'bat0'
+    option input 'ACCEPT'
+    option output 'ACCEPT'
+    option forward 'ACCEPT'
+
+config zone
+    option name 'wan'
+    list network 'wan'
+    list network 'wan_lte'
+    option input 'DROP'
+    option output 'ACCEPT'
+    option forward 'DROP'
+    option masq '1'
+    option mtu_fix '1'
+
+config forwarding
+    option src 'lan'
+    option dest 'wan'
+
+config rule
+    option name 'Allow-Ping'
+    option src 'wan'
+    option proto 'icmp'
+    option icmp_type 'echo-request'
+    option family 'ipv4'
+    option target 'ACCEPT'

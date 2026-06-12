@@ -1,0 +1,15 @@
+tier_node:
+  ros__parameters:
+    robot_id:                       3        # default follower
+    tick_period_ms:                 100      # SDD §6.4.1 — 100ms BT tick
+    catch_up_ratio:                 1.5      # delta > 1.5 d0 -> T2
+    hard_catch_up_ratio:            2.0      # delta > 2.0 d0 -> T3
+    breadcrumb_ratio:               4.0      # delta > 4.0 d0 -> T4
+    hysteresis_ratio:               0.1      # 10% margin (bidirectional)
+    comm_timeout_ms:                60000    # 60s -> T4
+    # PATCH 2026-05-13: anti-flap dwell now applies to all upgraded tiers.
+    auto_reroute_min_dwell_ms:      100      # T1.5 anti-flap
+    catch_up_min_dwell_ms:          200      # T2 anti-flap
+    hard_catch_up_min_dwell_ms:     200      # T3 anti-flap
+    breadcrumb_min_dwell_ms:        500      # T4 anti-flap (longer recovery)
+    base_distance_d0_m:             5.0      # recon_defence default
