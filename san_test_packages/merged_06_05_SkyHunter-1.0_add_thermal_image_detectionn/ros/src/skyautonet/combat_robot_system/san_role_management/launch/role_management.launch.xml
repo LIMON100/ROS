@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- SAN v1.4 PHASE 8 - role management process. -->
+<launch>
+    <arg name="robot_id"/>
+    <arg name="config_file"
+         default="$(find-pkg-share san_role_management)/config/role_management.yaml"/>
+
+    <node pkg="san_role_management" exec="role_management_node"
+          name="role_management_node" output="screen">
+        <param from="$(var config_file)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+    </node>
+</launch>
