@@ -1,0 +1,14 @@
+# SAN v1.3 PHASE 0 — device profile for combat_robot_device.launch.py
+#
+# 5-tier deployment_mode whitelist + per-host robot_id seed. Edit the
+# robot_id for each physical SBC at provisioning time.
+
+device_profile:
+  allowed_deployment_modes:
+    - production
+    - demo
+    - lab_test
+    - bench
+    - development
+  default_deployment_mode: "production"
+  default_robot_id: 0      # Each SBC overrides this in the systemd unit

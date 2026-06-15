@@ -1,0 +1,10 @@
+comm_link_node:
+  ros__parameters:
+    wifi6_probe_host:               "1.1.1.1"
+    wifi6_probe_port:               443
+    wifi6_probe_timeout_ms:         1500
+    consec_ok_to_upgrade:           5
+    consec_fail_to_downgrade:       3
+    # PATCH 2026-05-13:
+    lte_consec_ok_to_stabilize:     1     # C6 — LTE streak before claiming
+    use_stub_probe:                 false # production: real TCP probe
