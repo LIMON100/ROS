@@ -1,0 +1,554 @@
+// Copyright 2026 SkyAutoNet Inc.
+//
+// Proprietary and confidential. Unauthorized copying, distribution, or use
+// of this file, via any medium, is strictly prohibited.
+
+// SAN v1.5.1 PHASE 6 — HumanDetectorNode implementation.
+//
+// DCN-2026-003 D-003 (2026-05-13): camera -> NPU -> DetectionArray
+// pipeline. See header for design rationale.
+
+#include "human_detector/human_detector_node.hpp"
+
+#include <chrono>
+
+#include <cv_bridge/cv_bridge.h>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
+
+#include <combat_robot_msgs/msg/detection.hpp>
+
+#include "human_detector/stub_backend.hpp"
+
+namespace human_detector
+{
+
+using Detection_msg = combat_robot_msgs::msg::Detection;
+using DetectionArray_msg = combat_robot_msgs::msg::DetectionArray;
+
+// ─── ctors ─────────────────────────────────────────────────────────────
+
+HumanDetectorNode::HumanDetectorNode()
+: HumanDetectorNode(rclcpp::NodeOptions())
+{}
+
+HumanDetectorNode::HumanDetectorNode(const rclcpp::NodeOptions & options)
+: rclcpp::Node("human_detector_node", options),
+  last_infer_at_(0, 0, RCL_ROS_TIME)
+{
+  declareParameters();
+  readParameters();
+  selectBackend();
+  wireInterfaces();
+  tracker_ = std::make_unique<byte_track::BYTETracker>(30, 30);
+}
+
+// ─── parameters ────────────────────────────────────────────────────────
+
+void HumanDetectorNode::declareParameters()
+{
+  // Backend selection (v1.3 PHASE 6)
+  declare_parameter<std::string>("inference_backend", "rk3588");
+  declare_parameter<std::string>("model_path", "");
+  declare_parameter<std::string>("rk3588_fallback_model_path", "");
+
+  // v1.5.1 pipeline (DCN-2026-003 D-003 + I-15 fix)
+  //
+  // image_mode default = "raw": subscribe to san_video_decoder's
+  // output. Migration deployments can flip to "auto" to also
+  // listen on the CompressedImage path if the decoder node is not
+  // yet running.
+  declare_parameter<std::string>("image_mode", "raw");
+  declare_parameter<std::string>(
+    "camera_topic",
+    "/imx678_camera_node/image_compressed");
+  declare_parameter<std::string>(
+    "decoded_topic",
+    "/imx678_camera_node/image_decoded");
+  declare_parameter<std::string>("detections_topic", "~/detections");
+  declare_parameter<int>("max_inference_hz", 15);
+  declare_parameter<bool>("drop_when_busy", true);
+  
+  declare_parameter<std::string>("thermal_topic", "");       // "" = off
+  declare_parameter<double>("thermal_celsius_scale", 0.01);  
+  declare_parameter<double>("thermal_celsius_offset", -273.15);
+  declare_parameter<double>("thermal_stale_sec", 0.5);
+}
+
+void HumanDetectorNode::readParameters()
+{
+  requested_backend_ = get_parameter("inference_backend").as_string();
+  model_path_ = get_parameter("model_path").as_string();
+  rk3588_fallback_model_path_ =
+    get_parameter("rk3588_fallback_model_path").as_string();
+  if (rk3588_fallback_model_path_.empty()) {
+    rk3588_fallback_model_path_ = model_path_;
+  }
+
+  image_mode_ = get_parameter("image_mode").as_string();
+  camera_topic_ = get_parameter("camera_topic").as_string();
+  decoded_topic_ = get_parameter("decoded_topic").as_string();
+  detections_topic_ = get_parameter("detections_topic").as_string();
+
+  thermal_topic_     = get_parameter("thermal_topic").as_string();
+  thermal_scale_     = get_parameter("thermal_celsius_scale").as_double();
+  thermal_offset_    = get_parameter("thermal_celsius_offset").as_double();
+  thermal_stale_sec_ = get_parameter("thermal_stale_sec").as_double();
+
+  max_inference_hz_ = get_parameter("max_inference_hz").as_int();
+  drop_when_busy_ = get_parameter("drop_when_busy").as_bool();
+  if (max_inference_hz_ < 1) {max_inference_hz_ = 1;}
+  if (max_inference_hz_ > 60) {max_inference_hz_ = 60;}
+
+  // Normalize image_mode_.
+  if (image_mode_ != "raw" && image_mode_ != "compressed" &&
+    image_mode_ != "auto")
+  {
+    RCLCPP_WARN(
+      get_logger(),
+      "Unknown image_mode='%s'; defaulting to 'raw' (v1.5.1 production).",
+      image_mode_.c_str());
+    image_mode_ = "raw";
+  }
+}
+
+// ─── backend selection (v1.3, unchanged) ───────────────────────────────
+
+void HumanDetectorNode::selectBackend()
+{
+  backend_ = createBackend(requested_backend_);
+  if (backend_ == nullptr) {
+    RCLCPP_WARN(
+      get_logger(),
+      "Unknown inference_backend='%s'; using stub",
+      requested_backend_.c_str());
+    backend_ = std::make_unique<StubBackend>();
+    backend_->initialize(model_path_);
+    return;
+  }
+  if (backend_->initialize(model_path_)) {
+    RCLCPP_INFO(
+      get_logger(),
+      "AI inference backend: %s", backend_->getName().c_str());
+    return;
+  }
+  // Fall back to RK3588 (spec'd baseline) before degrading to stub.
+  if (backend_->getName() != "rk3588") {
+    RCLCPP_WARN(
+      get_logger(),
+      "Backend %s init failed; falling back to rk3588",
+      backend_->getName().c_str());
+    backend_ = createBackend("rk3588");
+    if (backend_ && backend_->initialize(rk3588_fallback_model_path_)) {
+      RCLCPP_INFO(
+        get_logger(),
+        "AI inference backend: %s (fallback)",
+        backend_->getName().c_str());
+      return;
+    }
+  }
+  RCLCPP_WARN(
+    get_logger(),
+    "rk3588 backend unavailable; using stub. "
+    "AI features disabled until a valid backend is wired.");
+  backend_ = std::make_unique<StubBackend>();
+  backend_->initialize(model_path_);
+}
+
+// ─── ROS wiring (v1.5.1 NEW) ───────────────────────────────────────────
+
+void HumanDetectorNode::wireInterfaces()
+{
+  // ─── v1.5.1 (DCN-2026-003 D-003 / I-15 fix) image source selection ─
+  //
+  // image_mode_ governs which subscription(s) we create:
+  //
+  //   "raw"        — production. The san_video_decoder node
+  //                  consumes the camera's H.265 CompressedImage,
+  //                  decodes via MPP HW (or avdec_h265 on host),
+  //                  and republishes sensor_msgs/Image on
+  //                  decoded_topic_. We subscribe there directly.
+  //                  cv::imdecode is NEVER invoked on H.265.
+  //
+  //   "compressed" — legacy / dev. Only useful when the upstream
+  //                  camera publishes JPEG (which cv::imdecode
+  //                  supports). The H.265 path is silently broken
+  //                  here and should not be used.
+  //
+  //   "auto"       — migration window: subscribe to both. The
+  //                  throttle (max_inference_hz_) prevents double-
+  //                  firing, and image_sub_ takes precedence
+  //                  because the decoded path arrives later but
+  //                  with valid frames.
+  if (image_mode_ == "raw" || image_mode_ == "auto") {
+    image_sub_ = create_subscription<sensor_msgs::msg::Image>(
+      decoded_topic_, rclcpp::SensorDataQoS().keep_last(2),
+      std::bind(
+        &HumanDetectorNode::onImage, this,
+        std::placeholders::_1));
+  }
+
+  if (!thermal_topic_.empty()) {
+    thermal_sub_ = create_subscription<sensor_msgs::msg::Image>(
+      thermal_topic_, rclcpp::SensorDataQoS().keep_last(2),
+      std::bind(&HumanDetectorNode::onThermal, this, std::placeholders::_1));
+  }
+
+  if (image_mode_ == "compressed" || image_mode_ == "auto") {
+    compressed_sub_ =
+      create_subscription<sensor_msgs::msg::CompressedImage>(
+      camera_topic_, rclcpp::SensorDataQoS().keep_last(2),
+      std::bind(
+        &HumanDetectorNode::onCompressedImage, this,
+        std::placeholders::_1));
+  }
+
+  // DetectionArray output — reliable, depth 10. san_perception
+  // (Python) used `~/detections` on reliable QoS; mission_node
+  // and threat_aggregator both subscribe with reliable, so keep
+  // the same shape.
+  det_pub_ = create_publisher<DetectionArray_msg>(
+    detections_topic_, rclcpp::QoS(10).reliable());
+
+  // 1 Hz health log so operators see the path is alive even when
+  // there are no detections (e.g. patrolling empty corridor).
+  health_timer_ = create_wall_timer(
+    std::chrono::seconds(1),
+    std::bind(&HumanDetectorNode::onHealthTick, this));
+
+  RCLCPP_INFO(
+    get_logger(),
+    "HumanDetectorNode UP: backend=%s ready=%d "
+    "image_mode=%s decoded=%s compressed=%s detections=%s max_hz=%d",
+    backend_->getName().c_str(),
+    static_cast<int>(backend_->isReady()),
+    image_mode_.c_str(),
+    decoded_topic_.c_str(),
+    camera_topic_.c_str(),
+    detections_topic_.c_str(),
+    max_inference_hz_);
+}
+
+// ─── Camera callbacks ──────────────────────────────────────────────────
+
+void HumanDetectorNode::onCompressedImage(
+  sensor_msgs::msg::CompressedImage::SharedPtr msg)
+{
+  if (msg == nullptr) {return;}
+  ++frames_in_;
+
+  // Throttle to max_inference_hz_. Camera comes in at 30 fps but NPU
+  // realistically delivers ~15 fps on RK3588 dual-core.
+  const auto t = now();
+  const double min_interval_s = 1.0 / static_cast<double>(max_inference_hz_);
+  if (last_infer_at_.nanoseconds() != 0 &&
+    (t - last_infer_at_).seconds() < min_interval_s)
+  {
+    ++frames_dropped_;
+    return;
+  }
+
+  // If the previous inference is still running and drop_when_busy_
+  // is set, skip; otherwise we'll queue behind the mutex.
+  if (drop_when_busy_ && infer_busy_.load()) {
+    ++frames_dropped_;
+    return;
+  }
+
+  // Decode compressed (H.265 from imx678, jpeg from stub) into BGR.
+  // cv::imdecode handles both via format=="hevc"/"h265"/"jpeg" via
+  // the OpenCV format detector. We pass the raw bytes view.
+  // cv::Mat encoded(1, static_cast<int>(msg->data.size()), CV_8UC1,
+  //   const_cast<uint8_t *>(msg->data.data()));
+  // cv::Mat bgr = cv::imdecode(encoded, cv::IMREAD_COLOR);
+  // if (bgr.empty()) {
+  //   RCLCPP_WARN_THROTTLE(
+  //     get_logger(), *get_clock(), 5000,
+  //     "imdecode failed (format=%s, size=%zu) — skipping frame",
+  //     msg->format.c_str(), msg->data.size());
+  //   ++frames_dropped_;
+  //   return;
+  // }
+
+  // last_infer_at_ = t;
+  // processFrame(bgr, msg->header);
+  try {
+    cv::Mat encoded(1, static_cast<int>(msg->data.size()), CV_8UC1,
+      const_cast<uint8_t *>(msg->data.data()));
+    cv::Mat bgr = cv::imdecode(encoded, cv::IMREAD_COLOR);
+    if (bgr.empty()) {
+      RCLCPP_WARN_THROTTLE(
+        get_logger(), *get_clock(), 5000,
+        "imdecode failed (format=%s, size=%zu) — skipping frame",
+        msg->format.c_str(), msg->data.size());
+      ++frames_dropped_;
+      return;
+    }
+
+    last_infer_at_ = t;
+    processFrame(bgr, msg->header);
+
+  } catch (const cv::Exception & e) {
+    // Catch OpenCV crashes  ---
+    RCLCPP_WARN_THROTTLE(
+      get_logger(), *get_clock(), 5000,
+      "OpenCV Exception during imdecode: %s", e.what());
+    ++frames_dropped_;
+  }
+}
+
+void HumanDetectorNode::onImage(
+  sensor_msgs::msg::Image::SharedPtr msg)
+{
+  if (msg == nullptr) {return;}
+  ++frames_in_;
+
+  const auto t = now();
+  const double min_interval_s = 1.0 / static_cast<double>(max_inference_hz_);
+  if (last_infer_at_.nanoseconds() != 0 &&
+    (t - last_infer_at_).seconds() < min_interval_s)
+  {
+    ++frames_dropped_;
+    return;
+  }
+  if (drop_when_busy_ && infer_busy_.load()) {
+    ++frames_dropped_;
+    return;
+  }
+
+  try {
+    auto cv_ptr = cv_bridge::toCvShare(msg, "bgr8");
+    if (!cv_ptr || cv_ptr->image.empty()) {
+      ++frames_dropped_;
+      return;
+    }
+    last_infer_at_ = t;
+    processFrame(cv_ptr->image, msg->header);
+  } catch (const cv_bridge::Exception & e) {
+    RCLCPP_WARN_THROTTLE(
+      get_logger(), *get_clock(), 5000,
+      "cv_bridge: %s", e.what());
+    ++frames_dropped_;
+  }catch (const cv::Exception & e) {
+    RCLCPP_WARN_THROTTLE(
+      get_logger(), *get_clock(), 5000,
+      "OpenCV Exception (ignoring frame): %s", e.what());
+    ++frames_dropped_;
+  }
+}
+
+void HumanDetectorNode::onThermal(sensor_msgs::msg::Image::SharedPtr msg)
+{
+  if (!msg) {return;}
+  try {
+    auto cv_ptr = cv_bridge::toCvShare(msg, "mono16");  // CV_16UC1
+    std::lock_guard<std::mutex> lock(thermal_mutex_);
+    latest_thermal_ = cv_ptr->image.clone();
+    latest_thermal_stamp_ = now();
+  } catch (const cv_bridge::Exception & e) {
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 5000,
+      "thermal cv_bridge: %s", e.what());
+  }
+}
+
+  
+
+// ─── Core: infer + publish ─────────────────────────────────────────────
+
+void HumanDetectorNode::processFrame(
+  const cv::Mat & bgr,
+  const std_msgs::msg::Header & src_header)
+{
+  if (!backend_ || !backend_->isReady() || bgr.empty()) {
+    ++frames_dropped_;
+    return;
+  }
+
+  infer_busy_.store(true);
+  std::vector<Detection> backend_dets;
+  std::vector<int> track_ids;
+  {
+    std::lock_guard<std::mutex> lock(infer_mutex_);
+    backend_dets = backend_->infer(bgr);
+
+    // ── BYTETrack association ──
+    track_ids.assign(backend_dets.size(), 0);
+    if (!backend_dets.empty()) {
+      std::vector<byte_track::Object> objs;
+      objs.reserve(backend_dets.size());
+      for (const auto & d : backend_dets) {
+        objs.emplace_back(
+          byte_track::Rect<float>(d.bbox[0], d.bbox[1],
+            d.bbox[2] - d.bbox[0], d.bbox[3] - d.bbox[1]),
+          d.class_id, d.confidence);
+      }
+      auto tracks = tracker_->update(objs, cv::Mat::eye(2, 3, CV_64F));
+      for (size_t i = 0; i < backend_dets.size(); ++i) {
+        const auto & d = backend_dets[i];
+        byte_track::Rect<float> dr(d.bbox[0], d.bbox[1],
+          d.bbox[2] - d.bbox[0], d.bbox[3] - d.bbox[1]);
+        float best = 0.3f; size_t id = 0;
+        for (const auto & t : tracks) {
+          float iou = dr.calcIoU(t->getRect());
+          if (iou > best) { best = iou; id = t->getTrackId(); }
+        }
+        track_ids[i] = static_cast<int>(id);
+      }
+    }
+  }
+  infer_busy_.store(false);
+  ++frames_inferred_;
+
+  auto out = std::make_unique<DetectionArray_msg>();
+  out->header.stamp = now();
+  out->header.frame_id = "perception";
+  out->source_width = static_cast<uint32_t>(bgr.cols);
+  out->source_height = static_cast<uint32_t>(bgr.rows);
+  out->source_frame_id = src_header.frame_id;
+  out->inference_time_ms = static_cast<uint32_t>(backend_->getInferenceLatencyMs() + 0.5);
+  out->cycle_timestamp_ms = static_cast<uint64_t>(now().nanoseconds() / 1'000'000LL);
+
+  out->detections.reserve(backend_dets.size());
+  for (size_t i = 0; i < backend_dets.size(); ++i) {
+    const auto & d = backend_dets[i];
+    Detection_msg det;
+    det.class_id = cocoToSanClassId(d.class_id, d.label);
+    // person + drone only — delete these 2 lines to publish all classes
+    if (det.class_id != Detection_msg::CLASS_PERSON &&
+        det.class_id != Detection_msg::CLASS_DRONE) { continue; }
+    det.track_id   = static_cast<uint32_t>(track_ids[i]);
+    det.confidence = d.confidence;
+    det.bbox_x1 = static_cast<uint32_t>(std::max(0.0f, d.bbox[0]));
+    det.bbox_y1 = static_cast<uint32_t>(std::max(0.0f, d.bbox[1]));
+    det.bbox_x2 = static_cast<uint32_t>(std::max(0.0f, d.bbox[2]));
+    det.bbox_y2 = static_cast<uint32_t>(std::max(0.0f, d.bbox[3]));
+    det.estimated_depth_m = 0.0f;            // v2: fill with monocular/LRF
+    det.thermal_avg_temp_c = std::nanf("");
+    det.thermal_max_temp_c = std::nanf("");
+    det.has_thermal_signature = false;
+    {
+      std::lock_guard<std::mutex> lock(thermal_mutex_);
+      bool fresh = !latest_thermal_.empty() &&
+        (now() - latest_thermal_stamp_).seconds() < thermal_stale_sec_;
+      if (fresh) {
+        const int tw = latest_thermal_.cols, th = latest_thermal_.rows;
+        const double sx = static_cast<double>(tw) / bgr.cols;
+        const double sy = static_cast<double>(th) / bgr.rows;
+        int x1 = std::clamp<int>(d.bbox[0]*sx, 0, tw-1);
+        int x2 = std::clamp<int>(d.bbox[2]*sx, 0, tw);
+        int y1 = std::clamp<int>(d.bbox[1]*sy, 0, th-1);
+        int y2 = std::clamp<int>(d.bbox[3]*sy, 0, th);
+        if (x2 > x1 && y2 > y1) {
+          cv::Mat patch = latest_thermal_(cv::Range(y1,y2), cv::Range(x1,x2));
+          double mn, mx; cv::minMaxLoc(patch, &mn, &mx);
+          double mean = cv::mean(patch)[0];
+          det.thermal_avg_temp_c = static_cast<float>(mean*thermal_scale_ + thermal_offset_);
+          det.thermal_max_temp_c = static_cast<float>(mx*thermal_scale_ + thermal_offset_);
+          det.has_thermal_signature = true;
+        }
+      }
+    }     
+    out->detections.push_back(std::move(det));
+  }
+
+  if (!out->detections.empty()) {
+    int n_person = 0, n_drone = 0, n_other = 0;
+    for (const auto & det : out->detections) {
+      if (det.class_id == Detection_msg::CLASS_PERSON) ++n_person;
+      else if (det.class_id == Detection_msg::CLASS_DRONE) ++n_drone;
+      else ++n_other;
+    }
+    RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 1000,
+      "DETECTED person=%d drone=%d other=%d (total=%zu)",
+      n_person, n_drone, n_other, out->detections.size());
+  }
+
+  if (det_pub_) { det_pub_->publish(std::move(out)); ++publishes_; }
+}
+
+combat_robot_msgs::msg::DetectionArray
+HumanDetectorNode::detectOnFrameForTest(const cv::Mat & bgr)
+{
+  // Side-effect: publish too, so integration tests can watch the
+  // topic. Counter increments mirror the production path so health
+  // logs stay coherent.
+  std_msgs::msg::Header h;
+  h.stamp = now();
+  h.frame_id = "test";
+  processFrame(bgr, h);
+
+  // Mirror what we published: re-run the conversion deterministically.
+  DetectionArray_msg snapshot;
+  snapshot.header.stamp = now();
+  snapshot.header.frame_id = "perception";
+  snapshot.source_width = static_cast<uint32_t>(bgr.cols);
+  snapshot.source_height = static_cast<uint32_t>(bgr.rows);
+  snapshot.inference_time_ms = static_cast<uint32_t>(
+    (backend_ ? backend_->getInferenceLatencyMs() : 0.0) + 0.5);
+  return snapshot;
+}
+
+// ─── Class id remap (COCO -> SAN) ──────────────────────────────────────
+
+uint8_t HumanDetectorNode::cocoToSanClassId(
+  int coco_id,
+  const std::string & label)
+{
+  // COCO 80-class:
+  //   0 = person, 1 = bicycle, 2 = car, 3 = motorcycle, 5 = bus,
+  //   7 = truck, 14 = bird, 15 = cat, 16 = dog, 17 = horse, ...
+  // SAN combat_robot_msgs/Detection:
+  //   CLASS_UNKNOWN=0, PERSON=1, VEHICLE=2, DRONE=3, WEAPON=4, ANIMAL=5
+  using D = Detection_msg;
+
+  // Prefer label match — RK3588 Airys port emits the COCO label
+  // string. Drone is COCO-untrained (Phase 1 detection only emits
+  // it if a custom drone-trained model is loaded; the label string
+  // is the explicit cue).
+  if (!label.empty()) {
+    if (label == "person") {return D::CLASS_PERSON;}
+    if (label == "car" || label == "truck" ||
+      label == "bus" || label == "motorcycle" ||
+      label == "bicycle") {return D::CLASS_VEHICLE;}
+    if (label == "drone" || label == "airplane") {return D::CLASS_DRONE;}
+    if (label == "knife" || label == "rifle" ||
+      label == "gun") {return D::CLASS_WEAPON;}
+    if (label == "bird" || label == "cat" ||
+      label == "dog" || label == "horse" ||
+      label == "sheep" || label == "cow" ||
+      label == "elephant" || label == "bear" ||
+      label == "zebra" || label == "giraffe") {return D::CLASS_ANIMAL;}
+  }
+
+  // Fallback: COCO id ranges.
+  switch (coco_id) {
+    case 0:   return D::CLASS_PERSON;
+    case 1: case 2: case 3: case 5: case 7:
+      return D::CLASS_VEHICLE;
+    case 4:   return D::CLASS_DRONE;        // COCO id 4 = airplane
+    case 14: case 15: case 16: case 17: case 18:
+    case 19: case 20: case 21: case 22: case 23:
+      return D::CLASS_ANIMAL;
+    default:  return D::CLASS_UNKNOWN;
+  }
+}
+
+// ─── Health log ────────────────────────────────────────────────────────
+
+void HumanDetectorNode::onHealthTick()
+{
+  const uint64_t in_ = frames_in_.load();
+  const uint64_t drop_ = frames_dropped_.load();
+  const uint64_t inf_ = frames_inferred_.load();
+  const uint64_t pub_ = publishes_.load();
+  RCLCPP_INFO_THROTTLE(
+    get_logger(), *get_clock(), 5000,
+    "human_detector: in=%lu drop=%lu inferred=%lu pub=%lu lat_ms=%.1f "
+    "backend=%s ready=%d",
+    in_, drop_, inf_, pub_,
+    backend_ ? backend_->getInferenceLatencyMs() : 0.0,
+    backend_ ? backend_->getName().c_str() : "none",
+    backend_ ? static_cast<int>(backend_->isReady()) : 0);
+}
+
+}  // namespace human_detector
