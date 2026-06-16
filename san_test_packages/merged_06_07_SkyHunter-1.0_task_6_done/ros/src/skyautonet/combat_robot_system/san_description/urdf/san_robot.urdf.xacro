@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="$(arg robot_name)">
+
+  <!-- Unique SDF model name per robot so Gazebo renders BOTH robots: two
+       models sharing one name make the gz GUI scene manager drop the second
+       one's visuals. Callers pass robot_name (san_combat_robot_1/2 …). -->
+  <xacro:arg name="robot_name" default="san_combat_robot"/>
+
+  <!-- Macros -->
+  <xacro:include filename="$(find san_description)/urdf/macros.xacro" />
+  <xacro:include filename="$(find san_description)/urdf/materials.xacro" />
+
+  <!-- Robot body -->
+  <xacro:include filename="$(find san_description)/urdf/chassis.xacro" />
+  <xacro:include filename="$(find san_description)/urdf/gimbal.xacro" />
+  <xacro:include filename="$(find san_description)/urdf/camera.xacro" />
+  <xacro:include filename="$(find san_description)/urdf/chassis_cameras.xacro"/>
+  <xacro:include filename="$(find san_description)/urdf/rifle.xacro" />
+  <xacro:include filename="$(find san_description)/urdf/sensors.xacro" />
+
+  <!-- Gazebo -->
+  <xacro:include filename="$(find san_description)/urdf/gazebo.xacro" />
+  <xacro:include filename="$(find san_description)/urdf/gazebo_control.xacro" />
+
+</robot>

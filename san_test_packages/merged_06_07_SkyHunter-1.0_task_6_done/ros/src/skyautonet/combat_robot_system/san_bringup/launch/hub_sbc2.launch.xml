@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+  Hub UGV SBC #2 — fixed-role launch wrapper (DCN-2026-011 D-034).
+  Identical to hub_sbc1.launch.xml except sbc_id=2.
+-->
+<launch>
+  <arg name="deployment_mode"    default="production"
+       description="production | demo | lab_test | bench | development"/>
+  <arg name="include_regression" default="auto"
+       description="auto | true | false"/>
+  <arg name="use_sim_time"       default="false"/>
+  <!-- DCN-2026-012 v2 D-043 passthrough -->
+  <arg name="sim_startup_offset_sec" default="5.0"
+       description="DCN-2026-012 v2 D-043: per-robot sim startup stagger"/>
+
+  <log message="[hub_sbc2] Launching Hub UGV SBC #2 profile"/>
+
+  <include file="$(find-pkg-share san_bringup)/launch/squadron.launch.xml">
+    <arg name="robot_id"               value="2"/>
+    <arg name="robot_role"             value="hub"/>
+    <arg name="sbc_id"                 value="2"/>
+    <arg name="hub_features"           value="true"/>
+    <arg name="include_regression"     value="$(var include_regression)"/>
+    <arg name="deployment_mode"        value="$(var deployment_mode)"/>
+    <arg name="use_sim_time"           value="$(var use_sim_time)"/>
+    <arg name="sim_startup_offset_sec" value="$(var sim_startup_offset_sec)"/>
+  </include>
+</launch>
