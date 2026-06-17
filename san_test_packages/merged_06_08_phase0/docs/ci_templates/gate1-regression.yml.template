@@ -1,0 +1,100 @@
+# [DCN-2026-022] Gate-1 regression workflow.
+#
+# Runs san_l5_regression/regression_main --scenario gate1_suite and
+# uploads the JUnit XML so PR reviewers see L5_26~L5_33 results.
+
+name: Gate-1 Regression
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Workflow-level permissions. Default GITHUB_TOKEN scope on repos
+# with restricted policy is `contents: read` only — dorny/test-
+# reporter then fails with "Resource not accessible by integration"
+# when creating its check run. checks:write resolves that. (Other
+# permissions left implicit / unchanged.)
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write   # for inline test annotations on PR
+
+jobs:
+  gate1-suite:
+    name: L5_26~L5_33 acceptance suite
+    runs-on: ubuntu-22.04
+    container:
+      image: ros:humble-ros-base
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mark workspace safe for git
+        shell: bash
+        run: |
+          # dorny/test-reporter + actions/checkout 컨테이너 안에서
+          # /__w/<repo>/<repo> 의 host:container uid 불일치 → git
+          # "dubious ownership" fatal. 명시 safe.directory 로 우회.
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Install rosdep + system deps
+        shell: bash
+        run: |
+          apt-get update
+          # xmllint 바이너리는 libxml2-utils 패키지가 제공 (Ubuntu/Debian).
+          apt-get install -y python3-rosdep python3-colcon-common-extensions \
+                             libboost-dev libxml2-utils
+          rosdep init || true
+          rosdep update
+          cd ros && rosdep install --from-paths src --ignore-src \
+                                    -r -y --skip-keys "rmw_cyclonedds_cpp"
+
+      - name: colcon build (gate1-relevant packages)
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          cd ros && colcon build \
+              --packages-up-to san_l5_regression \
+              --symlink-install \
+              --cmake-args -DBUILD_TESTING=OFF
+
+      - name: Run Gate-1 suite
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          source ros/install/setup.bash
+          mkdir -p /tmp/gate1
+          # gate1_suite tolerates absent live deps — each scenario
+          # records FAIL with a descriptive message and the suite
+          # still emits a JUnit XML for the PR reporter.
+          ros2 run san_l5_regression regression_main \
+              --scenario gate1_suite \
+              --junit-xml /tmp/gate1/gate1_results.xml \
+              || true
+          # Validate the XML so the artifact upload step has something
+          # to consume.
+          xmllint --noout /tmp/gate1/gate1_results.xml
+
+      - name: Upload JUnit XML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate1-junit
+          path: /tmp/gate1/gate1_results.xml
+          if-no-files-found: error
+
+      - name: Publish test report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Gate-1 Regression (L5_26~33)
+          path: /tmp/gate1/gate1_results.xml
+          reporter: jest-junit
+          # 8/8 SKIP (live deps 부재) 는 정상 — fail-on-empty 가
+          # SKIP-only report 를 empty 로 판단해서 false-fail 안 함.
+          fail-on-empty: false
+          # 시나리오 자체가 FAIL 일 때만 CI 빨강 (SKIP 은 yellow).
+          fail-on-error: true
