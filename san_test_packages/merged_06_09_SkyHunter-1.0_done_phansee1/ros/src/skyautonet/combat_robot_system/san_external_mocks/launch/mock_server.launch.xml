@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+  DCN-2026-021 — Aban Android dev mock launch.
+
+  Brings up:
+    1. rosbridge_websocket — Aban app's WS endpoint.
+    2. rosbridge_mock_server — the synthetic publishers.
+
+  Port allocation (Phase-7 P1-2 fix — Aban dev↔prod parity)
+
+  The production rule per DCN-2026-014 v2 D-041 is:
+        port = 9090 + robot_id
+
+  This mock now PARAMETRIZES robot_id so the dev port matches
+  production deterministically:
+
+        robot_id=1 (default, Leader)  →  port 9091
+        robot_id=2 (Hub UGV)          →  port 9092
+        robot_id=3 (Deputy)           →  port 9093
+        robot_id=4..8 (Followers)     →  ports 9094..9098
+
+  The previous hardcoded 9091 default is preserved (still robot_id=1
+  default → 9091), so existing dev workflows continue to work, but
+  Aban can now exercise the same port discipline they will see in
+  production by overriding robot_id:
+        ros2 launch san_external_mocks mock_server.launch.xml \
+            robot_id:=2     # → port 9092, matching Hub production
+
+  Or override port directly for ad-hoc cases.
+
+  Refs:
+    * DCN-2026-021 — this DCN
+    * DCN-2026-014 v2 D-041 — port = 9090 + robot_id
+    * docs/external/Aban_Android_rosbridge_schema_v2.md — schema
+-->
+<launch>
+  <arg name="robot_id" default="1"
+       description="Robot identity (1..8). Drives port via D-041
+                    (port = 9090 + robot_id) so dev mirrors prod."/>
+  <arg name="port" default="$(eval '9090 + int(\'$(var robot_id)\')')"
+       description="rosbridge_websocket TCP port; defaults to
+                    9090 + robot_id per DCN-2026-014 v2 D-041.
+                    Override directly for ad-hoc cases."/>
+
+  <node pkg="rosbridge_server" exec="rosbridge_websocket"
+        name="rosbridge_websocket" output="screen">
+    <param name="port" value="$(var port)"/>
+    <param name="address" value=""/>
+    <param name="max_message_size" value="10000000"/>
+    <param name="fragment_timeout" value="600"/>
+    <param name="delay_between_messages" value="0.0"/>
+    <param name="topics_glob" value="[/diagnostics/*, /swarm/*, /rtk_gnss_node/*, /hub_internal/*, /gate1/*, /gun_trigger/*]"/>
+    <param name="services_glob" value="[/gate1/*]"/>
+  </node>
+
+  <node pkg="san_external_mocks" exec="rosbridge_mock_server"
+        name="rosbridge_mock_server" output="screen"/>
+</launch>
