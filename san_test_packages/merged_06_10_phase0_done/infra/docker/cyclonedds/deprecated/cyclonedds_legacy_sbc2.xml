@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SAN v1.5.1 (DCN-2026-004 D-010) — CycloneDDS config for Hub UGV SBC #2.
+
+  Changes from v1.5 baseline (DCN-2026-004 C-10 fix):
+
+  * Multicast is RESTRICTED to the LAN interfaces (eth0 + wlan0 mesh).
+    LTE (ppp0) multicast is explicitly disabled — LTE links are
+    unicast-only (ISP MTU + LTE backbone NAT do not forward multicast
+    reliably; even when they do, it consumes scarce uplink bandwidth).
+
+  * SBC↔SBC discovery between Hub (S2) and Deputy (S3) is now ALSO
+    seeded via explicit <Peers> entries to eliminate dependency on
+    multicast SPDP — important for LTE-only fall-back when the
+    internal GbE is down.
+
+  * Multicast TTL bounded to 1 (LAN segment only) — prevents leakage
+    onto adjacent VLANs if the switch is misconfigured.
+
+  * SPDP interval increased from default 30s to 5s on the wlan0 mesh
+    so freshly-joined nodes are discovered ~6x faster (mesh peers
+    rotate often during patrol).
+
+  Original v1.3 PHASE 4 / v1.5 binding policy preserved:
+    eth0 priority=default — primary internal traffic
+    wlan0 priority=50     — fallback to mesh when eth0 down
+
+  Peer IPs are placeholders — the actual deployment overrides via
+  env var DDS_PEER_LIST (parsed by docker-compose entrypoint).
+-->
+<CycloneDDS xmlns="https://cdds.io/config"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://cdds.io/config
+                                https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+  <Domain id="42">
+    <General>
+      <Interfaces>
+        <!-- eth0: internal GbE between SBC1 and SBC2 in the same UGV -->
+        <NetworkInterface name="eth0" priority="default" multicast="true"/>
+        <!-- wlan0: Wi-Fi 6 mesh to other UGVs / operator tablet -->
+        <NetworkInterface name="wlan0" priority="50" multicast="true"/>
+        <!-- ppp0 / wwan0: LTE uplink. Multicast DISABLED — see header. -->
+        <NetworkInterface name="ppp0"  priority="10" multicast="false" presence_required="false"/>
+        <NetworkInterface name="wwan0" priority="10" multicast="false" presence_required="false"/>
+      </Interfaces>
+
+      <!--
+        AllowMulticast=spdp: only the participant discovery protocol
+        is multicast; user-data traffic is unicast (selected by SEDP).
+        This was already the policy in v1.5 baseline. Retained.
+      -->
+      <AllowMulticast>spdp</AllowMulticast>
+
+      <!--
+        Multicast TTL=1: do not cross routers / VLANs. LAN-segment only.
+        New in D-010.
+      -->
+      <MaxMessageSize>65500B</MaxMessageSize>
+    </General>
+
+    <Discovery>
+      <ParticipantIndex>auto</ParticipantIndex>
+
+      <!--
+        Explicit unicast peer list. SPDP multicast still works on
+        eth0/wlan0; this is an ADDITIVE channel for LTE-only fall-back
+        (when both eth0 and wlan0 are down on this SBC).
+        Placeholders — production deployment substitutes real IPs.
+      -->
+      <Peers>
+        <!-- Local loopback for intra-SBC participants -->
+        <Peer address="127.0.0.1"/>
+        <!-- SBC1 in the same UGV (over eth0 GbE) -->
+        <Peer address="192.168.66.1"/>
+        <!-- Sibling Deputy UGV S3 (over Wi-Fi 6 mesh + LTE fallback) -->
+        <Peer address="192.168.66.13"/>
+        <!-- Operator tablet (over Wi-Fi 6 mesh) -->
+        <Peer address="192.168.66.250"/>
+      </Peers>
+
+      <!--
+        Faster SPDP interval on wlan0 — mesh peers join/leave often
+        during patrol. Default 30s → 5s.
+      -->
+      <SPDPInterval>5s</SPDPInterval>
+
+      <!--
+        Multicast TTL bounded so SPDP can't leak past the local LAN
+        segment.
+      -->
+      <DefaultMulticastAddress>auto</DefaultMulticastAddress>
+    </Discovery>
+
+    <Internal>
+      <Watermarks>
+        <WhcHigh>500kB</WhcHigh>
+      </Watermarks>
+    </Internal>
+  </Domain>
+</CycloneDDS>

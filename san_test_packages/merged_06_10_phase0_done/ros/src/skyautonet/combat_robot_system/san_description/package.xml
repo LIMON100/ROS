@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_description</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — Combat robot URDF/xacro description package.
+
+    Ported and adapted from skyhunter_description (Limon code). Provides
+    a complete xacro-based robot model including:
+      - chassis + tracks
+      - 360° pan-tilt gimbal (SDD §8)
+      - EO + thermal dual-camera (IMX678)
+      - LiDAR (Robosense E1)
+      - IMU
+      - GPS / RTK antenna
+      - 5.56 mm rifle mount
+
+    Used by san_sim_gazebo for simulation spawn, and (with HW
+    drivers) for real robot description in TF.
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
