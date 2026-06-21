@@ -1,0 +1,11 @@
+# SAN v1.3 PHASE 0 - BENCH mode overlay (PC CI / unit-bench).
+# No real kinematics; all sensors mocked.
+
+combat_robot_operation_system:
+  ros__parameters:
+    deployment_mode: "bench"
+    safety:
+      gun_trigger_permission: "DENIED"
+      hw_watchdog_enabled: true
+      operator_screen_banner: "BENCH"
+      operator_screen_color: "gray"

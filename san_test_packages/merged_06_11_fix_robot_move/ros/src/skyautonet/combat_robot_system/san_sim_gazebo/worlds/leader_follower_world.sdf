@@ -1,0 +1,341 @@
+<?xml version="1.0"?>
+<!--
+  SAN v1.5 — lightweight world for leader_follower_demo.launch.py.
+
+  Deliberately OMITS the gz-sim-sensors-system plugin. On hosts without GPU
+  passthrough (e.g. WSL) that system renders every camera + gpu_lidar in
+  software (llvmpipe), which collapses the real-time factor to ~0.0015 and
+  makes the robots crawl. The leader/follower demo needs only odom +
+  diff-drive, so dropping sensor rendering restores RTF ~1.0. The robots'
+  camera/lidar links still exist (their bridges simply carry no data here).
+
+  Also omits the Fuel model include from empty_world.sdf so the demo has no
+  network dependency. Keeps physics / scene-broadcaster / user-commands and
+  the cheap (non-rendering) IMU + NavSat systems.
+-->
+<sdf version="1.8">
+  <world name="leader_follower_world">
+
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>500</real_time_update_rate>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu" />
+    <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat" />
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>36.61002559225</latitude_deg>
+      <longitude_deg>127.28772570583</longitude_deg>
+      <elevation>0.0</elevation>
+      <heading_deg>0.0</heading_deg>
+    </spherical_coordinates>
+
+    <!-- Sunlight -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>200 200</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.0</mu>
+                <mu2>1.0</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>200 200</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Walled arena (44 x 44, centred at origin) so the demo has a visible
+         "world" the robots drive across. Walls at +/-22 m. Static, no sensors. -->
+    <model name="arena_walls">
+      <static>true</static>
+      <link name="link">
+        <!-- North (+Y) -->
+        <collision name="n_col"><pose>0 22 0.75 0 0 0</pose>
+          <geometry><box><size>44.6 0.3 1.5</size></box></geometry></collision>
+        <visual name="n_vis"><pose>0 22 0.75 0 0 0</pose>
+          <geometry><box><size>44.6 0.3 1.5</size></box></geometry>
+          <material><ambient>0.25 0.35 0.55 1</ambient><diffuse>0.3 0.45 0.7 1</diffuse></material></visual>
+        <!-- South (-Y) -->
+        <collision name="s_col"><pose>0 -22 0.75 0 0 0</pose>
+          <geometry><box><size>44.6 0.3 1.5</size></box></geometry></collision>
+        <visual name="s_vis"><pose>0 -22 0.75 0 0 0</pose>
+          <geometry><box><size>44.6 0.3 1.5</size></box></geometry>
+          <material><ambient>0.25 0.35 0.55 1</ambient><diffuse>0.3 0.45 0.7 1</diffuse></material></visual>
+        <!-- East (+X) -->
+        <collision name="e_col"><pose>22 0 0.75 0 0 0</pose>
+          <geometry><box><size>0.3 44.6 1.5</size></box></geometry></collision>
+        <visual name="e_vis"><pose>22 0 0.75 0 0 0</pose>
+          <geometry><box><size>0.3 44.6 1.5</size></box></geometry>
+          <material><ambient>0.25 0.35 0.55 1</ambient><diffuse>0.3 0.45 0.7 1</diffuse></material></visual>
+        <!-- West (-X) -->
+        <collision name="w_col"><pose>-22 0 0.75 0 0 0</pose>
+          <geometry><box><size>0.3 44.6 1.5</size></box></geometry></collision>
+        <visual name="w_vis"><pose>-22 0 0.75 0 0 0</pose>
+          <geometry><box><size>0.3 44.6 1.5</size></box></geometry>
+          <material><ambient>0.25 0.35 0.55 1</ambient><diffuse>0.3 0.45 0.7 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Leader driving route drawn ON the ground (RViz markers do not
+         appear in Gazebo). FIGURE-8 = two tangent circles (R=6) through
+         the origin; must match leader_path_nav 'route:=figure8' waypoints.
+         Visual-only (no collision) so the leader drives through it. -->
+    <model name="route_path">
+      <static>true</static>
+      <link name="link">
+        <visual name="seg0"><pose>0.604 0.061 0.02 0 0 0.1013</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg1"><pose>1.787 0.305 0.02 0 0 0.3040</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg2"><pose>2.897 0.781 0.02 0 0 0.5067</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg3"><pose>3.888 1.471 0.02 0 0 0.7094</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg4"><pose>4.720 2.346 0.02 0 0 0.9121</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg5"><pose>5.359 3.371 0.02 0 0 1.1148</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg6"><pose>5.779 4.504 0.02 0 0 1.3174</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg7"><pose>5.962 5.698 0.02 0 0 1.5201</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg8"><pose>5.900 6.904 0.02 0 0 1.7228</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg9"><pose>5.598 8.073 0.02 0 0 1.9255</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg10"><pose>5.066 9.158 0.02 0 0 2.1282</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg11"><pose>4.326 10.113 0.02 0 0 2.3309</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg12"><pose>3.410 10.899 0.02 0 0 2.5335</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg13"><pose>2.354 11.485 0.02 0 0 2.7362</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg14"><pose>1.202 11.847 0.02 0 0 2.9389</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg15"><pose>0.000 11.969 0.02 0 0 3.1416</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg16"><pose>-1.202 11.847 0.02 0 0 -2.9389</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg17"><pose>-2.354 11.485 0.02 0 0 -2.7362</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg18"><pose>-3.410 10.899 0.02 0 0 -2.5335</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg19"><pose>-4.326 10.113 0.02 0 0 -2.3309</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg20"><pose>-5.066 9.158 0.02 0 0 -2.1282</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg21"><pose>-5.598 8.073 0.02 0 0 -1.9255</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg22"><pose>-5.900 6.904 0.02 0 0 -1.7228</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg23"><pose>-5.962 5.698 0.02 0 0 -1.5201</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg24"><pose>-5.779 4.504 0.02 0 0 -1.3174</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg25"><pose>-5.359 3.371 0.02 0 0 -1.1148</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg26"><pose>-4.720 2.346 0.02 0 0 -0.9121</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg27"><pose>-3.888 1.471 0.02 0 0 -0.7094</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg28"><pose>-2.897 0.781 0.02 0 0 -0.5067</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg29"><pose>-1.787 0.305 0.02 0 0 -0.3040</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg30"><pose>-0.604 0.061 0.02 0 0 -0.1013</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg31"><pose>0.604 -0.061 0.02 0 0 -0.1013</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg32"><pose>1.787 -0.305 0.02 0 0 -0.3040</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg33"><pose>2.897 -0.781 0.02 0 0 -0.5067</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg34"><pose>3.888 -1.471 0.02 0 0 -0.7094</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg35"><pose>4.720 -2.346 0.02 0 0 -0.9121</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg36"><pose>5.359 -3.371 0.02 0 0 -1.1148</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg37"><pose>5.779 -4.504 0.02 0 0 -1.3174</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg38"><pose>5.962 -5.698 0.02 0 0 -1.5201</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg39"><pose>5.900 -6.904 0.02 0 0 -1.7228</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg40"><pose>5.598 -8.073 0.02 0 0 -1.9255</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg41"><pose>5.066 -9.158 0.02 0 0 -2.1282</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg42"><pose>4.326 -10.113 0.02 0 0 -2.3309</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg43"><pose>3.410 -10.899 0.02 0 0 -2.5335</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg44"><pose>2.354 -11.485 0.02 0 0 -2.7362</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg45"><pose>1.202 -11.847 0.02 0 0 -2.9389</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg46"><pose>0.000 -11.969 0.02 0 0 3.1416</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg47"><pose>-1.202 -11.847 0.02 0 0 2.9389</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg48"><pose>-2.354 -11.485 0.02 0 0 2.7362</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg49"><pose>-3.410 -10.899 0.02 0 0 2.5335</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg50"><pose>-4.326 -10.113 0.02 0 0 2.3309</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg51"><pose>-5.066 -9.158 0.02 0 0 2.1282</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg52"><pose>-5.598 -8.073 0.02 0 0 1.9255</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg53"><pose>-5.900 -6.904 0.02 0 0 1.7228</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg54"><pose>-5.962 -5.698 0.02 0 0 1.5201</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg55"><pose>-5.779 -4.504 0.02 0 0 1.3174</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg56"><pose>-5.359 -3.371 0.02 0 0 1.1148</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg57"><pose>-4.720 -2.346 0.02 0 0 0.9121</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg58"><pose>-3.888 -1.471 0.02 0 0 0.7094</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg59"><pose>-2.897 -0.781 0.02 0 0 0.5067</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg60"><pose>-1.787 -0.305 0.02 0 0 0.3040</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="seg61"><pose>-0.604 -0.061 0.02 0 0 0.1013</pose>
+          <geometry><box><size>1.264 0.2 0.02</size></box></geometry>
+          <material><ambient>0.1 0.9 0.2 1</ambient><diffuse>0.1 1 0.2 1</diffuse><emissive>0.05 0.4 0.1 1</emissive></material></visual>
+        <visual name="wp0"><pose>0 12 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="wp1"><pose>6 6 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="wp2"><pose>-6 6 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="wp3"><pose>0 -12 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="wp4"><pose>6 -6 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="wp5"><pose>-6 -6 0.3 0 0 0</pose>
+          <geometry><cylinder><radius>0.3</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>1 0.85 0.1 1</ambient><diffuse>1 0.9 0.1 1</diffuse><emissive>0.4 0.35 0.05 1</emissive></material></visual>
+        <visual name="goal"><pose>0 0 0.4 0 0 0</pose>
+          <geometry><cylinder><radius>0.45</radius><length>0.8</length></cylinder></geometry>
+          <material><ambient>1 0.15 0.1 1</ambient><diffuse>1 0.15 0.1 1</diffuse><emissive>0.4 0.05 0.03 1</emissive></material></visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
