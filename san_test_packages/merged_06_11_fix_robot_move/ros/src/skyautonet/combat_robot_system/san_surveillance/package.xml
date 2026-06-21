@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_surveillance</name>
+  <version>1.5.1</version>
+  <description>
+    SAN v1.5 — 360° Surveillance Sector + Pan-Tilt Controller
+    (SDD-SWARM §8, SDD-SUR §3). Hub-side authority: subscribes
+    RobotStatus + ThreatAlert, publishes SurveillanceSectorAssignment
+    + PanTiltCommand per IDS-CMD v1.5 §5.10/§5.11.
+
+    KPP 정량 검증:
+      * 팬틸트 추적 정확도 ≤ 0.05° (Track mode 수렴 측정)
+      * 360° 분담 = 100% (sector union check)
+      * 주행 중에도 절대 360° 유지 (★ PATCH 2026-05-13)
+
+    PATCH 2026-05-13 (deep-dive review):
+      * sector_frame library — Heading↔World 변환 + DriveClassifier
+        (hysteresis). 주행 중 (공격 모드) 절대 world-frame 분담 유지.
+      * sector_allocator — output_frame + leader_yaw_world 지원.
+      * pan_tilt_controller — Track 비례 제어가 dt-INDEPENDENT
+        (이전: dt 로 나눠서 tick rate 마다 effective gain 변동).
+        Sweep boundary 의 residual 모션 보존 (이전: 손실).
+      * surveillance_node — recursive_mutex (이전: deadlock 잠재),
+        ThreatAlert bearing 실제 추출 (이전: placeholder=0.0),
+        per-robot yaw 추적 + World→Heading 변환 on publish.
+      * 단위 테스트 17 → 25 (8 PATCH 검증 testcase 추가).
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>std_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
