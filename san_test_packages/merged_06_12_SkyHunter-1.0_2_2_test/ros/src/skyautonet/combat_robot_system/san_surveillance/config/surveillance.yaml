@@ -1,0 +1,14 @@
+surveillance_node:
+  ros__parameters:
+    realloc_period_sec:   10     # SDD §8.5 — 10s default
+    robot_timeout_sec:     3     # mark robot dead if no RobotStatus for 3s
+    threat_validity_sec:  10     # decay threat focus after 10s
+    leader_robot_id:       1     # PATCH: anchors world-frame sectors
+
+    # PATCH 2026-05-13 — Drive/Patrol classifier hysteresis.
+    # Patrol → Drive when EITHER speed >= enter_drive_mps OR yaw rate >= enter_drive_dps.
+    # Drive  → Patrol when BOTH speed < exit_drive_mps AND yaw rate < exit_drive_dps.
+    enter_drive_mps:       0.3   # 30 cm/s (typical UGV creep)
+    exit_drive_mps:        0.1   # 10 cm/s
+    enter_drive_dps:       5.0   # 5 deg/s yaw
+    exit_drive_dps:        2.0   # 2 deg/s yaw

@@ -1,0 +1,39 @@
+# SAN v1.5.2 — DCN-2026-011 D-035 Leader (Unitree Go2) systemd unit.
+
+[Unit]
+Description=SkyAutoNet Leader (Unitree Go2) (DCN-2026-011 D-035)
+Documentation=https://github.com/adasone/SH_Unitree_Patrol/blob/main/infra/systemd/README.md
+After=network-online.target NetworkManager-wait-online.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=skyautonet
+Group=skyautonet
+WorkingDirectory=/opt/skyautonet
+Environment="ROS_DOMAIN_ID=42"
+# DCN-2026-014 D-050: swarm-wide migration to FastDDS.
+Environment="RMW_IMPLEMENTATION=rmw_fastrtps_cpp"
+Environment="FASTRTPS_DEFAULT_PROFILES_FILE=/opt/skyautonet/share/san_bringup/config/fastrtps_profile.xml"
+Environment="HOME=/home/skyautonet"
+# DCN-2026-014 Item 8: static mesh0 IP assignment (EasyMesh deterministic).
+# C++ executable (san_bringup package); reads /etc/skyautonet/{robot_id,
+# sbc_id} and brings up mesh0 at the matching 192.168.50.X address.
+# Fail-fast on unknown combo so a provisioning error never silently
+# lands the robot on a stale IP. install.sh symlinks the colcon
+# install/lib/san_bringup/network_bringup binary into /usr/local/sbin/.
+ExecStartPre=/usr/local/sbin/network_bringup
+ExecStart=/bin/bash -c 'source /opt/skyautonet/install/setup.bash && \
+                       exec ros2 launch san_bringup leader_go2.launch.xml \
+                            deployment_mode:=production'
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=skyautonet-leader-go2
+
+MemoryMax=7G
+TasksMax=4096
+
+[Install]
+WantedBy=multi-user.target
