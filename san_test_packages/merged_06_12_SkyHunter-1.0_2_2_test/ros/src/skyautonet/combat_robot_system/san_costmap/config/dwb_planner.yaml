@@ -1,0 +1,50 @@
+# SAN v1.5 PHASE 1 — Nav2 DWB local planner parameters.
+# Companion to nav2_costmap.yaml. Tuned for the UGV envelope
+# (length 1.3 m, width 0.85 m, 10 km/h / 2.78 m/s max).
+# v1.5 (DCN-2026-001 D-002): max_vel_x corrected 3.33 → 2.78 to match
+# AVTBOT TinS-13 chassis HW spec (10 km/h, not the v1.3-era 12 km/h).
+
+controller_server:
+  ros__parameters:
+    use_sim_time: false
+    controller_frequency: 10.0      # 100 ms tick
+    progress_checker_plugin: "progress_checker"
+    goal_checker_plugin:     "goal_checker"
+    controller_plugins:      ["FollowPath"]
+
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.5
+      movement_time_allowance: 10.0
+    goal_checker:
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.20
+      yaw_goal_tolerance: 0.20
+      stateful: true
+
+    FollowPath:
+      plugin: "dwb_core::DWBLocalPlanner"
+      max_vel_x: 2.78          # v1.5 (DCN-2026-001 D-002): 10 km/h
+      min_vel_x: 0.0
+      max_vel_theta: 1.5
+      acc_lim_x: 1.5
+      acc_lim_theta: 2.0
+      decel_lim_x: -2.0
+      decel_lim_theta: -2.5
+      vx_samples: 20
+      vtheta_samples: 20
+      sim_time: 1.5
+      transform_tolerance: 0.2
+      critics:
+        - "RotateToGoal"
+        - "Oscillation"
+        - "BaseObstacle"
+        - "GoalAlign"
+        - "PathAlign"
+        - "PathDist"
+        - "GoalDist"
+      BaseObstacle.scale: 0.02
+      PathAlign.scale: 32.0
+      GoalAlign.scale: 24.0
+      PathDist.scale: 32.0
+      GoalDist.scale: 24.0
