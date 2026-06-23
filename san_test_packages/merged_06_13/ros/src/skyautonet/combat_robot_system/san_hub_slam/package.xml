@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_hub_slam</name>
+  <version>1.3.0</version>
+  <description>
+    SAN v1.3 PHASE 3 - Hub UGV SBC #1 multirobot map aggregator.
+    Subscribes to /robot_{1..8}/local/slam_delta, merges into
+    a global occupancy grid, publishes SLAMAggregatedMap every 5 s.
+    g2o pose-graph optimizer is HAVE_G2O-guarded.
+  </description>
+  <maintainer email="dev@skyautonet.com">SkyAutoNet</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>combat_robot_msgs</depend>
+  <!-- [DCN-2026-006 EXT D-026] hub_slam audit publisher. -->
+  <depend>diagnostic_msgs</depend>
+  <depend>libopencv-dev</depend>
+
+  <exec_depend>multirobot_map_merge</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
