@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- SAN v1.3 PHASE 1 - san_lidar (Robosense E1 driver + ground segmenter). -->
+<launch>
+    <arg name="config_file"
+         default="$(find-pkg-share san_lidar)/config/robosense_e1.yaml"/>
+    <arg name="segmenter_config"
+         default="$(find-pkg-share san_lidar)/config/ground_segmenter.yaml"/>
+
+    <node pkg="san_lidar" exec="robosense_e1_driver"
+          name="robosense_e1_driver" output="screen">
+        <param from="$(var config_file)"/>
+        <param from="$(var segmenter_config)"/>
+    </node>
+</launch>

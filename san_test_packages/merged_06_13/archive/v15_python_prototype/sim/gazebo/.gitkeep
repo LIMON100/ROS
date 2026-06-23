@@ -1,0 +1,4 @@
+# Placeholder so the directory is tracked by git. Real world/model files
+# (e.g. empty_field.world, seoul_urban_2km.world, models/unitree_go2/) are
+# added during Phase D week 1 sim setup; they're sizable Gazebo assets that
+# we deliberately keep out of the source tree until then.

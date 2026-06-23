@@ -1,0 +1,13 @@
+# SAN v1.3 PHASE 1 — Robosense E1 driver parameters.
+# Mount values come from SAN-SDD-SWARM-001 v1.3 §4.5.
+
+robosense_e1_driver:
+  ros__parameters:
+    # Mount geometry.
+    mount_height_m:  0.50       # 500 mm above ground
+    mount_forward_m: 0.25       # 250 mm forward of the body origin
+
+    # Topics.
+    input_topic:    "/rslidar_points"
+    ground_topic:   "/san/lidar/ground"
+    obstacle_topic: "/san/lidar/obstacles"

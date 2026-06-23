@@ -1,0 +1,37 @@
+# SAN v1.3 PHASE 0 - DEVELOPMENT mode overlay.
+#
+# Free debug for developers. DEVELOPER_AUTH_TOKEN env var REQUIRED at
+# boot when safety.developer_auth_required=true. All sensors can be
+# mocked; the watchdog yaml flag is honored (the only mode where it
+# is). Weapons SIMULATED only (log-only PWM).
+
+combat_robot_operation_system:
+  ros__parameters:
+    deployment_mode: "development"
+    safety:
+      gun_trigger_permission: "SIMULATED"   # PWM not asserted; log only
+      hw_watchdog_enabled: false             # developer may toggle OFF
+      operator_screen_banner: "DEV"
+      operator_screen_color: "purple"
+      developer_auth_required: true          # env var enforced
+    sensors:
+      use_real_lidar: false                  # individually selectable
+      use_real_imu: false
+      use_dummy_detector: true               # mock inference
+      use_real_pantilt: false
+    audit:
+      log_level: "TRACE"                     # max logging
+      audit_destination: "stdout+file"
+      ros2_param_dump_on_boot: true          # reproducibility
+    cost_map:
+      enabled: true
+      latency_target_ms: 999999              # KPP not enforced
+    lte:
+      hub_role: "disabled"                   # LTE OFF
+      backup_chain: []
+    demo_sequence:
+      enabled: true                          # exercise the sequencer
+    development_flags:
+      bypass_arming_interlock: false         # ALSO forbidden in development
+      allow_yaml_overlay_chaining: true      # multi-overlay testing
+      verbose_message_dump: true

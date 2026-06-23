@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SkyHunter swarm — FastDDS simulation profile (DCN-2026-014 D-052).
+
+  Selected by squadron.launch.xml when use_sim_time=true (Limon Gazebo
+  multi-robot scenarios + CI). Keeps every participant on 127.0.0.1
+  so:
+    * SPDP traffic never leaves the host (CI runners, paired benches,
+      developer laptops on the same LAN);
+    * sim runs on adjacent machines don't cross-discover each other;
+    * the production wlan0 radios stay free of sim noise.
+
+  avoid_builtin_multicast=true forces unicast metadata exchange — required
+  in Docker default-bridge and GitHub Actions runners where multicast
+  is blocked.
+
+  leaseDuration=5s is intentionally short: sim restarts frequently and
+  stale participants must be reaped quickly so the next run does not
+  see ghost peers (Scenario B B2 root cause class).
+
+  Activated by:
+    san_bringup/launch/squadron.launch.xml (use_sim_time:=true branch)
+  or manually:
+    export FASTRTPS_DEFAULT_PROFILES_FILE=$(ros2 pkg prefix san_bringup)/share/san_bringup/config/fastrtps_sim_profile.xml
+    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+-->
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+  <!-- ⚠️ transport_descriptors MUST come before participant; see
+       fastrtps_profile.xml header comment for the failure mode. -->
+  <transport_descriptors>
+    <transport_descriptor>
+      <transport_id>udp_localhost</transport_id>
+      <type>UDPv4</type>
+      <interfaceWhiteList>
+        <address>127.0.0.1</address>
+      </interfaceWhiteList>
+    </transport_descriptor>
+  </transport_descriptors>
+
+  <participant profile_name="skyhunter_sim" is_default_profile="true">
+    <rtps>
+      <builtin>
+        <discovery_config>
+          <discoveryProtocol>SIMPLE</discoveryProtocol>
+          <leaseDuration><sec>5</sec></leaseDuration>
+        </discovery_config>
+        <metatrafficUnicastLocatorList>
+          <locator><udpv4><address>127.0.0.1</address></udpv4></locator>
+        </metatrafficUnicastLocatorList>
+        <avoid_builtin_multicast>true</avoid_builtin_multicast>
+      </builtin>
+      <userTransports>
+        <transport_id>udp_localhost</transport_id>
+      </userTransports>
+      <useBuiltinTransports>false</useBuiltinTransports>
+    </rtps>
+  </participant>
+</profiles>
