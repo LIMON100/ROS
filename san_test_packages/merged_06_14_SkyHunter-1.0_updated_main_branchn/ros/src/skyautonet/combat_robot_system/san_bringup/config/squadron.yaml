@@ -1,0 +1,11 @@
+# SAN v1.5 Phase 2-E Turn 1 — squadron-level base parameters.
+#
+# Per-node overrides go into each package's own config yaml; this file
+# carries values that span the squadron (robot_id, role, deployment mode)
+# and are picked up by launch via SetParameter.
+
+/**:
+  ros__parameters:
+    deployment_mode: "production"   # production | demo | lab_test | bench | development
+    robot_id: 0                     # 1..8 in operation, 0 = un-assigned
+    robot_role: "follower"          # follower | leader | hub
