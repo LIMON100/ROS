@@ -1,0 +1,169 @@
+# SAN v1.5 — Code Coverage workflow.
+#
+# Builds with --coverage flags and produces gcov / lcov reports for
+# all C++ packages. Python coverage is measured via pytest-cov.
+# Coverage output is uploaded as a CI artifact for the PDR / CDR
+# verification matrix.
+#
+# Trigger: same as standalone-tests (push + PR + manual).
+# Runtime: ~15-25 min (heavier than standalone, lighter than full ros2-ci).
+#
+# Target coverage threshold (PDR baseline): ≥ 60% lines per package.
+# Lower threshold is intentional — many drivers are HW-conditional
+# (stub_on_no_HW paths) and tests run only the stub side.
+#
+# ─── 2026-05-24 fix ─────────────────────────────────────────────────────
+# GitHub Actions' default run-step shell on Linux is `sh -e {0}`. The
+# `source` builtin only exists in bash, so every `run: |` block that
+# began with `source /opt/ros/jazzy/setup.bash` exited 127 immediately
+# (`/__w/_temp/...sh: 1: source: not found`). Pinned `shell: bash` at the
+# top of each job via the `defaults` block so the fix is single-place
+# and survives new step additions. Same pattern as gate1-regression
+# workflow.
+
+name: Coverage Measurement
+
+on:
+  push:
+    branches: [main, develop, "release/**"]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+concurrency:
+  group: coverage-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  cpp-coverage:
+    name: C++ Coverage (gcov + lcov)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: osrf/ros:jazzy-desktop
+      options: --user 0:0
+    steps:
+      - name: Install coverage tools
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            python3-colcon-common-extensions \
+            python3-pip \
+            lcov \
+            gcovr
+
+      - uses: actions/checkout@v4
+        with:
+          path: src/sh_unitree_patrol
+
+      - name: Build with coverage flags
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          colcon build \
+            --packages-up-to san_formation san_surveillance \
+                              san_follower_tier san_reroute_planner \
+                              san_costmap san_fire_authorization \
+            --cmake-args \
+              -DCMAKE_BUILD_TYPE=Debug \
+              -DCMAKE_CXX_FLAGS="--coverage -O0 -g" \
+              -DCMAKE_C_FLAGS="--coverage -O0 -g" \
+              -DCMAKE_EXE_LINKER_FLAGS="--coverage" \
+              -DCMAKE_SHARED_LINKER_FLAGS="--coverage"
+
+      - name: Run tests (gtest)
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          source install/setup.bash
+          # Run only the standalone gtest targets — integration tests
+          # are covered by their own workflow.
+          colcon test \
+            --packages-select san_formation san_surveillance \
+                               san_follower_tier san_reroute_planner \
+                               san_costmap san_fire_authorization \
+            --return-code-on-test-failure || true
+
+      - name: Generate lcov report
+        run: |
+          lcov --capture \
+               --directory build/ \
+               --output-file coverage.info \
+               --rc lcov_branch_coverage=1 \
+               --no-external || true
+          # Exclude system + ROS 2 + test code from report
+          lcov --remove coverage.info \
+               '/usr/*' '/opt/*' '*/test/*' '*_test.cpp' \
+               --output-file coverage_filtered.info \
+               --rc lcov_branch_coverage=1 || true
+          genhtml coverage_filtered.info \
+                  --output-directory coverage_html \
+                  --branch-coverage \
+                  --legend || true
+
+      - name: Coverage summary
+        run: |
+          echo "=== Coverage Summary ==="
+          lcov --summary coverage_filtered.info \
+               --rc lcov_branch_coverage=1 || true
+          # Fail if line coverage < 50% (PDR baseline; tighten to 70% by CDR)
+          # The actual threshold check is informational for now.
+
+      - name: Upload coverage HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cpp-coverage-html
+          path: coverage_html/
+          retention-days: 30
+
+      - name: Upload coverage lcov info
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cpp-coverage-info
+          path: coverage_filtered.info
+          retention-days: 30
+
+  python-coverage:
+    name: Python Coverage (pytest-cov)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    container:
+      image: osrf/ros:jazzy-desktop
+      options: --user 0:0
+    steps:
+      - name: Install pytest + coverage
+        run: |
+          apt-get update
+          # Ubuntu 24.04 / Python 3.12 (PEP 668): system pip is externally-
+          # managed, so `pip3 install pytest-cov` fails with
+          # "externally-managed-environment". Install the coverage plugin
+          # from apt (noble universe) instead — no pip needed.
+          apt-get install -y --no-install-recommends \
+            python3-pytest \
+            python3-pytest-cov
+
+      - uses: actions/checkout@v4
+        with:
+          path: src/sh_unitree_patrol
+
+      - name: Run pytest with coverage (san_mission)
+        working-directory: src/sh_unitree_patrol/ros/src/skyautonet/combat_robot_system/san_mission
+        run: |
+          PYTHONPATH=. python3 -m pytest test/ \
+            --cov=san_mission \
+            --cov-report=html:python_coverage_html \
+            --cov-report=term \
+            --cov-report=xml:python_coverage.xml \
+            -v || true
+
+      - name: Upload Python coverage HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-coverage-html
+          path: src/sh_unitree_patrol/ros/src/skyautonet/combat_robot_system/san_mission/python_coverage_html/
+          retention-days: 30
