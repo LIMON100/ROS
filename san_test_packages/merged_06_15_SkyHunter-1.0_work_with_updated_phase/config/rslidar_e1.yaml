@@ -1,0 +1,31 @@
+# Robosense E1 driver config (PHASE 7 §7.2).
+# Consumed by rslidar_sdk_node on the Follower + Hub UGV.
+#
+# E1 datasheet highlights:
+#   • 905 nm solid-state, no mechanical scanner
+#   • 200 m range at 10% reflectivity, 0.4 m minimum
+#   • 120° HFOV × 25° VFOV (limited rear coverage — see
+#     safety/cliff_detector.py for the blind-spot compensation)
+#   • 921,600 points/s, 10 or 20 Hz frame rate
+#   • Default UDP ports: msop=6699, difop=7788
+
+common:
+  msg_source: 1                  # 1 = online LiDAR
+  send_packet_ros: false
+  send_point_cloud_ros: true
+
+lidar:
+  - driver:
+      lidar_type: RSE1
+      msop_port: 6699
+      difop_port: 7788
+      start_angle: -60           # 120° FoV centred at 0°
+      end_angle: 60
+      min_distance: 0.4
+      max_distance: 200.0
+      use_lidar_clock: false
+      ts_first_point: false
+      dense_points: false
+    ros:
+      ros_frame_id: robosense_e1_link
+      ros_send_point_cloud_topic: rslidar_points
