@@ -1,0 +1,33 @@
+# SAN v1.3 PHASE 0 - LAB_TEST mode overlay.
+#
+# Real HW partial + dummy partial. Weapons strictly disabled; sensor
+# stack runs the real Robosense E1 + real pan-tilt; AI inference is
+# real. DEMO 6-phase sequencer OFF (lab is a precision-test mode).
+
+combat_robot_operation_system:
+  ros__parameters:
+    deployment_mode: "lab_test"
+    safety:
+      gun_trigger_permission: "DENIED"   # weapons forced OFF
+      hw_watchdog_enabled: true           # 3 s watchdog forced ON
+      operator_screen_banner: "LAB"
+      operator_screen_color: "blue"
+    sensors:
+      use_real_lidar: true                # Robosense E1
+      use_real_imu: true
+      use_dummy_detector: false           # real AI inference
+      use_real_pantilt: true              # real actuator (engagement still blocked)
+    audit:
+      log_level: "DEBUG"
+      audit_destination: "file"           # /var/log/san_audit.log
+      retention_days: 30
+    cost_map:
+      enabled: true
+      latency_target_ms: 5000             # KPP enforced
+    lte:
+      hub_role: "primary"
+      backup_chain: [3, 5]
+    demo_sequence:
+      enabled: false                      # DEMO 6-phase OFF in lab_test
+    development_flags:
+      bypass_arming_interlock: false      # absolutely forbidden

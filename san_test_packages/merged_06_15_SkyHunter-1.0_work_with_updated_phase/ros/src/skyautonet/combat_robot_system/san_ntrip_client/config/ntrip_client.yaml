@@ -1,0 +1,9 @@
+ntrip_client_node:
+  ros__parameters:
+    host:                rts2.ngii.go.kr
+    port:                2101
+    mount:               VRS-RTCM31
+    user:                ""
+    password:            ""
+    user_agent:          "NTRIP SkyHunter/1.5"
+    stub_on_no_network:  true

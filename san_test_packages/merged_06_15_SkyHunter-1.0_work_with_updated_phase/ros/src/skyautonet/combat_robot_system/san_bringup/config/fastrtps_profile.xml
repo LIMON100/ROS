@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SkyHunter swarm — FastDDS production profile (DCN-2026-014 D-051, v2-fix).
+
+  Replaces the DCN-2026-004 D-010 CycloneDDS interface restriction
+  (now retained under infra/docker/cyclonedds/deprecated/).
+
+  Network environment (Gong/Choi confirmation, 2026-05-23):
+    * Mesh interface name : mesh0 (Wi-Fi 6 + WPA3, EasyMesh standard)
+    * Multi-hop relay     : Leader → Hub → Follower (TTL = 3)
+    * Multicast           : stable on the mesh; discovery accelerated
+                             via 239.255.0.1:7400.
+    * IP allocation       : static 192.168.50.0/24 (no DHCP in the
+                             tactical field — see san_bringup
+                             `network_bringup` executable for the
+                             per-robot IP map). Subnet isolation does
+                             the heavy lifting for mesh0 confinement;
+                             FastDDS interfaceWhiteList is NOT used —
+                             it accepts IP literals only, not the
+                             interface name "mesh0", so a whitelist
+                             entry would either silently fall back to
+                             "all interfaces" or require per-host
+                             generation. See ADR-007 §4.2 + the post-
+                             review notes for the trade-off rationale.
+
+  Transport stack:
+    * SHM    — zero-copy intra-host. Used by the dual-SBC Hub for
+               cross-process traffic (hub_slam aggregation,
+               threat_aggregator, role_management). 16 MiB segment.
+    * UDPv4  — inter-robot. Bound to all interfaces, but only the
+               mesh0 subnet (192.168.50.0/24) carries our peers; LTE
+               (wwan0 / usb0) and LoRa (sx127x) live on different
+               subnets so Linux routing already isolates them.
+               maxMessageSize = 1400 fits 1500-byte Ethernet minus
+               IP/UDP/RTPS/mesh overhead — avoids fragmentation in
+               multi-hop relays.
+               TTL = 3 covers the worst-case 3-hop path
+               (Follower → Deputy → Hub → Leader).
+
+  useBuiltinTransports=false ensures FastDDS does NOT layer its
+  default UDPv4 descriptor on top of ours.
+  ⚠️ SHARP EDGE: with this flag, ANY descriptor parse error (typo in
+  an XML element name, FastDDS version skew) leaves the participant
+  with NO transports — the node looks "up" in `ros2 node list` but
+  publishes/subscribes are silent. Test the profile end-to-end after
+  every edit (see test_fastrtps_profile_selection T1/T2/T3 + T6).
+
+  initialPeersList = the 9 swarm participants (Leader + 2×Hub-SBC +
+  Deputy + 5×Follower). Even if multicast SPDP drops, every robot
+  finds every peer via unicast metadata — primary mesh-partition
+  resilience hedge.
+
+  leaseDuration = 10s (vs default 20s) + leaseAnnouncement = 3s gives
+  multi-hop participants a faster failover signal when an intermediate
+  relay drops out.
+-->
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+  <!-- ⚠️ FastDDS XML parses top-down; <transport_descriptors> MUST
+       precede <participant> so the <userTransports> ID references
+       resolve. Putting participant first triggers:
+         "[XMLPARSER Error] Transport Node not found. Given ID: ..."
+       and the entire profile is rejected (silent fallback to default,
+       no production tuning). -->
+
+  <transport_descriptors>
+    <!-- SHM for Hub dual-SBC zero-copy. -->
+    <transport_descriptor>
+      <transport_id>shm_transport</transport_id>
+      <type>SHM</type>
+      <maxMessageSize>10485760</maxMessageSize>   <!-- 10 MiB           -->
+      <segment_size>16777216</segment_size>       <!-- 16 MiB segment   -->
+    </transport_descriptor>
+
+    <!-- EasyMesh transport (UDPv4). No interfaceWhiteList — subnet
+         routing isolates mesh0 traffic (192.168.50.0/24 only exists on
+         that interface). See header comment for the IP-literal-only
+         schema constraint. -->
+    <transport_descriptor>
+      <transport_id>udp_easymesh</transport_id>
+      <type>UDPv4</type>
+
+      <sendBufferSize>1048576</sendBufferSize>    <!-- 1 MiB            -->
+      <receiveBufferSize>4194304</receiveBufferSize>  <!-- 4 MiB        -->
+
+      <!-- Multi-hop relay: conservative MTU.
+           1500 Ethernet - 20 IP - 8 UDP - 32 RTPS - 40 mesh overhead = 1400. -->
+      <maxMessageSize>1400</maxMessageSize>
+
+      <!-- TTL covers worst-case 3-hop relay
+           (Follower → Deputy → Hub → Leader). -->
+      <TTL>3</TTL>
+    </transport_descriptor>
+  </transport_descriptors>
+
+  <participant profile_name="skyhunter_swarm" is_default_profile="true">
+    <rtps>
+      <name>skyhunter_swarm_participant</name>
+
+      <builtin>
+        <!-- Multi-hop EasyMesh: shorter lease for fast failover.
+             SimpleEDP is on by default — no explicit toggle needed. -->
+        <discovery_config>
+          <discoveryProtocol>SIMPLE</discoveryProtocol>
+          <leaseDuration>
+            <sec>10</sec>
+          </leaseDuration>
+          <leaseAnnouncement>
+            <sec>3</sec>
+          </leaseAnnouncement>
+        </discovery_config>
+
+        <!-- EasyMesh multicast (stable per Gong) — discovery acceleration. -->
+        <metatrafficMulticastLocatorList>
+          <locator>
+            <udpv4>
+              <address>239.255.0.1</address>
+              <port>7400</port>
+            </udpv4>
+          </locator>
+        </metatrafficMulticastLocatorList>
+
+        <!-- Initial peers — mesh partition resilience. Keep in lockstep
+             with san_bringup network_bringup's deterministic IP map.
+             test_fastrtps_profile_selection T9 enforces both the count
+             AND the IP set. -->
+        <initialPeersList>
+          <locator><udpv4><address>192.168.50.10</address></udpv4></locator>  <!-- Leader Go2 -->
+          <locator><udpv4><address>192.168.50.20</address></udpv4></locator>  <!-- Hub SBC #1 -->
+          <locator><udpv4><address>192.168.50.21</address></udpv4></locator>  <!-- Hub SBC #2 -->
+          <locator><udpv4><address>192.168.50.30</address></udpv4></locator>  <!-- Deputy UGV -->
+          <locator><udpv4><address>192.168.50.40</address></udpv4></locator>  <!-- Follower 1 -->
+          <locator><udpv4><address>192.168.50.41</address></udpv4></locator>  <!-- Follower 2 -->
+          <locator><udpv4><address>192.168.50.42</address></udpv4></locator>  <!-- Follower 3 -->
+          <locator><udpv4><address>192.168.50.43</address></udpv4></locator>  <!-- Follower 4 -->
+          <locator><udpv4><address>192.168.50.44</address></udpv4></locator>  <!-- Follower 5 -->
+        </initialPeersList>
+
+        <avoid_builtin_multicast>false</avoid_builtin_multicast>
+      </builtin>
+
+      <userTransports>
+        <transport_id>shm_transport</transport_id>
+        <transport_id>udp_easymesh</transport_id>
+      </userTransports>
+      <useBuiltinTransports>false</useBuiltinTransports>
+    </rtps>
+  </participant>
+</profiles>
