@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SkyHunter swarm — FastDDS Discovery Server profile (DCN-2026-014 D-054).
+
+  =====================================================================
+  STATUS: NOT ACTIVE BY DEFAULT — Phase-7 large-scale swarm opt-in.
+  =====================================================================
+
+  Replaces per-participant SPDP multicast with a single central listener
+  that brokers discovery. Worth turning on when the swarm grows past the
+  point where the per-second multicast burst saturates the wlan0 radio —
+  in practice, ≥ 16 robots or sustained ≥ 200 topics across the swarm.
+
+  For the current 5-robot configuration this is a regression: it adds a
+  single-point-of-failure (the DS process) without measurable discovery
+  latency benefit. Keep SIMPLE built-in SPDP until Phase-7.
+
+  Activation flow (when DS goes live):
+    1. Pick a DS host — typically the Leader Go2, with Hub UGV as warm
+       backup if Leader is in a NLOS pocket.
+    2. Run the server:
+         fastdds discovery -i 0 -l 0.0.0.0 -p 11811
+       Pin its GuidPrefix to /etc/skyautonet/discovery_server_guid so
+       restarts are stable.
+    3. On every robot:
+         export ROS_DISCOVERY_SERVER=<leader_ip>:11811
+         export FASTRTPS_DEFAULT_PROFILES_FILE=<this file>
+       (squadron.launch.xml supports discovery_server:=true to wire
+        this from launch.)
+    4. Validate:
+         fastdds discovery -i 0 -t   # tree of discovered participants
+
+  Failure mode: DS host crash blocks NEW participant discovery; existing
+  peers stay connected via cached PDP entries. Mitigation = run a second
+  DS on the Hub UGV and list both under <discoveryServersList>.
+
+  The GuidPrefix below is the FastDDS "EPROSIMA" default ASCII pattern;
+  replace at activation time.
+-->
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+  <participant profile_name="skyhunter_swarm" is_default_profile="true">
+    <rtps>
+      <builtin>
+        <discovery_config>
+          <discoveryProtocol>CLIENT</discoveryProtocol>
+          <discoveryServersList>
+            <RemoteServer prefix="44.53.00.5f.45.50.52.4f.53.49.4d.41">
+              <metatrafficUnicastLocatorList>
+                <locator>
+                  <udpv4>
+                    <address>127.0.0.1</address>
+                    <port>11811</port>
+                  </udpv4>
+                </locator>
+              </metatrafficUnicastLocatorList>
+            </RemoteServer>
+          </discoveryServersList>
+          <leaseDuration><sec>20</sec></leaseDuration>
+        </discovery_config>
+      </builtin>
+    </rtps>
+  </participant>
+</profiles>

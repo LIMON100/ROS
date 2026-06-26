@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+  SkyHunter v1.5.3 — DCN-2026-022 Gate-1 regression launch.
+
+  Orchestrates the dependencies the L5_26..L5_33 scenarios exercise,
+  waits for stabilization, then invokes the gate1_regression_runner
+  executable inside the live ROS graph.
+
+  Sim-time by default (CI usage). Override for real-hardware bench:
+    ros2 launch san_test gate1_regression.launch.xml use_sim_time:=false
+
+  Result: /tmp/gate1_regression_results.xml (JUnit XML).
+-->
+<launch>
+  <arg name="use_sim_time" default="true"
+       description="Sim clock (default) — flip false for HIL bench."/>
+  <arg name="stabilization_sec" default="30.0"
+       description="Wait this long after bring-up before running the
+                    regression — gives Nav2 lifecycle, RTK fix, mission
+                    BT first-tick time to settle."/>
+
+  <!-- Bring up the dependency stack. deputy.launch.xml is the
+       lightest squadron wrapper (no Hub-only nodes), enough to
+       exercise L5_27 (RTK) / L5_28 (costmap) / L5_30 (/rth via
+       san_rth which is included by squadron post-PR #181) /
+       L5_31 (E-Stop on /cmd_vel) / L5_32 (mission BT). -->
+  <include file="$(find-pkg-share san_bringup)/launch/deputy.launch.xml">
+    <arg name="use_sim_time" value="$(var use_sim_time)"/>
+  </include>
+
+  <!-- Stagger: scenario runner waits stabilization_sec before
+       executing, so the bring-up has time to reach steady state.
+       gate1_regression_runner exits with the gtest result code;
+       systemd / CI wrapper picks that up via shell. -->
+  <timer period="$(var stabilization_sec)">
+    <node pkg="san_test" exec="gate1_regression_runner"
+          name="gate1_regression_runner" output="screen">
+      <param name="use_sim_time" value="$(var use_sim_time)"/>
+    </node>
+  </timer>
+</launch>
