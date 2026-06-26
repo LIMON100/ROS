@@ -1,0 +1,98 @@
+# SAN v1.5 Phase 2-E — Squadron systemd unit.
+#
+# Installation:
+#   sudo cp $(ros2 pkg prefix san_bringup)/share/san_bringup/systemd/san-squadron.service \
+#           /lib/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable san-squadron
+#   sudo systemctl start san-squadron
+#
+# Configuration:
+#   /etc/san/squadron.env  — robot-specific environment variables
+#                             (ROBOT_ID, ROBOT_ROLE, ROBOT_DEPLOYMENT_MODE,
+#                              ROS_DOMAIN_ID, RMW_IMPLEMENTATION)
+#
+# Replaces main.py's multiprocessing bootstrap + install_crash_handler()
+# per DCN-2026-002 D-008.
+#
+# Refs:
+#   * DCN-2026-002 — D-007 + D-008
+#   * ADR-006 — IPC Unification Strategy, §5.3 systemd unit standard
+
+[Unit]
+Description=SAN SkyHunter Squadron Bootstrap (ROS 2 Jazzy)
+Documentation=https://github.com/adasone/SH_Unitree_Patrol
+After=network-online.target time-sync.target
+Wants=network-online.target
+
+# Hard requirements: secret + audit log dirs MUST be ready or the
+# fire authorization node will fail-closed.
+RequiresMountsFor=/etc/san /var/log/san
+
+[Service]
+Type=exec
+User=san
+Group=san
+
+# Environment + secrets. The .env file is provisioned out-of-band
+# during system imaging — NOT in this repo.
+EnvironmentFile=/etc/san/squadron.env
+# Defaults if EnvironmentFile is partial (allow override):
+Environment="ROBOT_ID=1"
+Environment="ROBOT_ROLE=leader"
+Environment="ROBOT_DEPLOYMENT_MODE=production"
+Environment="ROS_DOMAIN_ID=42"
+Environment="RMW_IMPLEMENTATION=rmw_cyclonedds_cpp"
+
+# Source ros2 environment then exec launch. Adjust /opt paths to match
+# the system imaging recipe.
+ExecStart=/bin/bash -c '\
+    source /opt/ros/jazzy/setup.bash && \
+    source /opt/san/install/setup.bash && \
+    exec ros2 launch san_bringup squadron.launch.py \
+        robot_id:=${ROBOT_ID} \
+        robot_role:=${ROBOT_ROLE} \
+        deployment_mode:=${ROBOT_DEPLOYMENT_MODE}'
+
+# Graceful shutdown: SIGINT first (rclcpp::shutdown handles it cleanly),
+# escalate to SIGTERM if it doesn't exit in 10 s.
+KillSignal=SIGINT
+KillMode=mixed
+TimeoutStopSec=10s
+
+# Restart policy: any failure → respawn after 5 s. systemd gives up
+# after 5 failures within 60 s (StartLimit*) to avoid crashloops.
+Restart=on-failure
+RestartSec=5s
+StartLimitIntervalSec=60s
+StartLimitBurst=5
+
+# Resource limits — squadron is the dominant workload; allow it to use
+# real-time scheduling but cap CPU to leave headroom for ros2 CLI / ssh.
+LimitNOFILE=65536
+CPUAccounting=true
+MemoryAccounting=true
+TasksMax=4096
+
+# Security hardening (squadron runs as unprivileged "san" user).
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/san /tmp
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictRealtime=false      # Allow SCHED_FIFO/RR for hard real-time
+
+# Network — DDS needs raw sockets / broadcast. We use ports 7400+ which
+# are unprivileged, so CAP_NET_BIND_SERVICE is NOT required.
+AmbientCapabilities=CAP_NET_RAW CAP_NET_BROADCAST
+
+# Standard output → journald
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=san-squadron
+
+[Install]
+WantedBy=multi-user.target
