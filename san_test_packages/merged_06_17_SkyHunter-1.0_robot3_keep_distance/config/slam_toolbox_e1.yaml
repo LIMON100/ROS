@@ -1,0 +1,21 @@
+# slam_toolbox tuning for the Robosense E1 LiDAR (PHASE 7 §7.4).
+#
+# E1's specifics force three deviations from the default Unitree-L1
+# preset:
+#   • max_laser_range bumped 100 → 200 m to match the sensor's reach.
+#   • voxel_filter_size = 0.05 m to downsample the 921 k pts/s firehose
+#     before scan-matching; otherwise the CPU saturates.
+#   • use_scan_barycenter = true gives a more stable centroid when the
+#     25° VFOV occasionally clips a cliff edge.
+#
+# The 120° HFOV limitation (no rear view) is NOT addressed here —
+# safety/cliff_detector.py compensates by monitoring IMU pitch.
+
+slam_toolbox:
+  ros__parameters:
+    max_laser_range: 200.0
+    minimum_travel_distance: 0.5
+    minimum_travel_heading: 0.5
+    scan_buffer_size: 10
+    use_scan_barycenter: true
+    voxel_filter_size: 0.05      # 5 cm voxel downsampling

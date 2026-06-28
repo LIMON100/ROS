@@ -1,0 +1,27 @@
+# Overlay: deployment_mode=demo (SAN v1.3 §11)
+#
+# Live robots in a controlled customer / trade-show demo. Inherits the
+# strict production safety profile but relaxes the mission cadence so
+# the swarm reads visually for human observers and so anomalies don't
+# spam the operator app.
+
+system:
+  deployment_mode: "demo"
+
+mission:
+  # Slow the patrol schedule so demos can re-cycle predictably.
+  patrol_schedule: ["10:00", "14:00"]
+  # Higher start threshold so we don't deplete demo batteries mid-show.
+  battery_threshold_start: 0.80
+  battery_threshold_return: 0.40
+
+comm:
+  # Demo mode keeps WS telemetry only (no remote patrol-server uploads
+  # so customer presentations stay on-LAN). Operators flip this back on
+  # for production explicitly.
+  enable_patrol_server: false
+
+safety:
+  # Demos run with shorter comm-loss timeouts so the swarm halts more
+  # aggressively if a wifi drop happens in front of the audience.
+  comm_loss_timeout_s: 15
