@@ -1,0 +1,66 @@
+version: "3.8"
+
+# Hub UGV dual-SBC deployment (SAN-SDD-SUR-001 v1.1 §3).
+#
+# SBC#1 (hub-sbc1)  — SLAM aggregator: drains per-follower
+#                     SLAMLocalDelta and broadcasts the fused
+#                     AggregatedMap on /hub/slam/aggregated_map.
+# SBC#2 (hub-sbc2)  — Comm + video relay: tablet WS endpoint, BLE
+#                     bridge, GStreamerRelay (UDP → SRT bridge).
+#
+# `network_mode: host` is required for DDS multicast discovery. On a
+# WSL or rootless-docker host that may need `dockerd --userland-proxy=false`
+# and a real bridge — see sim/README.md.
+#
+# `image:` tags are aspirational (`san/hub-slam:1.1`, `san/hub-comm:1.1`)
+# so a CI pipeline can `docker compose push` to a registry. The `build:`
+# directives let `docker compose build` produce them locally from this
+# tree without a registry round-trip.
+
+services:
+  hub-sbc1:
+    image: san/hub-slam:1.1
+    build:
+      context: ..
+      dockerfile: sim/Dockerfile.hub-slam
+    container_name: hub_sbc1_slam
+    environment:
+      - ROS_DOMAIN_ID=42
+      - ROS_LOCALHOST_ONLY=0
+      - HUB_ROLE=slam
+    network_mode: host
+    # /dev/nvme0n1 is the SBC#1's persistent map SSD. Comment out on
+    # hosts without that device (Gazebo sim, CI runners).
+    devices:
+      - /dev/nvme0n1
+    volumes:
+      - ../config:/opt/patrol/config:ro
+      - /tmp/patrol_logs:/var/log/patrol
+    restart: unless-stopped
+
+  hub-sbc2:
+    image: san/hub-comm:1.1
+    build:
+      context: ..
+      dockerfile: sim/Dockerfile.hub-comm
+    container_name: hub_sbc2_comm
+    environment:
+      - ROS_DOMAIN_ID=42
+      - ROS_LOCALHOST_ONLY=0
+      - HUB_ROLE=comm
+      # External-facing IP the Hub advertises to the tablet for the
+      # SRT caller URI in VideoStreamHandle. Override per-deployment.
+      - HUB_EXTERNAL_IP=10.0.0.99
+    network_mode: host
+    # NET_ADMIN — SBC#2 runs the tablet-facing SRT listener and may
+    # need to tune sysctl (rmem_max), iptables (port allow), or qdisc
+    # (tc) for low-latency streaming. Drop if the deployment delegates
+    # those to the host OS.
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ../config:/opt/patrol/config:ro
+      - /tmp/patrol_logs:/var/log/patrol
+    restart: unless-stopped
+    depends_on:
+      - hub-sbc1

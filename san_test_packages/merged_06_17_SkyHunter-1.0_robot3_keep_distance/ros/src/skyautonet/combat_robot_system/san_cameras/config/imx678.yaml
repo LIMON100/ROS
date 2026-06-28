@@ -1,0 +1,9 @@
+imx678_camera_node:
+  ros__parameters:
+    device:              /dev/video0
+    width:               3840
+    height:              2160
+    encoding:            h265
+    fps:                 30.0
+    frame_id:            imx678
+    stub_on_no_device:   true

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_rth</name>
+  <version>1.5.3</version>
+  <description>
+    SkyHunter v1.5.3 — DCN-2026-017 Return-to-Home action server (C++).
+
+    Exposes /rth (combat_robot_msgs/action/ReturnToHome) so any caller
+    (Gate-1 demo BT in DCN-2026-016, san_mission RETURN-priority branch
+    after refactor, or a manual `ros2 action send_goal`) can trigger
+    autonomous return to the home pose captured at boot.
+
+    Lives in its own package — NOT inside san_mission — because
+    san_mission is the project's designated rclpy node per
+    DCN-2026-002 D-007 (ament_python), and the v1.5.3 "C++ for all
+    code" policy applies to NEW work without disturbing that
+    architectural decision. Communicates with the rclpy mission node
+    over the standard rclcpp_action wire protocol.
+
+    Features:
+      * Home pose auto-recorded on first /odometry/filtered/global fix
+        and persisted to /run/skyautonet/home_pose.yaml (D-081).
+      * ±2m + 10° yaw verification at completion (D-082).
+      * RTK loss → wheel + IMU dead-reckoning fallback when
+        /rtk_gnss_node/heading covariance exceeds threshold for &gt; 5s
+        (D-083).
+
+    Refs:
+      * DCN-2026-017 — Gate-1 (6/5) ±2m RTH accuracy + GPS-loss
+        robustness requirement.
+      * DCN-2026-006 EXT D-022/023 (PR-5) — RTK heading + covariance
+        publisher used for the dead-reckoning trigger.
+      * ADR-006 — IPC unification (rclcpp_action layer is the
+        standard cross-language boundary).
+  </description>
+
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>nav_msgs</depend>
+  <depend>nav2_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>yaml-cpp</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

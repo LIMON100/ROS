@@ -1,0 +1,37 @@
+# SAN v1.5.2 — DCN-2026-011 D-035 Hub UGV SBC #2 systemd unit.
+#
+# Companion of skyautonet-hub-sbc1.service on the peer board.
+
+[Unit]
+Description=SkyAutoNet Hub UGV SBC #2 (DCN-2026-011 D-035)
+Documentation=https://github.com/adasone/SH_Unitree_Patrol/blob/main/infra/systemd/README.md
+After=network-online.target NetworkManager-wait-online.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=skyautonet
+Group=skyautonet
+WorkingDirectory=/opt/skyautonet
+Environment="ROS_DOMAIN_ID=42"
+# DCN-2026-014 D-050: swarm-wide migration to FastDDS.
+Environment="RMW_IMPLEMENTATION=rmw_fastrtps_cpp"
+Environment="FASTRTPS_DEFAULT_PROFILES_FILE=/opt/skyautonet/share/san_bringup/config/fastrtps_profile.xml"
+Environment="HOME=/home/skyautonet"
+# DCN-2026-014 Item 8: static mesh0 IP (EasyMesh deterministic mapping).
+# C++ executable from san_bringup, symlinked by install.sh.
+ExecStartPre=/usr/local/sbin/network_bringup
+ExecStart=/bin/bash -c 'source /opt/skyautonet/install/setup.bash && \
+                       exec ros2 launch san_bringup hub_sbc2.launch.xml \
+                            deployment_mode:=production'
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=skyautonet-hub-sbc2
+
+MemoryMax=7G
+TasksMax=4096
+
+[Install]
+WantedBy=multi-user.target
