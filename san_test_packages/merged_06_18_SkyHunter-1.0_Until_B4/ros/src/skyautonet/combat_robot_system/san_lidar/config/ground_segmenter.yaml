@@ -1,0 +1,8 @@
+# SAN v1.3 PHASE 1 — RANSAC ground segmenter parameters.
+
+robosense_e1_driver:
+  ros__parameters:
+    ransac_max_iterations: 1000
+    ransac_distance_threshold_m: 0.05      # 5 cm
+    prefilter_z_min_m: -0.5
+    prefilter_z_max_m:  3.0

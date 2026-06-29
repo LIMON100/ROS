@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+  SkyHunter v1.5.3 — DCN-2026-017 RTH action server launch.
+
+  Stand-alone: spawn just the RTH server (Nav2 + odom + RTK must be
+  running separately, typically by squadron.launch.xml).
+
+  Production wiring: san_bringup/launch/squadron.launch.xml should
+  include this once san_rth lands on main (operator-side note —
+  not done in this DCN to keep the change surface contained).
+
+  Args: thresholds default to the Gate-1 (6/5) acceptance criteria
+  (±2m, ±10°, 5s RTK hold).
+-->
+<launch>
+  <arg name="use_sim_time"            default="false"
+       description="Sim-time clock source"/>
+  <arg name="accuracy_threshold_m"    default="2.0"
+       description="DCN-2026-017 Gate-1 ±2m acceptance bound"/>
+  <arg name="yaw_threshold_deg"       default="10.0"
+       description="Yaw alignment bound at arrival"/>
+  <arg name="rtk_loss_threshold"      default="0.1"
+       description="rtk_gnss heading orientation_covariance[8] level
+                    that classifies RTK as 'lost'"/>
+  <arg name="rtk_loss_threshold_sec"  default="5.0"
+       description="How long cov must stay above threshold to switch
+                    to dead-reckoning mode (D-083)"/>
+  <arg name="robot_id"                default="1"
+       description="Per-robot identity (1..MAX_ROBOTS). Used to
+                    derive a per-robot home_pose_path default so
+                    multi-robot localhost sim runs don't clobber
+                    each other's home pose YAML."/>
+  <arg name="home_pose_path"
+       default="/run/skyautonet/home_pose_robot_$(var robot_id).yaml"
+       description="Where to persist the auto-captured home pose
+                    (Phase-7 P1-4 fix: per-robot path so 2-8 robots
+                    on the same host don't race for the same file).
+                    /run/ is tmpfs so it resets on power cycle."/>
+  <arg name="odom_topic"              default="/odometry/filtered/global"/>
+  <arg name="heading_topic"           default="/rtk_gnss_node/heading"/>
+  <arg name="action_name"             default="/rth"/>
+  <arg name="nav2_action"             default="navigate_to_pose"/>
+
+  <node pkg="san_rth" exec="rth_action_node" name="rth_action_node"
+        output="screen">
+    <param name="use_sim_time"           value="$(var use_sim_time)"/>
+    <param name="accuracy_threshold_m"   value="$(var accuracy_threshold_m)"/>
+    <param name="yaw_threshold_deg"      value="$(var yaw_threshold_deg)"/>
+    <param name="rtk_loss_threshold"     value="$(var rtk_loss_threshold)"/>
+    <param name="rtk_loss_threshold_sec" value="$(var rtk_loss_threshold_sec)"/>
+    <param name="home_pose_path"         value="$(var home_pose_path)"/>
+    <param name="odom_topic"             value="$(var odom_topic)"/>
+    <param name="heading_topic"          value="$(var heading_topic)"/>
+    <param name="action_name"            value="$(var action_name)"/>
+    <param name="nav2_action"            value="$(var nav2_action)"/>
+  </node>
+</launch>
