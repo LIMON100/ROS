@@ -1,0 +1,50 @@
+# Overlay: deployment_mode=development (SAN v1.3 §11)
+#
+# Pure software harness — laptops, CI, dev containers. ALL hardware
+# stubs are accepted; this mode is gated by the DEVELOPER_AUTH_TOKEN
+# environment variable so it cannot be entered on a real-robot boot
+# by accident (see core/deployment.validate_developer_auth).
+
+system:
+  deployment_mode: "development"
+  robot_role: "follower"
+
+go2:
+  # Loopback-ish defaults so the Go2 adapter binds cleanly when no
+  # robot is present and immediately falls into stub mode.
+  interface: "lo"
+  robot_ip:  "127.0.0.1"
+  host_ip:   "127.0.0.1"
+
+rtk:
+  device: "/dev/null"
+  ntrip:
+    enabled: false
+
+ext_imu:
+  device: "/dev/null"
+
+imx678:
+  device: "/dev/null"
+
+thermal:
+  device: "/dev/null"
+
+lrf:
+  device: "/dev/null"
+
+lte:
+  at_device: "/dev/null"
+
+mission:
+  patrol_schedule: []                # never auto-start a mission in dev
+  default_mission_type: "recon"
+
+comm:
+  enable_patrol_server: false
+  server_url: "http://localhost:0"   # nothing reachable; uploader stays idle
+  wifi_probe_host: "127.0.0.1"
+
+safety:
+  # Don't pester developers with comm-loss alerts on their laptop.
+  comm_loss_timeout_s: 600

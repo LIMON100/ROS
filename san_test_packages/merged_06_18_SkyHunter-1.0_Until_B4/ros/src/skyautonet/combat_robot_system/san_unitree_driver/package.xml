@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_unitree_driver</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 Phase 2-E Turn 2 — Unitree Go2 ROS 2 driver (Tier 1 C++).
+
+    Bridges the Unitree Go2 EDU SDK to ROS 2 topics per DCN-2026-002
+    D-008 (IPC unification). Replaces adapters/unitree_go2.py per
+    DCN-2026-002 D-007 (Tier 1 = C++ mandatory for HW control).
+
+    Publishers (Go2 → ROS 2):
+      ~/lidar             sensor_msgs/PointCloud2  — 360° LiDAR (≤ 10 Hz)
+      ~/imu               sensor_msgs/Imu          — onboard IMU (200 Hz)
+      ~/internal_camera   sensor_msgs/Image        — front cam (30 Hz)
+      ~/state             san_unitree_driver/Go2State — battery, mode, body
+
+    Subscribers (ROS 2 → Go2):
+      ~/cmd_vel           geometry_msgs/Twist       — locomotion command
+      ~/goal_pose         geometry_msgs/PoseStamped — high-level nav goal
+
+    The Go2 SDK is abstracted behind Go2SdkInterface so the node can
+    be unit-tested with a mock SDK (no actual Go2 connection needed).
+
+    References:
+      * SDD-SWARM v1.5 §3.1 (HW layout — Leader Go2)
+      * IDS v1.5 §5 (topic naming)
+      * IDS v1.5 §7 (QoS profiles)
+      * DCN-2026-002 D-007/D-008
+      * ADR-006 (IPC Unification Strategy)
+  </description>
+
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>tf2_geometry_msgs</depend>
+
+  <!-- Unitree SDK is system-installed (out-of-band) under /opt/unitree_sdk2.
+       CMakeLists uses find_package(unitree_sdk2 QUIET) so the package
+       builds without it (mock SDK fallback for CI / dev). -->
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

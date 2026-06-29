@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  gazebo_world:
+    image: ros:humble-ros-base-jammy
+    container_name: phase_d_gazebo
+    network_mode: host  # DDS multicast
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./gazebo:/opt/ros2_ws/src/gazebo:ro
+      - ./launch:/opt/ros2_ws/launch:ro
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y
+          ros-humble-gazebo-ros-pkgs
+          ros-humble-rmw-cyclonedds-cpp
+          ros-humble-nav2-bringup &&
+        source /opt/ros/humble/setup.bash &&
+        ros2 launch /opt/ros2_ws/launch/multi_robot_5.launch.py
+      "
+
+  # NOTE: multi_robot_5.launch.py already spawns one patrol_stack node
+  # PER ROBOT inside the gazebo_world container. The "robot_stack"
+  # service below is intentionally NOT enabled by default — it would
+  # collide with the per-robot nodes the launch file creates.
+  #
+  # Keep it commented as a reference for a future "1 container per
+  # robot" topology. `deploy.replicas` only works under `docker stack
+  # deploy` (Swarm), not plain `docker compose up` — to actually fan
+  # out N containers from compose, use:
+  #     docker compose up --scale robot_stack=5
+  # and parameterise ROBOT_ROLE per instance via an env file or
+  # per-replica override.
+  #
+  # robot_stack:
+  #   build:
+  #     context: ..
+  #     dockerfile: sim/Dockerfile.robot
+  #   container_name: phase_d_robot_stack
+  #   network_mode: host
+  #   depends_on:
+  #     - gazebo_world
+  #   environment:
+  #     - ROS_DOMAIN_ID=42
+  #     - ROBOT_ROLE=leader
+  #   volumes:
+  #     - ../config:/opt/patrol/config:ro
+  #     - /tmp/patrol_logs:/var/log/patrol

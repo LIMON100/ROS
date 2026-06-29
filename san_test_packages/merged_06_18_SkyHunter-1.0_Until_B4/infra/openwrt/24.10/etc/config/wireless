@@ -1,0 +1,35 @@
+# OpenWrt 24.10 — radio + 802.11s mesh interface config.
+# 5 GHz radio runs the mesh; 2.4 GHz radio is reserved for the
+# operator's tablet AP (configured separately at deploy time).
+
+config wifi-device 'radio0'
+    option type 'mac80211'
+    option path 'pci0000:00/0000:00:00.0'
+    option band '5g'
+    option htmode 'HE80'           # Wi-Fi 6, 80 MHz
+    option country 'KR'
+    option channel 'auto'
+    option txpower '23'
+
+config wifi-iface 'mesh_5g'
+    option device 'radio0'
+    option network 'mesh0'
+    option mode 'mesh'
+    option mesh_id 'san-mesh-001'
+    option encryption 'sae'
+    option key 'CHANGE_ME_PROD_KEY'
+    option mcast_rate '24000'
+    option mesh_fwding '0'         # let batman-adv route, not HWMP
+    option disabled '0'
+
+# 2.4 GHz radio for operator tablet AP — kept disabled in the
+# default config so a deploy step has to enable it deliberately.
+config wifi-device 'radio1'
+    option type 'mac80211'
+    option path 'pci0000:00/0000:00:01.0'
+    option band '2g'
+    option htmode 'HE20'
+    option country 'KR'
+    option channel 'auto'
+    option txpower '20'
+    option disabled '1'

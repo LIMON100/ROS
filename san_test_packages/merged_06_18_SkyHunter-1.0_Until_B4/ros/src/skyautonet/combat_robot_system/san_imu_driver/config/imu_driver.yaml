@@ -1,0 +1,9 @@
+imu_driver_node:
+  ros__parameters:
+    device:              /dev/ttyACM1
+    baud:                921600
+    frame_id:            payload_imu
+    stub_rate_hz:        200.0
+    stub_on_no_serial:   true
+    sync_byte_0:         0xFA
+    checksum_xor:        true
