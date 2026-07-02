@@ -1,0 +1,51 @@
+{
+  "_comment": "DAWN AP steering — see https://openwrt.org/docs/guide-user/network/wifi/dawn",
+  "_comment_ssid": "Steers tablets between 2.4/5 GHz APs based on RSSI + load; mesh peers are excluded.",
+  "network": {
+    "broadcast_ip": "10.42.255.255",
+    "broadcast_port": 1025,
+    "tcp_port": 1026,
+    "network_option": "broadcast",
+    "shared_key": "CHANGE_ME_PROD_DAWN_KEY"
+  },
+  "hostapd": {
+    "hostapd_dir": "/var/run/hostapd",
+    "ubus_path": "/var/run/ubus.sock"
+  },
+  "times": {
+    "update_client": 10,
+    "denied_req_threshold": 30,
+    "remove_client": 15,
+    "remove_probe": 30,
+    "remove_ap": 300,
+    "update_hostapd": 10,
+    "update_tcp_con": 60,
+    "update_chan_util": 5,
+    "update_beacon_reports": 20
+  },
+  "metric": {
+    "ap_weight": 0,
+    "ht_support": 10,
+    "vht_support": 30,
+    "no_ht_support": -100,
+    "no_vht_support": 0,
+    "rssi": 10,
+    "low_rssi": -500,
+    "freq": 100,
+    "chan_util": 0,
+    "max_chan_util": -500,
+    "rssi_val": -60,
+    "low_rssi_val": -80,
+    "chan_util_val": 140,
+    "max_chan_util_val": 170,
+    "min_probe_count": 2,
+    "bandwidth_threshold": 6,
+    "use_station_count": 1,
+    "max_station_diff": 1,
+    "eval_probe_req": 1,
+    "eval_auth_req": 1,
+    "eval_assoc_req": 1,
+    "kicking": 3,
+    "min_kick_count": 3
+  }
+}
