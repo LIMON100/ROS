@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_fire_authorization</name>
+  <version>1.5.1</version>
+  <description>
+    SAN v1.5 PHASE 9 — Per-trigger fire authorization gate.
+
+    Enforces the DCN-2026-001 D-004 "Option A" Limp Mode fire policy:
+    HMAC-SHA256 (mesh-direct, LTE-bypass) + Two-key arming
+    (target tap + Confirm Fire) + audit log with limp_mode_fire flag.
+
+    Subscribes to FireAuthorizationRequest, publishes FireAuthorizationResponse.
+    Observes OperationState.in_limp_mode for Limp Mode tagging.
+
+    Provides three internal modules:
+      * HmacAuthenticator   — RFC 4231 HMAC-SHA256 + 64-slot nonce window
+      * TwoKeyStateMachine  — IDLE→KEY1→KEY2→FIRE_GRANTED→IDLE (timeout 5s)
+      * AuditLogger         — JSON Lines append-only to /var/log/san/fire_audit.log
+
+    References:
+      * SAN-SDD-SWARM-001 v1.5 §5.7.2.1 (Limp Mode 발사 정책 박스)
+      * SAN-OPS-SOP-001   v1.5 §7.11   (Limp Mode FAQ — Option A)
+      * SAN-IDS-CMD-001   v1.5 §3.5    (FireAuthorizationRequest/Response)
+  </description>
+
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <!-- [DCN-2026-018] FireSimulatorNode subscribes sensor_msgs/JointState. -->
+  <depend>sensor_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+
+  <!-- OpenSSL provides HMAC-SHA256 + CRYPTO_memcmp (constant-time compare). -->
+  <depend>libssl-dev</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

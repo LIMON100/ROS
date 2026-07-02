@@ -1,0 +1,14 @@
+# SAN v1.3 PHASE 0 - base parameters (production posture).
+# Other modes overlay this file via params.<mode>.yaml.
+
+combat_robot_operation_system:
+  ros__parameters:
+    deployment_mode: "production"
+    robot_id: 0
+    heartbeat_period_sec: 1.0
+    safety:
+      gun_trigger_permission: "ALLOWED"
+      hw_watchdog_enabled: true
+      operator_screen_banner: ""        # empty -> derived from mode
+      operator_screen_color: "green"
+      developer_auth_required: false

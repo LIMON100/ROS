@@ -1,0 +1,19 @@
+<!--
+  [DCN-2026-018] fire_simulator_node bring-up.
+
+  Sibling to fire_authorization_node — subscribes to the gate's
+  /swarm/fire/authorization_response, evaluates gimbal alignment, and
+  publishes simulated FireResult. Never actuates a real device.
+-->
+<launch>
+  <arg name="use_sim_time"            default="false"/>
+  <arg name="robot_id"                default="1"/>
+  <arg name="alignment_tolerance_deg" default="2.0"/>
+
+  <node pkg="san_fire_authorization" exec="fire_simulator_node"
+        name="fire_simulator_node" output="screen">
+    <param name="use_sim_time"            value="$(var use_sim_time)"/>
+    <param name="robot_id"                value="$(var robot_id)"/>
+    <param name="alignment_tolerance_deg" value="$(var alignment_tolerance_deg)"/>
+  </node>
+</launch>
