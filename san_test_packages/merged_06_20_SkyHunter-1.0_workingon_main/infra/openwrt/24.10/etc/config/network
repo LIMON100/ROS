@@ -1,0 +1,43 @@
+# OpenWrt 24.10 — Wi-Fi 6 mesh + LTE failover network config.
+# SAN-SDD-SWARM-001 v1.1 §5. UCI format.
+
+config interface 'loopback'
+    option device 'lo'
+    option proto 'static'
+    option ipaddr '127.0.0.1'
+    option netmask '255.0.0.0'
+
+# batman-adv mesh interface — wraps the 802.11s mesh in a bat0 bridge
+# that handles per-hop routing instead of native HWMP.
+config interface 'mesh0'
+    option proto 'batadv'
+    option mesh 'bat0'
+
+config interface 'bat0'
+    option proto 'static'
+    option ipaddr '10.42.0.1'
+    option netmask '255.255.0.0'
+
+# LAN bridge — operator laptop / tablet wires in here.
+config interface 'lan'
+    option proto 'static'
+    option ipaddr '192.168.42.1'
+    option netmask '255.255.255.0'
+    list dns '1.1.1.1'
+    list dns '8.8.8.8'
+
+# Primary WAN — wired uplink to the campus AP / mesh gateway. Drop
+# this stanza on Hub UGV routers that only have an LTE uplink.
+config interface 'wan'
+    option proto 'dhcp'
+    option device 'eth1'
+
+# Cellular fallback. ModemManager handles the AT command dance; the
+# `mil.kt` APN is the v1.1-spec PLMN for the military LTE backhaul.
+config interface 'wan_lte'
+    option proto 'modemmanager'
+    option device '/dev/ttyUSB0'
+    option apn 'mil.kt'
+    option auth 'none'
+    option iptype 'ipv4'
+    option metric '20'

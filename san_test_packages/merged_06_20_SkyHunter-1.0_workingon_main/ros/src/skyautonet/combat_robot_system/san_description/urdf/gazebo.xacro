@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================== -->
+  <!-- GAZEBO FRICTION      -->
+  <!-- ==================== -->
+  <!-- Per-wheel lateral friction (mu2). Engine note: the worlds declare
+       <physics type="ode"> but no gz-physics-ode plugin is installed, so gz-sim
+       silently falls back to dartsim. Under dartsim only mu/mu2/fdir1 are
+       honoured - the <contact> kp/kd/max_vel block below is inert (kept so the
+       model still behaves if ever run under bullet/ode). -->
+  <xacro:macro name="wheel_friction" params="wheel_name mu2:=0.1">
+    <gazebo reference="${wheel_name}">
+      <collision>
+        <surface>
+          <friction>
+            <ode>
+              <!-- mu = forward traction (along fdir1, the wheel roll dir).
+                   mu2 = LATERAL grip; see the per-wheel strategy below. -->
+              <mu>1.0</mu>
+              <mu2>${mu2}</mu2>
+              <fdir1>1 0 0</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000.0</kp>
+              <kd>100.0</kd>
+              <min_depth>0.001</min_depth>
+              <max_vel>1.0</max_vel>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Skid-steer friction strategy (decoupled mu2 by wheel row).
+       A single uniform mu2 cannot win: too low (0.1) lets the body DRIFT
+       sideways; too high makes the front/rear wheels stick-slip when they scrub
+       during a turn, so the body SHAKES. The mid wheels sit on the turn axis
+       (x=0) and barely scrub, whereas the front/rear wheels (x=+/-0.4) scrub the
+       most. So anchor lateral drift with the MID wheels (mu2=1.0) and let the
+       FRONT/REAR wheels slide freely (mu2=0.1) to keep turns smooth. This is
+       strictly better than uniform 0.1 (more lateral grip, no extra scrub). -->
+  <xacro:wheel_friction wheel_name="left_front_wheel"  mu2="0.1" />
+  <xacro:wheel_friction wheel_name="left_mid_wheel"    mu2="1.0" />
+  <xacro:wheel_friction wheel_name="left_rear_wheel"   mu2="0.1" />
+  <xacro:wheel_friction wheel_name="right_front_wheel" mu2="0.1" />
+  <xacro:wheel_friction wheel_name="right_mid_wheel"   mu2="1.0" />
+  <xacro:wheel_friction wheel_name="right_rear_wheel"  mu2="0.1" />
+
+  <!-- ==================== -->
+  <!-- GAZEBO MATERIALS     -->
+  <!-- ==================== -->
+
+  <gazebo reference="base_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_track_visual">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="right_track_visual">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="gimbal_base_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="gimbal_pan_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="gimbal_tilt_link">
+    <material>Gazebo/DarkGrey</material>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="gimbal_pan_link">
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="camera_holder_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="lidar_link">
+    <material>Gazebo/DarkGray</material>
+  </gazebo>
+  <gazebo reference="rifle_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+</robot>

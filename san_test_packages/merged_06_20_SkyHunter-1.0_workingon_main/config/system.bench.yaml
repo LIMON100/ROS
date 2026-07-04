@@ -1,0 +1,27 @@
+# Overlay: deployment_mode=bench (SAN v1.3 §11)
+#
+# Single-robot HIL bench. No swarm peers expected on the bus; sensor
+# stubs are allowed for missing payload hardware (adapters fall back
+# to synthetic data per BaseProcess convention).
+
+system:
+  deployment_mode: "bench"
+  robot_role: "follower"
+
+rtk:
+  ntrip:
+    enabled: false
+
+mission:
+  patrol_schedule: []
+  battery_threshold_start: 0.20      # bench rigs often run on bench PSU
+  battery_threshold_return: 0.10
+
+comm:
+  enable_patrol_server: false        # bench has no server to talk to
+  wifi_probe_period_s: 30.0          # bench wifi is stable; poll rarely
+
+safety:
+  # The bench can run for hours without comm — relax the timeout so the
+  # operator doesn't see a comm-loss event every test cycle.
+  comm_loss_timeout_s: 300
