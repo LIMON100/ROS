@@ -1,0 +1,15 @@
+idx,path,speed,leader_wp,reached,go2_z_min,min_gap,min_obsdist,result
+0,straight,0.3,wp=2/4,0,0.236429,1.90,2.09,INCOMPLETE
+1,straight,0.45,wp=3/4,0,0.231697,1.63,1.79,INCOMPLETE
+2,straight,0.6,wp=2/4,0,0.075656,0.06,3.83,FALL
+3,straight,0.75,wp=2/4,0,0.078916,1.73,3.44,FALL
+4,straight,0.9,wp=2/4,0,0.161988,0.03,3.79,COLLIDE
+5,scurve,0.3,wp=3/8,0,0.232476,1.64,2.86,INCOMPLETE
+6,scurve,0.45,wp=5/8,0,0.235572,3.00,2.26,INCOMPLETE
+7,scurve,0.6,wp=6/8,0,0.236542,1.61,2.40,INCOMPLETE
+8,scurve,0.75,wp=6/8,0,0.234815,1.61,2.43,INCOMPLETE
+9,scurve,0.9,wp=2/8,0,0.076723,0.06,5.10,FALL
+10,zigzag,0.3,wp=2/5,0,0.235354,1.62,4.89,INCOMPLETE
+11,zigzag,0.45,wp=2/5,0,0.076259,2.21,4.86,FALL
+12,zigzag,0.6,wp=2/5,0,0.161970,1.82,4.84,INCOMPLETE
+13,zigzag,0.75,wp=2/5,0,0.161965,2.64,4.44,INCOMPLETE

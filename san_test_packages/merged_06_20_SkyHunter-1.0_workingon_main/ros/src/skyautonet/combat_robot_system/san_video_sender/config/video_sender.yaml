@@ -1,0 +1,13 @@
+# SAN v1.3 PHASE 5 - Follower video sender parameters.
+
+video_sender_node:
+  ros__parameters:
+    hub_ip: "10.0.0.2"
+    robot_id: 3                   # systemd unit injects per-host id
+    video_device: "/dev/video0"
+    default_bitrate_kbps: 1500    # 1.5 Mbps HD baseline (matches KPP)
+    udp_base_port: 5000
+    width: 1280
+    height: 720
+    framerate: 30
+    codec: "h265"                 # h264 | h265

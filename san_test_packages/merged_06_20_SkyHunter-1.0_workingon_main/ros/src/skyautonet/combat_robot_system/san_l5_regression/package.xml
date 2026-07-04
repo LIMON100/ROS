@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd"
+            schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_l5_regression</name>
+  <version>1.4.0</version>
+  <description>
+    SAN v1.4 L5 regression scenario orchestrator. Runs S18-1..S18-6
+    (Hub-Deputy + 4-tier Leader + Limp Mode) end-to-end on the live
+    role-management stack, injecting failures via synthetic RobotStatus
+    publication and capturing transition timings. No shell calls.
+  </description>
+  <maintainer email="tkim1310@gmail.com">SAN Team</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <!-- [DCN-2026-022] Gate-1 scenarios call rclcpp_action (/rth) +
+       std_srvs (/gate1/start_demo Trigger). -->
+  <depend>rclcpp_action</depend>
+  <depend>std_srvs</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>std_msgs</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,179 @@
+cmake_minimum_required(VERSION 3.16)
+project(san_fire_authorization)
+
+# SAN v1.5 PHASE 9 — Per-trigger fire authorization gate.
+# DCN-2026-001 D-004 (Limp Mode 발사 정책 Option A).
+
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+endif()
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+endif()
+
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+# [DCN-2026-018] FireSimulatorNode subscribes sensor_msgs/JointState.
+find_package(sensor_msgs REQUIRED)
+find_package(combat_robot_msgs REQUIRED)
+find_package(OpenSSL REQUIRED)
+
+# ─── core library (HMAC + Two-key + Audit + Node) ─────────────────────
+# fire_authorization_node.cpp is in the core lib (not the executable)
+# so test_fire_authorization_node can link against the FireAuthorization
+# Node ctor it instantiates. The executable target then only needs main().
+add_library(${PROJECT_NAME}_core STATIC
+  src/hmac_authenticator.cpp
+  src/two_key_state_machine.cpp
+  src/audit_logger.cpp
+  src/fire_authorization_node.cpp
+  # [DCN-2026-018] FireSimulatorNode — co-located sibling executable.
+  # Lives in core lib so test_fire_simulator_node can link the class
+  # ctor without recompiling the main().
+  src/fire_simulator_node.cpp
+)
+target_include_directories(${PROJECT_NAME}_core PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+target_link_libraries(${PROJECT_NAME}_core
+  OpenSSL::Crypto
+)
+ament_target_dependencies(${PROJECT_NAME}_core
+  rclcpp
+  std_msgs
+  sensor_msgs
+  combat_robot_msgs
+)
+
+# ─── ROS 2 node executable ─────────────────────────────────────────────
+add_executable(fire_authorization_node
+  src/fire_authorization_main.cpp
+)
+target_include_directories(fire_authorization_node PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_link_libraries(fire_authorization_node
+  ${PROJECT_NAME}_core
+)
+ament_target_dependencies(fire_authorization_node
+  rclcpp
+  std_msgs
+  combat_robot_msgs
+)
+
+# [DCN-2026-018] FireSimulatorNode executable — sibling to the main
+# fire_authorization_node so the simulator stays co-located with the
+# message contract it consumes/produces.
+add_executable(fire_simulator_node
+  src/fire_simulator_main.cpp
+)
+target_include_directories(fire_simulator_node PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_link_libraries(fire_simulator_node
+  ${PROJECT_NAME}_core
+)
+ament_target_dependencies(fire_simulator_node
+  rclcpp
+  sensor_msgs
+  combat_robot_msgs
+)
+
+install(TARGETS
+  fire_authorization_node
+  fire_simulator_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+install(TARGETS
+  ${PROJECT_NAME}_core
+  EXPORT export_${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+install(DIRECTORY include/
+  DESTINATION include
+)
+install(DIRECTORY config launch
+  DESTINATION share/${PROJECT_NAME}
+  OPTIONAL
+)
+
+# ─── tests ────────────────────────────────────────────────────────────
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  find_package(ament_cmake_gtest REQUIRED)
+  # ament_copyright cannot validate the proprietary 'Proprietary - SkyAutoNet'
+  # license (it only knows OSS templates); skip it. Copyright headers are
+  # still present and enforced by cpplint's [legal/copyright] check.
+  set(ament_cmake_copyright_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+
+  ament_add_gtest(test_hmac_authenticator
+    test/test_hmac_authenticator.cpp
+  )
+  target_link_libraries(test_hmac_authenticator
+    ${PROJECT_NAME}_core
+  )
+  target_include_directories(test_hmac_authenticator PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+  )
+
+  # DCN-2026-026 C-3 — TargetConfirmation 인증 어댑터
+  ament_add_gtest(test_target_confirmation_auth
+    test/test_target_confirmation_auth.cpp
+  )
+  target_link_libraries(test_target_confirmation_auth
+    ${PROJECT_NAME}_core
+  )
+  target_include_directories(test_target_confirmation_auth PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+  )
+
+  ament_add_gtest(test_two_key_state_machine
+    test/test_two_key_state_machine.cpp
+  )
+  target_link_libraries(test_two_key_state_machine
+    ${PROJECT_NAME}_core
+  )
+  target_include_directories(test_two_key_state_machine PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+  )
+
+  ament_add_gtest(test_audit_logger
+    test/test_audit_logger.cpp
+  )
+  target_link_libraries(test_audit_logger
+    ${PROJECT_NAME}_core
+  )
+  target_include_directories(test_audit_logger PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+  )
+
+  # [DCN-2026-018] FireSimulatorNode tests (5 cases — pure-logic via
+  # evaluateForTest seam, no rclcpp::spin required).
+  ament_add_gtest(test_fire_simulator_node
+    test/test_fire_simulator_node.cpp TIMEOUT 60
+  )
+  target_link_libraries(test_fire_simulator_node
+    ${PROJECT_NAME}_core
+  )
+  target_include_directories(test_fire_simulator_node PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+  )
+  ament_target_dependencies(test_fire_simulator_node
+    rclcpp sensor_msgs combat_robot_msgs)
+endif()
+
+ament_export_include_directories(include)
+ament_export_libraries(${PROJECT_NAME}_core)
+ament_export_dependencies(
+  rclcpp
+  std_msgs
+  combat_robot_msgs
+  OpenSSL
+)
+ament_package()
