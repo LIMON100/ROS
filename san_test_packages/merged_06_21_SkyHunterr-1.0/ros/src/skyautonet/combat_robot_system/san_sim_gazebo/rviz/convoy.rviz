@@ -1,0 +1,100 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Property Tree Widget:
+      Expanded: ~
+      Splitter Ratio: 0.5
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Color: 160; 160; 164
+      Cell Size: 1
+      Plan Cell Count: 40
+      Reference Frame: <Fixed Frame>
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Marker Scale: 1
+      Show Names: true
+    - Class: rviz_default_plugins/Path
+      Name: PlannedPath
+      Enabled: true
+      Topic:
+        Value: /convoy/plan
+        Depth: 5
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+      Color: 25; 200; 25
+      Line Style: Lines
+      Line Width: 0.05
+    - Class: rviz_default_plugins/Path
+      Name: LeaderTrack
+      Enabled: true
+      Topic:
+        Value: /convoy/leader_track
+        Depth: 5
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+      Color: 0; 200; 230
+      Line Style: Lines
+      Line Width: 0.05
+    - Class: rviz_default_plugins/MarkerArray
+      Name: ConvoyMarkers
+      Enabled: true
+      Namespaces: {}
+      Topic:
+        Value: /convoy/markers
+        Depth: 10
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+    - Class: rviz_default_plugins/Map
+      Name: Costmap
+      Enabled: true
+      Topic:
+        Value: /convoy/costmap
+        Depth: 1
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+      Color Scheme: costmap
+      Alpha: 0.5
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Go2Lidar
+      Enabled: true
+      Topic:
+        Value: /unitree_lidar/points
+        Depth: 5
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+      Size (m): 0.05
+      Style: Points
+      Color: 255; 170; 0
+  Global Options:
+    Fixed Frame: odom
+    Background Color: 48; 48; 48
+    Frame Rate: 30
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: Current View
+      Distance: 28
+      Focal Point:
+        X: 8
+        Y: 1
+        Z: 0
+      Pitch: 1.05
+      Yaw: 4.2
+      Target Frame: <Fixed Frame>
+Window Geometry:
+  Height: 840
+  Width: 1200
+  Displays:
+    collapsed: false
