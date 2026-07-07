@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_external_mocks</name>
+  <version>0.1.0</version>
+  <description>
+    SkyHunter v1.5.3 — DCN-2026-021 mock services for external vendors
+    (Tier 3 per ADR-008 — test/tool, C++ for CI integration).
+
+    Currently hosts:
+      * rosbridge_mock_server — synthetic publishers for the topics
+        Aban Co. Android App subscribes to. Lets the Aban dev team
+        build/iterate UI without robot hardware, against the schema
+        published in docs/external/Aban_Android_rosbridge_schema_v2.md.
+
+    NOTE on topic backends (v1.5.3 phase B):
+      The mock publishes ALL topics listed in the v2 schema, including
+      those whose production backends are not yet implemented
+      (gate_demo_orchestrator → DCN-2026-016, MC retransmit →
+      DCN-2026-019). Aban can develop UI against the full schema;
+      production receive will activate as each backend lands.
+
+    Refs:
+      * DCN-2026-021 — this DCN
+      * [[ADR-008]] — Tier 3 test/tool, C++ acceptable
+      * docs/external/Aban_Android_rosbridge_schema_v2.md — the spec
+        this mock implements
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>diagnostic_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+
+  <exec_depend>rosbridge_server</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
