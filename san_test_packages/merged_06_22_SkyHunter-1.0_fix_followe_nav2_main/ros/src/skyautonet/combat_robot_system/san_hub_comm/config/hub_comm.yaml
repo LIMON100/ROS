@@ -1,0 +1,32 @@
+# SAN v1.3 PHASE 5 - Hub UGV SBC#2 GStreamer relay parameters.
+
+gstreamer_relay_node:
+  ros__parameters:
+    # Hub UGV (S2) bind address - srtsink listens here.
+    hub_ip: "10.0.0.2"
+
+    # SRT egress port to the operator tablet (single port; one stream
+    # per concurrent client is multiplexed by streamid).
+    srt_port: 8888
+
+    # Follower → Hub UDP base; per-stream port = base + robot_id.
+    udp_base_port: 5000
+
+    # SRT receive buffer latency (ms). 120 ms keeps p99 E2E below the
+    # 200 ms KPP while giving Layer-3 packet loss room to recover.
+    srt_latency_ms: 120
+
+    # When true, every START transition picks a fresh AES-128 key. If
+    # the request explicitly sets encryption=true, this is OR'd in.
+    encryption_default: true
+
+    # PHASE 5b: LTE-driven auto-rate. When enabled, the relay subscribes
+    # to /lte/link_quality and adjusts every active stream's quality
+    # based on RSRP grade. Disable to fall back to manual CHANGE_QUALITY
+    # only.
+    auto_rate_enabled: true
+
+    # Consecutive better-grade samples required before upgrading the
+    # active streams. Demotion is immediate; only promotion uses this
+    # hold time to absorb single-sample glitches.
+    auto_rate_promote_hold_ticks: 5

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- SAN v1.3 PHASE 3 - san_slam (per-robot local SLAM wrapper). -->
+<launch>
+    <arg name="robot_id"/>
+    <arg name="config_file"
+         default="$(find-pkg-share san_slam)/config/local_slam.yaml"/>
+
+    <node pkg="san_slam" exec="local_slam_node"
+          name="local_slam_node" output="screen">
+        <param from="$(var config_file)"/>
+        <param name="robot_id" value="$(var robot_id)"/>
+    </node>
+</launch>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_formation</name>
+  <version>1.5.1</version>
+  <description>
+    SAN v1.5 — 9 Formations + Hungarian slot assignment (SDD-SWARM §7).
+    Publishes SlotAssignment, FollowerTargetMessage (KPP-1, KPP-3),
+    FormationStatus per IDS-CMD v1.5 §4.2/§5.1/§5.9.
+
+    PATCH 2026-05-13 (Formation deep-dive review):
+      * Added formation_planner library — pure-logic frame transform,
+        velocity estimator, 1-second slot prediction (SDD §6.3 / PDR-3)
+      * Patched formations.cpp — Box / Diamond ring-out 4-way symmetric
+      * Patched formation_node.cpp — leader-anchored frame, listener-
+        outside-lock, v1.5 9-formation ID support (was clamped to v1.3
+        0..4), velocity-driven 1-s prediction (was zero-vel)
+      * Test coverage: 16 existing + 8 PATCH validation = 24 testcases
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
