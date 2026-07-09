@@ -1,0 +1,82 @@
+# SAN v1.5 — EKF Local Node (odom → base_link).
+#
+# 권원: SDD-SWARM v1.5 §9 (SLAM/Pose)
+#       robot_localization dual-EKF best practice
+#
+# 오류 수정 사항 (Limon 의 단일 ekf.yaml 대비):
+#   1. world_frame=odom (Limon: map) — GPS jump 가 base_link 에 직접 영향
+#      주지 못하도록 격리. odom 은 continuous, drift 허용.
+#   2. publish_tf=true — odom → base_link 만 publish (map → odom 은 global 측)
+#   3. 입력에서 GPS 제거 — local 측은 IMU + wheel 만 (continuous 데이터)
+#
+# 출력:
+#   - /odometry/filtered/local
+#   - TF odom → base_link
+#
+# 페어링: ekf_global.yaml (map → odom)
+
+ekf_filter_node_local:
+  ros__parameters:
+    use_sim_time: true
+    frequency: 30.0
+    two_d_mode: true        # UGV 평면 운용 (Limon false 였으나 2D 가 안정적)
+    sensor_timeout: 0.1
+    transform_time_offset: 0.0
+    transform_timeout: 0.0
+    print_diagnostics: true
+    debug: false
+
+    # ─── Frame setup (dual-EKF local pattern) ─────────────────────────
+    map_frame:       map
+    odom_frame:      odom
+    base_link_frame: base_footprint
+    world_frame:     odom    # ★ local — drift 허용, GPS 영향 차단
+
+    publish_tf: true         # odom → base_link 만 publish
+    publish_acceleration: false
+
+    # ─── INPUT 1: Wheel Odometry (vx, vyaw 만) ─────────────────────────
+    odom0: odom
+    # [x, y, z,           roll, pitch, yaw,
+    #  vx, vy, vz,        vroll, vpitch, vyaw,
+    #  ax, ay, az]
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true,  false, false,
+                   false, false, true,
+                   false, false, false]
+    odom0_queue_size: 10
+    odom0_differential: false
+    odom0_relative: false
+    odom0_nodelay: true
+
+    # ─── INPUT 2: IMU (yaw rate + roll/pitch 자세) ──────────────────────
+    imu0: imu/data
+    imu0_config: [false, false, false,
+                  true,  true,  false,    # roll/pitch (gravity 기반)
+                  false, false, false,
+                  false, false, true,     # yaw rate
+                  false, false, false]
+    imu0_queue_size: 10
+    imu0_differential: false
+    imu0_relative: true                   # 초기값 기준 상대
+    imu0_remove_gravitational_acceleration: true
+
+    # GPS 입력 없음 — global 측에서 처리
+
+    # ─── 프로세스 노이즈 (local 측은 velocity 위주) ─────────────────────
+    process_noise_covariance: [0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.06, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.03, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.03, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.06, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.025, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.025, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.04, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.02, 0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.015]

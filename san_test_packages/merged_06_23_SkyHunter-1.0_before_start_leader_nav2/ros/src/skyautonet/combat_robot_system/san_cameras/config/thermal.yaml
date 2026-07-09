@@ -1,0 +1,9 @@
+thermal_camera_node:
+  ros__parameters:
+    device:              /dev/video2
+    width:               640
+    height:              512
+    encoding:            mono16
+    fps:                 9.0
+    frame_id:            thermal
+    stub_on_no_device:   true

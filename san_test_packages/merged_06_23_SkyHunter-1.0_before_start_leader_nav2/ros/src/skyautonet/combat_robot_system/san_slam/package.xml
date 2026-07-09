@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_slam</name>
+  <version>1.3.0</version>
+  <description>
+    SAN v1.3 PHASE 3 - per-robot SLAM wrapper. Subscribes to
+    slam_toolbox's /map (nav_msgs/OccupancyGrid), computes per-cell
+    deltas, publishes SLAMLocalDelta at 1 Hz with PNG encoding.
+  </description>
+  <maintainer email="dev@skyautonet.com">SkyAutoNet</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>libopencv-dev</depend>
+
+  <exec_depend>slam_toolbox</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

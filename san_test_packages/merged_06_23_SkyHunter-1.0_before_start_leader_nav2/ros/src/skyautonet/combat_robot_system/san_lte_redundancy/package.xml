@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_lte_redundancy</name>
+  <version>1.5.1</version>
+  <description>
+    SAN combatrobot_1 v1.3 LTE 이중화. Hub UGV (S2) LTE 모뎀 작동 불능 시
+    Follower S3 자동 백업. 모든 OpenWrt 통합은 libuci / libubus C API.
+    Shell 호출 0건.
+  </description>
+  <maintainer email="dev@skyautonet.com">SkyAutoNet</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>pkg-config</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>libuci-dev</depend>
+  <depend>libubox-dev</depend>
+  <depend>libubus-dev</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

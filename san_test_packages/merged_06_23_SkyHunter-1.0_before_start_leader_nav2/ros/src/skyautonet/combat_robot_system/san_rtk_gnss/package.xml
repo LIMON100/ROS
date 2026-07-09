@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_rtk_gnss</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 Phase 2-E Turn 4 — RTK GNSS driver (Tier 1 C++).
+
+    u-blox F9P over serial: parses NMEA $GxGGA, publishes NavSatFix +
+    RtkFixStatus + gga_latest. Accepts RTCM corrections via topic
+    and injects them back to the receiver over the same serial port
+    (thread-safe via SerialInterface).
+
+    Replaces adapters/rtk_gnss.py per DCN-2026-002 D-007/D-008.
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

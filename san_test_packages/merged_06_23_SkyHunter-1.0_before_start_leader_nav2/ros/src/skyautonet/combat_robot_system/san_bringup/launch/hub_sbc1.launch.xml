@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+  Hub UGV SBC #1 — fixed-role launch wrapper (DCN-2026-011 D-034).
+  Converted from hub_sbc1.launch.py per DCN-2026-014.
+
+  Equivalent to:
+    ros2 launch san_bringup squadron.launch.xml \
+        robot_id:=2 robot_role:=hub sbc_id:=1 \
+        hub_features:=true include_regression:=auto
+
+  Pin reasoning:
+    - robot_id=2, robot_role=hub  : Hub UGV slot in the v1.5 IDS topology
+    - sbc_id=1                    : primary RK3588 slot (matches
+                                    /etc/skyautonet/sbc_id provisioned
+                                    by infra/systemd/install.sh)
+    - hub_features=true           : explicit, hub group always on
+-->
+<launch>
+  <arg name="deployment_mode"    default="production"
+       description="production | demo | lab_test | bench | development"/>
+  <arg name="include_regression" default="auto"
+       description="auto | true | false"/>
+  <arg name="use_sim_time"       default="false"/>
+  <!-- DCN-2026-012 v2 D-043 passthrough -->
+  <arg name="sim_startup_offset_sec" default="5.0"
+       description="DCN-2026-012 v2 D-043: per-robot sim startup stagger"/>
+
+  <log message="[hub_sbc1] Launching Hub UGV SBC #1 profile"/>
+
+  <include file="$(find-pkg-share san_bringup)/launch/squadron.launch.xml">
+    <arg name="robot_id"               value="2"/>
+    <arg name="robot_role"             value="hub"/>
+    <arg name="sbc_id"                 value="1"/>
+    <arg name="hub_features"           value="true"/>
+    <arg name="include_regression"     value="$(var include_regression)"/>
+    <arg name="deployment_mode"        value="$(var deployment_mode)"/>
+    <arg name="use_sim_time"           value="$(var use_sim_time)"/>
+    <arg name="sim_startup_offset_sec" value="$(var sim_startup_offset_sec)"/>
+  </include>
+</launch>
