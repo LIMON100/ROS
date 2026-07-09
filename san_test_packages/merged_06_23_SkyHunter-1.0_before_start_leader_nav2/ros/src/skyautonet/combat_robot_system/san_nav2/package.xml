@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_nav2</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — Nav2 navigation stack integration.
+
+    Ported and adapted from skyhunter_navigation (Limon code) with
+    fixes:
+      1. odom_topic standardized to /odometry/filtered (matches
+         san_localization dual-EKF output)
+      2. AMCL section added (was missing in Limon)
+      3. Frame conventions verified (map / odom / base_footprint)
+
+    Provides Nav2 stack config for global planner + DWB controller +
+    behavior server + collision monitor. Works with san_localization
+    for map-frame pose, and san_reroute_planner takes over for
+    Tier 1.5 cost-map evasion (SDD §6.4 KPP-2).
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>nav2_bringup</exec_depend>
+  <exec_depend>nav2_amcl</exec_depend>
+  <exec_depend>nav2_planner</exec_depend>
+  <exec_depend>nav2_controller</exec_depend>
+  <exec_depend>nav2_behaviors</exec_depend>
+  <exec_depend>nav2_lifecycle_manager</exec_depend>
+  <exec_depend>nav2_collision_monitor</exec_depend>
+  <exec_depend>nav2_costmap_2d</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

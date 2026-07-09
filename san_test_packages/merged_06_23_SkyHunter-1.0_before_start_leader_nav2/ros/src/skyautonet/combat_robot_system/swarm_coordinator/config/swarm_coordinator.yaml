@@ -1,0 +1,5 @@
+# SAN v1.3 PHASE 0 — swarm_coordinator parameters.
+# Constants are compile-time (see include/swarm_coordinator/swarm_coordinator.hpp).
+
+swarm_coordinator:
+  ros__parameters: {}

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_costmap</name>
+  <version>1.3.0</version>
+  <description>
+    SAN v1.3 PHASE 1 - 4-layer local cost map (obstacle / traversability
+    / inflation) with v1.3 UGV thresholds: 235 mm lethal obstacle,
+    100 mm inflated; 30° lethal slope; 220 mm lethal ditch. Publishes
+    CostMapUpdate at 10 Hz (1 Hz refresh). PNG-encoded grid via OpenCV.
+  </description>
+  <maintainer email="dev@skyautonet.com">SkyAutoNet</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>combat_robot_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>pcl_conversions</depend>
+  <depend>libpcl-all-dev</depend>
+  <depend>libopencv-dev</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

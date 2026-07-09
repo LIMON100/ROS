@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_reroute_planner</name>
+  <version>1.5.1</version>
+  <description>
+    SAN v1.5 — Tier 1.5 AUTO_REROUTE planner (SDD-SWARM §6.4).
+    Cost path checker + lateral evasion ±2m. Owns KPP-2 (회피 반응
+    ≤ 300ms) E2E measurement. Pure-logic core is standalone-testable;
+    rclcpp wrapper publishes obstacle_on_path + /cmd_vel.
+
+    Soft Kill 제외 적용 — RF 재머 통합 없음. Hard kill 경로
+    (san_fire_authorization) 와 독립적으로 동작.
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
