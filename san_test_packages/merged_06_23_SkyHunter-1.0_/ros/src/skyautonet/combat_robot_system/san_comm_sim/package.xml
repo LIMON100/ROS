@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_comm_sim</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — Communication simulators (WiFi6 + LTE + LoRa).
+
+    Ported and adapted from skyhunter_comm (Limon code). Provides
+    pure-Python simulators for the SAN swarm comm stack:
+
+      - wifi6_mesh_simulator: log-distance + shadow fading RF model
+      - lte_simulator:        LTE RSRP/SNR + handover modeling
+      - lora_simulator:       LoRa heartbeat + ESTOP fallback
+      - swarm_comm_manager:   3-tier FSM (WiFi6 → LTE → LoRa)
+      - mesh_visualizer:      RViz MarkerArray link visualization
+      - rssi_plotter:         live RSSI vs distance plot
+      - comm_traffic_filter:  inter-tier traffic policy enforcement
+
+    Pure-logic models (path_loss, comm_fsm, etc.) under models/ are
+    standalone testable.
+
+    ★ Soft Kill 제외 — jammer_service.py, RF 재머 시뮬레이션,
+    JammedLink/JammedLinks 메시지, JamLink/UnjamLink 서비스 모두
+    포팅되지 않음. SH_Unitree_Patrol 의 대드론 대응은 Hard Kill 전용.
+
+    Test files: 3개 잔존 (test_all, test_delay, test_packet_loss).
+    Soft Kill 의존 테스트 7개 제외.
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>visualization_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>san_comm_msgs</exec_depend>
+
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

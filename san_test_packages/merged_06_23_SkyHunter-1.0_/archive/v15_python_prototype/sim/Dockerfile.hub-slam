@@ -1,0 +1,35 @@
+# Hub UGV SBC#1 — SLAM aggregator container.
+#
+# Drains per-follower SLAMLocalDelta and broadcasts the fused
+# AggregatedMap on /hub/slam/aggregated_map. CPU-bound; no GPU/NPU.
+
+FROM ros:humble-ros-base-jammy
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Pillow is needed for PNG-encoded occupancy grids (mapping.aggregated_map).
+# numpy + scipy are the compute dependencies for merge_deltas.
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-yaml \
+    python3-numpy \
+    python3-scipy \
+    python3-pil \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/patrol
+
+COPY requirements.txt /opt/patrol/requirements.txt
+RUN pip install --break-system-packages -r /opt/patrol/requirements.txt
+
+COPY . /opt/patrol/
+
+ENV PYTHONUNBUFFERED=1
+ENV HUB_ROLE=slam
+
+# Inert entry point — proves the module graph loads inside the
+# container and blocks on SIGTERM. Real process wiring (queue drain +
+# publish) lands in a follow-up commit; this image is structurally
+# ready so `docker compose build` + `up` succeed today.
+CMD ["python3", "scripts/run_hub_slam.py"]
