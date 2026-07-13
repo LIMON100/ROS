@@ -1,0 +1,9 @@
+reroute_node:
+  ros__parameters:
+    robot_id:                   3
+    tick_period_ms:           100   # SDD §6.4.1 100ms tick
+    evasion_linear_speed_mps:   1.0
+    evasion_angular_max_rps:    1.0
+    # PATCH 2026-05-13:
+    raw_grid_mode:            true  # CDR: switch to false once PNG decode lands
+    heading_aware_evasion:    true  # opt-in tie-break by current yaw

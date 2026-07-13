@@ -1,0 +1,97 @@
+# SAN v1.3 PHASE 4 — Hub UGV SBC #2 (Comm / Video / LTE)
+#
+# Hardware: Boardcon EM3588 (RK3588) 8 GB / 128 GB NVMe.
+# 노드 분담:
+#   * san_hub_comm       — GStreamer SRT relay (PHASE 5)
+#   * san_lte_redundancy — LTE 1차 게이트웨이 (PHASE 2)
+#   * san_operation_ctrl — DEMO sequencer + watchdog (PHASE 7)
+#   * san_role_mgmt      — Hub-Deputy + 4-tier + Limp (PHASE 8)
+# 외부 노출 인터페이스: 내부 GbE (eth0, SBC #1 와 share) +
+# Wi-Fi 6 mesh (wlan0) + LTE (lte0).
+
+services:
+  san_hub_comm:
+    image: san/hub_comm:v1.3
+    container_name: san_hub_comm
+    network_mode: host
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///opt/san/cyclonedds.xml
+      - ROBOT_ID=2
+    volumes:
+      - ../cyclonedds/cyclonedds_sbc2.xml:/opt/san/cyclonedds.xml:ro
+      - /var/log/san:/var/log/san
+    restart: unless-stopped
+
+  san_lte_redundancy:
+    image: san/lte_redundancy:v1.3
+    container_name: san_lte_redundancy
+    network_mode: host
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///opt/san/cyclonedds.xml
+      - ROBOT_ID=2
+      - IS_HUB=true
+    volumes:
+      - ../cyclonedds/cyclonedds_sbc2.xml:/opt/san/cyclonedds.xml:ro
+      - /etc/config:/etc/config           # OpenWrt UCI confdir (libuci)
+      - /var/run/ubus:/var/run/ubus       # ubus socket (libubus)
+      - /var/log/san:/var/log/san
+    devices:
+      - /dev/lte:/dev/lte                 # Quectel modem AT port
+    restart: unless-stopped
+
+  san_operation_ctrl:
+    image: san/operation_control:v1.3
+    container_name: san_operation_ctrl
+    network_mode: host
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///opt/san/cyclonedds.xml
+      - ROBOT_ID=2
+      - DEPLOYMENT_MODE=production
+    volumes:
+      - ../cyclonedds/cyclonedds_sbc2.xml:/opt/san/cyclonedds.xml:ro
+      - /var/log/san:/var/log/san
+    restart: unless-stopped
+
+  san_role_mgmt:
+    image: san/role_management:v1.4
+    container_name: san_role_mgmt
+    network_mode: host
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///opt/san/cyclonedds.xml
+      - ROBOT_ID=2
+    volumes:
+      - ../cyclonedds/cyclonedds_sbc2.xml:/opt/san/cyclonedds.xml:ro
+      - /var/log/san:/var/log/san
+    restart: unless-stopped
+
+  # PHASE 5b — 1 Hz LTE RSRP/grade publisher consumed by the relay's
+  # AutoRateController. Reuses the lte_redundancy image; the status
+  # file is written by the OS-level ModemManager poller outside the
+  # ROS2 stack (see docs/deployment/lte_auto_rate.md).
+  san_lte_link_quality:
+    image: san/lte_redundancy:v1.3
+    container_name: san_lte_link_quality
+    command:
+      - ros2
+      - launch
+      - san_lte_redundancy
+      - lte_link_quality.launch.xml
+    network_mode: host
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///opt/san/cyclonedds.xml
+      - ROBOT_ID=2
+    volumes:
+      - ../cyclonedds/cyclonedds_sbc2.xml:/opt/san/cyclonedds.xml:ro
+      - /var/run/san:/var/run/san:ro       # status file feed
+      - /var/log/san:/var/log/san
+    restart: unless-stopped
