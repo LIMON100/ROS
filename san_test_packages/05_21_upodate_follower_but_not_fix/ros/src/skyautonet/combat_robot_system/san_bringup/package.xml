@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_bringup</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 Phase 2-E — Squadron-level bringup and launch composition.
+
+    Replaces the v1.4 main.py multiprocessing bootstrap with a ROS 2
+    launch file (squadron.launch.py) + systemd service unit
+    (san-squadron.service) per DCN-2026-002 D-007 (3-Tier toolchain)
+    and D-008 (IPC unification on ROS 2).
+
+    Owns:
+      * launch/squadron.launch.py — top-level node composition
+      * config/squadron.yaml      — squadron-level parameter overlay
+      * systemd/san-squadron.service — process lifecycle management
+
+    No source code — pure launch + config + systemd integration.
+
+    References:
+      * DCN-2026-002 — D-007 Amendment (3-Tier toolchain), D-008 (IPC unification)
+      * ADR-006 — IPC Unification Strategy
+      * SDD-SWARM v1.5 §10.1.1 (Standard toolchain)
+      * OPS-SOP v1.5 §3.1 (Deployment modes)
+  </description>
+
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- launch + ros2launch infrastructure -->
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <!-- Tier 1 ROS 2 C++ packages launched by squadron.launch.py -->
+  <exec_depend>san_role_management</exec_depend>
+  <exec_depend>san_lte_redundancy</exec_depend>
+  <exec_depend>san_slam</exec_depend>
+  <exec_depend>san_costmap</exec_depend>
+  <exec_depend>swarm_coordinator</exec_depend>
+  <exec_depend>san_fire_authorization</exec_depend>
+  <exec_depend>combat_robot_operation_system</exec_depend>
+  <exec_depend>san_operation_control</exec_depend>
+  <exec_depend>san_lidar</exec_depend>
+  <exec_depend>san_video_sender</exec_depend>
+  <exec_depend>human_detector</exec_depend>
+
+  <!-- Hub-only nodes (conditional launch) -->
+  <exec_depend>san_hub_slam</exec_depend>
+  <exec_depend>san_hub_comm</exec_depend>
+
+  <!-- Leader-only nodes (Phase 2-E Turn 2+) -->
+  <exec_depend>san_unitree_driver</exec_depend>
+
+  <!-- HW adapters (Phase 2-E Turn 4+) -->
+  <exec_depend>san_rtk_gnss</exec_depend>
+  <exec_depend>san_ntrip_client</exec_depend>
+  <exec_depend>san_imu_driver</exec_depend>
+  <exec_depend>san_cameras</exec_depend>
+
+  <!-- Tier 2 coordination (Phase 2-E Turn 8+) -->
+  <exec_depend>san_comm</exec_depend>
+  <exec_depend>san_comm_link</exec_depend>
+  <exec_depend>san_hub_orchestrator</exec_depend>
+  <!-- PDR-prep — formation slot assignment (SDD §7) -->
+  <exec_depend>san_formation</exec_depend>
+  <!-- PDR-prep — 360° surveillance sector + pan-tilt (SDD §8) -->
+  <exec_depend>san_surveillance</exec_depend>
+  <!-- PDR-prep — follower tier FSM (SDD §6.2, KPP-2) -->
+  <exec_depend>san_follower_tier</exec_depend>
+  <!-- PDR-prep — Tier 1.5 reroute planner (SDD §6.4, KPP-2 E2E) -->
+  <exec_depend>san_reroute_planner</exec_depend>
+  <!-- Gazebo simulation integration (ported from Limon) -->
+  <exec_depend>san_description</exec_depend>
+  <exec_depend>san_sim_gazebo</exec_depend>
+  <!-- Operator-facing utility nodes (ported from Limon) -->
+  <exec_depend>san_operator_tools</exec_depend>
+  <!-- Nav2 + dual-EKF + AMCL + Maps (ported from Limon, EKF 오류 수정) -->
+  <exec_depend>san_nav2</exec_depend>
+  <exec_depend>san_localization</exec_depend>
+  <!-- Comm simulators (WiFi6/LTE/LoRa, Soft Kill 제외) -->
+  <exec_depend>san_comm_msgs</exec_depend>
+  <exec_depend>san_comm_sim</exec_depend>
+
+  <!-- Tier 2/3 Mission (Phase 2-E Turn 9-10 — first rclpy) -->
+  <exec_depend>san_mission</exec_depend>
+
+  <!-- Tier 3 Perception (Phase 2-E Turn 11-12 — second rclpy) -->
+  <exec_depend>san_perception</exec_depend>
+
+  <!-- BLE Control removed in DCN-2026-008 v2 (D-WIFI-001).
+       Operator link is Wi-Fi (rosbridge_server) only. -->
+
+  <!-- Android App operator link via WebSocket (DCN-2026-008 v2 D-WIFI-002) -->
+  <exec_depend>rosbridge_server</exec_depend>
+
+  <!-- Test-mode regression -->
+  <exec_depend>san_l5_regression</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <!-- [DCN-2026-011 D-034] launch wrapper smoke test (pytest). -->
+  <test_depend>ament_cmake_pytest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

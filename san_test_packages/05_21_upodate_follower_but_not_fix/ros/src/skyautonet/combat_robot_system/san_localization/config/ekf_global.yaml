@@ -1,0 +1,131 @@
+# SAN v1.5 — EKF Global Node (map → odom).
+#
+# 권원: SDD-SWARM v1.5 §9 (SLAM/Pose)
+#       robot_localization dual-EKF best practice
+#
+# 오류 수정 사항 (Limon 의 단일 ekf.yaml 대비):
+#   1. world_frame=map (정상) but base_link 에 직접 가지 않음 — odom 을
+#      중간에 두어 GPS jump 가 base_link 의 velocity 에 영향 없도록 격리
+#   2. EKF 가 map → odom transform 만 publish (odom → base_link 는 local 측)
+#   3. GPS 가 reset 되거나 fix lost 시 odom 으로 graceful degradation
+#
+# 출력:
+#   - /odometry/filtered/global (= /odometry/filtered for Nav2 호환)
+#   - TF map → odom
+#
+# 페어링: ekf_local.yaml + navsat_transform.yaml
+
+ekf_filter_node_global:
+  ros__parameters:
+    use_sim_time: true
+    frequency: 30.0
+    two_d_mode: true
+    sensor_timeout: 0.1
+    transform_time_offset: 0.0
+    transform_timeout: 0.0
+    print_diagnostics: true
+    debug: false
+
+    # ─── Frame setup (dual-EKF global pattern) ────────────────────────
+    map_frame:       map
+    odom_frame:      odom
+    base_link_frame: base_footprint
+    world_frame:     map     # global — GPS absolute, map → odom transform
+
+    publish_tf: true         # map → odom 만 publish
+    publish_acceleration: false
+
+    # ─── INPUT 1: Wheel Odometry (vx, vyaw 만) ─────────────────────────
+    odom0: odom
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true,  false, false,
+                   false, false, true,
+                   false, false, false]
+    odom0_queue_size: 10
+    odom0_differential: false
+    odom0_relative: false
+    odom0_nodelay: true
+
+    # ─── INPUT 2: IMU (chassis MEMS) ─────────────────────────────────
+    imu0: imu/data
+    imu0_config: [false, false, false,
+                  true,  true,  false,
+                  false, false, false,
+                  false, false, true,
+                  false, false, false]
+    imu0_queue_size: 10
+    imu0_differential: false
+    imu0_relative: true
+    imu0_remove_gravitational_acceleration: true
+
+    # ─── INPUT 2b: RTK dual-antenna heading (D-022) ──────────────────
+    # Published by san_rtk_gnss on ~/heading (sensor_msgs/Imu, yaw
+    # only). Provides absolute heading anchor that the chassis IMU
+    # cannot — and that KPP-1 (50 m+ follower lateral ≤ 2 m) needs.
+    # Only the yaw (orientation Z/W → ψ) is fused; angular velocity
+    # and linear acceleration covariances are set to -1 in the
+    # message so EKF ignores those axes.
+    # [DCN-2026-006 EXT D-023] The per-message yaw covariance varies
+    # with RTK fix quality (FIX 0.0017 rad², FLOAT 0.030 rad², else
+    # 1.0 rad²) so the EKF effectively down-weights RTK_FLOAT
+    # automatically without a parameter switch.
+    imu1: /rtk_gnss_node/heading
+    imu1_config: [false, false, false,         # x,y,z
+                  false, false, true,          # roll, pitch, YAW ★
+                  false, false, false,
+                  false, false, false,
+                  false, false, false]
+    imu1_queue_size: 5
+    imu1_differential: false
+    imu1_relative: false
+    imu1_remove_gravitational_acceleration: false
+
+    # ─── INPUT 3: GPS (navsat_transform 출력) ─────────────────────────
+    # navsat_transform 가 NavSatFix → odometry/gps 로 변환
+    odom1: odometry/gps
+    odom1_config: [true,  true,  false,    # X, Y 절대 (UTM 좌표)
+                   false, false, false,
+                   false, false, false,
+                   false, false, false,
+                   false, false, false]
+    odom1_queue_size: 5
+    odom1_differential: false
+    odom1_relative: false
+    odom1_nodelay: true
+
+    process_noise_covariance: [0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.05, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.06, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.03, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.03, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.06, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.025, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.025, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.04, 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,  0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,  0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.02, 0.0,  0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,  0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.01, 0.0,
+                               0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.015]
+
+
+# ─── navsat_transform: NavSatFix → UTM odometry 변환 ──────────────────
+# Limon 대비 수정:
+#   - wait_for_datum: false 유지 (Gazebo 첫 GPS fix 가 origin)
+#   - publish_filtered_gps: true — diagnostics 용
+#   - broadcast_cartesian_transform: **false** (Limon 은 true 였으나
+#     dual-EKF 에서는 EKF global 이 map → odom 을 publish 하므로 충돌)
+navsat_transform_node:
+  ros__parameters:
+    use_sim_time: true
+    frequency: 30.0
+    magnetic_declination_radians: 0.0
+    yaw_offset: 0.0          # 동쪽이 yaw=0 (ENU)
+    zero_altitude: true      # 2D 운용
+    publish_filtered_gps: true
+    use_odometry_yaw: false  # IMU yaw 사용 (더 정확)
+    wait_for_datum: false
+    # ★ 오류 수정: dual-EKF 에서 broadcast_cartesian_transform=false
+    # broadcast_cartesian_transform: false   # EKF global 이 transform 담당

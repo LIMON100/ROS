@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_sim_gazebo</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — Gazebo Garden simulation integration.
+
+    Ported and adapted from skyhunter_gazebo (Limon code).
+    Provides:
+      - 3 simulation worlds (empty, obstacle, tactical_test)
+      - ros_gz_bridge configuration for sim ↔ ROS 2 topics
+      - Single-robot + swarm spawn launch files
+      - Multi-robot world generation utility
+
+    Enables PDR evaluation visual demonstration of swarm behaviors
+    (Hungarian formations, KPP-2 evasion, BT priority subtrees) in
+    a controlled Gazebo environment without HW.
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>san_description</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
