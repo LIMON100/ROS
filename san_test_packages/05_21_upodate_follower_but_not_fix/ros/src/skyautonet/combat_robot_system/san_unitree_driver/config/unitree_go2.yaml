@@ -1,0 +1,22 @@
+# SAN v1.5 Phase 2-E Turn 2 — UnitreeGo2Node parameters.
+# DCN-2026-002 D-007 (Tier 1 C++) — Leader Go2 only.
+
+unitree_go2_node:
+  ros__parameters:
+    # Network interface for the Go2 SDK DDS link. Production: eth0
+    # (Go2 EDU built-in Ethernet). Dev / sim: a vlan or wireguard tap.
+    interface_name: eth0
+
+    # Frame ids — must match URDF + tf2 broadcaster (san_role_management
+    # or future san_localization). SDD-SWARM §3.1.1.
+    lidar_frame_id:   go2_lidar_frame
+    imu_frame_id:     go2_imu_frame
+    camera_frame_id:  go2_camera_frame
+    base_frame_id:    go2_base_link
+
+    # Safety: hard limits on locomotion command. Operator UI / nav stack
+    # may issue larger values; we clamp before forwarding to the SDK.
+    # Per SDD-SWARM §3.1.1 the Go2 EDU max velocity is ~3.7 m/s; we
+    # restrict to 1.5 m/s for personnel safety + battery economy.
+    max_cmd_vel_linear_mps:    1.5
+    max_cmd_vel_angular_rps:   2.0

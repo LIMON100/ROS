@@ -1,0 +1,47 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/opt/ros/humble/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/combat_robot_operation_system/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/human_detector/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_cameras/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_comm/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_comm_link/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_costmap/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_fire_authorization/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_follower_tier/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_formation/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_hub_comm/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_hub_orchestrator/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_hub_slam/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_imu_driver/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_l5_regression/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_lidar/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_lte_redundancy/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_ntrip_client/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_operation_control/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_reroute_planner/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_role_management/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_rtk_gnss/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_slam/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_surveillance/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_unitree_driver/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_video_decoder/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/san_video_sender/include/**",
+        "/home/limonubuntu/Work/Limon/other_task/swarm_robotics/unitree_go2/demo_code/SH_Unitree_Patrol_merged_own/ros/src/skyautonet/combat_robot_system/swarm_coordinator/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

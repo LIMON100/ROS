@@ -1,0 +1,6 @@
+reroute_node:
+  ros__parameters:
+    robot_id:                   3
+    tick_period_ms:           100   # SDD §6.4.1 100ms tick
+    evasion_linear_speed_mps:   1.0
+    evasion_angular_max_rps:    1.0
