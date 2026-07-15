@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>san_mission</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 Phase 2-E Turn 9-10 — Mission rclpy node (Tier 2 Python).
+
+    First rclpy node in the SkyHunter v1.5 stack per DCN-2026-002
+    D-007. Behavior-tree-driven patrol mission orchestrator.
+    Replaces mission/mission_process.py from the legacy prototype.
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

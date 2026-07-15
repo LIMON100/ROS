@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- SAN v1.3 PHASE 7 - combat robot operation system control. -->
+<launch>
+    <arg name="deployment_mode" default="production"/>
+    <arg name="robot_id"        default="1"/>
+    <arg name="config_file"
+         default="$(find-pkg-share san_operation_control)/config/operation_control.yaml"/>
+
+    <node pkg="san_operation_control" exec="operation_control_node"
+          name="operation_control_node" output="screen">
+        <param from="$(var config_file)"/>
+        <param name="deployment_mode" value="$(var deployment_mode)"/>
+        <param name="robot_id"        value="$(var robot_id)"/>
+    </node>
+</launch>
