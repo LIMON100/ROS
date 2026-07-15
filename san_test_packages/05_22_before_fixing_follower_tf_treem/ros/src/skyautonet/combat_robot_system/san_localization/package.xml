@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_localization</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — Dual-EKF localization + AMCL + saved maps.
+
+    Ported and adapted from skyhunter_navigation (Limon code) with
+    significant error corrections:
+
+    ★ Limon ekf.yaml 오류 수정:
+      1. 단일 EKF (world_frame=map) → dual EKF (local + global)
+         - ekf_local:  odom → base_link (continuous, IMU+wheel)
+         - ekf_global: map → odom        (GPS+IMU+wheel)
+         - 이전 구조에서 GPS jump 가 base_link 의 velocity 에
+           직접 영향 → 본 단계에서 odom 으로 격리
+      2. broadcast_cartesian_transform: dual-EKF 에서는 false
+         (EKF global 이 map → odom 담당 — 이전 구조와 충돌)
+      3. two_d_mode: true (UGV 평면 운용, Limon 의 3D 모드는 불필요)
+
+    제공:
+      - ekf_local.yaml + ekf_global.yaml (수정된 dual-EKF)
+      - amcl 통합 (san_nav2 의 amcl section 과 페어링)
+      - 2 saved maps (empty / obstacle)
+      - localization.launch.py (모든 노드 일괄)
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>robot_localization</exec_depend>
+  <exec_depend>nav2_map_server</exec_depend>
+  <exec_depend>nav2_amcl</exec_depend>
+  <exec_depend>nav2_lifecycle_manager</exec_depend>
+  <exec_depend>nav2_msgs</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

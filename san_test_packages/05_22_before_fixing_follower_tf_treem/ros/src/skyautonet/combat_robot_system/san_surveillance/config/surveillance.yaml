@@ -1,0 +1,5 @@
+surveillance_node:
+  ros__parameters:
+    realloc_period_sec:   10     # SDD §8.5 — 10s default
+    robot_timeout_sec:     3     # mark robot dead if no RobotStatus for 3s
+    threat_validity_sec:  10     # decay threat focus after 10s

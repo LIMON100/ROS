@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_follower_tier</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — Follower Tier FSM per SDD-SWARM §6.2 (5-Tier).
+    6-state FSM (T0/T1/T1.5/T2/T3/T4) determining follower tracking
+    behaviour from prediction quality, comm state, and δ. Publishes
+    TierStatusChange per IDS §4.5. KPP-2 (≤ 300ms) measurable via
+    T0→T1.5 transition timing.
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>combat_robot_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

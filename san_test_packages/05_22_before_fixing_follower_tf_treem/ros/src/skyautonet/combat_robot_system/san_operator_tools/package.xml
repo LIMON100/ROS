@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_operator_tools</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 — Operator-facing utility nodes.
+
+    Adapted from skyhunter_nav_tools (Limon code). Provides:
+      - waypoint_sender — pushes mission waypoints to current Leader,
+        auto-follows Leader change (D-005 failover)
+      - formation_switcher — one-shot FormationCommand publisher
+        (column / line / wedge / diamond / custom)
+      - swarm_dashboard — Tk GUI showing per-robot state + KPP-1
+        (Formation alignment) + current Tier
+
+    All adapted to use combat_robot_msgs (IDS v1.5) instead of
+    skyhunter_msgs. Useful for PDR demonstrations and field training.
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>combat_robot_msgs</exec_depend>
+  <exec_depend>nav2_msgs</exec_depend>
+  <exec_depend>python3-tk</exec_depend>
+
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
