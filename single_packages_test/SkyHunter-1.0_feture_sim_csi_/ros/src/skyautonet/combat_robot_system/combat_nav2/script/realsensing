@@ -1,0 +1,4 @@
+#!/bin/bash
+ros2 launch combat_robot_nav2 sensor.launch.py &
+sleep 5
+ros2 launch combat_robot_nav2 bag_nav_test.launch.py

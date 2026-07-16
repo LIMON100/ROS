@@ -1,0 +1,26 @@
+/**:
+  ros__parameters:
+    device_path: "/dev/ttyUSB0"
+    baud_rate: 9600
+    camera_id: 1
+    distance_topic: "/sensor/distance"
+    preset_cmd_topic: "/zoom/preset"
+    zoom_level_topic: "/zoom_level"
+    
+    pelco_repeat_tx: 3
+    pelco_repeat_delay_ms: 40
+    pelco_post_stop: true
+    pelco_post_stop_delay_ms: 30
+    
+    hysteresis_m: 2.0
+    
+    # 거리별 프리셋 매핑
+    # thresholds: 내림차순으로 정렬되어야 함
+    # presets: thresholds 구간에 해당하는 프리셋 ID (thresholds 개수 + 1개 필요)
+    # 예: d >= 500 -> 1, 300 <= d < 500 -> 2, ... d < 100 -> 5
+    zoom_mapping:
+      thresholds: [500.0, 300.0, 200.0, 100.0]
+      presets: [1, 2, 3, 4, 5]
+      
+    # 프리셋 ID별 줌 배율 (Index 0 = Preset 1, Index 1 = Preset 2 ...)
+    zoom_levels: [30, 16, 8, 4, 1]
