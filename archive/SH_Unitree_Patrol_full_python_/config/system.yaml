@@ -1,0 +1,145 @@
+system:
+  # SDD Rev.A.5: each robot is configured with one of three roles.
+  #   leader   — V-shape/line/column leader, runs PredictiveLeader + breadcrumbs
+  #   follower — local Nav2 + tier escape, consumes follower_target / shared_map
+  #   hub      — UGV equipped with extra compute; fuses N follower SLAM maps,
+  #              runs the comm gateway, and can take over leadership when
+  #              the elected leader is unreachable.
+  robot_role: "follower"
+  cpu_affinity:
+    go2_adapter:  [4]
+    rtk:          [5]            # share with localization (low load)
+    lte:          [0]
+    ext_imu:      [5]
+    imx678:       [3]
+    thermal:      [3]
+    lrf:          [0]
+    localization: [5]
+    slam_bridge:  [6, 7]
+    perception:   [3]
+    mission:      [2]
+    map_fusion:   [1]
+    comm:         [0]
+    safety:       [0]
+  rt_priority:
+    go2_adapter:  50
+    localization: 30
+    ext_imu:      40             # high-rate sensor → near-RT priority
+
+go2:
+  interface: "eth0"
+  robot_ip:  "192.168.123.161"
+  host_ip:   "192.168.123.99"
+  lidar_topic:     "rt/utlidar/cloud_deskewed"
+  imu_topic:       "rt/utlidar/imu"
+  camera_topic:    "rt/frontvideostream"
+  goal_pose_topic: "/goal_pose"
+  cmd_vel_topic:   "/cmd_vel"
+
+# ─── Payload sensors on RK3588 ───
+rtk:
+  device:        "/dev/ttyACM0"
+  baud:          115200
+  reference_lat: ~                  # null = auto-set on first valid fix
+  reference_lon: ~
+  reference_alt: ~
+  ntrip:
+    enabled:    false
+    host:       "rts2.ngii.go.kr"     # Korean Geographic Information Institute
+    port:       2101
+    mountpoint: "VRS-RTCM31"
+    username:   ""                    # set via secret store in production
+    password:   ""
+
+ext_imu:
+  device:   "/dev/ttyACM1"
+  baud:     921600
+  rate_hz:  200.0
+
+imx678:
+  device:   "/dev/video0"
+  fps:      15.0
+  bitrate_kbps: 4000
+  encoder:  "h265"
+
+thermal:
+  device:   "/dev/video2"
+  fps:      9.0
+
+lrf:
+  device:   "/dev/ttyUSB0"
+  baud:     115200
+  rate_hz:  5.0
+
+lte:
+  at_device:  "/dev/ttyUSB2"
+  baud:       115200
+  poll_hz:    0.5                  # status poll rate (low — AT is slow)
+  apn:        "lte.korea"          # if PDP needs to be (re)activated
+  data_iface: "wwan0"              # data plane interface name
+  daily_quota_mb: 200              # soft quota for cellular uploads
+
+localization:
+  rtk_max_age_s:        1.5         # >1.5s stale → fall back
+  rtk_fixed_sigma_max:  0.10        # Fixed accepted only if σ ≤ 10 cm
+  odom_drift_per_s:     0.02        # 2 cm/s drift estimate when RTK lost
+  odom_drift_per_m:     0.01        # +1 cm σ per meter traveled (DR component)
+
+shared_map_rx:
+  chunk_timeout_s:      30.0        # drop incomplete maps after 30s
+  max_in_flight:        8
+  tile_height:          0           # 0 = infer from sqrt(payload size)
+  tile_width:           0
+
+shm:
+  lidar_slot_bytes:   16777216    # 16 MB
+  lidar_n_slots:      8
+  camera_slot_bytes:   4194304    # 4 MB
+  camera_n_slots:     16
+
+map_fusion:
+  # Retained for future tunables; HD-map query knobs are gone.
+  query_period_s:  1.0
+  query_radius_m: 15.0
+
+perception:
+  # ── Domain: 군집제어 소형전술 로봇 (swarm-controlled small tactical robot)
+  # General object detector (YOLOv5 COCO 80-class) for recon/surveillance.
+  # The previous PPE-specific model is replaced; tactical use cases focus on
+  # personnel/vehicle presence in the patrol or recon area.
+  detector_model_path: "models/yolov5s-640-640_rk3588_251205_640.rknn"
+  detector_input_hw:   [640, 640]
+  npu_core_mask:       "auto"
+  min_confidence:      0.40
+  # Classes we care about (COCO indices). Others are filtered out to reduce
+  # false positives from animals/furniture in operational scenes.
+  classes_of_interest: [0, 1, 2, 3, 5, 7]   # person, bicycle, car, motorcycle, bus, truck
+
+mission:
+  # Tactical mission types (replaces patrol_routes.yaml):
+  #   recon          — silent waypoint visit, no broadcast
+  #   formation_move — leader-follower movement (V/line/column)
+  #   area_sweep     — grid-pattern coverage of a polygon
+  routes_file: "config/tactical_missions.yaml"
+  default_mission_type: "recon"
+  battery_threshold_start:  0.60
+  battery_threshold_return: 0.30
+
+comm:
+  # Patrol Server is deferred to Phase F (SDD Rev.A.5). When disabled, the
+  # CommProcess does NOT spawn the HTTP uploader / heartbeat threads;
+  # AnomalyEvents and heartbeats are instead redirected to WsTelemetry for
+  # in-network broadcast (operator app via ws://). Flip to true once a
+  # patrol_server endpoint is available.
+  enable_patrol_server: false
+  server_url:        "https://patrol.example.com"
+  cache_dir:         "/var/lib/patrol/cache"
+  upload_interval_s: 60
+  wifi_probe_host:   "1.1.1.1"     # lightweight TCP-443 reachability target
+  wifi_probe_period_s: 3.0
+  lte_min_rsrp_dbm:  -110          # below this → don't trust LTE for uploads
+  lte_video_disabled: true         # never push H.265 over cellular
+
+safety:
+  comm_loss_timeout_s: 30
+  fall_detect_acc_g:   2.5
