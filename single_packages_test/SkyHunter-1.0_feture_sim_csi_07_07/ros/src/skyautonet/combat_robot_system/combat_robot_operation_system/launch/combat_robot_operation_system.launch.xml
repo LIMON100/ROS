@@ -1,0 +1,16 @@
+<launch>
+  <arg name="pan_tilt_state"      default="/current_actuator_state_info"/>
+  <arg name="params_file"         default="$(find-pkg-share combat_robot_operation_system)/config/params.yaml"/>
+  <!--
+    overlay defaults to the same base file so we can unconditionally load it twice
+    (later value wins). Deployment-specific overlays should point this to
+    config/params.demo.yaml or config/params.office_test.yaml.
+  -->
+  <arg name="params_overlay_file" default="$(find-pkg-share combat_robot_operation_system)/config/params.yaml"/>
+
+  <node pkg="combat_robot_operation_system" exec="combat_robot_operation_system_node" name="combat_robot_operation_system" output="screen">
+      <remap from="pan_tilt_state" to="$(var pan_tilt_state)"/>
+      <param from="$(var params_file)"/>
+      <param from="$(var params_overlay_file)"/>
+  </node>
+</launch>

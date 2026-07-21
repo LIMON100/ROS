@@ -1,0 +1,66 @@
+combat_robot_operation_system:
+  ros__parameters:
+    # Deployment mode: production | demo | office_test
+    deployment_mode: "production"
+
+    # Hardware watchdog toggles + timeout thresholds (seconds since last update)
+    checks:
+      detector_status: true
+      gun_status: true
+      pantilt_status: true
+      detector_status_timeout_sec: 3.0
+      gun_status_timeout_sec: 5.0
+      pantilt_status_timeout_sec: 3.0
+
+    # Gun trigger topic remap
+    topics:
+      gun_trigger_cmd: "/gun_trigger/cmd"
+      gun_trigger_status: "/gun_trigger/status"
+
+    # Camera/optics
+    optics:
+      camera_fov_deg: 65.4
+      aspect_ratio_w: 16
+      aspect_ratio_h: 9
+      fps: 30
+
+    # Pan/Tilt mechanical limits and speed scaling
+    pan_tilt:
+      min_pan_deg: -180.0
+      max_pan_deg:  180.0
+      min_tilt_deg: -75.0
+      max_tilt_deg:  45.0
+      pan_speed_divider: 10.0
+      tilt_speed_divider: 5.0
+      tilt_aspect_factor: 0.75
+
+    # Target prediction / feedforward
+    prediction:
+      enable: true
+      pan_tilt_delay: 0.15
+      ff_gain: 0.05
+      velocity_lpf_alpha: 0.5
+
+    # Ballistic/environment correction
+    correction:
+      gravity: 0.0
+      wind_x: 0.0
+      wind_y: 0.0
+
+    # Scanning timeout: timeout = max_diff / timeout_speed_divider + base_timeout_sec
+    scanning:
+      base_timeout_sec: 3.0
+      timeout_speed_divider: 2.0
+      general_tilt_deg: 0.0     # PROTECT_GENERAL scan tilt baseline (horizontal)
+      drone_tilt_deg: -30.0     # PROTECT_DRONE scan tilt baseline (negative = upward; tune for aerial band)
+
+    # Demo sequence (used when deployment_mode=="demo" and demo command received)
+    demo:
+      forward_distance_m: 0.3
+      reverse_distance_m: 0.3
+      drive_speed_mps: 0.2
+      fire_duration_sec: 3.0
+      scan_duration_sec: 3.0
+      target_count: 3
+      scan_default_pan_deg: 0.0
+      scan_default_tilt_deg: 0.0
