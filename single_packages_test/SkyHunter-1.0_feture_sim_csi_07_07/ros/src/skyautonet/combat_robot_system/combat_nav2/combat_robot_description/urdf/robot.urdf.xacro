@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="combat_robot">
+
+  <!-- Per-robot namespace (e.g. robot_ns:=s1). Defined here so every included xacro
+       (sensors, gazebo_control) can use topic_prefix / frame_prefix. Empty = legacy
+       single-robot behavior (no prefix). -->
+  <xacro:arg name="robot_ns" default="" />
+  <!-- use_cameras:=false strips the 4 gz camera sensors (front/rear/rgb/ir) — they are
+       unused for nav and rendering 4 per robot saturates the CPU in multi-robot sim. -->
+  <xacro:arg name="use_cameras" default="true" />
+  <xacro:property name="ns" value="$(arg robot_ns)" />
+  <xacro:property name="topic_prefix" value="${'/' + ns if ns != '' else ''}" />
+  <xacro:property name="frame_prefix" value="${ns + '/' if ns != '' else ''}" />
+
+  <xacro:include filename="$(find combat_robot_description)/urdf/macros.xacro" />
+  <xacro:include filename="$(find combat_robot_description)/urdf/materials.xacro" />
+
+  <xacro:include filename="$(find combat_robot_description)/urdf/chassis.xacro" />
+  <xacro:include filename="$(find combat_robot_description)/urdf/gimbal.xacro" />
+  <xacro:if value="$(arg use_cameras)">
+    <xacro:include filename="$(find combat_robot_description)/urdf/camera.xacro" />
+    <xacro:include filename="$(find combat_robot_description)/urdf/chassis_cameras.xacro"/>
+  </xacro:if>
+  <xacro:include filename="$(find combat_robot_description)/urdf/rifle.xacro" />
+  
+  <xacro:include filename="$(find combat_robot_description)/urdf/sensors.xacro" />
+
+  <xacro:include filename="$(find combat_robot_description)/urdf/gazebo.xacro" />
+  <xacro:include filename="$(find combat_robot_description)/urdf/gazebo_control.xacro" />
+
+</robot>
