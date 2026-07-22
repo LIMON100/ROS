@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>san_cameras</name>
+  <version>1.5.0</version>
+  <description>
+    SAN v1.5 Phase 2-E Turn 6 — IMX678 + Thermal camera drivers (Tier 1 C++).
+    Replaces adapters/payload_sensors.py::{IMX678Adapter,ThermalCameraAdapter}.
+    ShmPool → ROS 2 intra-process zero-copy.
+  </description>
+  <maintainer email="taegeun.kim@skyautonet.com">Kim Taegeun</maintainer>
+  <license>Proprietary - SkyAutoNet</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

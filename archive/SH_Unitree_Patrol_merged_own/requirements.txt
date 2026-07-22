@@ -1,0 +1,26 @@
+# Core runtime — works everywhere (dev laptop & RK3588 device).
+numpy>=1.24
+scipy>=1.10.0
+PyYAML>=6.0
+websockets>=12.0
+# Pillow is the PNG codec backend for mapping.aggregated_map +
+# mapping.slam_local_publisher. The modules use a lazy _require_pillow()
+# guard so a stripped install still imports, but real usage (and the
+# CI bandwidth-budget regression tests) needs it.
+Pillow>=10.0
+
+# OSM static layer (mapping/osm_static_layer.py) needs pyosmium / rasterio /
+# pyproj at runtime when load_from_pbf() is invoked. Not pinned here because:
+#   1) load_from_pbf currently raises NotImplementedError; the only test that
+#      would import them is marked @pytest.mark.skip — CI never reaches them.
+#   2) pyosmium has no >=3.x release on PyPI (PyPI ships 2.3.x–2.4.x only as
+#      of 2026-05); the 3.x line is conda/source-only. CI installer would
+#      fail with "No matching distribution found for pyosmium>=3.4.0".
+#   3) Production install path (RK3588 image) provides them via apt + conda.
+# Re-add with concrete pins once load_from_pbf is implemented (S2 backlog).
+
+# Dev / test
+pytest>=7.0
+
+# RK3588 device dependencies live in requirements-arm64.txt — install on
+# target hardware with:  pip install -r requirements-arm64.txt
