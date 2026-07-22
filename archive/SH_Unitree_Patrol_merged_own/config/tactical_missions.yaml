@@ -1,0 +1,73 @@
+# Tactical missions for swarm-controlled small tactical robot.
+#
+# Three mission types supported by MissionProcess:
+#   recon          — single-robot or small-group covert waypoint visits;
+#                    minimal radio chatter, no map broadcast
+#   formation_move — leader-follower coordinated movement; one of
+#                    {v_shape, line, column, diamond} formations
+#   area_sweep     — grid coverage of a polygon for survey/clearance
+#
+# Coordinates are local ENU (m). Replace the placeholders with mission-specific
+# values from your operational planning. The numeric examples below are
+# representative geometry only — do not deploy without site-specific planning.
+
+missions:
+  - name: "demo_recon_route"
+    type: "recon"
+    waypoints:
+      - id: "WP1"
+        pose:
+          position: [10.0, 0.0, 0.0]
+          orientation: [0, 0, 0, 1]
+        dwell_sec: 5.0
+      - id: "WP2"
+        pose:
+          position: [10.0, 10.0, 0.0]
+          orientation: [0, 0, 0.707, 0.707]
+        dwell_sec: 5.0
+      - id: "WP3"
+        pose:
+          position: [0.0, 10.0, 0.0]
+          orientation: [0, 0, 1, 0]
+        dwell_sec: 5.0
+
+  - name: "demo_formation_v"
+    type: "formation_move"
+    formation: "v_shape"
+    spacing_m: 2.5         # follower offset behind leader
+    leader_path:
+      - position: [0.0, 0.0, 0.0]
+      - position: [20.0, 0.0, 0.0]
+      - position: [20.0, 20.0, 0.0]
+
+  - name: "demo_area_sweep"
+    type: "area_sweep"
+    boundary:              # closed polygon (auto-closes last → first)
+      - [0.0,  0.0]
+      - [30.0, 0.0]
+      - [30.0, 20.0]
+      - [0.0,  20.0]
+    track_spacing_m: 4.0   # parallel-track distance during sweep
+    overlap_pct:     0.10  # detector FOV overlap between tracks
+
+  # M4 assault (P2-8, SDD §7.8 + user decision #7).
+  # Forward-fire formation tuned to evade 122 mm artillery lethal radius.
+  - name: "M4_assault"
+    type: "assault"
+    description: "돌격 — 전방 화력 + 122mm 살상반경 회피"
+    formation:
+      type: "V_SHAPE"
+      d_m: 15.0
+      theta_deg: 60.0
+    leader_max_speed_mps: 1.3
+    requires_pin: false
+    behavior_tree:
+      - name: "PreCheck"
+        battery_min: 25
+        rtk_required: true
+      - name: "FormationSet"
+        formation_type: "V_SHAPE"
+        d_m: 15.0
+        theta_deg: 60.0
+      - name: "AssaultLoop"
+        max_duration_s: 600
