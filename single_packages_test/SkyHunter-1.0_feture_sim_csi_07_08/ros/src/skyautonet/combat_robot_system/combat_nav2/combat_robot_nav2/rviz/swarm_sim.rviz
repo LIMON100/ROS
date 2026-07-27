@@ -1,0 +1,126 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 1
+      Plane Cell Count: 40
+      Color: 160; 160; 164
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: true
+      Marker Scale: 2
+    - Class: rviz_default_plugins/RobotModel
+      Name: Robot_s1
+      Enabled: true
+      Description Topic:
+        Value: /s1/robot_description
+        Durability Policy: Transient Local
+      Visual Enabled: true
+    - Class: rviz_default_plugins/RobotModel
+      Name: Robot_s2
+      Enabled: true
+      Description Topic:
+        Value: /s2/robot_description
+        Durability Policy: Transient Local
+      Visual Enabled: true
+    - Class: rviz_default_plugins/RobotModel
+      Name: Robot_s3
+      Enabled: true
+      Description Topic:
+        Value: /s3/robot_description
+        Durability Policy: Transient Local
+      Visual Enabled: true
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Lidar_s1
+      Enabled: true
+      Topic:
+        Value: /s1/rslidar_points
+        Reliability Policy: Best Effort
+      Size (m): 0.05
+      Color: 0; 255; 0
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Lidar_s2
+      Enabled: true
+      Topic:
+        Value: /s2/rslidar_points
+        Reliability Policy: Best Effort
+      Size (m): 0.05
+      Color: 0; 200; 255
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Lidar_s3
+      Enabled: true
+      Topic:
+        Value: /s3/rslidar_points
+        Reliability Policy: Best Effort
+      Size (m): 0.05
+      Color: 255; 80; 255
+    - Class: rviz_default_plugins/Path
+      Name: Plan_s1
+      Enabled: true
+      Topic:
+        Value: /s1/plan
+      Color: 255; 170; 0
+    - Class: rviz_default_plugins/Path
+      Name: Plan_s2
+      Enabled: true
+      Topic:
+        Value: /s2/plan
+      Color: 0; 170; 255
+    - Class: rviz_default_plugins/Path
+      Name: Plan_s3
+      Enabled: true
+      Topic:
+        Value: /s3/plan
+      Color: 255; 80; 255
+    - Class: rviz_default_plugins/Map
+      Name: Costmap_s1
+      Enabled: true
+      Topic:
+        Value: /s1/local_costmap/costmap
+        Durability Policy: Transient Local
+      Color Scheme: costmap
+      Alpha: 0.6
+    - Class: rviz_default_plugins/Map
+      Name: Costmap_s2
+      Enabled: true
+      Topic:
+        Value: /s2/local_costmap/costmap
+        Durability Policy: Transient Local
+      Color Scheme: costmap
+      Alpha: 0.6
+    - Class: rviz_default_plugins/Map
+      Name: Costmap_s3
+      Enabled: true
+      Topic:
+        Value: /s3/local_costmap/costmap
+        Durability Policy: Transient Local
+      Color Scheme: costmap
+      Alpha: 0.6
+  Global Options:
+    Fixed Frame: map
+    Background Color: 48; 48; 48
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: Current View
+      Distance: 40
+      Pitch: 1.0
+      Yaw: 3.14
+      Focal Point:
+        X: 0
+        Y: 15
+        Z: 0
+Window Geometry:
+  Height: 900
+  Width: 1400
