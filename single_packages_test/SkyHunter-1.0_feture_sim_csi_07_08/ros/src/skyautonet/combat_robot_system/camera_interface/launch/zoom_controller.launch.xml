@@ -1,0 +1,45 @@
+<launch>
+  <group>
+    <!-- 기존 인자 -->
+    <arg name="output_image" default="/camera/image_raw"/>
+    <arg name="config_file"  default="$(find-pkg-share camera_interface)/config/zoom_controller.config.yaml"/>
+
+    <!-- 노드 파라미터 인자 -->
+    <arg name="device_path"        default="/dev/ttyUSB0"/>
+    <arg name="baud_rate"          default="9600"/>
+    <arg name="camera_id"          default="1"/>
+    <!-- 퍼블리셔가 /sensor/distance 이므로 기본값을 여기에 맞춤 -->
+    <arg name="distance_topic"     default="/sensor/distance"/>
+    <arg name="preset_cmd_topic"   default="/zoom/preset"/>
+
+    <arg name="pelco_repeat_tx"        default="3"/>
+    <arg name="pelco_repeat_delay_ms"  default="10"/>
+    <arg name="pelco_post_stop"        default="true"/>
+    <arg name="pelco_post_stop_delay_ms" default="10"/>
+    <arg name="hysteresis_m"           default="0.0"/>
+
+    <node pkg="camera_interface" exec="zoom_controller_node" name="zoom_controller_node" output="screen">
+      <!-- (필요 없으면 remap들은 지워도 됩니다) -->
+      <remap from="out/image_raw"                 to="$(var output_image)"/>
+      <remap from="out/image_raw/compressed"      to="$(var output_image)/compressed"/>
+      <remap from="out/image_raw/compressedDepth" to="$(var output_image)/compressedDepth"/>
+      <remap from="out/image_raw/theora"          to="$(var output_image)/theora"/>
+
+      <!-- YAML 기본값 -->
+      <param from="$(var config_file)"/>
+
+      <!-- YAML 값 위에 덮어쓰기 (우선순위 높음) -->
+      <param name="device_path"       value="$(var device_path)"/>
+      <param name="baud_rate"         value="$(var baud_rate)"/>
+      <param name="camera_id"         value="$(var camera_id)"/>
+      <param name="distance_topic"    value="$(var distance_topic)"/>
+      <param name="preset_cmd_topic"  value="$(var preset_cmd_topic)"/>
+
+      <param name="pelco_repeat_tx"         value="$(var pelco_repeat_tx)"/>
+      <param name="pelco_repeat_delay_ms"   value="$(var pelco_repeat_delay_ms)"/>
+      <param name="pelco_post_stop"         value="$(var pelco_post_stop)"/>
+      <param name="pelco_post_stop_delay_ms" value="$(var pelco_post_stop_delay_ms)"/>
+      <param name="hysteresis_m"            value="$(var hysteresis_m)"/>
+    </node>
+  </group>
+</launch>

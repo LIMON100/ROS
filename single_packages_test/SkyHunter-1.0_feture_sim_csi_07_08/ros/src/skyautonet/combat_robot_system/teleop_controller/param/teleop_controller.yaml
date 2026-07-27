@@ -1,0 +1,6 @@
+teleop_controller:
+  ros__parameters:
+    wheel_base: 0.4
+    max_linear_velocity: 2.22
+    max_angular_velocity: 6.0
+    device_path: "/dev/ttyUSB2"

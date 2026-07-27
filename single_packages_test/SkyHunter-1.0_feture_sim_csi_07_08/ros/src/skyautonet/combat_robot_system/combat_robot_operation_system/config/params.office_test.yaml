@@ -1,0 +1,22 @@
+combat_robot_operation_system:
+  ros__parameters:
+    deployment_mode: "office_test"
+
+    # Hardware not present in office test; skip watchdog
+    checks:
+      detector_status: false
+      gun_status: false
+      pantilt_status: false
+
+    # Dummy leader telemetry for tablet UI mock-up
+    dummy_leader_state:
+      enabled: true
+      gps_lat: 37.402152
+      gps_lon: 127.108517
+      gps_heading: 78.0
+      current_speed_mps: 0.0
+      current_waypoint_index: 0
+      total_waypoints: 0
+      progress_ratio: 0.0
+      distance_to_next_wp_m: 0.0
+      distance_to_goal_m: 0.0

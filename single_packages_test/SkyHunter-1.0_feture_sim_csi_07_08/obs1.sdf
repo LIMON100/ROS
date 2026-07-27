@@ -1,0 +1,12 @@
+cat > /ws/obs1.sdf <<'SDF'
+  <?xml version="1.0"?>
+  <sdf version="1.6">
+    <model name="obs1">
+      <static>true</static>
+      <link name="l">
+        <collision name="c"><geometry><box><size>2 2 4</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2 2 4</size></box></geometry></visual>
+      </link>
+    </model>
+  </sdf>
+  SDF
