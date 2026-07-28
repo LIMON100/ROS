@@ -1,0 +1,65 @@
+/**:
+  ros__parameters:
+    # Imu
+    port : "/dev/ttyUSB0"
+    bard_rate : 9600
+    # # PTS-303Z
+    # pan_offset : 180
+    # tilt_offset : 45
+    # min_tilt_angle : 0
+    # max_tilt_angle : 90
+    # min_pan_angle : 0
+    # max_pan_angle : 360
+
+    # J-PT-2315HP (코드에서 각도 부분 수정 필요)
+    pan_offset : 180
+    tilt_offset : 0
+    min_tilt_angle : -75
+    max_tilt_angle : 45
+    min_pan_angle : 0
+    max_pan_angle : 360
+
+    angle_tolerance : 0.1
+    # pan_proportional_gain : 5.0  # Deprecated, use pid.pan.p instead
+    # tilt_proportional_gain : 5.0 # Deprecated, use pid.tilt.p instead
+    min_pan_speed : 5
+    min_tilt_speed : 6
+    max_pan_speed : 63
+    max_tilt_speed : 63
+
+    # --- New Parameters ---
+
+    # PID Controller Gains
+    pid:
+      pan:
+        p: 1.8
+        i: 0.0
+        d: 0.06
+        windup_limit: 5.0
+      tilt:
+        p: 6.3
+        i: 0.1
+        d: 0.055
+        windup_limit: 5.0
+
+    # Velocity and Acceleration Limits
+    limits:
+      velocity:
+        pan: 63.0
+        tilt: 63.0
+      acceleration:
+        pan: 30.0
+        tilt: 30.0
+
+    # Safety and Timeout
+    safety:
+      command_timeout_ms: 1000.0
+      enable_startup_homing: false
+      home_pan_angle: 0.0
+      home_tilt_angle: 0.0
+
+    # Convenience
+    convenience:
+      invert_pan_direction: false
+      invert_tilt_direction: false
+      controller_frequency: 50.0

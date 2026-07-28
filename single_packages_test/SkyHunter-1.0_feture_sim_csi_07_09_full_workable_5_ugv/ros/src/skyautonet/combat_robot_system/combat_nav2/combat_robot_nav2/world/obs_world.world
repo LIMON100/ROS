@@ -1,0 +1,102 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="default">
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors"/>
+
+    <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat"/>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- T19b — 2 m corridor: two static 2x2x4 m boxes at y=12, centered at x=+2 and
+         x=-2, so their inner faces sit at x=+1 and x=-1  ->  a 2 m gap on the path
+         (leader line x=0). Robots must narrow up and thread the gap instead of
+         going around. pose = x y z r p yaw ; z=2.0 sits the box on the ground.
+         (T19a single-box already PASSED; this is the corridor variant.) -->
+    <model name="obs_l">
+      <static>true</static>
+      <pose>2 12 2 0 0 0</pose>
+      <link name="l">
+        <collision name="c">
+          <geometry><box><size>2 2 4</size></box></geometry>
+        </collision>
+        <visual name="v">
+          <geometry><box><size>2 2 4</size></box></geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="obs_r">
+      <static>true</static>
+      <pose>-2 12 2 0 0 0</pose>
+      <link name="l">
+        <collision name="c">
+          <geometry><box><size>2 2 4</size></box></geometry>
+        </collision>
+        <visual name="v">
+          <geometry><box><size>2 2 4</size></box></geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>36.61002559225</latitude_deg>
+      <longitude_deg>127.28772570583</longitude_deg>
+      <elevation>0.0</elevation>
+      <heading_deg>0.0</heading_deg>
+    </spherical_coordinates>
+
+  </world>
+</sdf>
