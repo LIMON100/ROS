@@ -1,0 +1,84 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/UserCommand.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module combat_robot_msgs {
+  module msg {
+    module UserCommand_Constants {
+      const uint8 TABLET = 0;
+      @verbatim (language="comment", text=
+        "Command ID")
+      const uint8 IDLE = 0;
+      const uint8 RECON = 1;
+      const uint8 PROTECT_GENERAL = 2;
+      const uint8 PROTECT_DRONE = 3;
+      const uint8 DEBUG_ATTACK = 4;
+      const uint8 DEBUG_TRACKING = 5;
+      const uint8 ASSAULT = 6;
+      const uint8 RETURN_TO_HOME = 7;
+      const uint8 ESTOP = 8;
+      @verbatim (language="comment", text=
+        "Stream command")
+      const uint8 STREAM_NONE = 0;
+      const uint8 STREAM_START = 1;
+      const uint8 STREAM_STOP = 2;
+    };
+    @verbatim (language="comment", text=
+      "Command command_from")
+    struct UserCommand {
+      @verbatim (language="comment", text=
+        "UserCommand.msg" "\n"
+        "This message is used to send user commands to the combat robot system.")
+      std_msgs::msg::Header header;
+
+      @verbatim (language="comment", text=
+        "0 - tablet / 1 - ble")
+      uint8 command_from;
+
+      @verbatim (language="comment", text=
+        "Command ID" "\n"
+        "0=Idle, 1=Recon, 2=Protect General, 3=Protect Drone, 4/5=Debug, 6=Assault, 7=Return to Home, 8=Estop")
+      uint8 command_id;
+
+      @verbatim (language="comment", text=
+        "Manual Targeting Coordinates" "\n"
+        "X coordinate in normalized pixels (0.0 - 1.0)")
+      float target_x;
+
+      @verbatim (language="comment", text=
+        "Y coordinate in normalized pixels (0.0 - 1.0)")
+      float target_y;
+
+      @verbatim (language="comment", text=
+        "Drone Search Target")
+      double drone_target_lat;
+
+      double drone_target_lon;
+
+      boolean drone_target_valid;
+
+      @verbatim (language="comment", text=
+        "Gun trigger control" "\n"
+        "0 - stop / 1 - start")
+      boolean gun_trigger;
+
+      @verbatim (language="comment", text=
+        "0 - no permission / 1 - permission granted")
+      boolean gun_trigger_permission;
+
+      @verbatim (language="comment", text=
+        "Gimbal / stream control")
+      int8 pan_speed;
+
+      int8 tilt_speed;
+
+      int8 zoom_command;
+
+      @verbatim (language="comment", text=
+        "0=None, 1=Start, 2=Stop")
+      uint8 stream_command;
+    };
+  };
+};

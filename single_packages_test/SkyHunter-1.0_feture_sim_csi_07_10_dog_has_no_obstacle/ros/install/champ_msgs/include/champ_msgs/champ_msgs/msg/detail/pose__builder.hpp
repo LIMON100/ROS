@@ -1,0 +1,1 @@
+/ws/ros/build/champ_msgs/rosidl_generator_cpp/champ_msgs/msg/detail/pose__builder.hpp

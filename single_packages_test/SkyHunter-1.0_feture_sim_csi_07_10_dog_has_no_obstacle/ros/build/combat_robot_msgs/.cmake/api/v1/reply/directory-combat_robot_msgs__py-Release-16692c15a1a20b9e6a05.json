@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "combat_robot_msgs__py",
+		"source" : "/ws/ros/build/combat_robot_msgs/combat_robot_msgs__py"
+	}
+}

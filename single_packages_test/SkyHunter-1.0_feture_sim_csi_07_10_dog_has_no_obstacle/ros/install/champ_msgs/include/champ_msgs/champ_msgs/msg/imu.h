@@ -1,0 +1,1 @@
+/ws/ros/build/champ_msgs/rosidl_generator_c/champ_msgs/msg/imu.h

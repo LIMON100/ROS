@@ -1,0 +1,6 @@
+{
+  "package_name": "rslidar_msg",
+  "non_idl_tuples": [
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/rslidar_msg:msg/RslidarPacket.msg"
+  ]
+}

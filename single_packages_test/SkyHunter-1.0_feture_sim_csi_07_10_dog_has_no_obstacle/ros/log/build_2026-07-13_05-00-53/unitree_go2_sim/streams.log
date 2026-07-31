@@ -1,0 +1,48 @@
+[0.123s] Invoking command in '/ws/ros/build/unitree_go2_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/unitree_go2_sim -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/unitree_go2_sim
+[0.158s] -- The C compiler identification is GNU 13.3.0
+[0.202s] -- The CXX compiler identification is GNU 13.3.0
+[0.215s] -- Detecting C compiler ABI info
+[0.282s] -- Detecting C compiler ABI info - done
+[0.291s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.291s] -- Detecting C compile features
+[0.292s] -- Detecting C compile features - done
+[0.299s] -- Detecting CXX compiler ABI info
+[0.360s] -- Detecting CXX compiler ABI info - done
+[0.365s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.365s] -- Detecting CXX compile features
+[0.366s] -- Detecting CXX compile features - done
+[0.369s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.472s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.532s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.647s] -- Configuring done (0.5s)
+[0.649s] -- Generating done (0.0s)
+[0.651s] -- Build files have been written to: /ws/ros/build/unitree_go2_sim
+[0.659s] Invoked command in '/ws/ros/build/unitree_go2_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/unitree_go2_sim -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/unitree_go2_sim
+[0.660s] Invoking command in '/ws/ros/build/unitree_go2_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/unitree_go2_sim -- -j24 -l24
+[0.682s] Invoked command in '/ws/ros/build/unitree_go2_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/unitree_go2_sim -- -j24 -l24
+[0.682s] Invoking command in '/ws/ros/build/unitree_go2_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/unitree_go2_sim
+[0.700s] -- Install configuration: "Release"
+[0.700s] -- Execute custom install script
+[0.700s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/launch/unitree_go2_launch.py
+[0.700s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/launch/unitree_go2_launch.py.odombak
+[0.700s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/config/gait/gait.yaml
+[0.703s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/config/joints/joints.yaml
+[0.708s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/config/links/links.yaml
+[0.712s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/config/ros_control/ros_control.yaml
+[0.717s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/rviz/rviz.rviz
+[0.721s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/ament_index/resource_index/package_run_dependencies/unitree_go2_sim
+[0.726s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/ament_index/resource_index/parent_prefix_path/unitree_go2_sim
+[0.730s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/environment/ament_prefix_path.sh
+[0.735s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/environment/ament_prefix_path.dsv
+[0.741s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/environment/path.sh
+[0.745s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/environment/path.dsv
+[0.750s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/local_setup.bash
+[0.755s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/local_setup.sh
+[0.760s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/local_setup.zsh
+[0.766s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/local_setup.dsv
+[0.771s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/package.dsv
+[0.776s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/ament_index/resource_index/packages/unitree_go2_sim
+[0.781s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/cmake/unitree_go2_simConfig.cmake
+[0.787s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/cmake/unitree_go2_simConfig-version.cmake
+[0.794s] -- Symlinking: /ws/ros/install/unitree_go2_sim/share/unitree_go2_sim/package.xml
+[0.804s] Invoked command in '/ws/ros/build/unitree_go2_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/unitree_go2_sim

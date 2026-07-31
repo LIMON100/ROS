@@ -1,0 +1,64 @@
+[0.118s] Invoking command in '/ws/ros/build/unitree_go2_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/unitree_go2_description -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/unitree_go2_description
+[0.156s] -- The C compiler identification is GNU 13.3.0
+[0.189s] -- The CXX compiler identification is GNU 13.3.0
+[0.202s] -- Detecting C compiler ABI info
+[0.256s] -- Detecting C compiler ABI info - done
+[0.265s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.265s] -- Detecting C compile features
+[0.265s] -- Detecting C compile features - done
+[0.272s] -- Detecting CXX compiler ABI info
+[0.337s] -- Detecting CXX compiler ABI info - done
+[0.342s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.342s] -- Detecting CXX compile features
+[0.343s] -- Detecting CXX compile features - done
+[0.346s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.460s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.505s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.619s] -- Configuring done (0.5s)
+[0.622s] -- Generating done (0.0s)
+[0.623s] -- Build files have been written to: /ws/ros/build/unitree_go2_description
+[0.628s] Invoked command in '/ws/ros/build/unitree_go2_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/unitree_go2_description -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/unitree_go2_description
+[0.629s] Invoking command in '/ws/ros/build/unitree_go2_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/unitree_go2_description -- -j24 -l24
+[0.655s] Invoked command in '/ws/ros/build/unitree_go2_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/unitree_go2_description -- -j24 -l24
+[0.660s] Invoking command in '/ws/ros/build/unitree_go2_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/unitree_go2_description
+[0.665s] -- Install configuration: "Release"
+[0.665s] -- Execute custom install script
+[0.665s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/worlds/default.sdf
+[0.670s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/worlds/default_open.sdf
+[0.676s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/L1_4D_Lidar.dae
+[0.684s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/VLP16_base_1.dae
+[0.689s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/VLP16_base_2.dae
+[0.693s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/VLP16_scan.dae
+[0.698s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/calf.dae
+[0.703s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/calf_mirror.dae
+[0.708s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/foot.dae
+[0.712s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/hip.dae
+[0.716s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/hokuyo.dae
+[0.721s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/thigh.dae
+[0.725s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/thigh_mirror.dae
+[0.729s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/trunk.dae
+[0.736s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/const.xacro
+[0.742s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/leg.xacro
+[0.747s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/lidar_4D_lidar.xacro
+[0.752s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/materials.xacro
+[0.757s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/realsense_d455.xacro
+[0.762s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/unitree_go2_gazebo.xacro
+[0.768s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/unitree_go2_gazebo.xacro.odombak
+[0.773s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/unitree_go2_robot.xacro
+[0.781s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/velodyne.xacro
+[0.785s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/ament_index/resource_index/package_run_dependencies/unitree_go2_description
+[0.790s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/ament_index/resource_index/parent_prefix_path/unitree_go2_description
+[0.795s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/environment/ament_prefix_path.sh
+[0.800s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/environment/ament_prefix_path.dsv
+[0.807s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/environment/path.sh
+[0.811s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/environment/path.dsv
+[0.817s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/local_setup.bash
+[0.825s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/local_setup.sh
+[0.830s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/local_setup.zsh
+[0.835s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/local_setup.dsv
+[0.841s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/package.dsv
+[0.846s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/ament_index/resource_index/packages/unitree_go2_description
+[0.851s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/cmake/unitree_go2_descriptionConfig.cmake
+[0.856s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/cmake/unitree_go2_descriptionConfig-version.cmake
+[0.861s] -- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/package.xml
+[0.869s] Invoked command in '/ws/ros/build/unitree_go2_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/unitree_go2_description

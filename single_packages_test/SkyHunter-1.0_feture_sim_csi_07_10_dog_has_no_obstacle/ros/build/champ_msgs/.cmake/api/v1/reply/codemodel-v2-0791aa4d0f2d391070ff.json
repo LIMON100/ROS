@@ -1,0 +1,267 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-45de42b50c030d909ec0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				},
+				{
+					"build" : "champ_msgs__py",
+					"jsonFile" : "directory-champ_msgs__py-Release-d8af5aaa6571d4c2db7b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/ws/ros/build/champ_msgs/champ_msgs__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "champ_msgs__rs",
+					"jsonFile" : "directory-champ_msgs__rs-Release-fb65122dfd50e06cf261.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/ws/ros/build/champ_msgs/champ_msgs__rs",
+					"targetIndexes" : 
+					[
+						14
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "champ_msgs",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_champ_msgs_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_champ_msgs_egg-Release-28fd7ebd8f6a33addeee.json",
+					"name" : "ament_cmake_python_build_champ_msgs_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_symlink_champ_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_symlink_champ_msgs-Release-706f259d65b461f1d510.json",
+					"name" : "ament_cmake_python_symlink_champ_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs-Release-febff17d972a536d5bb8.json",
+					"name" : "champ_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__cpp-Release-229ae7a1798917e8868b.json",
+					"name" : "champ_msgs__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "champ_msgs__py::@0720fd0a0a77cc28b733",
+					"jsonFile" : "target-champ_msgs__py-Release-b913e4e52eb0c25017be.json",
+					"name" : "champ_msgs__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__rosidl_generator_c-Release-9b0db237a03175b6b832.json",
+					"name" : "champ_msgs__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__rosidl_generator_py-Release-932d2036876753432395.json",
+					"name" : "champ_msgs__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__rosidl_generator_type_description-Release-35634e21fb9d86669f33.json",
+					"name" : "champ_msgs__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__rosidl_typesupport_c-Release-291e2ea27f90ab86baf5.json",
+					"name" : "champ_msgs__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__rosidl_typesupport_cpp-Release-fa75f265ac771e97b802.json",
+					"name" : "champ_msgs__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__rosidl_typesupport_fastrtps_c-Release-8d4015ec7d465ca4b636.json",
+					"name" : "champ_msgs__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__rosidl_typesupport_fastrtps_cpp-Release-97a8b9dbf12f74414d66.json",
+					"name" : "champ_msgs__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__rosidl_typesupport_introspection_c-Release-16b5fa3fcf5d1fe277a4.json",
+					"name" : "champ_msgs__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs__rosidl_typesupport_introspection_cpp-Release-710a820e6b8d7d1b2d7d.json",
+					"name" : "champ_msgs__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "champ_msgs__rs::@6f3780454e386aa153c7",
+					"jsonFile" : "target-champ_msgs__rs-Release-b82759b6d624514827cc.json",
+					"name" : "champ_msgs__rs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs_s__rosidl_typesupport_c-Release-56cf7dbcaec312caae84.json",
+					"name" : "champ_msgs_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs_s__rosidl_typesupport_fastrtps_c-Release-69f54ec0dbd9978d760c.json",
+					"name" : "champ_msgs_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs_s__rosidl_typesupport_introspection_c-Release-c705ef604eb2b83c1ef4.json",
+					"name" : "champ_msgs_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "champ_msgs_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-champ_msgs_uninstall-Release-932afb80903bd05696de.json",
+					"name" : "champ_msgs_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-Release-4002b64ba6a301cb6b63.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/ws/ros/build/champ_msgs",
+		"source" : "/ws/ros/src/third_party/unitree_go2_ros2/champ_msgs"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

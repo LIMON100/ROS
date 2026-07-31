@@ -1,0 +1,25 @@
+[ 50%] Built target swarm_coordinator_node
+[100%] Built target swarm_coordinator
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/lib/swarm_coordinator/swarm_coordinator_node
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/lib/libswarm_coordinator.so
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/config/swarm_coordinator.yaml
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/launch/swarm_coordinator.launch.xml
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/include/swarm_coordinator/swarm_coordinator.hpp
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/ament_index/resource_index/package_run_dependencies/swarm_coordinator
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/ament_index/resource_index/parent_prefix_path/swarm_coordinator
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/environment/path.sh
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/environment/path.dsv
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/local_setup.bash
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/local_setup.sh
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/local_setup.zsh
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/local_setup.dsv
+-- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/package.dsv
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/ament_index/resource_index/packages/swarm_coordinator
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/ament_index/resource_index/rclcpp_components/swarm_coordinator
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/cmake/swarm_coordinatorConfig.cmake
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/cmake/swarm_coordinatorConfig-version.cmake
+-- Up-to-date symlink: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/package.xml

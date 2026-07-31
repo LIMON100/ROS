@@ -1,0 +1,37 @@
+{
+  "package_name": "combat_robot_msgs",
+  "output_dir": "/ws/ros/build/combat_robot_msgs/rosidl_generator_type_description/combat_robot_msgs",
+  "idl_tuples": [
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/BoundingBox2d.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/DetectedObject.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/DetectedObjects.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/TargetPoint.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/TouchTargetPoint.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/UserCommand.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/MissionControlCommand.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/StreamControlCommand.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/SwarmControlCommand.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/SwarmFollowerStatus.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/SwarmLeaderHeartbeat.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/SwarmPathCommand.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/SwarmRobotCommand.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/IMUState.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/OperationState.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/DriveCommand.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/PanTiltControlCommand.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/PanTiltState.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/CenterObject.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/Waypoint.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/WaypointList.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/GnssStatus.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/ChassisStatus.idl",
+    "/ws/ros/build/combat_robot_msgs/rosidl_adapter/combat_robot_msgs:msg/LidarStatus.idl"
+  ],
+  "include_paths": [
+    "builtin_interfaces:/opt/ros/jazzy/share/builtin_interfaces",
+    "std_msgs:/opt/ros/jazzy/share/std_msgs",
+    "sensor_msgs:/opt/ros/jazzy/share/sensor_msgs",
+    "geometry_msgs:/opt/ros/jazzy/share/geometry_msgs",
+    "service_msgs:/opt/ros/jazzy/share/service_msgs"
+  ]
+}

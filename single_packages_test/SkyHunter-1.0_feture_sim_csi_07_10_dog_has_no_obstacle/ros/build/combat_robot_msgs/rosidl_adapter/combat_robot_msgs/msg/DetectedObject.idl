@@ -1,0 +1,19 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/DetectedObject.msg
+// generated code does not contain a copyright notice
+
+#include "combat_robot_msgs/msg/BoundingBox2d.idl"
+
+module combat_robot_msgs {
+  module msg {
+    @verbatim (language="comment", text=
+      "DetectedObject.msg")
+    struct DetectedObject {
+      int32 id;
+
+      float prob;
+
+      combat_robot_msgs::msg::BoundingBox2d box;
+    };
+  };
+};

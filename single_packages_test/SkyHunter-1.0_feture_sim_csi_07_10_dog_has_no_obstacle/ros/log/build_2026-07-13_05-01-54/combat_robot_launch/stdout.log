@@ -1,0 +1,23 @@
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/config/device_profile.yaml
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/launch/combat_robot.launch.xml
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/launch/combat_robot_device.launch.py
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/launch/combat_robot_test.launch.xml
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/launch/start_camera.launch.py
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/launch/test_rtsp.xml
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/ament_index/resource_index/package_run_dependencies/combat_robot_launch
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/ament_index/resource_index/parent_prefix_path/combat_robot_launch
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/environment/path.sh
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/environment/path.dsv
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/local_setup.bash
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/local_setup.sh
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/local_setup.zsh
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/local_setup.dsv
+-- Symlinking: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/package.dsv
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/ament_index/resource_index/packages/combat_robot_launch
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/cmake/combat_robot_launchConfig.cmake
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/cmake/combat_robot_launchConfig-version.cmake
+-- Up-to-date symlink: /ws/ros/install/combat_robot_launch/share/combat_robot_launch/package.xml

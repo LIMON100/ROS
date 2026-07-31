@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_msgs/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/user_command__rosidl_typesupport_fastrtps_cpp.hpp

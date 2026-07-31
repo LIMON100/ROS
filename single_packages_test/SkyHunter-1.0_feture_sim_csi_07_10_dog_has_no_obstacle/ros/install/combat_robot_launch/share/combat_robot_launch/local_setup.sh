@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_launch/ament_cmake_environment_hooks/local_setup.sh

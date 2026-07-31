@@ -1,0 +1,2 @@
+source;share/swarm_path_test/environment/ament_prefix_path.sh
+source;share/swarm_path_test/environment/path.sh

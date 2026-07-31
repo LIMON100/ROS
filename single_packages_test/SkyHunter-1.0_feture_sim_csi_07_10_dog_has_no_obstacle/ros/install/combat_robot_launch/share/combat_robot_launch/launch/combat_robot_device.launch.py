@@ -1,0 +1,1 @@
+/ws/ros/src/skyautonet/combat_robot_launch/launch/combat_robot_device.launch.py

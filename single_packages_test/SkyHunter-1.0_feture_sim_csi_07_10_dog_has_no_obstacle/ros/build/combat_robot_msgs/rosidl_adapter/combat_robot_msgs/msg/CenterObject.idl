@@ -1,0 +1,28 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/CenterObject.msg
+// generated code does not contain a copyright notice
+
+#include "combat_robot_msgs/msg/BoundingBox2d.idl"
+#include "std_msgs/msg/Header.idl"
+
+module combat_robot_msgs {
+  module msg {
+    @verbatim (language="comment", text=
+      "CenterObject.msg")
+    struct CenterObject {
+      std_msgs::msg::Header header;
+
+      int32 class_id;
+
+      combat_robot_msgs::msg::BoundingBox2d bounding_box;
+
+      float target_x;
+
+      float target_y;
+
+      float laser_distance;
+
+      float zoom_level;
+    };
+  };
+};

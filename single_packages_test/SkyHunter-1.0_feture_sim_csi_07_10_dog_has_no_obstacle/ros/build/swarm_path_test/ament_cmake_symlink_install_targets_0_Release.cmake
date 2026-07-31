@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/ws/ros/build/swarm_path_test/send_path" "/ws/ros/build/swarm_path_test/jog_tune" "TARGETS" "send_path" "jog_tune" "DESTINATION" "lib/swarm_path_test")

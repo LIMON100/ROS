@@ -1,0 +1,1 @@
+/ws/ros/build/gun_trigger/ament_cmake_core/gun_triggerConfig-version.cmake

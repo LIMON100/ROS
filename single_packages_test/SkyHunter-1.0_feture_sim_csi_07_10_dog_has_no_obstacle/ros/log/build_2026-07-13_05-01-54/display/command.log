@@ -1,0 +1,4 @@
+Invoking command in '/ws/ros/build/display': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/display -- -j24 -l24
+Invoked command in '/ws/ros/build/display' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/display -- -j24 -l24
+Invoking command in '/ws/ros/build/display': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/display
+Invoked command in '/ws/ros/build/display' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/display

@@ -1,0 +1,46 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/MissionControlCommand.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module combat_robot_msgs {
+  module msg {
+    module MissionControlCommand_Constants {
+      const uint8 IDLE = 0;
+      const uint8 RECON = 1;
+      const uint8 PROTECT_GENERAL = 2;
+      const uint8 PROTECT_DRONE = 3;
+      const uint8 DEBUG_ATTACK = 4;
+      const uint8 DEBUG_TRACKING = 5;
+      const uint8 ASSAULT = 6;
+      const uint8 RETURN_TO_HOME = 7;
+      const uint8 ATTACK_PERMISSION_NONE = 0;
+      const uint8 ATTACK_PERMISSION_APPROVE = 1;
+      const uint8 ATTACK_PERMISSION_DENY = 2;
+    };
+    struct MissionControlCommand {
+      std_msgs::msg::Header header;
+
+      uint8 command_id;
+
+      boolean estop_requested;
+
+      uint8 attack_permission;
+
+      int8 pan_speed;
+
+      int8 tilt_speed;
+
+      int8 zoom_command;
+
+      float lateral_wind_speed;
+
+      double drone_target_lat;
+
+      double drone_target_lon;
+
+      boolean drone_target_valid;
+    };
+  };
+};

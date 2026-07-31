@@ -1,0 +1,30 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/SwarmPathCommand.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module combat_robot_msgs {
+  module msg {
+    module SwarmPathCommand_Constants {
+      const uint8 CMD_NONE = 0;
+      const uint8 CMD_START = 1;
+      const uint8 CMD_STOP = 2;
+      const uint8 CMD_PAUSE = 3;
+      const uint8 CMD_RESUME = 4;
+      const uint8 CMD_LOAD_PATH = 5;
+      @verbatim (language="comment", text=
+        "path follower / operator signals 'waypoints done'; FSM switches PROTECT modes from drive to engage")
+      const uint8 CMD_COMPLETE = 6;
+    };
+    struct SwarmPathCommand {
+      std_msgs::msg::Header header;
+
+      uint8 command;
+
+      uint16 num_waypoints;
+
+      string path_json;
+    };
+  };
+};

@@ -1,0 +1,41 @@
+[ 18%] Built target pan_tilt_controller_node_auto
+[ 63%] Built target async_comm
+[ 81%] Built target pan_tilt_controller
+[100%] Built target pan_tilt_controller_node
+-- Install configuration: "Debug"
+-- Execute custom install script
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/lib/pan_tilt_controller/pan_tilt_controller_node_auto
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/lib/pan_tilt_controller/libpan_tilt_controller.so
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/lib/pan_tilt_controller/pan_tilt_controller_node
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/include/pan_tilt_controller/pan_tilt_controller.hpp
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/launch/pan_tilt_controller.launch.xml
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/launch/ptz_square_test.launch.xml
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/param/pan_tilt.param.yaml
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/ament_index/resource_index/package_run_dependencies/pan_tilt_controller
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/ament_index/resource_index/parent_prefix_path/pan_tilt_controller
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/environment/path.sh
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/environment/path.dsv
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/local_setup.bash
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/local_setup.sh
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/local_setup.zsh
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/local_setup.dsv
+-- Symlinking: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/package.dsv
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/ament_index/resource_index/packages/pan_tilt_controller
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/ament_index/resource_index/rclcpp_components/pan_tilt_controller
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/cmake/pan_tilt_controllerConfig.cmake
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/cmake/pan_tilt_controllerConfig-version.cmake
+-- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/package.xml
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/lib/libasync_comm.so
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/tcp_client.h
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/serial.h
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/message_handler.h
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/udp.h
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/comm.h
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/lib/async_comm/async_comm-targets.cmake
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/lib/async_comm/async_comm-targets-debug.cmake
+-- Up-to-date: /ws/ros/install/pan_tilt_controller/lib/async_comm/async_comm-config.cmake

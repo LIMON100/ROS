@@ -1,0 +1,1 @@
+/ws/ros/build/champ_msgs/rosidl_typesupport_introspection_cpp/champ_msgs/msg/detail/pose__rosidl_typesupport_introspection_cpp.hpp

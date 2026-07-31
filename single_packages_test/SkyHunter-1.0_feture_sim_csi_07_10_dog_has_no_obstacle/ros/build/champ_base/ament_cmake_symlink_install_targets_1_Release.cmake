@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/ws/ros/build/champ_base/quadruped_controller_node" "/ws/ros/build/champ_base/message_relay_node" "/ws/ros/build/champ_base/state_estimation_node" "TARGETS" "quadruped_controller_node" "message_relay_node" "state_estimation_node" "DESTINATION" "lib/champ_base")

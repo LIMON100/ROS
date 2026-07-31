@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/ws/ros/build/laser_distance/liblaser_distance.a" "/ws/ros/build/laser_distance/laser_distance_node" "TARGETS" "laser_distance" "laser_distance_node" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "lib/laser_distance")

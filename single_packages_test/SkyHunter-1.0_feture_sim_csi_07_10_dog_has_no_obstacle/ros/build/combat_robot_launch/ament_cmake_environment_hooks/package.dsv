@@ -1,0 +1,4 @@
+source;share/combat_robot_launch/local_setup.bash
+source;share/combat_robot_launch/local_setup.dsv
+source;share/combat_robot_launch/local_setup.sh
+source;share/combat_robot_launch/local_setup.zsh

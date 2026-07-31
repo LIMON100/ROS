@@ -1,0 +1,95 @@
+[0.026s] Invoking command in '/ws/ros/build/bluespace_ai_xsens_mti_driver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_nav2/bluespace_ai_xsens_ros_mti_driver -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/bluespace_ai_xsens_mti_driver
+[0.136s] -- The C compiler identification is GNU 13.3.0
+[0.137s] [0mCMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
+[0.137s]   Compatibility with CMake < 3.5 will be removed from a future version of
+[0.137s]   CMake.
+[0.137s] 
+[0.137s]   Update the VERSION argument <min> value or use a ...<max> suffix to tell
+[0.137s]   CMake that the project does not need compatibility with older versions.
+[0.137s] 
+[0.137s] [0m
+[0.184s] -- The CXX compiler identification is GNU 13.3.0
+[0.194s] -- Detecting C compiler ABI info
+[0.253s] -- Detecting C compiler ABI info - done
+[0.261s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.261s] -- Detecting C compile features
+[0.262s] -- Detecting C compile features - done
+[0.268s] -- Detecting CXX compiler ABI info
+[0.326s] -- Detecting CXX compiler ABI info - done
+[0.333s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.333s] -- Detecting CXX compile features
+[0.333s] -- Detecting CXX compile features - done
+[0.336s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.447s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.496s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.556s] -- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.616s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.632s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.654s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.672s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.779s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.785s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.863s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[0.877s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[0.898s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.990s] -- Found tf2: 0.36.20 (/opt/ros/jazzy/share/tf2/cmake)
+[1.019s] -- Found tf2_ros: 0.36.20 (/opt/ros/jazzy/share/tf2_ros/cmake)
+[1.174s] -- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[1.192s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[1.301s] -- Added test 'copyright' to check source files copyright and LICENSE
+[1.325s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.325s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/bluespace_ai_xsens_ros_mti_driver/lib/xspublic>
+[1.325s] -- Configured cppcheck exclude dirs and/or files: 
+[1.352s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[1.352s] -- Configured cpplint exclude dirs and/or files: 
+[1.356s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.356s] -- Configured 'flake8' exclude dirs and/or files: 
+[1.364s] -- Added test 'lint_cmake' to check CMake code style
+[1.368s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.395s] -- Added test 'uncrustify' to check C / C++ code style
+[1.395s] -- Configured uncrustify additional arguments: 
+[1.400s] -- Added test 'xmllint' to check XML markup files
+[1.401s] -- Configuring done (1.3s)
+[1.417s] -- Generating done (0.0s)
+[1.421s] -- Build files have been written to: /ws/ros/build/bluespace_ai_xsens_mti_driver
+[1.430s] Invoked command in '/ws/ros/build/bluespace_ai_xsens_mti_driver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_nav2/bluespace_ai_xsens_ros_mti_driver -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/bluespace_ai_xsens_mti_driver
+[1.430s] Invoking command in '/ws/ros/build/bluespace_ai_xsens_mti_driver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/bluespace_ai_xsens_mti_driver -- -j24 -l24
+[1.475s] [ 25%] [32mBuilding CXX object CMakeFiles/xsens_mti_node.dir/src/main.cpp.o[0m
+[1.475s] [ 50%] [32mBuilding CXX object CMakeFiles/xsens_mti_node.dir/src/xdacallback.cpp.o[0m
+[1.475s] [ 75%] [32mBuilding CXX object CMakeFiles/xsens_mti_node.dir/src/xdainterface.cpp.o[0m
+[16.233s] [100%] [32m[1mLinking CXX executable xsens_mti_node[0m
+[16.235s] make[3]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.
+[16.240s] make[3]: Circular libxscommon <- libxscommon dependency dropped.
+[16.495s] [100%] Built target xsens_mti_node
+[16.505s] Invoked command in '/ws/ros/build/bluespace_ai_xsens_mti_driver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/bluespace_ai_xsens_mti_driver -- -j24 -l24
+[16.506s] Invoking command in '/ws/ros/build/bluespace_ai_xsens_mti_driver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/bluespace_ai_xsens_mti_driver
+[16.512s] -- Install configuration: "Release"
+[16.512s] -- Execute custom install script
+[16.512s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/launch/display.launch.py
+[16.518s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/launch/xsens_mti_node.launch.py
+[16.526s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/param/xsens_mti_node.yaml
+[16.535s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/rviz/display.rviz
+[16.544s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/urdf/MTi_1.stl
+[16.549s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/urdf/MTi_1.urdf
+[16.557s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/urdf/MTi_10.stl
+[16.565s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/urdf/MTi_10.urdf
+[16.573s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/urdf/MTi_6xx.stl
+[16.582s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/urdf/MTi_6xx.urdf
+[16.590s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/ament_index/resource_index/package_run_dependencies/bluespace_ai_xsens_mti_driver
+[16.598s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/ament_index/resource_index/parent_prefix_path/bluespace_ai_xsens_mti_driver
+[16.607s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/environment/ament_prefix_path.sh
+[16.615s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/environment/ament_prefix_path.dsv
+[16.624s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/environment/path.sh
+[16.632s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/environment/path.dsv
+[16.640s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/local_setup.bash
+[16.648s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/local_setup.sh
+[16.653s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/local_setup.zsh
+[16.659s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/local_setup.dsv
+[16.666s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/package.dsv
+[16.673s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/ament_index/resource_index/packages/bluespace_ai_xsens_mti_driver
+[16.681s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/cmake/bluespace_ai_xsens_mti_driverConfig.cmake
+[16.688s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/cmake/bluespace_ai_xsens_mti_driverConfig-version.cmake
+[16.694s] -- Symlinking: /ws/ros/install/bluespace_ai_xsens_mti_driver/share/bluespace_ai_xsens_mti_driver/package.xml
+[16.702s] -- Installing: /ws/ros/install/bluespace_ai_xsens_mti_driver/lib/bluespace_ai_xsens_mti_driver/xsens_mti_node
+[16.705s] -- Set non-toolchain portion of runtime path of "/ws/ros/install/bluespace_ai_xsens_mti_driver/lib/bluespace_ai_xsens_mti_driver/xsens_mti_node" to ""
+[16.707s] Invoked command in '/ws/ros/build/bluespace_ai_xsens_mti_driver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/bluespace_ai_xsens_mti_driver

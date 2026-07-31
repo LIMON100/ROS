@@ -1,0 +1,38 @@
+[ 13%] Built target gtest
+[ 26%] Built target gtest_main
+[ 40%] Built target combat_robot_test_dummy_node
+[ 53%] Built target combat_robot_operation_system_node
+[ 86%] Built target combat_robot_operation_system
+[100%] Built target test_fsm_transitions
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/lib/combat_robot_operation_system/combat_robot_test_dummy_node
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/lib/combat_robot_operation_system/combat_robot_operation_system_node
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/include/combat_robot_operation_system/combat_robot_operation_system.hpp
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/library_path.sh
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/library_path.dsv
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/lib/libcombat_robot_operation_system.so
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/launch/combat_robot_operation_system.launch.xml
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/config/params.demo.yaml
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/config/params.office_test.yaml
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/config/params.production.yaml
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/config/params.yaml
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/ament_index/resource_index/package_run_dependencies/combat_robot_operation_system
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/ament_index/resource_index/parent_prefix_path/combat_robot_operation_system
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/path.sh
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/path.dsv
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/local_setup.bash
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/local_setup.sh
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/local_setup.zsh
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/local_setup.dsv
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/package.dsv
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/ament_index/resource_index/packages/combat_robot_operation_system
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/ament_index/resource_index/rclcpp_components/combat_robot_operation_system
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/ament_cmake_export_libraries-extras.cmake
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/combat_robot_operation_systemConfig.cmake
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/combat_robot_operation_systemConfig-version.cmake
+-- Up-to-date symlink: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/package.xml

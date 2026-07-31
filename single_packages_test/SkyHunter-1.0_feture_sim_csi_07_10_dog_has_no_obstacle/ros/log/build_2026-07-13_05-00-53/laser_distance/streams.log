@@ -1,0 +1,62 @@
+[0.119s] Invoking command in '/ws/ros/build/laser_distance': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/laser_distance -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/laser_distance
+[0.154s] -- The C compiler identification is GNU 13.3.0
+[0.187s] -- The CXX compiler identification is GNU 13.3.0
+[0.197s] -- Detecting C compiler ABI info
+[0.256s] -- Detecting C compiler ABI info - done
+[0.265s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.265s] -- Detecting C compile features
+[0.266s] -- Detecting C compile features - done
+[0.273s] -- Detecting CXX compiler ABI info
+[0.338s] -- Detecting CXX compiler ABI info - done
+[0.346s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.346s] -- Detecting CXX compile features
+[0.347s] -- Detecting CXX compile features - done
+[0.352s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.457s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.513s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.578s] -- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.618s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.633s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.648s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.664s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.763s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.770s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.851s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[0.864s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[0.880s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.966s] -- Found std_msgs: 5.3.7 (/opt/ros/jazzy/share/std_msgs/cmake)
+[1.036s] -- Configuring done (0.9s)
+[1.046s] -- Generating done (0.0s)
+[1.050s] -- Build files have been written to: /ws/ros/build/laser_distance
+[1.061s] Invoked command in '/ws/ros/build/laser_distance' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/laser_distance -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/laser_distance
+[1.061s] Invoking command in '/ws/ros/build/laser_distance': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/laser_distance -- -j24 -l24
+[1.091s] [ 25%] [32mBuilding CXX object CMakeFiles/laser_distance.dir/src/laser_distance.cpp.o[0m
+[1.335s] [ 50%] [32m[1mLinking CXX static library liblaser_distance.a[0m
+[1.363s] [ 50%] Built target laser_distance
+[1.384s] [ 75%] [32mBuilding CXX object CMakeFiles/laser_distance_node.dir/node/laser_distance_node.cpp.o[0m
+[6.641s] [100%] [32m[1mLinking CXX executable laser_distance_node[0m
+[6.758s] [100%] Built target laser_distance_node
+[6.769s] Invoked command in '/ws/ros/build/laser_distance' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/laser_distance -- -j24 -l24
+[6.770s] Invoking command in '/ws/ros/build/laser_distance': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/laser_distance
+[6.778s] -- Install configuration: "Release"
+[6.778s] -- Execute custom install script
+[6.778s] -- Symlinking: /ws/ros/install/laser_distance/lib/liblaser_distance.a
+[6.784s] -- Symlinking: /ws/ros/install/laser_distance/lib/laser_distance/laser_distance_node
+[6.789s] -- Symlinking: /ws/ros/install/laser_distance/include//laser_distance.hpp
+[6.795s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance//launch/laser_distance.launch.xml
+[6.803s] -- Symlinking: /ws/ros/install/laser_distance/share/ament_index/resource_index/package_run_dependencies/laser_distance
+[6.810s] -- Symlinking: /ws/ros/install/laser_distance/share/ament_index/resource_index/parent_prefix_path/laser_distance
+[6.816s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/environment/ament_prefix_path.sh
+[6.825s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/environment/ament_prefix_path.dsv
+[6.834s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/environment/path.sh
+[6.844s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/environment/path.dsv
+[6.859s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/local_setup.bash
+[6.868s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/local_setup.sh
+[6.877s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/local_setup.zsh
+[6.902s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/local_setup.dsv
+[6.912s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/package.dsv
+[6.921s] -- Symlinking: /ws/ros/install/laser_distance/share/ament_index/resource_index/packages/laser_distance
+[6.929s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/cmake/laser_distanceConfig.cmake
+[6.936s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/cmake/laser_distanceConfig-version.cmake
+[6.942s] -- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/package.xml
+[6.951s] Invoked command in '/ws/ros/build/laser_distance' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/laser_distance

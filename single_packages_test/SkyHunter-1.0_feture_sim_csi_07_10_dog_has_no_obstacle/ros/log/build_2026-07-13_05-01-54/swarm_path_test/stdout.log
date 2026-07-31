@@ -1,0 +1,21 @@
+[ 50%] Built target jog_tune
+[100%] Built target send_path
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/lib/swarm_path_test/send_path
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/lib/swarm_path_test/jog_tune
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/ament_index/resource_index/package_run_dependencies/swarm_path_test
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/ament_index/resource_index/parent_prefix_path/swarm_path_test
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/environment/path.sh
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/environment/path.dsv
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/local_setup.bash
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/local_setup.sh
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/local_setup.zsh
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/local_setup.dsv
+-- Symlinking: /ws/ros/install/swarm_path_test/share/swarm_path_test/package.dsv
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/ament_index/resource_index/packages/swarm_path_test
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/cmake/swarm_path_testConfig.cmake
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/cmake/swarm_path_testConfig-version.cmake
+-- Up-to-date symlink: /ws/ros/install/swarm_path_test/share/swarm_path_test/package.xml

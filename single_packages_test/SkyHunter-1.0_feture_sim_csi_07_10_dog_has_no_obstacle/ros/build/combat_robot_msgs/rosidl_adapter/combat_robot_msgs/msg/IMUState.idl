@@ -1,0 +1,24 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/IMUState.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Vector3.idl"
+#include "std_msgs/msg/Header.idl"
+
+module combat_robot_msgs {
+  module msg {
+    struct IMUState {
+      std_msgs::msg::Header header;
+
+      @verbatim (language="comment", text=
+        "Roll Pitch Yaw")
+      geometry_msgs::msg::Vector3 angle;
+
+      boolean is_connected;
+
+      @verbatim (language="comment", text=
+        "\"gun\" or \"car\"")
+      string device_id;
+    };
+  };
+};

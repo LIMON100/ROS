@@ -1,0 +1,25 @@
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:[m[K In lambda function:
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:1314:25:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kwhile[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+ 1314 |                         [01;35m[Kwhile[m[K (a < -M_PI) a += 2.0 * M_PI; return a; };
+      |                         [01;35m[K^~~~~[m[K
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:1314:60:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kwhile[m[K’
+ 1314 |                         while (a < -M_PI) a += 2.0 * M_PI; [01;36m[Kreturn[m[K a; };
+      |                                                            [01;36m[K^~~~~~[m[K
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:[m[K In member function ‘[01m[Kvoid SwarmPathExecutorNode::[01;32m[Ksync_tick[m[K()[m[K’:
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:1368:16:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kdbg_lag[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+ 1368 |         double [01;35m[Kdbg_lag[m[K = 0.0;
+      |                [01;35m[K^~~~~~~[m[K
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:[m[K In lambda function:
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:2348:13:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kwhile[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+ 2348 |             [01;35m[Kwhile[m[K (a < -M_PI) a += 2.0 * M_PI; return a; };
+      |             [01;35m[K^~~~~[m[K
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:2348:48:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kwhile[m[K’
+ 2348 |             while (a < -M_PI) a += 2.0 * M_PI; [01;36m[Kreturn[m[K a; };
+      |                                                [01;36m[K^~~~~~[m[K
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:[m[K In member function ‘[01m[Kbool SwarmPathExecutorNode::[01;32m[Kdrive_reposition[m[K(double, double, double)[m[K’:
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:2386:34:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksx[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+ 2386 |     bool drive_reposition([01;35m[Kdouble sx[m[K, double sy, double syaw)
+      |                           [01;35m[K~~~~~~~^~[m[K
+[01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:2386:45:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksy[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+ 2386 |     bool drive_reposition(double sx, [01;35m[Kdouble sy[m[K, double syaw)
+      |                                      [01;35m[K~~~~~~~^~[m[K

@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/ws/ros/build/robot_server/command_server_node" "/ws/ros/build/robot_server/rtsp_server_node" "TARGETS" "command_server_node" "rtsp_server_node" "DESTINATION" "lib/robot_server")

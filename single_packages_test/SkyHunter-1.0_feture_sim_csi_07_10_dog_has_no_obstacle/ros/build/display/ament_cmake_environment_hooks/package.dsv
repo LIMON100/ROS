@@ -1,0 +1,4 @@
+source;share/display/local_setup.bash
+source;share/display/local_setup.dsv
+source;share/display/local_setup.sh
+source;share/display/local_setup.zsh

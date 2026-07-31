@@ -1,0 +1,40 @@
+[0.024s] Invoking command in '/ws/ros/build/camera_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/camera_interface -- -j24 -l24
+[0.222s] [ 25%] Built target camera_driver_node
+[0.222s] [ 50%] Built target zoom_controller_lib
+[0.222s] [ 75%] Built target camera_driver
+[0.222s] [100%] Built target zoom_controller_node
+[0.230s] Invoked command in '/ws/ros/build/camera_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/camera_interface -- -j24 -l24
+[0.230s] Invoking command in '/ws/ros/build/camera_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/camera_interface
+[0.243s] -- Install configuration: "Release"
+[0.243s] -- Execute custom install script
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/lib/camera_interface/camera_driver_node
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/lib/libcamera_driver.so
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/lib/libzoom_controller_lib.a
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/lib/camera_interface/zoom_controller_node
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/lib/camera_interface/camera_driver_node
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/include/camera_driver.hpp
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/include/zoom_controller.hpp
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/config/camera_driver.config.yaml
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/config/camera_driver.config2.yaml
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/config/zoom_controller.config.yaml
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/launch/camera_driver.launch.xml
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/launch/zoom_controller.launch.xml
+[0.243s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/ament_index/resource_index/package_run_dependencies/camera_interface
+[0.246s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/ament_index/resource_index/parent_prefix_path/camera_interface
+[0.246s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/environment/ament_prefix_path.sh
+[0.247s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/environment/ament_prefix_path.dsv
+[0.247s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/environment/path.sh
+[0.247s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/environment/path.dsv
+[0.248s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/local_setup.bash
+[0.248s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/local_setup.sh
+[0.248s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/local_setup.zsh
+[0.248s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/local_setup.dsv
+[0.248s] -- Symlinking: /ws/ros/install/camera_interface/share/camera_interface/package.dsv
+[0.269s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/ament_index/resource_index/packages/camera_interface
+[0.269s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/ament_index/resource_index/rclcpp_components/camera_interface
+[0.269s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.269s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.269s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/cmake/camera_interfaceConfig.cmake
+[0.271s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/cmake/camera_interfaceConfig-version.cmake
+[0.271s] -- Up-to-date symlink: /ws/ros/install/camera_interface/share/camera_interface/package.xml
+[0.283s] Invoked command in '/ws/ros/build/camera_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/camera_interface

@@ -1,0 +1,1 @@
+/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs/msg/SwarmControlCommand.msg

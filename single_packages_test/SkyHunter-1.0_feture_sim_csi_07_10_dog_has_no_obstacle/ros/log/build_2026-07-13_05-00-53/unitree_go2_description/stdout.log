@@ -1,0 +1,58 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Configuring done (0.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /ws/ros/build/unitree_go2_description
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/worlds/default.sdf
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/worlds/default_open.sdf
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/L1_4D_Lidar.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/VLP16_base_1.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/VLP16_base_2.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/VLP16_scan.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/calf.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/calf_mirror.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/foot.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/hip.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/hokuyo.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/thigh.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/thigh_mirror.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/meshes/trunk.dae
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/const.xacro
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/leg.xacro
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/lidar_4D_lidar.xacro
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/materials.xacro
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/realsense_d455.xacro
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/unitree_go2_gazebo.xacro
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/unitree_go2_gazebo.xacro.odombak
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/unitree_go2_robot.xacro
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/urdf/velodyne.xacro
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/ament_index/resource_index/package_run_dependencies/unitree_go2_description
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/ament_index/resource_index/parent_prefix_path/unitree_go2_description
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/environment/ament_prefix_path.sh
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/environment/ament_prefix_path.dsv
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/environment/path.sh
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/environment/path.dsv
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/local_setup.bash
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/local_setup.sh
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/local_setup.zsh
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/local_setup.dsv
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/package.dsv
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/ament_index/resource_index/packages/unitree_go2_description
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/cmake/unitree_go2_descriptionConfig.cmake
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/cmake/unitree_go2_descriptionConfig-version.cmake
+-- Symlinking: /ws/ros/install/unitree_go2_description/share/unitree_go2_description/package.xml
