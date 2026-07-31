@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/StreamControlCommand.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module combat_robot_msgs {
+  module msg {
+    module StreamControlCommand_Constants {
+      const uint8 STREAM_NONE = 0;
+      const uint8 STREAM_START = 1;
+      const uint8 STREAM_STOP = 2;
+    };
+    struct StreamControlCommand {
+      std_msgs::msg::Header header;
+
+      uint8 stream_command;
+
+      uint32 stream_target_robot_id;
+    };
+  };
+};

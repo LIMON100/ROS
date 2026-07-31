@@ -1,0 +1,1 @@
+/ws/ros/build/gun_trigger/ament_cmake_environment_hooks/local_setup.zsh

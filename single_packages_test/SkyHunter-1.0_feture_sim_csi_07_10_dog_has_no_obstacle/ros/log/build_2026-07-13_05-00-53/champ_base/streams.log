@@ -1,0 +1,153 @@
+[0.033s] Invoking command in '/ws/ros/build/champ_base': AMENT_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/champ_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/champ_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/champ_base -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/champ_base
+[0.140s] -- The C compiler identification is GNU 13.3.0
+[0.277s] -- The CXX compiler identification is GNU 13.3.0
+[0.307s] -- Detecting C compiler ABI info
+[0.490s] -- Detecting C compiler ABI info - done
+[0.509s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.509s] -- Detecting C compile features
+[0.512s] -- Detecting C compile features - done
+[0.519s] -- Detecting CXX compiler ABI info
+[0.659s] -- Detecting CXX compiler ABI info - done
+[0.685s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.685s] -- Detecting CXX compile features
+[0.686s] -- Detecting CXX compile features - done
+[0.694s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.836s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.910s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.990s] -- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+[1.131s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[1.179s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[1.237s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.296s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.521s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.539s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.771s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[1.816s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[1.867s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.011s] -- Found rclpy: 7.1.11 (/opt/ros/jazzy/share/rclpy/cmake)
+[2.011s] -- Found champ_msgs: 0.1.0 (/ws/ros/install/champ_msgs/share/champ_msgs/cmake)
+[2.134s] -- Found visualization_msgs: 5.3.7 (/opt/ros/jazzy/share/visualization_msgs/cmake)
+[2.225s] -- Found trajectory_msgs: 5.3.7 (/opt/ros/jazzy/share/trajectory_msgs/cmake)
+[2.257s] -- Found nav_msgs: 5.3.7 (/opt/ros/jazzy/share/nav_msgs/cmake)
+[2.288s] -- Found tf2_ros: 0.36.20 (/opt/ros/jazzy/share/tf2_ros/cmake)
+[2.386s] -- Found urdf: 2.10.0 (/opt/ros/jazzy/share/urdf/cmake)
+[2.417s] -- Found champ: 0.1.0 (/ws/ros/install/champ/share/champ/cmake)
+[2.494s] -- Configuring done (2.4s)
+[2.521s] -- Generating done (0.0s)
+[2.529s] -- Build files have been written to: /ws/ros/build/champ_base
+[2.536s] Invoked command in '/ws/ros/build/champ_base' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/champ_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/champ_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/champ_base -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/champ_base
+[2.537s] Invoking command in '/ws/ros/build/champ_base': AMENT_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/champ_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/champ_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/champ_base -- -j24 -l24
+[2.582s] [  8%] [32mBuilding CXX object CMakeFiles/state_estimation.dir/src/state_estimation.cpp.o[0m
+[2.584s] [ 25%] [32mBuilding CXX object CMakeFiles/quadruped_controller.dir/src/quadruped_controller.cpp.o[0m
+[2.584s] [ 25%] [32mBuilding CXX object CMakeFiles/message_relay.dir/src/message_relay.cpp.o[0m
+[14.138s] In file included from [01m[K/usr/include/c++/13/bits/stl_uninitialized.h:63[m[K,
+[14.141s]                  from [01m[K/usr/include/c++/13/memory:69[m[K,
+[14.142s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/rclcpp.hpp:173[m[K,
+[14.142s]                  from [01m[K/ws/ros/src/third_party/unitree_go2_ros2/champ_base/include/quadruped_controller.h:31[m[K,
+[14.142s]                  from [01m[K/ws/ros/src/third_party/unitree_go2_ros2/champ_base/src/quadruped_controller.cpp:29[m[K:
+[14.142s] In static member function ‘[01m[Kstatic _Up* std::__copy_move<_IsMove, true, std::random_access_iterator_tag>::[01;32m[K__copy_m[m[K(_Tp*, _Tp*, _Up*) [35m[K[with _Tp = long unsigned int; _Up = long unsigned int; bool _IsMove = false][m[K[m[K’,
+[14.142s]     inlined from ‘[01m[K_OI std::[01;32m[K__copy_move_a2[m[K(_II, _II, _OI) [35m[K[with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_algobase.h:506:30[m[K,
+[14.142s]     inlined from ‘[01m[K_OI std::[01;32m[K__copy_move_a1[m[K(_II, _II, _OI) [35m[K[with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_algobase.h:533:42[m[K,
+[14.142s]     inlined from ‘[01m[K_OI std::[01;32m[K__copy_move_a[m[K(_II, _II, _OI) [35m[K[with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_algobase.h:540:31[m[K,
+[14.142s]     inlined from ‘[01m[K_OI std::[01;32m[Kcopy[m[K(_II, _II, _OI) [35m[K[with _II = long unsigned int*; _OI = long unsigned int*][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_algobase.h:633:7[m[K,
+[14.142s]     inlined from ‘[01m[Kstd::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::[01;32m[K_M_copy_aligned[m[K(const_iterator, const_iterator, iterator) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1342:28[m[K,
+[14.142s]     inlined from ‘[01m[Kvoid std::vector<bool, _Alloc>::[01;32m[K_M_fill_insert[m[K(iterator, size_type, bool) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/vector.tcc:879:34[m[K,
+[14.142s]     inlined from ‘[01m[Kstd::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::[01;32m[Kinsert[m[K(const_iterator, size_type, const bool&) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1242:16[m[K,
+[14.142s]     inlined from ‘[01m[Kvoid std::vector<bool, _Alloc>::[01;32m[Kresize[m[K(size_type, bool) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1288:10[m[K,
+[14.142s]     inlined from ‘[01m[Kvoid QuadrupedController::[01;32m[KpublishFootContacts_[m[K(bool*)[m[K’ at [01m[K/ws/ros/src/third_party/unitree_go2_ros2/champ_base/src/quadruped_controller.cpp:194:37[m[K:
+[14.142s] [01m[K/usr/include/c++/13/bits/stl_algobase.h:437:30:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid*[01;32m[K __builtin_memmove[m[K(void*, const void*, long unsigned int)[m[K’ writing between 9 and 9223372036854775807 bytes into a region of size 8 overflows the destination [[01;35m[K-Wstringop-overflow=[m[K]
+[14.142s]   437 |             [01;35m[K__builtin_memmove(__result, __first, sizeof(_Tp) * _Num)[m[K;
+[14.142s]       |             [01;35m[K~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[14.143s] In file included from [01m[K/usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:33[m[K,
+[14.143s]                  from [01m[K/usr/include/c++/13/bits/allocator.h:46[m[K,
+[14.143s]                  from [01m[K/usr/include/c++/13/memory:65[m[K:
+[14.143s] In member function ‘[01m[K_Tp* std::__new_allocator<_Tp>::[01;32m[Kallocate[m[K(size_type, const void*) [35m[K[with _Tp = long unsigned int][m[K[m[K’,
+[14.143s]     inlined from ‘[01m[Kstatic _Tp* std::allocator_traits<std::allocator<_Tp1> >::[01;32m[Kallocate[m[K(allocator_type&, size_type) [35m[K[with _Tp = long unsigned int][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/alloc_traits.h:482:28[m[K,
+[14.143s]     inlined from ‘[01m[Kstd::_Bvector_base<_Alloc>::_Bit_pointer std::_Bvector_base<_Alloc>::[01;32m[K_M_allocate[m[K(std::size_t) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:679:48[m[K,
+[14.143s]     inlined from ‘[01m[Kvoid std::vector<bool, _Alloc>::[01;32m[K_M_fill_insert[m[K(iterator, size_type, bool) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/vector.tcc:877:40[m[K,
+[14.143s]     inlined from ‘[01m[Kstd::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::[01;32m[Kinsert[m[K(const_iterator, size_type, const bool&) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1242:16[m[K,
+[14.143s]     inlined from ‘[01m[Kvoid std::vector<bool, _Alloc>::[01;32m[Kresize[m[K(size_type, bool) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1288:10[m[K,
+[14.143s]     inlined from ‘[01m[Kvoid QuadrupedController::[01;32m[KpublishFootContacts_[m[K(bool*)[m[K’ at [01m[K/ws/ros/src/third_party/unitree_go2_ros2/champ_base/src/quadruped_controller.cpp:194:37[m[K:
+[14.143s] [01m[K/usr/include/c++/13/bits/new_allocator.h:151:55:[m[K [01;36m[Knote: [m[Kdestination object of size 8 allocated by ‘[01m[Koperator new[m[K’
+[14.143s]   151 |         return static_cast<_Tp*>(_GLIBCXX_OPERATOR_NEW[01;36m[K([m[K__n * sizeof(_Tp)));
+[14.143s]       |                                                       [01;36m[K^[m[K
+[15.453s] [ 33%] [32m[1mLinking CXX shared library libquadruped_controller.so[0m
+[15.893s] [ 33%] Built target quadruped_controller
+[15.929s] [ 41%] [32mBuilding CXX object CMakeFiles/quadruped_controller_node.dir/src/quadruped_controller_node.cpp.o[0m
+[18.580s] [ 50%] [32m[1mLinking CXX executable quadruped_controller_node[0m
+[18.679s] [ 50%] Built target quadruped_controller_node
+[20.104s] In file included from [01m[K/usr/include/c++/13/bits/stl_uninitialized.h:63[m[K,
+[20.105s]                  from [01m[K/usr/include/c++/13/memory:69[m[K,
+[20.105s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/rclcpp.hpp:173[m[K,
+[20.105s]                  from [01m[K/ws/ros/src/third_party/unitree_go2_ros2/champ_base/include/message_relay.h:31[m[K,
+[20.105s]                  from [01m[K/ws/ros/src/third_party/unitree_go2_ros2/champ_base/src/message_relay.cpp:28[m[K:
+[20.105s] In static member function ‘[01m[Kstatic _Up* std::__copy_move<_IsMove, true, std::random_access_iterator_tag>::[01;32m[K__copy_m[m[K(_Tp*, _Tp*, _Up*) [35m[K[with _Tp = long unsigned int; _Up = long unsigned int; bool _IsMove = false][m[K[m[K’,
+[20.105s]     inlined from ‘[01m[K_OI std::[01;32m[K__copy_move_a2[m[K(_II, _II, _OI) [35m[K[with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_algobase.h:506:30[m[K,
+[20.105s]     inlined from ‘[01m[K_OI std::[01;32m[K__copy_move_a1[m[K(_II, _II, _OI) [35m[K[with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_algobase.h:533:42[m[K,
+[20.105s]     inlined from ‘[01m[K_OI std::[01;32m[K__copy_move_a[m[K(_II, _II, _OI) [35m[K[with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_algobase.h:540:31[m[K,
+[20.105s]     inlined from ‘[01m[K_OI std::[01;32m[Kcopy[m[K(_II, _II, _OI) [35m[K[with _II = long unsigned int*; _OI = long unsigned int*][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_algobase.h:633:7[m[K,
+[20.105s]     inlined from ‘[01m[Kstd::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::[01;32m[K_M_copy_aligned[m[K(const_iterator, const_iterator, iterator) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1342:28[m[K,
+[20.105s]     inlined from ‘[01m[Kvoid std::vector<bool, _Alloc>::[01;32m[K_M_fill_insert[m[K(iterator, size_type, bool) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/vector.tcc:879:34[m[K,
+[20.105s]     inlined from ‘[01m[Kstd::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::[01;32m[Kinsert[m[K(const_iterator, size_type, const bool&) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1242:16[m[K,
+[20.105s]     inlined from ‘[01m[Kvoid std::vector<bool, _Alloc>::[01;32m[Kresize[m[K(size_type, bool) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1288:10[m[K,
+[20.105s]     inlined from ‘[01m[Kvoid MessageRelay::[01;32m[KfootContactCallback_[m[K(champ_msgs::msg::Contacts_<std::allocator<void> >::SharedPtr)[m[K’ at [01m[K/ws/ros/src/third_party/unitree_go2_ros2/champ_base/src/message_relay.cpp:167:33[m[K:
+[20.105s] [01m[K/usr/include/c++/13/bits/stl_algobase.h:437:30:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid*[01;32m[K __builtin_memmove[m[K(void*, const void*, long unsigned int)[m[K’ writing between 9 and 9223372036854775807 bytes into a region of size 8 overflows the destination [[01;35m[K-Wstringop-overflow=[m[K]
+[20.105s]   437 |             [01;35m[K__builtin_memmove(__result, __first, sizeof(_Tp) * _Num)[m[K;
+[20.105s]       |             [01;35m[K~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[20.106s] In file included from [01m[K/usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:33[m[K,
+[20.106s]                  from [01m[K/usr/include/c++/13/bits/allocator.h:46[m[K,
+[20.106s]                  from [01m[K/usr/include/c++/13/memory:65[m[K:
+[20.106s] In member function ‘[01m[K_Tp* std::__new_allocator<_Tp>::[01;32m[Kallocate[m[K(size_type, const void*) [35m[K[with _Tp = long unsigned int][m[K[m[K’,
+[20.106s]     inlined from ‘[01m[Kstatic _Tp* std::allocator_traits<std::allocator<_Tp1> >::[01;32m[Kallocate[m[K(allocator_type&, size_type) [35m[K[with _Tp = long unsigned int][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/alloc_traits.h:482:28[m[K,
+[20.106s]     inlined from ‘[01m[Kstd::_Bvector_base<_Alloc>::_Bit_pointer std::_Bvector_base<_Alloc>::[01;32m[K_M_allocate[m[K(std::size_t) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:679:48[m[K,
+[20.106s]     inlined from ‘[01m[Kvoid std::vector<bool, _Alloc>::[01;32m[K_M_fill_insert[m[K(iterator, size_type, bool) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/vector.tcc:877:40[m[K,
+[20.106s]     inlined from ‘[01m[Kstd::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::[01;32m[Kinsert[m[K(const_iterator, size_type, const bool&) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1242:16[m[K,
+[20.106s]     inlined from ‘[01m[Kvoid std::vector<bool, _Alloc>::[01;32m[Kresize[m[K(size_type, bool) [35m[K[with _Alloc = std::allocator<bool>][m[K[m[K’ at [01m[K/usr/include/c++/13/bits/stl_bvector.h:1288:10[m[K,
+[20.106s]     inlined from ‘[01m[Kvoid MessageRelay::[01;32m[KfootContactCallback_[m[K(champ_msgs::msg::Contacts_<std::allocator<void> >::SharedPtr)[m[K’ at [01m[K/ws/ros/src/third_party/unitree_go2_ros2/champ_base/src/message_relay.cpp:167:33[m[K:
+[20.106s] [01m[K/usr/include/c++/13/bits/new_allocator.h:151:55:[m[K [01;36m[Knote: [m[Kdestination object of size 8 allocated by ‘[01m[Koperator new[m[K’
+[20.106s]   151 |         return static_cast<_Tp*>(_GLIBCXX_OPERATOR_NEW[01;36m[K([m[K__n * sizeof(_Tp)));
+[20.106s]       |                                                       [01;36m[K^[m[K
+[20.913s] [ 58%] [32m[1mLinking CXX shared library libmessage_relay.so[0m
+[21.047s] [ 58%] Built target message_relay
+[21.067s] [ 66%] [32mBuilding CXX object CMakeFiles/message_relay_node.dir/src/message_relay_node.cpp.o[0m
+[23.024s] [ 75%] [32m[1mLinking CXX shared library libstate_estimation.so[0m
+[23.165s] [ 75%] Built target state_estimation
+[23.185s] [ 83%] [32mBuilding CXX object CMakeFiles/state_estimation_node.dir/src/state_estimation_node.cpp.o[0m
+[23.552s] [ 91%] [32m[1mLinking CXX executable message_relay_node[0m
+[23.701s] [ 91%] Built target message_relay_node
+[27.316s] [100%] [32m[1mLinking CXX executable state_estimation_node[0m
+[27.417s] [100%] Built target state_estimation_node
+[27.428s] Invoked command in '/ws/ros/build/champ_base' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/champ_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/champ_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/champ_base -- -j24 -l24
+[27.429s] Invoking command in '/ws/ros/build/champ_base': AMENT_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/champ_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/champ_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/champ_base
+[27.435s] -- Install configuration: "Release"
+[27.435s] -- Execute custom install script
+[27.435s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/config/ekf/base_to_footprint.yaml
+[27.443s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/config/ekf/footprint_to_odom.yaml
+[27.449s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/config/velocity_smoother/velocity_smoother.yaml
+[27.456s] -- Symlinking: /ws/ros/install/champ_base/lib/libquadruped_controller.so
+[27.462s] -- Symlinking: /ws/ros/install/champ_base/bin/quadruped_controller_node
+[27.469s] -- Symlinking: /ws/ros/install/champ_base/lib/libmessage_relay.so
+[27.474s] -- Symlinking: /ws/ros/install/champ_base/bin/message_relay_node
+[27.482s] -- Symlinking: /ws/ros/install/champ_base/lib/libstate_estimation.so
+[27.489s] -- Symlinking: /ws/ros/install/champ_base/bin/state_estimation_node
+[27.497s] -- Symlinking: /ws/ros/install/champ_base/lib/champ_base/quadruped_controller_node
+[27.505s] -- Symlinking: /ws/ros/install/champ_base/lib/champ_base/message_relay_node
+[27.509s] -- Symlinking: /ws/ros/install/champ_base/lib/champ_base/state_estimation_node
+[27.517s] -- Symlinking: /ws/ros/install/champ_base/share/ament_index/resource_index/package_run_dependencies/champ_base
+[27.522s] -- Symlinking: /ws/ros/install/champ_base/share/ament_index/resource_index/parent_prefix_path/champ_base
+[27.530s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/environment/ament_prefix_path.sh
+[27.537s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/environment/ament_prefix_path.dsv
+[27.544s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/environment/path.sh
+[27.552s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/environment/path.dsv
+[27.558s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/local_setup.bash
+[27.566s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/local_setup.sh
+[27.573s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/local_setup.zsh
+[27.580s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/local_setup.dsv
+[27.587s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/package.dsv
+[27.593s] -- Symlinking: /ws/ros/install/champ_base/share/ament_index/resource_index/packages/champ_base
+[27.600s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/cmake/ament_cmake_export_include_directories-extras.cmake
+[27.605s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/cmake/ament_cmake_export_dependencies-extras.cmake
+[27.612s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/cmake/champ_baseConfig.cmake
+[27.619s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/cmake/champ_baseConfig-version.cmake
+[27.626s] -- Symlinking: /ws/ros/install/champ_base/share/champ_base/package.xml
+[27.635s] Invoked command in '/ws/ros/build/champ_base' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/champ_msgs:/ws/ros/install/champ:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/champ_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/champ_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/champ_base

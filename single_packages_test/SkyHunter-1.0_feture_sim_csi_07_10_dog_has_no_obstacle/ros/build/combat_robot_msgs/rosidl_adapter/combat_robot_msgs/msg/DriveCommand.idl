@@ -1,0 +1,23 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/DriveCommand.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module combat_robot_msgs {
+  module msg {
+    @verbatim (language="comment", text=
+      "combat_robot_msgs/msg/DriveCommand.msg")
+    struct DriveCommand {
+      std_msgs::msg::Header header;
+
+      @verbatim (language="comment", text=
+        "m/s, forward(+)/backward(-)")
+      float linear_velocity;
+
+      @verbatim (language="comment", text=
+        "rad/s, left(+)/right(-)  ← 기존 부호 규칙 그대로 사용")
+      float angular_velocity;
+    };
+  };
+};

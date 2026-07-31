@@ -1,0 +1,883 @@
+[0.032s] Invoking command in '/ws/ros/build/combat_robot_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/combat_robot_msgs
+[0.146s] -- The C compiler identification is GNU 13.3.0
+[0.191s] -- The CXX compiler identification is GNU 13.3.0
+[0.200s] -- Detecting C compiler ABI info
+[0.255s] -- Detecting C compiler ABI info - done
+[0.261s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.262s] -- Detecting C compile features
+[0.262s] -- Detecting C compile features - done
+[0.269s] -- Detecting CXX compiler ABI info
+[0.343s] -- Detecting CXX compiler ABI info - done
+[0.351s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.352s] -- Detecting CXX compile features
+[0.352s] -- Detecting CXX compile features - done
+[0.357s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.482s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.536s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.598s] -- Found builtin_interfaces: 2.0.3 (/opt/ros/jazzy/share/builtin_interfaces/cmake)
+[0.652s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.670s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.691s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.710s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.731s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[0.752s] -- Found rosidl_adapter: 4.6.7 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[0.756s] -- Found std_msgs: 5.3.7 (/opt/ros/jazzy/share/std_msgs/cmake)
+[0.769s] -- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[1.313s] -- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+[2.234s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.575s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.582s] -- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)
+[2.694s] -- Found PythonExtra: /usr/bin/python3  
+[3.138s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed 
+[3.274s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[3.285s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[3.337s] -- Added test 'copyright' to check source files copyright and LICENSE
+[3.341s] -- Added test 'lint_cmake' to check CMake code style
+[3.343s] -- Added test 'xmllint' to check XML markup files
+[3.349s] -- Configuring done (3.3s)
+[3.465s] -- Generating done (0.1s)
+[3.483s] -- Build files have been written to: /ws/ros/build/combat_robot_msgs
+[3.501s] Invoked command in '/ws/ros/build/combat_robot_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/combat_robot_msgs
+[3.502s] Invoking command in '/ws/ros/build/combat_robot_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/combat_robot_msgs -- -j24 -l24
+[3.575s] [  0%] [34m[1mGenerating Rust code for ROS interfaces[0m
+[3.575s] [  0%] [34m[1mGenerating type hashes for ROS interfaces[0m
+[3.583s] [  0%] Built target ament_cmake_python_symlink_combat_robot_msgs
+[3.753s] running egg_info
+[3.754s] creating combat_robot_msgs.egg-info
+[3.762s] writing combat_robot_msgs.egg-info/PKG-INFO
+[3.762s] writing dependency_links to combat_robot_msgs.egg-info/dependency_links.txt
+[3.762s] writing top-level names to combat_robot_msgs.egg-info/top_level.txt
+[3.762s] writing manifest file 'combat_robot_msgs.egg-info/SOURCES.txt'
+[3.792s] reading manifest file 'combat_robot_msgs.egg-info/SOURCES.txt'
+[3.793s] writing manifest file 'combat_robot_msgs.egg-info/SOURCES.txt'
+[3.849s] [  0%] Built target ament_cmake_python_build_combat_robot_msgs_egg
+[5.308s] [  0%] Built target combat_robot_msgs__rosidl_generator_type_description
+[5.347s] [  1%] [34m[1mGenerating C code for ROS interfaces[0m
+[5.353s] [  1%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[5.417s] [  1%] Built target combat_robot_msgs__rs
+[7.150s] [  1%] Built target combat_robot_msgs__cpp
+[7.781s] [  2%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_object__type_support.c.o[0m
+[7.781s] [  2%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_objects__type_support.c.o[0m
+[7.781s] [  2%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_objects__description.c.o[0m
+[7.781s] [  2%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/bounding_box2d__functions.c.o[0m
+[7.781s] [  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/target_point__functions.c.o[0m
+[7.781s] [  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_object__description.c.o[0m
+[7.781s] [  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/bounding_box2d__description.c.o[0m
+[7.781s] [  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/target_point__description.c.o[0m
+[7.781s] [  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_object__functions.c.o[0m
+[7.781s] [  4%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_objects__functions.c.o[0m
+[7.781s] [  4%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/target_point__type_support.c.o[0m
+[7.781s] [  5%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/bounding_box2d__type_support.c.o[0m
+[7.785s] [  6%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/touch_target_point__description.c.o[0m
+[7.786s] [  6%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/touch_target_point__type_support.c.o[0m
+[7.786s] [  6%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/touch_target_point__functions.c.o[0m
+[7.796s] [  7%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/user_command__functions.c.o[0m
+[7.796s] [  7%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/user_command__description.c.o[0m
+[7.809s] [  8%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/mission_control_command__type_support.c.o[0m
+[7.810s] [  8%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/mission_control_command__functions.c.o[0m
+[7.812s] [  8%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/user_command__type_support.c.o[0m
+[7.815s] [  8%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/stream_control_command__functions.c.o[0m
+[7.816s] [  9%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/mission_control_command__description.c.o[0m
+[7.817s] [ 10%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/stream_control_command__type_support.c.o[0m
+[7.818s] [ 10%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/stream_control_command__description.c.o[0m
+[7.819s] [ 10%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_control_command__description.c.o[0m
+[7.822s] [ 10%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_control_command__functions.c.o[0m
+[7.839s] [ 11%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_control_command__type_support.c.o[0m
+[7.840s] [ 12%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_follower_status__functions.c.o[0m
+[7.843s] [ 12%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.c.o[0m
+[7.843s] [ 12%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.c.o[0m
+[7.843s] [ 13%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__functions.c.o[0m
+[7.844s] [ 13%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_follower_status__description.c.o[0m
+[7.844s] [ 13%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__description.c.o[0m
+[7.851s] [ 13%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_path_command__description.c.o[0m
+[7.876s] [ 14%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_path_command__functions.c.o[0m
+[7.876s] [ 15%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_robot_command__description.c.o[0m
+[7.878s] [ 15%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_path_command__type_support.c.o[0m
+[7.878s] [ 15%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_robot_command__functions.c.o[0m
+[7.881s] [ 15%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.c.o[0m
+[7.883s] [ 16%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/imu_state__description.c.o[0m
+[7.884s] [ 16%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/imu_state__functions.c.o[0m
+[7.887s] [ 16%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/imu_state__type_support.c.o[0m
+[7.903s] [ 16%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/drive_command__description.c.o[0m
+[7.907s] [ 17%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/operation_state__description.c.o[0m
+[7.910s] [ 18%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/operation_state__type_support.c.o[0m
+[7.910s] [ 18%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/operation_state__functions.c.o[0m
+[7.912s] [ 18%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/drive_command__functions.c.o[0m
+[7.915s] [ 19%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/drive_command__type_support.c.o[0m
+[7.921s] [ 19%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__description.c.o[0m
+[7.922s] [ 20%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__functions.c.o[0m
+[7.925s] [ 20%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.c.o[0m
+[7.925s] [ 20%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_state__description.c.o[0m
+[7.946s] [ 21%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint__description.c.o[0m
+[7.947s] [ 21%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.c.o[0m
+[7.951s] [ 22%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/center_object__type_support.c.o[0m
+[7.951s] [ 22%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/center_object__functions.c.o[0m
+[7.951s] [ 23%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint_list__description.c.o[0m
+[7.953s] [ 23%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint__functions.c.o[0m
+[7.954s] [ 23%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint__type_support.c.o[0m
+[7.956s] [ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_state__functions.c.o[0m
+[7.956s] [ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint_list__functions.c.o[0m
+[7.959s] [ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/center_object__description.c.o[0m
+[7.969s] [ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint_list__type_support.c.o[0m
+[7.987s] [ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/gnss_status__functions.c.o[0m
+[7.988s] [ 25%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/gnss_status__description.c.o[0m
+[7.992s] [ 26%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/chassis_status__type_support.c.o[0m
+[7.992s] [ 26%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/lidar_status__description.c.o[0m
+[7.993s] [ 27%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/gnss_status__type_support.c.o[0m
+[7.994s] [ 27%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/chassis_status__description.c.o[0m
+[7.994s] [ 27%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/lidar_status__functions.c.o[0m
+[7.998s] [ 27%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/chassis_status__functions.c.o[0m
+[8.002s] [ 28%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/lidar_status__type_support.c.o[0m
+[8.076s] [ 28%] [32m[1mLinking C shared library libcombat_robot_msgs__rosidl_generator_c.so[0m
+[8.112s] [ 28%] Built target combat_robot_msgs__rosidl_generator_c
+[8.121s] [ 28%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[8.121s] [ 28%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[8.121s] [ 28%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[8.121s] [ 29%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[8.121s] [ 30%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[8.122s] [ 30%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[8.946s] [ 31%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/detected_objects__type_support.cpp.o[0m
+[8.946s] [ 32%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/mission_control_command__type_support.cpp.o[0m
+[8.946s] [ 32%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/target_point__type_support.cpp.o[0m
+[8.946s] [ 32%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/user_command__type_support.cpp.o[0m
+[8.947s] [ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/bounding_box2d__type_support.cpp.o[0m
+[8.947s] [ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/touch_target_point__type_support.cpp.o[0m
+[8.947s] [ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/detected_object__type_support.cpp.o[0m
+[8.950s] [ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/stream_control_command__type_support.cpp.o[0m
+[8.951s] [ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_leader_heartbeat__type_support.cpp.o[0m
+[8.952s] [ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_robot_command__type_support.cpp.o[0m
+[8.952s] [ 34%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_control_command__type_support.cpp.o[0m
+[8.952s] [ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/imu_state__type_support.cpp.o[0m
+[8.954s] [ 35%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_path_command__type_support.cpp.o[0m
+[8.954s] [ 35%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_follower_status__type_support.cpp.o[0m
+[8.954s] [ 36%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/operation_state__type_support.cpp.o[0m
+[8.992s] [ 36%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/drive_command__type_support.cpp.o[0m
+[8.992s] [ 37%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/pan_tilt_control_command__type_support.cpp.o[0m
+[9.004s] [ 37%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/pan_tilt_state__type_support.cpp.o[0m
+[9.004s] [ 37%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/center_object__type_support.cpp.o[0m
+[9.239s] [ 38%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/waypoint__type_support.cpp.o[0m
+[9.352s] [ 38%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/waypoint_list__type_support.cpp.o[0m
+[9.356s] [ 38%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/gnss_status__type_support.cpp.o[0m
+[9.367s] [ 39%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/chassis_status__type_support.cpp.o[0m
+[9.376s] [ 39%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/lidar_status__type_support.cpp.o[0m
+[9.447s] [ 40%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/bounding_box2d__type_support.cpp.o[0m
+[9.455s] [ 41%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/detected_objects__type_support.cpp.o[0m
+[9.457s] [ 41%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/target_point__type_support.cpp.o[0m
+[9.460s] [ 41%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/detected_object__type_support.cpp.o[0m
+[9.469s] [ 41%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/touch_target_point__type_support.cpp.o[0m
+[9.471s] [ 42%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/user_command__type_support.cpp.o[0m
+[9.478s] [ 42%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/stream_control_command__type_support.cpp.o[0m
+[9.479s] [ 42%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/mission_control_command__type_support.cpp.o[0m
+[9.486s] [ 42%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_follower_status__type_support.cpp.o[0m
+[9.486s] [ 43%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_control_command__type_support.cpp.o[0m
+[9.518s] [ 43%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_path_command__type_support.cpp.o[0m
+[9.520s] [ 44%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_leader_heartbeat__type_support.cpp.o[0m
+[9.528s] [ 44%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/drive_command__type_support.cpp.o[0m
+[9.532s] [ 44%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_robot_command__type_support.cpp.o[0m
+[9.535s] [ 45%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/imu_state__type_support.cpp.o[0m
+[9.535s] [ 45%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/operation_state__type_support.cpp.o[0m
+[9.536s] [ 46%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/pan_tilt_control_command__type_support.cpp.o[0m
+[9.538s] [ 46%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/pan_tilt_state__type_support.cpp.o[0m
+[9.539s] [ 47%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/center_object__type_support.cpp.o[0m
+[9.567s] [ 48%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/bounding_box2d__type_support.cpp.o[0m
+[9.567s] [ 48%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/waypoint__type_support.cpp.o[0m
+[9.567s] [ 48%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/detected_object__type_support.cpp.o[0m
+[9.567s] [ 48%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/waypoint_list__type_support.cpp.o[0m
+[9.569s] [ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/gnss_status__type_support.cpp.o[0m
+[9.575s] [ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/detected_objects__type_support.cpp.o[0m
+[9.600s] [ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/target_point__type_support.cpp.o[0m
+[9.600s] [ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/lidar_status__type_support.cpp.o[0m
+[9.601s] [ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/chassis_status__type_support.cpp.o[0m
+[9.608s] [ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/touch_target_point__type_support.cpp.o[0m
+[9.611s] [ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/stream_control_command__type_support.cpp.o[0m
+[9.613s] [ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/mission_control_command__type_support.cpp.o[0m
+[9.615s] [ 51%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/user_command__type_support.cpp.o[0m
+[9.622s] [ 52%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.cpp.o[0m
+[9.632s] [ 53%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_control_command__type_support.cpp.o[0m
+[9.635s] [ 53%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.cpp.o[0m
+[9.641s] [ 53%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.cpp.o[0m
+[9.641s] [ 53%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_path_command__type_support.cpp.o[0m
+[9.681s] [ 54%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/imu_state__type_support.cpp.o[0m
+[9.684s] [ 54%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/operation_state__type_support.cpp.o[0m
+[9.685s] [ 55%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_c.so[0m
+[9.701s] [ 55%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/drive_command__type_support.cpp.o[0m
+[9.713s] [ 56%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.cpp.o[0m
+[9.798s] [ 56%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.cpp.o[0m
+[9.798s] [ 56%] Built target combat_robot_msgs__rosidl_typesupport_c
+[9.812s] [ 57%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/center_object__type_support.cpp.o[0m
+[9.818s] [ 57%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/waypoint__type_support.cpp.o[0m
+[9.871s] [ 57%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/waypoint_list__type_support.cpp.o[0m
+[9.927s] [ 58%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_cpp.so[0m
+[9.933s] [ 59%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/gnss_status__type_support.cpp.o[0m
+[9.951s] [ 59%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/chassis_status__type_support.cpp.o[0m
+[10.008s] [ 59%] Built target combat_robot_msgs__rosidl_typesupport_cpp
+[10.027s] [ 59%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/lidar_status__type_support.cpp.o[0m
+[10.205s] [ 59%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/bounding_box2d__type_support.c.o[0m
+[10.205s] [ 60%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/detected_objects__type_support.c.o[0m
+[10.205s] [ 60%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/detected_object__type_support.c.o[0m
+[10.210s] [ 60%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/user_command__type_support.c.o[0m
+[10.211s] [ 61%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/stream_control_command__type_support.c.o[0m
+[10.212s] [ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/touch_target_point__type_support.c.o[0m
+[10.212s] [ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_control_command__type_support.c.o[0m
+[10.213s] [ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/target_point__type_support.c.o[0m
+[10.217s] [ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/mission_control_command__type_support.c.o[0m
+[10.219s] [ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.c.o[0m
+[10.238s] [ 63%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.c.o[0m
+[10.243s] [ 63%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/operation_state__type_support.c.o[0m
+[10.245s] [ 64%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.c.o[0m
+[10.247s] [ 64%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_path_command__type_support.c.o[0m
+[10.248s] [ 64%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.c.o[0m
+[10.251s] [ 66%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/center_object__type_support.c.o[0m
+[10.254s] [ 66%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/drive_command__type_support.c.o[0m
+[10.254s] [ 66%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.c.o[0m
+[10.257s] [ 66%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/imu_state__type_support.c.o[0m
+[10.257s] [ 67%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/waypoint_list__type_support.c.o[0m
+[10.257s] [ 67%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/waypoint__type_support.c.o[0m
+[10.273s] [ 67%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/gnss_status__type_support.c.o[0m
+[10.273s] [ 67%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/chassis_status__type_support.c.o[0m
+[10.277s] [ 68%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/lidar_status__type_support.c.o[0m
+[10.318s] [ 68%] [32m[1mLinking C shared library libcombat_robot_msgs__rosidl_typesupport_introspection_c.so[0m
+[10.351s] [ 68%] Built target combat_robot_msgs__rosidl_typesupport_introspection_c
+[10.352s] [ 69%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_introspection_cpp.so[0m
+[10.424s] [ 69%] Built target combat_robot_msgs__rosidl_typesupport_introspection_cpp
+[10.433s] [ 70%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/detected_object__type_support.cpp.o[0m
+[10.434s] [ 70%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/bounding_box2d__type_support.cpp.o[0m
+[10.434s] [ 70%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/detected_objects__type_support.cpp.o[0m
+[10.437s] [ 71%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_follower_status__type_support.cpp.o[0m
+[10.437s] [ 71%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/mission_control_command__type_support.cpp.o[0m
+[10.437s] [ 71%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/user_command__type_support.cpp.o[0m
+[10.437s] [ 71%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/target_point__type_support.cpp.o[0m
+[10.437s] [ 72%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/stream_control_command__type_support.cpp.o[0m
+[10.437s] [ 73%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/touch_target_point__type_support.cpp.o[0m
+[10.437s] [ 73%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_control_command__type_support.cpp.o[0m
+[10.438s] [ 73%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_leader_heartbeat__type_support.cpp.o[0m
+[10.438s] [ 73%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_path_command__type_support.cpp.o[0m
+[10.442s] [ 74%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_robot_command__type_support.cpp.o[0m
+[10.445s] [ 75%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/target_point__type_support_c.cpp.o[0m
+[10.448s] [ 75%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/imu_state__type_support.cpp.o[0m
+[10.448s] [ 75%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/operation_state__type_support.cpp.o[0m
+[10.448s] [ 75%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/detected_objects__type_support_c.cpp.o[0m
+[10.448s] [ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/bounding_box2d__type_support_c.cpp.o[0m
+[10.449s] [ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/mission_control_command__type_support_c.cpp.o[0m
+[10.450s] [ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/touch_target_point__type_support_c.cpp.o[0m
+[10.452s] [ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_control_command__type_support_c.cpp.o[0m
+[10.452s] [ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/user_command__type_support_c.cpp.o[0m
+[10.455s] [ 77%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/detected_object__type_support_c.cpp.o[0m
+[10.460s] [ 77%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/stream_control_command__type_support_c.cpp.o[0m
+[10.877s] [ 78%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_follower_status__type_support_c.cpp.o[0m
+[10.880s] [ 79%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/drive_command__type_support.cpp.o[0m
+[10.948s] [ 79%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support_c.cpp.o[0m
+[10.950s] [ 79%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/pan_tilt_control_command__type_support.cpp.o[0m
+[11.023s] [ 80%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_path_command__type_support_c.cpp.o[0m
+[11.034s] [ 80%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_robot_command__type_support_c.cpp.o[0m
+[11.105s] [ 80%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/imu_state__type_support_c.cpp.o[0m
+[11.152s] [ 81%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/pan_tilt_state__type_support.cpp.o[0m
+[11.187s] [ 81%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/center_object__type_support.cpp.o[0m
+[11.188s] [ 82%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/operation_state__type_support_c.cpp.o[0m
+[11.201s] [ 82%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/drive_command__type_support_c.cpp.o[0m
+[11.218s] [ 82%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/waypoint__type_support.cpp.o[0m
+[11.252s] [ 83%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/waypoint_list__type_support.cpp.o[0m
+[11.270s] [ 83%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/gnss_status__type_support.cpp.o[0m
+[11.316s] [ 83%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support_c.cpp.o[0m
+[11.325s] [ 83%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/chassis_status__type_support.cpp.o[0m
+[11.331s] [ 84%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/lidar_status__type_support.cpp.o[0m
+[11.332s] [ 85%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/pan_tilt_state__type_support_c.cpp.o[0m
+[11.338s] [ 85%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/center_object__type_support_c.cpp.o[0m
+[11.369s] [ 86%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/waypoint__type_support_c.cpp.o[0m
+[11.393s] [ 86%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/waypoint_list__type_support_c.cpp.o[0m
+[11.424s] [ 86%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/gnss_status__type_support_c.cpp.o[0m
+[11.478s] [ 87%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/chassis_status__type_support_c.cpp.o[0m
+[11.535s] [ 87%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/lidar_status__type_support_c.cpp.o[0m
+[11.935s] [ 87%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_fastrtps_cpp.so[0m
+[11.986s] [ 87%] Built target combat_robot_msgs__rosidl_typesupport_fastrtps_cpp
+[11.990s] [ 87%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_fastrtps_c.so[0m
+[12.042s] [ 87%] Built target combat_robot_msgs__rosidl_typesupport_fastrtps_c
+[12.060s] [ 87%] Built target combat_robot_msgs
+[12.081s] [ 87%] [34m[1mGenerating Python code for ROS interfaces[0m
+[14.169s] [ 87%] Built target combat_robot_msgs__py
+[14.194s] [ 88%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_touch_target_point_s.c.o[0m
+[14.194s] [ 88%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_user_command_s.c.o[0m
+[14.194s] [ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_leader_heartbeat_s.c.o[0m
+[14.194s] [ 90%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_mission_control_command_s.c.o[0m
+[14.194s] [ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_imu_state_s.c.o[0m
+[14.194s] [ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_detected_objects_s.c.o[0m
+[14.194s] [ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_follower_status_s.c.o[0m
+[14.194s] [ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_target_point_s.c.o[0m
+[14.195s] [ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_detected_object_s.c.o[0m
+[14.195s] [ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_robot_command_s.c.o[0m
+[14.195s] [ 91%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_control_command_s.c.o[0m
+[14.195s] [ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_operation_state_s.c.o[0m
+[14.195s] [ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_path_command_s.c.o[0m
+[14.196s] [ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_bounding_box2d_s.c.o[0m
+[14.196s] [ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_stream_control_command_s.c.o[0m
+[14.202s] [ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_drive_command_s.c.o[0m
+[14.202s] [ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_pan_tilt_state_s.c.o[0m
+[14.202s] [ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_center_object_s.c.o[0m
+[14.202s] [ 94%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_waypoint_s.c.o[0m
+[14.202s] [ 95%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_pan_tilt_control_command_s.c.o[0m
+[14.232s] [ 96%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_chassis_status_s.c.o[0m
+[14.233s] [ 96%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_waypoint_list_s.c.o[0m
+[14.244s] [ 96%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_lidar_status_s.c.o[0m
+[14.249s] [ 96%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_gnss_status_s.c.o[0m
+[14.448s] [ 97%] [32m[1mLinking C shared library libcombat_robot_msgs__rosidl_generator_py.so[0m
+[14.487s] [ 97%] Built target combat_robot_msgs__rosidl_generator_py
+[14.503s] [ 98%] [32mBuilding C object CMakeFiles/combat_robot_msgs_s__rosidl_typesupport_c.dir/rosidl_generator_py/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_c.c.o[0m
+[14.504s] [ 98%] [32mBuilding C object CMakeFiles/combat_robot_msgs_s__rosidl_typesupport_introspection_c.dir/rosidl_generator_py/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[14.504s] [ 98%] [32mBuilding C object CMakeFiles/combat_robot_msgs_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator_py/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[14.708s] [ 98%] [32m[1mLinking C shared module rosidl_generator_py/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_c.so[0m
+[14.721s] [ 99%] [32m[1mLinking C shared module rosidl_generator_py/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_introspection_c.so[0m
+[14.740s] [ 99%] Built target combat_robot_msgs_s__rosidl_typesupport_c
+[14.751s] [ 99%] Built target combat_robot_msgs_s__rosidl_typesupport_introspection_c
+[14.764s] [100%] [32m[1mLinking C shared module rosidl_generator_py/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_fastrtps_c.so[0m
+[14.792s] [100%] Built target combat_robot_msgs_s__rosidl_typesupport_fastrtps_c
+[14.802s] Invoked command in '/ws/ros/build/combat_robot_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/combat_robot_msgs -- -j24 -l24
+[14.803s] Invoking command in '/ws/ros/build/combat_robot_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/combat_robot_msgs
+[14.810s] -- Install configuration: "Release"
+[14.811s] -- Execute custom install script
+[14.811s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/rosidl_interfaces/combat_robot_msgs
+[14.817s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/BoundingBox2d.json
+[14.825s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObject.json
+[14.831s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObjects.json
+[14.837s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TargetPoint.json
+[14.846s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TouchTargetPoint.json
+[14.855s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/UserCommand.json
+[14.865s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/MissionControlCommand.json
+[14.872s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/StreamControlCommand.json
+[14.885s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmControlCommand.json
+[14.891s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmFollowerStatus.json
+[14.897s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmLeaderHeartbeat.json
+[14.903s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmPathCommand.json
+[14.912s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmRobotCommand.json
+[14.920s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/IMUState.json
+[14.926s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/OperationState.json
+[14.932s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DriveCommand.json
+[14.941s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltControlCommand.json
+[14.947s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltState.json
+[14.954s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/CenterObject.json
+[14.960s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/Waypoint.json
+[14.969s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/WaypointList.json
+[14.978s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/GnssStatus.json
+[14.987s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/ChassisStatus.json
+[14.994s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/LidarStatus.json
+[15.004s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/bounding_box2d.h
+[15.010s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/center_object.h
+[15.018s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/chassis_status.h
+[15.029s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__functions.h
+[15.034s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__struct.h
+[15.042s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__type_support.h
+[15.051s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__functions.h
+[15.057s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__struct.h
+[15.064s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__type_support.h
+[15.073s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__functions.h
+[15.079s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__struct.h
+[15.086s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__type_support.h
+[15.093s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__functions.h
+[15.099s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__struct.h
+[15.108s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__type_support.h
+[15.113s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__functions.h
+[15.119s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__struct.h
+[15.127s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__type_support.h
+[15.135s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__functions.h
+[15.142s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__struct.h
+[15.150s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__type_support.h
+[15.158s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__functions.h
+[15.166s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__struct.h
+[15.175s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__type_support.h
+[15.183s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__functions.h
+[15.192s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__struct.h
+[15.200s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__type_support.h
+[15.207s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__functions.h
+[15.216s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__struct.h
+[15.224s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__type_support.h
+[15.231s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__functions.h
+[15.240s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__struct.h
+[15.248s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__type_support.h
+[15.255s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__functions.h
+[15.263s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__struct.h
+[15.272s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__type_support.h
+[15.279s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__functions.h
+[15.287s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__struct.h
+[15.295s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.h
+[15.302s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__functions.h
+[15.311s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__struct.h
+[15.320s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.h
+[15.329s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__functions.h
+[15.337s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__struct.h
+[15.346s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__type_support.h
+[15.354s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__functions.h
+[15.364s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__struct.h
+[15.373s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__type_support.h
+[15.381s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__functions.h
+[15.390s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__struct.h
+[15.399s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.h
+[15.407s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__functions.h
+[15.416s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__struct.h
+[15.424s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.h
+[15.432s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__functions.h
+[15.441s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__struct.h
+[15.449s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__type_support.h
+[15.458s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__functions.h
+[15.467s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__struct.h
+[15.474s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.h
+[15.482s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__functions.h
+[15.491s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__struct.h
+[15.498s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__type_support.h
+[15.506s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__functions.h
+[15.515s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__struct.h
+[15.522s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__type_support.h
+[15.530s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__functions.h
+[15.538s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__struct.h
+[15.546s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__type_support.h
+[15.555s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__functions.h
+[15.563s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__struct.h
+[15.570s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__type_support.h
+[15.579s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__functions.h
+[15.587s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__struct.h
+[15.594s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__type_support.h
+[15.602s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detected_object.h
+[15.611s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detected_objects.h
+[15.618s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/drive_command.h
+[15.626s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/gnss_status.h
+[15.634s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/imu_state.h
+[15.644s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/lidar_status.h
+[15.654s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/mission_control_command.h
+[15.665s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/operation_state.h
+[15.675s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/pan_tilt_control_command.h
+[15.681s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/pan_tilt_state.h
+[15.689s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_generator_c__visibility_control.h
+[15.696s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/stream_control_command.h
+[15.704s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_control_command.h
+[15.713s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_follower_status.h
+[15.723s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_leader_heartbeat.h
+[15.729s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_path_command.h
+[15.738s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_robot_command.h
+[15.747s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/target_point.h
+[15.752s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/touch_target_point.h
+[15.758s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/user_command.h
+[15.766s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/waypoint.h
+[15.775s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/waypoint_list.h
+[15.779s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/library_path.sh
+[15.785s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/library_path.dsv
+[15.793s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__rosidl_typesupport_fastrtps_c.h
+[15.800s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__rosidl_typesupport_fastrtps_c.h
+[15.805s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__rosidl_typesupport_fastrtps_c.h
+[15.814s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__rosidl_typesupport_fastrtps_c.h
+[15.821s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__rosidl_typesupport_fastrtps_c.h
+[15.830s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__rosidl_typesupport_fastrtps_c.h
+[15.837s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__rosidl_typesupport_fastrtps_c.h
+[15.843s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__rosidl_typesupport_fastrtps_c.h
+[15.850s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__rosidl_typesupport_fastrtps_c.h
+[15.858s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__rosidl_typesupport_fastrtps_c.h
+[15.868s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__rosidl_typesupport_fastrtps_c.h
+[15.876s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__rosidl_typesupport_fastrtps_c.h
+[15.883s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__rosidl_typesupport_fastrtps_c.h
+[15.892s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__rosidl_typesupport_fastrtps_c.h
+[15.900s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__rosidl_typesupport_fastrtps_c.h
+[15.906s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__rosidl_typesupport_fastrtps_c.h
+[15.915s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__rosidl_typesupport_fastrtps_c.h
+[15.923s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__rosidl_typesupport_fastrtps_c.h
+[15.931s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__rosidl_typesupport_fastrtps_c.h
+[15.939s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__rosidl_typesupport_fastrtps_c.h
+[15.951s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__rosidl_typesupport_fastrtps_c.h
+[15.958s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__rosidl_typesupport_fastrtps_c.h
+[15.966s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__rosidl_typesupport_fastrtps_c.h
+[15.974s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__rosidl_typesupport_fastrtps_c.h
+[15.979s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[15.988s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/bounding_box2d.hpp
+[15.996s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/center_object.hpp
+[16.003s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/chassis_status.hpp
+[16.011s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__builder.hpp
+[16.020s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__struct.hpp
+[16.027s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__traits.hpp
+[16.033s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__type_support.hpp
+[16.039s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__builder.hpp
+[16.046s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__struct.hpp
+[16.051s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__traits.hpp
+[16.059s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__type_support.hpp
+[16.068s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__builder.hpp
+[16.077s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__struct.hpp
+[16.084s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__traits.hpp
+[16.091s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__type_support.hpp
+[16.099s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__builder.hpp
+[16.106s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__struct.hpp
+[16.114s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__traits.hpp
+[16.121s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__type_support.hpp
+[16.130s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__builder.hpp
+[16.138s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__struct.hpp
+[16.146s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__traits.hpp
+[16.154s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__type_support.hpp
+[16.161s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__builder.hpp
+[16.169s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__struct.hpp
+[16.177s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__traits.hpp
+[16.184s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__type_support.hpp
+[16.190s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__builder.hpp
+[16.198s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__struct.hpp
+[16.206s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__traits.hpp
+[16.212s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__type_support.hpp
+[16.222s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__builder.hpp
+[16.230s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__struct.hpp
+[16.236s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__traits.hpp
+[16.244s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__type_support.hpp
+[16.253s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__builder.hpp
+[16.261s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__struct.hpp
+[16.269s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__traits.hpp
+[16.276s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__type_support.hpp
+[16.283s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__builder.hpp
+[16.291s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__struct.hpp
+[16.299s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__traits.hpp
+[16.307s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__type_support.hpp
+[16.315s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__builder.hpp
+[16.324s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__struct.hpp
+[16.332s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__traits.hpp
+[16.341s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__type_support.hpp
+[16.348s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__builder.hpp
+[16.354s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__struct.hpp
+[16.361s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__traits.hpp
+[16.368s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.hpp
+[16.373s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__builder.hpp
+[16.382s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__struct.hpp
+[16.387s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__traits.hpp
+[16.396s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.hpp
+[16.405s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__builder.hpp
+[16.413s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__struct.hpp
+[16.422s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__traits.hpp
+[16.428s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__type_support.hpp
+[16.435s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__builder.hpp
+[16.443s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__struct.hpp
+[16.451s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__traits.hpp
+[16.458s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__type_support.hpp
+[16.467s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__builder.hpp
+[16.476s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__struct.hpp
+[16.484s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__traits.hpp
+[16.493s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.hpp
+[16.500s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__builder.hpp
+[16.507s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__struct.hpp
+[16.515s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__traits.hpp
+[16.523s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.hpp
+[16.529s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__builder.hpp
+[16.537s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__struct.hpp
+[16.546s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__traits.hpp
+[16.553s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__type_support.hpp
+[16.559s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__builder.hpp
+[16.567s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__struct.hpp
+[16.576s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__traits.hpp
+[16.584s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.hpp
+[16.592s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__builder.hpp
+[16.601s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__struct.hpp
+[16.608s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__traits.hpp
+[16.617s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__type_support.hpp
+[16.626s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__builder.hpp
+[16.634s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__struct.hpp
+[16.642s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__traits.hpp
+[16.649s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__type_support.hpp
+[16.658s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__builder.hpp
+[16.666s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__struct.hpp
+[16.674s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__traits.hpp
+[16.682s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__type_support.hpp
+[16.689s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__builder.hpp
+[16.695s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__struct.hpp
+[16.702s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__traits.hpp
+[16.710s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__type_support.hpp
+[16.715s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__builder.hpp
+[16.723s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__struct.hpp
+[16.731s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__traits.hpp
+[16.739s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__type_support.hpp
+[16.747s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detected_object.hpp
+[16.755s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detected_objects.hpp
+[16.763s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/drive_command.hpp
+[16.770s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/gnss_status.hpp
+[16.778s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/imu_state.hpp
+[16.786s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/lidar_status.hpp
+[16.794s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/mission_control_command.hpp
+[16.802s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/operation_state.hpp
+[16.810s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/pan_tilt_control_command.hpp
+[16.816s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/pan_tilt_state.hpp
+[16.821s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+[16.829s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/stream_control_command.hpp
+[16.834s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_control_command.hpp
+[16.839s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_follower_status.hpp
+[16.845s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_leader_heartbeat.hpp
+[16.853s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_path_command.hpp
+[16.861s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_robot_command.hpp
+[16.868s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/target_point.hpp
+[16.875s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/touch_target_point.hpp
+[16.883s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/user_command.hpp
+[16.891s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/waypoint.hpp
+[16.900s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/waypoint_list.hpp
+[16.909s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__rosidl_typesupport_fastrtps_cpp.hpp
+[16.916s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__rosidl_typesupport_fastrtps_cpp.hpp
+[16.924s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__rosidl_typesupport_fastrtps_cpp.hpp
+[16.932s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__rosidl_typesupport_fastrtps_cpp.hpp
+[16.938s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__rosidl_typesupport_fastrtps_cpp.hpp
+[16.946s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__rosidl_typesupport_fastrtps_cpp.hpp
+[16.951s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__rosidl_typesupport_fastrtps_cpp.hpp
+[16.959s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__rosidl_typesupport_fastrtps_cpp.hpp
+[16.967s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__rosidl_typesupport_fastrtps_cpp.hpp
+[16.974s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__rosidl_typesupport_fastrtps_cpp.hpp
+[16.981s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__rosidl_typesupport_fastrtps_cpp.hpp
+[16.988s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__rosidl_typesupport_fastrtps_cpp.hpp
+[16.995s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__rosidl_typesupport_fastrtps_cpp.hpp
+[17.003s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__rosidl_typesupport_fastrtps_cpp.hpp
+[17.010s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__rosidl_typesupport_fastrtps_cpp.hpp
+[17.016s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__rosidl_typesupport_fastrtps_cpp.hpp
+[17.023s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__rosidl_typesupport_fastrtps_cpp.hpp
+[17.030s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__rosidl_typesupport_fastrtps_cpp.hpp
+[17.036s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__rosidl_typesupport_fastrtps_cpp.hpp
+[17.043s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__rosidl_typesupport_fastrtps_cpp.hpp
+[17.050s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__rosidl_typesupport_fastrtps_cpp.hpp
+[17.057s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__rosidl_typesupport_fastrtps_cpp.hpp
+[17.062s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__rosidl_typesupport_fastrtps_cpp.hpp
+[17.069s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__rosidl_typesupport_fastrtps_cpp.hpp
+[17.077s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[17.084s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__rosidl_typesupport_introspection_c.h
+[17.092s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__rosidl_typesupport_introspection_c.h
+[17.100s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__rosidl_typesupport_introspection_c.h
+[17.107s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__rosidl_typesupport_introspection_c.h
+[17.115s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__rosidl_typesupport_introspection_c.h
+[17.122s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__rosidl_typesupport_introspection_c.h
+[17.127s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__rosidl_typesupport_introspection_c.h
+[17.133s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__rosidl_typesupport_introspection_c.h
+[17.140s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__rosidl_typesupport_introspection_c.h
+[17.147s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__rosidl_typesupport_introspection_c.h
+[17.155s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__rosidl_typesupport_introspection_c.h
+[17.161s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__rosidl_typesupport_introspection_c.h
+[17.167s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__rosidl_typesupport_introspection_c.h
+[17.175s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__rosidl_typesupport_introspection_c.h
+[17.182s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__rosidl_typesupport_introspection_c.h
+[17.188s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__rosidl_typesupport_introspection_c.h
+[17.196s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__rosidl_typesupport_introspection_c.h
+[17.202s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__rosidl_typesupport_introspection_c.h
+[17.209s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__rosidl_typesupport_introspection_c.h
+[17.218s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__rosidl_typesupport_introspection_c.h
+[17.225s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__rosidl_typesupport_introspection_c.h
+[17.233s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__rosidl_typesupport_introspection_c.h
+[17.241s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__rosidl_typesupport_introspection_c.h
+[17.246s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__rosidl_typesupport_introspection_c.h
+[17.253s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[17.262s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__rosidl_typesupport_introspection_cpp.hpp
+[17.268s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__rosidl_typesupport_introspection_cpp.hpp
+[17.275s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__rosidl_typesupport_introspection_cpp.hpp
+[17.283s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__rosidl_typesupport_introspection_cpp.hpp
+[17.290s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__rosidl_typesupport_introspection_cpp.hpp
+[17.298s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__rosidl_typesupport_introspection_cpp.hpp
+[17.305s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__rosidl_typesupport_introspection_cpp.hpp
+[17.310s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__rosidl_typesupport_introspection_cpp.hpp
+[17.316s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__rosidl_typesupport_introspection_cpp.hpp
+[17.323s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__rosidl_typesupport_introspection_cpp.hpp
+[17.329s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__rosidl_typesupport_introspection_cpp.hpp
+[17.341s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__rosidl_typesupport_introspection_cpp.hpp
+[17.349s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__rosidl_typesupport_introspection_cpp.hpp
+[17.357s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__rosidl_typesupport_introspection_cpp.hpp
+[17.364s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__rosidl_typesupport_introspection_cpp.hpp
+[17.371s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__rosidl_typesupport_introspection_cpp.hpp
+[17.379s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__rosidl_typesupport_introspection_cpp.hpp
+[17.386s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__rosidl_typesupport_introspection_cpp.hpp
+[17.394s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__rosidl_typesupport_introspection_cpp.hpp
+[17.401s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__rosidl_typesupport_introspection_cpp.hpp
+[17.407s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__rosidl_typesupport_introspection_cpp.hpp
+[17.414s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__rosidl_typesupport_introspection_cpp.hpp
+[17.420s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__rosidl_typesupport_introspection_cpp.hpp
+[17.427s] -- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__rosidl_typesupport_introspection_cpp.hpp
+[17.434s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/pythonpath.sh
+[17.441s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/pythonpath.dsv
+[17.446s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs-0.0.0-py3.12.egg-info/PKG-INFO
+[17.454s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs-0.0.0-py3.12.egg-info/SOURCES.txt
+[17.462s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs-0.0.0-py3.12.egg-info/dependency_links.txt
+[17.468s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs-0.0.0-py3.12.egg-info/top_level.txt
+[17.476s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/__init__.py
+[17.483s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_c.c
+[17.491s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_fastrtps_c.c
+[17.498s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_introspection_c.c
+[17.505s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_c.so
+[17.513s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_fastrtps_c.so
+[17.519s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_introspection_c.so
+[17.526s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/__init__.py
+[17.533s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_bounding_box2d.py
+[17.540s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_bounding_box2d_s.c
+[17.547s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_center_object.py
+[17.555s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_center_object_s.c
+[17.563s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_chassis_status.py
+[17.568s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_chassis_status_s.c
+[17.573s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_object.py
+[17.581s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_object_s.c
+[17.587s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_objects.py
+[17.593s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_objects_s.c
+[17.600s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_drive_command.py
+[17.608s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_drive_command_s.c
+[17.616s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_gnss_status.py
+[17.621s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_gnss_status_s.c
+[17.629s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_imu_state.py
+[17.636s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_imu_state_s.c
+[17.642s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_lidar_status.py
+[17.649s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_lidar_status_s.c
+[17.656s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_mission_control_command.py
+[17.664s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_mission_control_command_s.c
+[17.672s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_operation_state.py
+[17.680s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_operation_state_s.c
+[17.689s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_control_command.py
+[17.697s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_control_command_s.c
+[17.703s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_state.py
+[17.709s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_state_s.c
+[17.715s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_stream_control_command.py
+[17.723s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_stream_control_command_s.c
+[17.731s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_control_command.py
+[17.736s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_control_command_s.c
+[17.744s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_follower_status.py
+[17.749s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_follower_status_s.c
+[17.754s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_leader_heartbeat.py
+[17.759s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_leader_heartbeat_s.c
+[17.765s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_path_command.py
+[17.772s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_path_command_s.c
+[17.780s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_robot_command.py
+[17.786s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_robot_command_s.c
+[17.791s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_target_point.py
+[17.799s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_target_point_s.c
+[17.807s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_touch_target_point.py
+[17.813s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_touch_target_point_s.c
+[17.820s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_user_command.py
+[17.827s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_user_command_s.c
+[17.834s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint.py
+[17.839s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint_list.py
+[17.846s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint_list_s.c
+[17.854s] -- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint_s.c
+[17.860s] -- Up-to-date symlink: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_fastrtps_c.so
+[17.860s] -- Up-to-date symlink: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_introspection_c.so
+[17.860s] -- Up-to-date symlink: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_c.so
+[17.860s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/rust_packages/combat_robot_msgs
+[17.865s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/Cargo.toml
+[17.873s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/build.rs
+[17.880s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/src/lib.rs
+[17.886s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/src/msg.rs
+[17.894s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/src/msg/rmw.rs
+[17.901s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/BoundingBox2d.idl
+[17.907s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObject.idl
+[17.915s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObjects.idl
+[17.922s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TargetPoint.idl
+[17.929s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TouchTargetPoint.idl
+[17.937s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/UserCommand.idl
+[17.944s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/MissionControlCommand.idl
+[17.951s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/StreamControlCommand.idl
+[17.956s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmControlCommand.idl
+[17.964s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmFollowerStatus.idl
+[17.971s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmLeaderHeartbeat.idl
+[17.978s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmPathCommand.idl
+[17.985s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmRobotCommand.idl
+[17.992s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/IMUState.idl
+[17.997s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/OperationState.idl
+[18.003s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DriveCommand.idl
+[18.010s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltControlCommand.idl
+[18.015s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltState.idl
+[18.020s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/CenterObject.idl
+[18.027s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/Waypoint.idl
+[18.034s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/WaypointList.idl
+[18.042s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/GnssStatus.idl
+[18.049s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/ChassisStatus.idl
+[18.057s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/LidarStatus.idl
+[18.065s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/BoundingBox2d.msg
+[18.070s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObject.msg
+[18.076s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObjects.msg
+[18.083s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TargetPoint.msg
+[18.090s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TouchTargetPoint.msg
+[18.097s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/UserCommand.msg
+[18.104s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/MissionControlCommand.msg
+[18.111s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/StreamControlCommand.msg
+[18.116s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmControlCommand.msg
+[18.124s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmFollowerStatus.msg
+[18.131s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmLeaderHeartbeat.msg
+[18.138s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmPathCommand.msg
+[18.144s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmRobotCommand.msg
+[18.152s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/IMUState.msg
+[18.160s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/OperationState.msg
+[18.167s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DriveCommand.msg
+[18.173s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltControlCommand.msg
+[18.180s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltState.msg
+[18.187s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/CenterObject.msg
+[18.193s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/Waypoint.msg
+[18.199s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/WaypointList.msg
+[18.208s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/GnssStatus.msg
+[18.216s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/ChassisStatus.msg
+[18.221s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/LidarStatus.msg
+[18.229s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/package_run_dependencies/combat_robot_msgs
+[18.237s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/parent_prefix_path/combat_robot_msgs
+[18.244s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/ament_prefix_path.sh
+[18.252s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/ament_prefix_path.dsv
+[18.260s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/path.sh
+[18.268s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/path.dsv
+[18.274s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/local_setup.bash
+[18.281s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/local_setup.sh
+[18.289s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/local_setup.zsh
+[18.295s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/local_setup.dsv
+[18.302s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/package.dsv
+[18.310s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/packages/combat_robot_msgs
+[18.316s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/rosidl_cmake-extras.cmake
+[18.324s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/ament_cmake_export_dependencies-extras.cmake
+[18.331s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/ament_cmake_export_include_directories-extras.cmake
+[18.338s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/ament_cmake_export_libraries-extras.cmake
+[18.343s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/ament_cmake_export_targets-extras.cmake
+[18.347s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[18.355s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[18.362s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgsConfig.cmake
+[18.367s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgsConfig-version.cmake
+[18.375s] -- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/package.xml
+[18.381s] -- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_generator_c.so
+[18.381s] -- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_generator_c.so" to ""
+[18.382s] -- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_fastrtps_c.so
+[18.382s] -- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_fastrtps_c.so" to ""
+[18.382s] -- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_fastrtps_cpp.so
+[18.382s] -- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_fastrtps_cpp.so" to ""
+[18.382s] -- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_introspection_c.so
+[18.382s] -- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_introspection_c.so" to ""
+[18.382s] -- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_c.so
+[18.382s] -- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_c.so" to ""
+[18.382s] -- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_introspection_cpp.so
+[18.383s] -- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_introspection_cpp.so" to ""
+[18.383s] -- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_cpp.so
+[18.383s] -- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_cpp.so" to ""
+[18.428s] Listing '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs'...
+[18.428s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/__init__.py'...
+[18.428s] Listing '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg'...
+[18.428s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/__init__.py'...
+[18.428s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_bounding_box2d.py'...
+[18.428s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_center_object.py'...
+[18.428s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_chassis_status.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_object.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_objects.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_drive_command.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_gnss_status.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_imu_state.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_lidar_status.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_mission_control_command.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_operation_state.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_control_command.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_state.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_stream_control_command.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_control_command.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_follower_status.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_leader_heartbeat.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_path_command.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_robot_command.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_target_point.py'...
+[18.429s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_touch_target_point.py'...
+[18.430s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_user_command.py'...
+[18.430s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint.py'...
+[18.430s] Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint_list.py'...
+[18.431s] -- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_generator_py.so
+[18.431s] -- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_generator_py.so" to ""
+[18.431s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_cExport.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_cExport-release.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_typesupport_fastrtps_cExport.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_typesupport_fastrtps_cExport-release.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_cppExport.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_typesupport_fastrtps_cppExport.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_typesupport_fastrtps_cppExport-release.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_introspection_cExport.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_introspection_cExport-release.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_cExport.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_cExport-release.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_introspection_cppExport.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_introspection_cppExport-release.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_cppExport.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_cppExport-release.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_pyExport.cmake
+[18.432s] -- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_pyExport-release.cmake
+[18.434s] Invoked command in '/ws/ros/build/combat_robot_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/combat_robot_msgs

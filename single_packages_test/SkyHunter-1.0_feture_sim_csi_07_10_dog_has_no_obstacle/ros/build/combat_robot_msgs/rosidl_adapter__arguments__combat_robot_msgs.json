@@ -1,0 +1,29 @@
+{
+  "package_name": "combat_robot_msgs",
+  "non_idl_tuples": [
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/BoundingBox2d.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/DetectedObject.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/DetectedObjects.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/TargetPoint.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/TouchTargetPoint.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/UserCommand.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/MissionControlCommand.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/StreamControlCommand.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/SwarmControlCommand.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/SwarmFollowerStatus.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/SwarmLeaderHeartbeat.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/SwarmPathCommand.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/SwarmRobotCommand.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/IMUState.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/OperationState.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/DriveCommand.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/PanTiltControlCommand.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/PanTiltState.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/CenterObject.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/Waypoint.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/WaypointList.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/GnssStatus.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/ChassisStatus.msg",
+    "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs:msg/LidarStatus.msg"
+  ]
+}

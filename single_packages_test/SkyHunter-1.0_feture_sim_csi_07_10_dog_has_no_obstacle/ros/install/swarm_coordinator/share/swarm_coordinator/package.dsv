@@ -1,0 +1,11 @@
+source;share/swarm_coordinator/hook/cmake_prefix_path.ps1
+source;share/swarm_coordinator/hook/cmake_prefix_path.dsv
+source;share/swarm_coordinator/hook/cmake_prefix_path.sh
+source;share/swarm_coordinator/hook/ld_library_path_lib.ps1
+source;share/swarm_coordinator/hook/ld_library_path_lib.dsv
+source;share/swarm_coordinator/hook/ld_library_path_lib.sh
+source;share/swarm_coordinator/local_setup.bash
+source;share/swarm_coordinator/local_setup.dsv
+source;share/swarm_coordinator/local_setup.ps1
+source;share/swarm_coordinator/local_setup.sh
+source;share/swarm_coordinator/local_setup.zsh

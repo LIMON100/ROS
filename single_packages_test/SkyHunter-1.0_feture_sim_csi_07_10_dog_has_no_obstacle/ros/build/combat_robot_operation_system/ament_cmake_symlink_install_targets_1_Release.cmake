@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/ws/ros/build/combat_robot_operation_system/combat_robot_operation_system_node" "TARGETS" "combat_robot_operation_system_node" "DESTINATION" "lib/combat_robot_operation_system")

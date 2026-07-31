@@ -1,0 +1,1 @@
+/ws/ros/build/swarm_path_test/ament_cmake_environment_hooks/local_setup.bash

@@ -1,0 +1,65 @@
+[0.017s] Invoking command in '/ws/ros/build/swarm_coordinator': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/swarm_coordinator -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/swarm_coordinator
+[0.058s] -- The C compiler identification is GNU 13.3.0
+[0.103s] -- The CXX compiler identification is GNU 13.3.0
+[0.114s] -- Detecting C compiler ABI info
+[0.170s] -- Detecting C compiler ABI info - done
+[0.179s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.179s] -- Detecting C compile features
+[0.179s] -- Detecting C compile features - done
+[0.186s] -- Detecting CXX compiler ABI info
+[0.258s] -- Detecting CXX compiler ABI info - done
+[0.266s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.266s] -- Detecting CXX compile features
+[0.266s] -- Detecting CXX compile features - done
+[0.270s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.391s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.436s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.491s] -- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.533s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.552s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.575s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.600s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.659s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.662s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.720s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[0.733s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[0.755s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.852s] -- Found rclcpp_components: 28.1.18 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+[0.900s] -- Found combat_robot_msgs: 0.0.0 (/ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake)
+[1.023s] -- Configuring done (1.0s)
+[1.033s] -- Generating done (0.0s)
+[1.037s] -- Build files have been written to: /ws/ros/build/swarm_coordinator
+[1.047s] Invoked command in '/ws/ros/build/swarm_coordinator' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/swarm_coordinator -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/swarm_coordinator
+[1.048s] Invoking command in '/ws/ros/build/swarm_coordinator': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/swarm_coordinator -- -j24 -l24
+[1.091s] [ 50%] [32mBuilding CXX object CMakeFiles/swarm_coordinator.dir/src/swarm_coordinator.cpp.o[0m
+[1.092s] [ 50%] [32mBuilding CXX object CMakeFiles/swarm_coordinator_node.dir/rclcpp_components/node_main_swarm_coordinator_node.cpp.o[0m
+[5.739s] [ 75%] [32m[1mLinking CXX executable swarm_coordinator_node[0m
+[6.062s] [ 75%] Built target swarm_coordinator_node
+[19.519s] [100%] [32m[1mLinking CXX shared library libswarm_coordinator.so[0m
+[19.632s] [100%] Built target swarm_coordinator
+[19.641s] Invoked command in '/ws/ros/build/swarm_coordinator' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/swarm_coordinator -- -j24 -l24
+[19.642s] Invoking command in '/ws/ros/build/swarm_coordinator': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/swarm_coordinator
+[19.649s] -- Install configuration: "Release"
+[19.650s] -- Execute custom install script
+[19.650s] -- Symlinking: /ws/ros/install/swarm_coordinator/lib/swarm_coordinator/swarm_coordinator_node
+[19.658s] -- Symlinking: /ws/ros/install/swarm_coordinator/lib/libswarm_coordinator.so
+[19.666s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/config/swarm_coordinator.yaml
+[19.673s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/launch/swarm_coordinator.launch.xml
+[19.678s] -- Symlinking: /ws/ros/install/swarm_coordinator/include/swarm_coordinator/swarm_coordinator.hpp
+[19.684s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/ament_index/resource_index/package_run_dependencies/swarm_coordinator
+[19.692s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/ament_index/resource_index/parent_prefix_path/swarm_coordinator
+[19.700s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/environment/ament_prefix_path.sh
+[19.707s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/environment/ament_prefix_path.dsv
+[19.715s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/environment/path.sh
+[19.723s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/environment/path.dsv
+[19.731s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/local_setup.bash
+[19.737s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/local_setup.sh
+[19.746s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/local_setup.zsh
+[19.754s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/local_setup.dsv
+[19.762s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/package.dsv
+[19.770s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/ament_index/resource_index/packages/swarm_coordinator
+[19.784s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/ament_index/resource_index/rclcpp_components/swarm_coordinator
+[19.790s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/cmake/swarm_coordinatorConfig.cmake
+[19.796s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/cmake/swarm_coordinatorConfig-version.cmake
+[19.803s] -- Symlinking: /ws/ros/install/swarm_coordinator/share/swarm_coordinator/package.xml
+[19.812s] Invoked command in '/ws/ros/build/swarm_coordinator' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/swarm_coordinator

@@ -1,0 +1,1 @@
+/ws/ros/src/third_party/unitree_go2_ros2/champ_msgs/msg/Point.msg

@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/ws/ros/build/combat_robot_msgs/rosidl_generator_py/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_fastrtps_c.so" "TARGETS" "combat_robot_msgs_s__rosidl_typesupport_fastrtps_c" "DESTINATION" "lib/python3.12/site-packages/combat_robot_msgs")

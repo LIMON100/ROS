@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/ws/ros/build/camera_interface/libcamera_driver.so" "/ws/ros/build/camera_interface/libzoom_controller_lib.a" "TARGETS" "camera_driver" "zoom_controller_lib" "DESTINATION" "lib")

@@ -1,0 +1,1 @@
+/ws/ros/src/skyautonet/combat_robot_system/camera_interface/include/camera_driver.hpp

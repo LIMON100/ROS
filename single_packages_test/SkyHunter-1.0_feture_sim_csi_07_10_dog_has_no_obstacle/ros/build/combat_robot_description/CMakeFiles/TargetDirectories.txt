@@ -1,0 +1,9 @@
+/ws/ros/build/combat_robot_description/CMakeFiles/uninstall.dir
+/ws/ros/build/combat_robot_description/CMakeFiles/combat_robot_description_uninstall.dir
+/ws/ros/build/combat_robot_description/CMakeFiles/test.dir
+/ws/ros/build/combat_robot_description/CMakeFiles/edit_cache.dir
+/ws/ros/build/combat_robot_description/CMakeFiles/rebuild_cache.dir
+/ws/ros/build/combat_robot_description/CMakeFiles/list_install_components.dir
+/ws/ros/build/combat_robot_description/CMakeFiles/install.dir
+/ws/ros/build/combat_robot_description/CMakeFiles/install/local.dir
+/ws/ros/build/combat_robot_description/CMakeFiles/install/strip.dir

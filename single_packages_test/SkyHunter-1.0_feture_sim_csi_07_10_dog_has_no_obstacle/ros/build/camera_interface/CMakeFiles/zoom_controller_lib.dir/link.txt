@@ -1,0 +1,2 @@
+/usr/bin/ar qc libzoom_controller_lib.a CMakeFiles/zoom_controller_lib.dir/src/zoom_controller.cpp.o
+/usr/bin/ranlib libzoom_controller_lib.a

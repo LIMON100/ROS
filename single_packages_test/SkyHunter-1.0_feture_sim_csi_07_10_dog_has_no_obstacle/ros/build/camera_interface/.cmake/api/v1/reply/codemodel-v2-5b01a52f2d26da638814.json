@@ -1,0 +1,106 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-e88e0e38a8af9f24ad23.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "camera_interface",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "camera_driver::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-camera_driver-Release-e25d69ce8c252619d7c7.json",
+					"name" : "camera_driver",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "camera_driver_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-camera_driver_node-Release-208a4a040a4d729a6e26.json",
+					"name" : "camera_driver_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "camera_interface_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-camera_interface_uninstall-Release-80e7c02fa6558e727283.json",
+					"name" : "camera_interface_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-Release-8f59fb5179cfc2e761a9.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zoom_controller_lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zoom_controller_lib-Release-c9e9f1b1d0d25aa01651.json",
+					"name" : "zoom_controller_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zoom_controller_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zoom_controller_node-Release-a481ceb1d15be89dc08f.json",
+					"name" : "zoom_controller_node",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/ws/ros/build/camera_interface",
+		"source" : "/ws/ros/src/skyautonet/combat_robot_system/camera_interface"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

@@ -1,0 +1,97 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found OpenCV: /usr (found version "4.6.0") 
+-- Found ament_cmake_auto: 2.5.6 (/opt/ros/jazzy/share/ament_cmake_auto/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found std_msgs: 5.3.7 (/opt/ros/jazzy/share/std_msgs/cmake)
+-- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+-- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+-- Found gtest sources under '/opt/ros/jazzy/src/gtest_vendor': C++ tests using 'Google Test' will be built
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Added test 'copyright' to check source files copyright and LICENSE
+-- Added test 'cppcheck' to perform static code analysis on C / C++ code
+-- Configured cppcheck include dirs: /ws/ros/src/skyautonet/combat_robot_system/combat_robot_operation_system/include
+-- Configured cppcheck exclude dirs and/or files: 
+-- Added test 'cpplint' to check C / C++ code against the Google style
+-- Configured cpplint exclude dirs and/or files: 
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'uncrustify' to check C / C++ code style
+-- Configured uncrustify additional arguments: 
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done (1.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /ws/ros/build/combat_robot_operation_system
+[  6%] [32mBuilding CXX object CMakeFiles/combat_robot_operation_system.dir/src/combat_robot_operation_system_control.cpp.o[0m
+[ 13%] [32mBuilding CXX object CMakeFiles/combat_robot_operation_system.dir/src/combat_robot_operation_system_callbacks.cpp.o[0m
+[ 20%] [32mBuilding CXX object CMakeFiles/combat_robot_operation_system.dir/src/combat_robot_operation_system_state.cpp.o[0m
+[ 26%] [32mBuilding CXX object CMakeFiles/combat_robot_operation_system.dir/src/combat_robot_operation_system.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_test_dummy_node.dir/src/combat_robot_test_dummy_node.cpp.o[0m
+[ 40%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[ 46%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[ 53%] [32mBuilding CXX object CMakeFiles/combat_robot_operation_system_node.dir/rclcpp_components/node_main_combat_robot_operation_system_node.cpp.o[0m
+[ 60%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[ 60%] Built target gtest_main
+[ 66%] [32m[1mLinking CXX executable combat_robot_operation_system_node[0m
+[ 66%] Built target combat_robot_operation_system_node
+[ 73%] [32m[1mLinking CXX static library libgtest.a[0m
+[ 73%] Built target gtest
+[ 80%] [32m[1mLinking CXX executable combat_robot_test_dummy_node[0m
+[ 80%] Built target combat_robot_test_dummy_node
+[ 86%] [32m[1mLinking CXX shared library libcombat_robot_operation_system.so[0m
+[ 86%] Built target combat_robot_operation_system
+[ 93%] [32mBuilding CXX object CMakeFiles/test_fsm_transitions.dir/test/test_fsm_transitions.cpp.o[0m
+[100%] [32m[1mLinking CXX executable test_fsm_transitions[0m
+[100%] Built target test_fsm_transitions
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/lib/combat_robot_operation_system/combat_robot_test_dummy_node
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/lib/combat_robot_operation_system/combat_robot_operation_system_node
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/include/combat_robot_operation_system/combat_robot_operation_system.hpp
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/library_path.sh
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/library_path.dsv
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/lib/libcombat_robot_operation_system.so
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/launch/combat_robot_operation_system.launch.xml
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/config/params.demo.yaml
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/config/params.office_test.yaml
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/config/params.production.yaml
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/config/params.yaml
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/ament_index/resource_index/package_run_dependencies/combat_robot_operation_system
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/ament_index/resource_index/parent_prefix_path/combat_robot_operation_system
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/ament_prefix_path.sh
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/ament_prefix_path.dsv
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/path.sh
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/environment/path.dsv
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/local_setup.bash
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/local_setup.sh
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/local_setup.zsh
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/local_setup.dsv
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/package.dsv
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/ament_index/resource_index/packages/combat_robot_operation_system
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/ament_index/resource_index/rclcpp_components/combat_robot_operation_system
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/ament_cmake_export_libraries-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/combat_robot_operation_systemConfig.cmake
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/cmake/combat_robot_operation_systemConfig-version.cmake
+-- Symlinking: /ws/ros/install/combat_robot_operation_system/share/combat_robot_operation_system/package.xml

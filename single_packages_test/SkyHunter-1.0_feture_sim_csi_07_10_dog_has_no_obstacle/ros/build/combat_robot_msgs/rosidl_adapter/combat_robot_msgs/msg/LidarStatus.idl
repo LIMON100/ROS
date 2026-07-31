@@ -1,0 +1,47 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/LidarStatus.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module combat_robot_msgs {
+  module msg {
+    module LidarStatus_Constants {
+      @verbatim (language="comment", text=
+        "Driver / hardware 상태" "\n"        "정상 스캔 중")
+      const uint8 LIDAR_OK = 0;
+      @verbatim (language="comment", text=
+        "스캔되지만 품질 저하 (rate↓, noise↑)")
+      const uint8 LIDAR_DEGRADED = 1;
+      @verbatim (language="comment", text=
+        "통신 / hardware 장애")
+      const uint8 LIDAR_FAULT = 2;
+    };
+    @verbatim (language="comment", text=
+      "LiDAR 드라이버가 publish 하는 status." "\n"
+      "robot_server 가 /lidar/status 토픽으로 subscribe 하여 LiDAR 헬스 / 장애물 정보를" "\n"
+      "추후 status 패킷에 반영하거나 안전 분기 입력으로 활용함." "\n"
+      "" "\n"
+      "가능한 한 모든 필드를 매 주기 채워 보내주세요.")
+    struct LidarStatus {
+      std_msgs::msg::Header header;
+
+      uint8 status;
+
+      @verbatim (language="comment", text=
+        "마지막 스캔 통계")
+      uint32 last_scan_point_count;
+
+      @verbatim (language="comment", text=
+        "실측 Hz (목표값과 차이 나면 LIDAR_DEGRADED 권장)")
+      float scan_rate_hz;
+
+      @verbatim (language="comment", text=
+        "장애물 감지 — 안전 정지 입력으로 활용 가능." "\n"
+        "가까이 있는 장애물 없으면 obstacle_detected=false, min_obstacle_distance_m=NaN.")
+      boolean obstacle_detected;
+
+      float min_obstacle_distance_m;
+    };
+  };
+};

@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_msgs/rosidl_generator_c/combat_robot_msgs/msg/detail/imu_state__functions.h

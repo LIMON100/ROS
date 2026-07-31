@@ -1,0 +1,877 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found builtin_interfaces: 2.0.3 (/opt/ros/jazzy/share/builtin_interfaces/cmake)
+-- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+-- Found rosidl_adapter: 4.6.7 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+-- Found std_msgs: 5.3.7 (/opt/ros/jazzy/share/std_msgs/cmake)
+-- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+-- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)
+-- Found PythonExtra: /usr/bin/python3  
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed 
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+-- Added test 'copyright' to check source files copyright and LICENSE
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done (3.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: /ws/ros/build/combat_robot_msgs
+[  0%] [34m[1mGenerating Rust code for ROS interfaces[0m
+[  0%] [34m[1mGenerating type hashes for ROS interfaces[0m
+[  0%] Built target ament_cmake_python_symlink_combat_robot_msgs
+running egg_info
+creating combat_robot_msgs.egg-info
+writing combat_robot_msgs.egg-info/PKG-INFO
+writing dependency_links to combat_robot_msgs.egg-info/dependency_links.txt
+writing top-level names to combat_robot_msgs.egg-info/top_level.txt
+writing manifest file 'combat_robot_msgs.egg-info/SOURCES.txt'
+reading manifest file 'combat_robot_msgs.egg-info/SOURCES.txt'
+writing manifest file 'combat_robot_msgs.egg-info/SOURCES.txt'
+[  0%] Built target ament_cmake_python_build_combat_robot_msgs_egg
+[  0%] Built target combat_robot_msgs__rosidl_generator_type_description
+[  1%] [34m[1mGenerating C code for ROS interfaces[0m
+[  1%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[  1%] Built target combat_robot_msgs__rs
+[  1%] Built target combat_robot_msgs__cpp
+[  2%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_object__type_support.c.o[0m
+[  2%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_objects__type_support.c.o[0m
+[  2%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_objects__description.c.o[0m
+[  2%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/bounding_box2d__functions.c.o[0m
+[  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/target_point__functions.c.o[0m
+[  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_object__description.c.o[0m
+[  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/bounding_box2d__description.c.o[0m
+[  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/target_point__description.c.o[0m
+[  3%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_object__functions.c.o[0m
+[  4%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/detected_objects__functions.c.o[0m
+[  4%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/target_point__type_support.c.o[0m
+[  5%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/bounding_box2d__type_support.c.o[0m
+[  6%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/touch_target_point__description.c.o[0m
+[  6%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/touch_target_point__type_support.c.o[0m
+[  6%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/touch_target_point__functions.c.o[0m
+[  7%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/user_command__functions.c.o[0m
+[  7%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/user_command__description.c.o[0m
+[  8%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/mission_control_command__type_support.c.o[0m
+[  8%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/mission_control_command__functions.c.o[0m
+[  8%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/user_command__type_support.c.o[0m
+[  8%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/stream_control_command__functions.c.o[0m
+[  9%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/mission_control_command__description.c.o[0m
+[ 10%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/stream_control_command__type_support.c.o[0m
+[ 10%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/stream_control_command__description.c.o[0m
+[ 10%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_control_command__description.c.o[0m
+[ 10%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_control_command__functions.c.o[0m
+[ 11%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_control_command__type_support.c.o[0m
+[ 12%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_follower_status__functions.c.o[0m
+[ 12%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.c.o[0m
+[ 12%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.c.o[0m
+[ 13%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__functions.c.o[0m
+[ 13%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_follower_status__description.c.o[0m
+[ 13%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__description.c.o[0m
+[ 13%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_path_command__description.c.o[0m
+[ 14%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_path_command__functions.c.o[0m
+[ 15%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_robot_command__description.c.o[0m
+[ 15%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_path_command__type_support.c.o[0m
+[ 15%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_robot_command__functions.c.o[0m
+[ 15%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.c.o[0m
+[ 16%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/imu_state__description.c.o[0m
+[ 16%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/imu_state__functions.c.o[0m
+[ 16%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/imu_state__type_support.c.o[0m
+[ 16%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/drive_command__description.c.o[0m
+[ 17%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/operation_state__description.c.o[0m
+[ 18%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/operation_state__type_support.c.o[0m
+[ 18%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/operation_state__functions.c.o[0m
+[ 18%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/drive_command__functions.c.o[0m
+[ 19%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/drive_command__type_support.c.o[0m
+[ 19%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__description.c.o[0m
+[ 20%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__functions.c.o[0m
+[ 20%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.c.o[0m
+[ 20%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_state__description.c.o[0m
+[ 21%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint__description.c.o[0m
+[ 21%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.c.o[0m
+[ 22%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/center_object__type_support.c.o[0m
+[ 22%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/center_object__functions.c.o[0m
+[ 23%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint_list__description.c.o[0m
+[ 23%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint__functions.c.o[0m
+[ 23%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint__type_support.c.o[0m
+[ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/pan_tilt_state__functions.c.o[0m
+[ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint_list__functions.c.o[0m
+[ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/center_object__description.c.o[0m
+[ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/waypoint_list__type_support.c.o[0m
+[ 24%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/gnss_status__functions.c.o[0m
+[ 25%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/gnss_status__description.c.o[0m
+[ 26%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/chassis_status__type_support.c.o[0m
+[ 26%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/lidar_status__description.c.o[0m
+[ 27%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/gnss_status__type_support.c.o[0m
+[ 27%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/chassis_status__description.c.o[0m
+[ 27%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/lidar_status__functions.c.o[0m
+[ 27%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/chassis_status__functions.c.o[0m
+[ 28%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_c.dir/rosidl_generator_c/combat_robot_msgs/msg/detail/lidar_status__type_support.c.o[0m
+[ 28%] [32m[1mLinking C shared library libcombat_robot_msgs__rosidl_generator_c.so[0m
+[ 28%] Built target combat_robot_msgs__rosidl_generator_c
+[ 28%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[ 28%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[ 28%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[ 29%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[ 30%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[ 30%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[ 31%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/detected_objects__type_support.cpp.o[0m
+[ 32%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/mission_control_command__type_support.cpp.o[0m
+[ 32%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/target_point__type_support.cpp.o[0m
+[ 32%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/user_command__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/bounding_box2d__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/touch_target_point__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/detected_object__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/stream_control_command__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_leader_heartbeat__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_robot_command__type_support.cpp.o[0m
+[ 34%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_control_command__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/imu_state__type_support.cpp.o[0m
+[ 35%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_path_command__type_support.cpp.o[0m
+[ 35%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/swarm_follower_status__type_support.cpp.o[0m
+[ 36%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/operation_state__type_support.cpp.o[0m
+[ 36%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/drive_command__type_support.cpp.o[0m
+[ 37%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/pan_tilt_control_command__type_support.cpp.o[0m
+[ 37%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/pan_tilt_state__type_support.cpp.o[0m
+[ 37%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/center_object__type_support.cpp.o[0m
+[ 38%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/waypoint__type_support.cpp.o[0m
+[ 38%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/waypoint_list__type_support.cpp.o[0m
+[ 38%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/gnss_status__type_support.cpp.o[0m
+[ 39%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/chassis_status__type_support.cpp.o[0m
+[ 39%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/combat_robot_msgs/msg/lidar_status__type_support.cpp.o[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/bounding_box2d__type_support.cpp.o[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/detected_objects__type_support.cpp.o[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/target_point__type_support.cpp.o[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/detected_object__type_support.cpp.o[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/touch_target_point__type_support.cpp.o[0m
+[ 42%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/user_command__type_support.cpp.o[0m
+[ 42%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/stream_control_command__type_support.cpp.o[0m
+[ 42%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/mission_control_command__type_support.cpp.o[0m
+[ 42%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_follower_status__type_support.cpp.o[0m
+[ 43%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_control_command__type_support.cpp.o[0m
+[ 43%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_path_command__type_support.cpp.o[0m
+[ 44%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_leader_heartbeat__type_support.cpp.o[0m
+[ 44%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/drive_command__type_support.cpp.o[0m
+[ 44%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/swarm_robot_command__type_support.cpp.o[0m
+[ 45%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/imu_state__type_support.cpp.o[0m
+[ 45%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/operation_state__type_support.cpp.o[0m
+[ 46%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/pan_tilt_control_command__type_support.cpp.o[0m
+[ 46%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/pan_tilt_state__type_support.cpp.o[0m
+[ 47%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/center_object__type_support.cpp.o[0m
+[ 48%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/bounding_box2d__type_support.cpp.o[0m
+[ 48%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/waypoint__type_support.cpp.o[0m
+[ 48%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/detected_object__type_support.cpp.o[0m
+[ 48%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/waypoint_list__type_support.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/gnss_status__type_support.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/detected_objects__type_support.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/target_point__type_support.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/lidar_status__type_support.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/combat_robot_msgs/msg/chassis_status__type_support.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/touch_target_point__type_support.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/stream_control_command__type_support.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/mission_control_command__type_support.cpp.o[0m
+[ 51%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/user_command__type_support.cpp.o[0m
+[ 52%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.cpp.o[0m
+[ 53%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_control_command__type_support.cpp.o[0m
+[ 53%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.cpp.o[0m
+[ 53%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.cpp.o[0m
+[ 53%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/swarm_path_command__type_support.cpp.o[0m
+[ 54%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/imu_state__type_support.cpp.o[0m
+[ 54%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/operation_state__type_support.cpp.o[0m
+[ 55%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_c.so[0m
+[ 55%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/drive_command__type_support.cpp.o[0m
+[ 56%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.cpp.o[0m
+[ 56%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.cpp.o[0m
+[ 56%] Built target combat_robot_msgs__rosidl_typesupport_c
+[ 57%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/center_object__type_support.cpp.o[0m
+[ 57%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/waypoint__type_support.cpp.o[0m
+[ 57%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/waypoint_list__type_support.cpp.o[0m
+[ 58%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_cpp.so[0m
+[ 59%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/gnss_status__type_support.cpp.o[0m
+[ 59%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/chassis_status__type_support.cpp.o[0m
+[ 59%] Built target combat_robot_msgs__rosidl_typesupport_cpp
+[ 59%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/lidar_status__type_support.cpp.o[0m
+[ 59%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/bounding_box2d__type_support.c.o[0m
+[ 60%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/detected_objects__type_support.c.o[0m
+[ 60%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/detected_object__type_support.c.o[0m
+[ 60%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/user_command__type_support.c.o[0m
+[ 61%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/stream_control_command__type_support.c.o[0m
+[ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/touch_target_point__type_support.c.o[0m
+[ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_control_command__type_support.c.o[0m
+[ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/target_point__type_support.c.o[0m
+[ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/mission_control_command__type_support.c.o[0m
+[ 62%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.c.o[0m
+[ 63%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.c.o[0m
+[ 63%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/operation_state__type_support.c.o[0m
+[ 64%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.c.o[0m
+[ 64%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_path_command__type_support.c.o[0m
+[ 64%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.c.o[0m
+[ 66%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/center_object__type_support.c.o[0m
+[ 66%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/drive_command__type_support.c.o[0m
+[ 66%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.c.o[0m
+[ 66%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/imu_state__type_support.c.o[0m
+[ 67%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/waypoint_list__type_support.c.o[0m
+[ 67%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/waypoint__type_support.c.o[0m
+[ 67%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/gnss_status__type_support.c.o[0m
+[ 67%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/chassis_status__type_support.c.o[0m
+[ 68%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/lidar_status__type_support.c.o[0m
+[ 68%] [32m[1mLinking C shared library libcombat_robot_msgs__rosidl_typesupport_introspection_c.so[0m
+[ 68%] Built target combat_robot_msgs__rosidl_typesupport_introspection_c
+[ 69%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_introspection_cpp.so[0m
+[ 69%] Built target combat_robot_msgs__rosidl_typesupport_introspection_cpp
+[ 70%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/detected_object__type_support.cpp.o[0m
+[ 70%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/bounding_box2d__type_support.cpp.o[0m
+[ 70%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/detected_objects__type_support.cpp.o[0m
+[ 71%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_follower_status__type_support.cpp.o[0m
+[ 71%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/mission_control_command__type_support.cpp.o[0m
+[ 71%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/user_command__type_support.cpp.o[0m
+[ 71%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/target_point__type_support.cpp.o[0m
+[ 72%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/stream_control_command__type_support.cpp.o[0m
+[ 73%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/touch_target_point__type_support.cpp.o[0m
+[ 73%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_control_command__type_support.cpp.o[0m
+[ 73%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_leader_heartbeat__type_support.cpp.o[0m
+[ 73%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_path_command__type_support.cpp.o[0m
+[ 74%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/swarm_robot_command__type_support.cpp.o[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/target_point__type_support_c.cpp.o[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/imu_state__type_support.cpp.o[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/operation_state__type_support.cpp.o[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/detected_objects__type_support_c.cpp.o[0m
+[ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/bounding_box2d__type_support_c.cpp.o[0m
+[ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/mission_control_command__type_support_c.cpp.o[0m
+[ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/touch_target_point__type_support_c.cpp.o[0m
+[ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_control_command__type_support_c.cpp.o[0m
+[ 76%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/user_command__type_support_c.cpp.o[0m
+[ 77%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/detected_object__type_support_c.cpp.o[0m
+[ 77%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/stream_control_command__type_support_c.cpp.o[0m
+[ 78%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_follower_status__type_support_c.cpp.o[0m
+[ 79%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/drive_command__type_support.cpp.o[0m
+[ 79%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support_c.cpp.o[0m
+[ 79%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/pan_tilt_control_command__type_support.cpp.o[0m
+[ 80%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_path_command__type_support_c.cpp.o[0m
+[ 80%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/swarm_robot_command__type_support_c.cpp.o[0m
+[ 80%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/imu_state__type_support_c.cpp.o[0m
+[ 81%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/pan_tilt_state__type_support.cpp.o[0m
+[ 81%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/center_object__type_support.cpp.o[0m
+[ 82%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/operation_state__type_support_c.cpp.o[0m
+[ 82%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/drive_command__type_support_c.cpp.o[0m
+[ 82%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/waypoint__type_support.cpp.o[0m
+[ 83%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/waypoint_list__type_support.cpp.o[0m
+[ 83%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/gnss_status__type_support.cpp.o[0m
+[ 83%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support_c.cpp.o[0m
+[ 83%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/chassis_status__type_support.cpp.o[0m
+[ 84%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/combat_robot_msgs/msg/detail/dds_fastrtps/lidar_status__type_support.cpp.o[0m
+[ 85%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/pan_tilt_state__type_support_c.cpp.o[0m
+[ 85%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/center_object__type_support_c.cpp.o[0m
+[ 86%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/waypoint__type_support_c.cpp.o[0m
+[ 86%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/waypoint_list__type_support_c.cpp.o[0m
+[ 86%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/gnss_status__type_support_c.cpp.o[0m
+[ 87%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/chassis_status__type_support_c.cpp.o[0m
+[ 87%] [32mBuilding CXX object CMakeFiles/combat_robot_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/combat_robot_msgs/msg/detail/lidar_status__type_support_c.cpp.o[0m
+[ 87%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_fastrtps_cpp.so[0m
+[ 87%] Built target combat_robot_msgs__rosidl_typesupport_fastrtps_cpp
+[ 87%] [32m[1mLinking CXX shared library libcombat_robot_msgs__rosidl_typesupport_fastrtps_c.so[0m
+[ 87%] Built target combat_robot_msgs__rosidl_typesupport_fastrtps_c
+[ 87%] Built target combat_robot_msgs
+[ 87%] [34m[1mGenerating Python code for ROS interfaces[0m
+[ 87%] Built target combat_robot_msgs__py
+[ 88%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_touch_target_point_s.c.o[0m
+[ 88%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_user_command_s.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_leader_heartbeat_s.c.o[0m
+[ 90%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_mission_control_command_s.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_imu_state_s.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_detected_objects_s.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_follower_status_s.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_target_point_s.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_detected_object_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_robot_command_s.c.o[0m
+[ 91%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_control_command_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_operation_state_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_swarm_path_command_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_bounding_box2d_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_stream_control_command_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_drive_command_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_pan_tilt_state_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_center_object_s.c.o[0m
+[ 94%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_waypoint_s.c.o[0m
+[ 95%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_pan_tilt_control_command_s.c.o[0m
+[ 96%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_chassis_status_s.c.o[0m
+[ 96%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_waypoint_list_s.c.o[0m
+[ 96%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_lidar_status_s.c.o[0m
+[ 96%] [32mBuilding C object CMakeFiles/combat_robot_msgs__rosidl_generator_py.dir/rosidl_generator_py/combat_robot_msgs/msg/_gnss_status_s.c.o[0m
+[ 97%] [32m[1mLinking C shared library libcombat_robot_msgs__rosidl_generator_py.so[0m
+[ 97%] Built target combat_robot_msgs__rosidl_generator_py
+[ 98%] [32mBuilding C object CMakeFiles/combat_robot_msgs_s__rosidl_typesupport_c.dir/rosidl_generator_py/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_c.c.o[0m
+[ 98%] [32mBuilding C object CMakeFiles/combat_robot_msgs_s__rosidl_typesupport_introspection_c.dir/rosidl_generator_py/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[ 98%] [32mBuilding C object CMakeFiles/combat_robot_msgs_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator_py/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[ 98%] [32m[1mLinking C shared module rosidl_generator_py/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_c.so[0m
+[ 99%] [32m[1mLinking C shared module rosidl_generator_py/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_introspection_c.so[0m
+[ 99%] Built target combat_robot_msgs_s__rosidl_typesupport_c
+[ 99%] Built target combat_robot_msgs_s__rosidl_typesupport_introspection_c
+[100%] [32m[1mLinking C shared module rosidl_generator_py/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_fastrtps_c.so[0m
+[100%] Built target combat_robot_msgs_s__rosidl_typesupport_fastrtps_c
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/rosidl_interfaces/combat_robot_msgs
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/BoundingBox2d.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObject.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObjects.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TargetPoint.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TouchTargetPoint.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/UserCommand.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/MissionControlCommand.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/StreamControlCommand.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmControlCommand.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmFollowerStatus.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmLeaderHeartbeat.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmPathCommand.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmRobotCommand.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/IMUState.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/OperationState.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DriveCommand.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltControlCommand.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltState.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/CenterObject.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/Waypoint.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/WaypointList.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/GnssStatus.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/ChassisStatus.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/LidarStatus.json
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/bounding_box2d.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/center_object.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/chassis_status.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__functions.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__struct.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__type_support.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detected_object.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detected_objects.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/drive_command.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/gnss_status.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/imu_state.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/lidar_status.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/mission_control_command.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/operation_state.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/pan_tilt_control_command.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/pan_tilt_state.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_generator_c__visibility_control.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/stream_control_command.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_control_command.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_follower_status.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_leader_heartbeat.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_path_command.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_robot_command.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/target_point.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/touch_target_point.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/user_command.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/waypoint.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/waypoint_list.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/library_path.sh
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/library_path.dsv
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__rosidl_typesupport_fastrtps_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/bounding_box2d.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/center_object.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/chassis_status.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__builder.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__struct.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__traits.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__type_support.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detected_object.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detected_objects.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/drive_command.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/gnss_status.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/imu_state.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/lidar_status.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/mission_control_command.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/operation_state.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/pan_tilt_control_command.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/pan_tilt_state.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/stream_control_command.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_control_command.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_follower_status.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_leader_heartbeat.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_path_command.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/swarm_robot_command.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/target_point.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/touch_target_point.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/user_command.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/waypoint.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/waypoint_list.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__rosidl_typesupport_fastrtps_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__rosidl_typesupport_introspection_c.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/bounding_box2d__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/center_object__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/chassis_status__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_object__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/detected_objects__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/drive_command__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/gnss_status__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/imu_state__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/lidar_status__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/mission_control_command__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/operation_state__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_control_command__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/pan_tilt_state__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/stream_control_command__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_control_command__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_follower_status__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_leader_heartbeat__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_path_command__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/swarm_robot_command__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/target_point__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/touch_target_point__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/user_command__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/include/combat_robot_msgs/combat_robot_msgs/msg/detail/waypoint_list__rosidl_typesupport_introspection_cpp.hpp
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/pythonpath.sh
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/pythonpath.dsv
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs-0.0.0-py3.12.egg-info/PKG-INFO
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs-0.0.0-py3.12.egg-info/SOURCES.txt
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs-0.0.0-py3.12.egg-info/dependency_links.txt
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs-0.0.0-py3.12.egg-info/top_level.txt
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/__init__.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_c.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_fastrtps_c.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/_combat_robot_msgs_s.ep.rosidl_typesupport_introspection_c.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_c.so
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_fastrtps_c.so
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_introspection_c.so
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/__init__.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_bounding_box2d.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_bounding_box2d_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_center_object.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_center_object_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_chassis_status.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_chassis_status_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_object.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_object_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_objects.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_objects_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_drive_command.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_drive_command_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_gnss_status.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_gnss_status_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_imu_state.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_imu_state_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_lidar_status.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_lidar_status_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_mission_control_command.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_mission_control_command_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_operation_state.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_operation_state_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_control_command.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_control_command_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_state.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_state_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_stream_control_command.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_stream_control_command_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_control_command.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_control_command_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_follower_status.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_follower_status_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_leader_heartbeat.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_leader_heartbeat_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_path_command.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_path_command_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_robot_command.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_robot_command_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_target_point.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_target_point_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_touch_target_point.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_touch_target_point_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_user_command.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_user_command_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint_list.py
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint_list_s.c
+-- Symlinking: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint_s.c
+-- Up-to-date symlink: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_fastrtps_c.so
+-- Up-to-date symlink: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_introspection_c.so
+-- Up-to-date symlink: /ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/combat_robot_msgs_s__rosidl_typesupport_c.so
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/rust_packages/combat_robot_msgs
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/Cargo.toml
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/build.rs
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/src/lib.rs
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/src/msg.rs
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/rust/src/msg/rmw.rs
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/BoundingBox2d.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObject.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObjects.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TargetPoint.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TouchTargetPoint.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/UserCommand.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/MissionControlCommand.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/StreamControlCommand.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmControlCommand.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmFollowerStatus.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmLeaderHeartbeat.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmPathCommand.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmRobotCommand.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/IMUState.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/OperationState.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DriveCommand.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltControlCommand.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltState.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/CenterObject.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/Waypoint.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/WaypointList.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/GnssStatus.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/ChassisStatus.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/LidarStatus.idl
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/BoundingBox2d.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObject.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DetectedObjects.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TargetPoint.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/TouchTargetPoint.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/UserCommand.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/MissionControlCommand.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/StreamControlCommand.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmControlCommand.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmFollowerStatus.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmLeaderHeartbeat.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmPathCommand.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/SwarmRobotCommand.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/IMUState.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/OperationState.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/DriveCommand.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltControlCommand.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/PanTiltState.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/CenterObject.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/Waypoint.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/WaypointList.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/GnssStatus.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/ChassisStatus.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/msg/LidarStatus.msg
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/package_run_dependencies/combat_robot_msgs
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/parent_prefix_path/combat_robot_msgs
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/ament_prefix_path.sh
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/ament_prefix_path.dsv
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/path.sh
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/environment/path.dsv
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/local_setup.bash
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/local_setup.sh
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/local_setup.zsh
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/local_setup.dsv
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/package.dsv
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/ament_index/resource_index/packages/combat_robot_msgs
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/rosidl_cmake-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/ament_cmake_export_libraries-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/ament_cmake_export_targets-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgsConfig.cmake
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgsConfig-version.cmake
+-- Symlinking: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/package.xml
+-- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_generator_c.so
+-- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_generator_c.so" to ""
+-- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_fastrtps_c.so
+-- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_fastrtps_c.so" to ""
+-- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_fastrtps_cpp.so
+-- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_fastrtps_cpp.so" to ""
+-- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_introspection_c.so
+-- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_introspection_c.so" to ""
+-- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_c.so
+-- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_c.so" to ""
+-- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_introspection_cpp.so
+-- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_introspection_cpp.so" to ""
+-- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_cpp.so
+-- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_typesupport_cpp.so" to ""
+Listing '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/__init__.py'...
+Listing '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/__init__.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_bounding_box2d.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_center_object.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_chassis_status.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_object.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_detected_objects.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_drive_command.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_gnss_status.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_imu_state.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_lidar_status.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_mission_control_command.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_operation_state.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_control_command.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_pan_tilt_state.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_stream_control_command.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_control_command.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_follower_status.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_leader_heartbeat.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_path_command.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_swarm_robot_command.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_target_point.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_touch_target_point.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_user_command.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint.py'...
+Compiling '/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages/combat_robot_msgs/msg/_waypoint_list.py'...
+-- Installing: /ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_generator_py.so
+-- Set non-toolchain portion of runtime path of "/ws/ros/install/combat_robot_msgs/lib/libcombat_robot_msgs__rosidl_generator_py.so" to ""
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_cExport.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_cExport-release.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_typesupport_fastrtps_cExport.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_typesupport_fastrtps_cExport-release.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_cppExport.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_typesupport_fastrtps_cppExport.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_typesupport_fastrtps_cppExport-release.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_introspection_cExport.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_introspection_cExport-release.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_cExport.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_cExport-release.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_introspection_cppExport.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_introspection_cppExport-release.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_cppExport.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/combat_robot_msgs__rosidl_typesupport_cppExport-release.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_pyExport.cmake
+-- Installing: /ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake/export_combat_robot_msgs__rosidl_generator_pyExport-release.cmake

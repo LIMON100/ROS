@@ -1,0 +1,267 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-87e142bf861b67126c6d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				},
+				{
+					"build" : "combat_robot_msgs__py",
+					"jsonFile" : "directory-combat_robot_msgs__py-Release-16692c15a1a20b9e6a05.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/ws/ros/build/combat_robot_msgs/combat_robot_msgs__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "combat_robot_msgs__rs",
+					"jsonFile" : "directory-combat_robot_msgs__rs-Release-03592b9a8240139c7545.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/ws/ros/build/combat_robot_msgs/combat_robot_msgs__rs",
+					"targetIndexes" : 
+					[
+						14
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "combat_robot_msgs",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_combat_robot_msgs_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_combat_robot_msgs_egg-Release-22960ca3f243c36ceddf.json",
+					"name" : "ament_cmake_python_build_combat_robot_msgs_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_symlink_combat_robot_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_symlink_combat_robot_msgs-Release-61e5cc2b4ea7ae7bb780.json",
+					"name" : "ament_cmake_python_symlink_combat_robot_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs-Release-806d84ad05f5114913c0.json",
+					"name" : "combat_robot_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__cpp-Release-8846934a413e048682ad.json",
+					"name" : "combat_robot_msgs__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "combat_robot_msgs__py::@4f4d384471b30e028350",
+					"jsonFile" : "target-combat_robot_msgs__py-Release-75230a98cd0a68369e88.json",
+					"name" : "combat_robot_msgs__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__rosidl_generator_c-Release-6b53e336781468c40c63.json",
+					"name" : "combat_robot_msgs__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__rosidl_generator_py-Release-b7c88b873645ad9b3e47.json",
+					"name" : "combat_robot_msgs__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__rosidl_generator_type_description-Release-d167ca26f38169ad3d6a.json",
+					"name" : "combat_robot_msgs__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__rosidl_typesupport_c-Release-80f3eed1ccd742cf0865.json",
+					"name" : "combat_robot_msgs__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__rosidl_typesupport_cpp-Release-8627fea8af4c5a989acf.json",
+					"name" : "combat_robot_msgs__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__rosidl_typesupport_fastrtps_c-Release-8d7e61ea5427a5466cb0.json",
+					"name" : "combat_robot_msgs__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__rosidl_typesupport_fastrtps_cpp-Release-026ef7acecebe571c928.json",
+					"name" : "combat_robot_msgs__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__rosidl_typesupport_introspection_c-Release-133942bf6b5d6b7a23d4.json",
+					"name" : "combat_robot_msgs__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs__rosidl_typesupport_introspection_cpp-Release-c9791cde5ac15106502a.json",
+					"name" : "combat_robot_msgs__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "combat_robot_msgs__rs::@35aa82e0f4c62588a802",
+					"jsonFile" : "target-combat_robot_msgs__rs-Release-c2869d2906a88af17b46.json",
+					"name" : "combat_robot_msgs__rs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs_s__rosidl_typesupport_c-Release-b3acc1ce192972cb0c2a.json",
+					"name" : "combat_robot_msgs_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs_s__rosidl_typesupport_fastrtps_c-Release-55bfe0af195b43e8634e.json",
+					"name" : "combat_robot_msgs_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs_s__rosidl_typesupport_introspection_c-Release-0f5d51daed8b69789dbd.json",
+					"name" : "combat_robot_msgs_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "combat_robot_msgs_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-combat_robot_msgs_uninstall-Release-ca5e1c9650365256ec4f.json",
+					"name" : "combat_robot_msgs_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-Release-baf2ba48f39c958b95c2.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/ws/ros/build/combat_robot_msgs",
+		"source" : "/ws/ros/src/skyautonet/combat_robot_system/combat_robot_msgs"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

@@ -1,0 +1,1 @@
+/ws/ros/build/champ_msgs/ament_cmake_core/champ_msgsConfig-version.cmake

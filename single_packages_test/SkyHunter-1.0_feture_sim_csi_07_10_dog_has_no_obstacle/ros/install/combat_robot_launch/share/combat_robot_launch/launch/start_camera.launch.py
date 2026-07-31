@@ -1,0 +1,1 @@
+/ws/ros/src/skyautonet/combat_robot_launch/launch/start_camera.launch.py

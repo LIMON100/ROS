@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_msgs/rosidl_typesupport_introspection_c/combat_robot_msgs/msg/detail/gnss_status__rosidl_typesupport_introspection_c.h

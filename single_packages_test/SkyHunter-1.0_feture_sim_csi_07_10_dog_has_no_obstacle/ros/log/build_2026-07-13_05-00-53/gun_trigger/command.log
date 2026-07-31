@@ -1,0 +1,6 @@
+Invoking command in '/ws/ros/build/gun_trigger': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/gun_trigger -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/gun_trigger
+Invoked command in '/ws/ros/build/gun_trigger' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/gun_trigger -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/gun_trigger
+Invoking command in '/ws/ros/build/gun_trigger': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/gun_trigger -- -j24 -l24
+Invoked command in '/ws/ros/build/gun_trigger' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/gun_trigger -- -j24 -l24
+Invoking command in '/ws/ros/build/gun_trigger': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/gun_trigger
+Invoked command in '/ws/ros/build/gun_trigger' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/gun_trigger

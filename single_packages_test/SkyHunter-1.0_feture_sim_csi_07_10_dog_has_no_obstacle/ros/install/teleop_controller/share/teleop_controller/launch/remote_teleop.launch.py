@@ -1,0 +1,1 @@
+/ws/ros/src/skyautonet/combat_robot_system/teleop_controller/launch/remote_teleop.launch.py

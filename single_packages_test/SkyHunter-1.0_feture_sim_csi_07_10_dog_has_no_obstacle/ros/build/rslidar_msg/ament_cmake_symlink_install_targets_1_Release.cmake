@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/ws/ros/build/rslidar_msg/rosidl_generator_py/rslidar_msg/rslidar_msg_s__rosidl_typesupport_introspection_c.so" "TARGETS" "rslidar_msg_s__rosidl_typesupport_introspection_c" "DESTINATION" "lib/python3.12/site-packages/rslidar_msg")

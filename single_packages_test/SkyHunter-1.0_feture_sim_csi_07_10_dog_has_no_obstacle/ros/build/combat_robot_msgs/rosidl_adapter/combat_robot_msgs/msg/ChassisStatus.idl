@@ -1,0 +1,71 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/ChassisStatus.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module combat_robot_msgs {
+  module msg {
+    module ChassisStatus_Constants {
+      @verbatim (language="comment", text=
+        "Drive state" "\n"        "정상 운행 가능")
+      const uint8 DRIVE_OK = 0;
+      @verbatim (language="comment", text=
+        "모터/통신 장애 — 운행 불가")
+      const uint8 DRIVE_FAULT = 1;
+      @verbatim (language="comment", text=
+        "E-Stop 인가됨")
+      const uint8 DRIVE_ESTOP = 2;
+      @verbatim (language="comment", text=
+        "Fault flags — bitmask. 여러 결함 동시 표현 가능.")
+      const uint32 FAULT_NONE = 0;
+      const uint32 FAULT_LEFT_WHEEL = 1;
+      const uint32 FAULT_RIGHT_WHEEL = 2;
+      const uint32 FAULT_LOW_BATTERY = 4;
+      const uint32 FAULT_OVERTEMP = 8;
+      @verbatim (language="comment", text=
+        "chassis ↔ robot_server 통신 (Modbus 등) 장애")
+      const uint32 FAULT_COMM = 16;
+    };
+    @verbatim (language="comment", text=
+      "차량(chassis) 컨트롤러가 publish 하는 status." "\n"
+      "robot_server 가 /chassis/status 토픽으로 subscribe 하여 BMS / 구동 상태를" "\n"
+      "앱 상태 패킷의 battery_pct, velocity 등에 반영함." "\n"
+      "" "\n"
+      "가능한 한 모든 필드를 매 주기 채워 보내주세요. 값을 모르면 0 또는 NaN 사용 가능.")
+    struct ChassisStatus {
+      std_msgs::msg::Header header;
+
+      uint8 drive_state;
+
+      @verbatim (language="comment", text=
+        "배터리 — BMS 값" "\n"
+        "0~100 (255 = 알 수 없음)")
+      uint8 battery_pct;
+
+      @verbatim (language="comment", text=
+        "V")
+      float battery_voltage_v;
+
+      @verbatim (language="comment", text=
+        "A  ( + = 방전 / - = 충전 )")
+      float battery_current_a;
+
+      @verbatim (language="comment", text=
+        "Velocity feedback — 차량이 실제로 움직이는 속도 (encoder/odometry 기반)" "\n"
+        "알 수 없으면 NaN." "\n"
+        "전진 양 = +, 후진 = -")
+      float linear_velocity_mps;
+
+      @verbatim (language="comment", text=
+        "rad/s, 반시계 양 = +")
+      float angular_velocity_rps;
+
+      uint32 fault_flags;
+
+      @verbatim (language="comment", text=
+        "모터 최고 온도 (좌/우 휠 중 큰 값). 알 수 없으면 NaN.")
+      float motor_temp_c;
+    };
+  };
+};

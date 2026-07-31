@@ -1,0 +1,4 @@
+source;share/gun_trigger/local_setup.bash
+source;share/gun_trigger/local_setup.dsv
+source;share/gun_trigger/local_setup.sh
+source;share/gun_trigger/local_setup.zsh

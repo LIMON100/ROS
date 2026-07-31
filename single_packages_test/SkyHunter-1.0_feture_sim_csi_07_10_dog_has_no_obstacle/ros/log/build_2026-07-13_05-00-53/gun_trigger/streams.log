@@ -1,0 +1,58 @@
+[0.020s] Invoking command in '/ws/ros/build/gun_trigger': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/gun_trigger -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/gun_trigger
+[0.130s] -- The C compiler identification is GNU 13.3.0
+[0.174s] -- The CXX compiler identification is GNU 13.3.0
+[0.184s] -- Detecting C compiler ABI info
+[0.240s] -- Detecting C compiler ABI info - done
+[0.249s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.249s] -- Detecting C compile features
+[0.250s] -- Detecting C compile features - done
+[0.255s] -- Detecting CXX compiler ABI info
+[0.322s] -- Detecting CXX compiler ABI info - done
+[0.331s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.331s] -- Detecting CXX compile features
+[0.332s] -- Detecting CXX compile features - done
+[0.337s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.451s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.520s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.584s] -- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.624s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.643s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.664s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.689s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.794s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.799s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.862s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[0.877s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[0.894s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.983s] -- Found std_msgs: 5.3.7 (/opt/ros/jazzy/share/std_msgs/cmake)
+[1.073s] -- Configuring done (1.0s)
+[1.079s] -- Generating done (0.0s)
+[1.081s] -- Build files have been written to: /ws/ros/build/gun_trigger
+[1.086s] Invoked command in '/ws/ros/build/gun_trigger' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/gun_trigger -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/gun_trigger
+[1.087s] Invoking command in '/ws/ros/build/gun_trigger': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/gun_trigger -- -j24 -l24
+[1.122s] [ 50%] [32mBuilding CXX object CMakeFiles/gun_trigger_node.dir/src/gun_trigger.cpp.o[0m
+[11.001s] [100%] [32m[1mLinking CXX executable gun_trigger_node[0m
+[11.388s] [100%] Built target gun_trigger_node
+[11.420s] Invoked command in '/ws/ros/build/gun_trigger' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/gun_trigger -- -j24 -l24
+[11.423s] Invoking command in '/ws/ros/build/gun_trigger': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/gun_trigger
+[11.440s] -- Install configuration: "Release"
+[11.443s] -- Execute custom install script
+[11.443s] -- Symlinking: /ws/ros/install/gun_trigger/lib/gun_trigger/gun_trigger_node
+[11.466s] -- Symlinking: /ws/ros/install/gun_trigger/include/gun_trigger.hpp
+[11.487s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger//launch/gun_trigger.launch.xml
+[11.510s] -- Symlinking: /ws/ros/install/gun_trigger/share/ament_index/resource_index/package_run_dependencies/gun_trigger
+[11.532s] -- Symlinking: /ws/ros/install/gun_trigger/share/ament_index/resource_index/parent_prefix_path/gun_trigger
+[11.556s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/environment/ament_prefix_path.sh
+[11.580s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/environment/ament_prefix_path.dsv
+[11.599s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/environment/path.sh
+[11.622s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/environment/path.dsv
+[11.680s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/local_setup.bash
+[11.702s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/local_setup.sh
+[11.712s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/local_setup.zsh
+[11.728s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/local_setup.dsv
+[11.739s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/package.dsv
+[11.749s] -- Symlinking: /ws/ros/install/gun_trigger/share/ament_index/resource_index/packages/gun_trigger
+[11.760s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/cmake/gun_triggerConfig.cmake
+[11.771s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/cmake/gun_triggerConfig-version.cmake
+[11.780s] -- Symlinking: /ws/ros/install/gun_trigger/share/gun_trigger/package.xml
+[11.792s] Invoked command in '/ws/ros/build/gun_trigger' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/gun_trigger

@@ -1,0 +1,78 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+[0mLet's configure ARM64[0m
+[0mbackend is wl[0m
+-- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+-- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_components: 28.1.18 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+-- Found rclcpp_lifecycle: 28.1.18 (/opt/ros/jazzy/share/rclcpp_lifecycle/cmake)
+-- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+-- Found cv_bridge: 4.1.0 (/opt/ros/jazzy/share/cv_bridge/cmake)
+-- Found image_transport: 5.1.7 (/opt/ros/jazzy/share/image_transport/cmake)
+-- Found combat_robot_msgs: 0.0.0 (/ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake)
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1") 
+-- Checking for one of the modules 'libxml-2.0'
+-- Checking for one of the modules 'gstreamer-1.0;gstreamer-video-1.0'
+-- Checking for one of the modules 'gstreamer-rtsp-server-1.0'
+-- Checking for one of the modules 'gstreamer-app-1.0'
+-- Configuring done (1.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /ws/ros/build/robot_server
+[ 10%] [32mBuilding CXX object CMakeFiles/rtsp_server_node.dir/nodes/rtsp_server_node.cpp.o[0m
+[ 20%] [32mBuilding CXX object CMakeFiles/command_server_node.dir/nodes/command_server_node.cpp.o[0m
+[ 30%] [32mBuilding CXX object CMakeFiles/rtsp_server_node.dir/src/rtsp_server.cpp.o[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/command_server_node.dir/src/command_server_path_payload_parser.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/command_server_node.dir/src/command_server_dispatch.cpp.o[0m
+[ 60%] [32mBuilding CXX object CMakeFiles/command_server_node.dir/src/command_server.cpp.o[0m
+[ 70%] [32mBuilding CXX object CMakeFiles/command_server_node.dir/src/command_server_status.cpp.o[0m
+[ 80%] [32mBuilding CXX object CMakeFiles/command_server_node.dir/src/command_server_transport.cpp.o[0m
+[ 90%] [32m[1mLinking CXX executable rtsp_server_node[0m
+[ 90%] Built target rtsp_server_node
+[100%] [32m[1mLinking CXX executable command_server_node[0m
+[100%] Built target command_server_node
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Symlinking: /ws/ros/install/robot_server/lib/robot_server/command_server_node
+-- Symlinking: /ws/ros/install/robot_server/lib/robot_server/rtsp_server_node
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/launch/command_server.launch.xml
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/launch/rtsp_server.launch.xml
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/config/rtsp_server.yaml
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/config/rtsp_server_pc.yaml
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/config/rtsp_server_rk3588.yaml
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/config/rtsp_server_rpi.yaml
+-- Symlinking: /ws/ros/install/robot_server/share/ament_index/resource_index/package_run_dependencies/robot_server
+-- Symlinking: /ws/ros/install/robot_server/share/ament_index/resource_index/parent_prefix_path/robot_server
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/environment/ament_prefix_path.sh
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/environment/ament_prefix_path.dsv
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/environment/path.sh
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/environment/path.dsv
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/local_setup.bash
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/local_setup.sh
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/local_setup.zsh
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/local_setup.dsv
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/package.dsv
+-- Symlinking: /ws/ros/install/robot_server/share/ament_index/resource_index/packages/robot_server
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/cmake/robot_serverConfig.cmake
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/cmake/robot_serverConfig-version.cmake
+-- Symlinking: /ws/ros/install/robot_server/share/robot_server/package.xml

@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/ws/ros/build/pan_tilt_controller/libpan_tilt_controller.so" "/ws/ros/build/pan_tilt_controller/pan_tilt_controller_node" "TARGETS" "pan_tilt_controller" "pan_tilt_controller_node" "DESTINATION" "lib/pan_tilt_controller")

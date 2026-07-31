@@ -1,0 +1,14 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/TouchTargetPoint.msg
+// generated code does not contain a copyright notice
+
+
+module combat_robot_msgs {
+  module msg {
+    struct TouchTargetPoint {
+      float touch_x;
+
+      float touch_y;
+    };
+  };
+};

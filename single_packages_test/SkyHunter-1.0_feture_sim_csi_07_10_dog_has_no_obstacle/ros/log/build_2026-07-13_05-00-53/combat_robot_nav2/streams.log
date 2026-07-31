@@ -1,0 +1,142 @@
+[0.026s] Invoking command in '/ws/ros/build/combat_robot_nav2': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2 -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/combat_robot_nav2
+[0.067s] -- The C compiler identification is GNU 13.3.0
+[0.114s] -- The CXX compiler identification is GNU 13.3.0
+[0.124s] -- Detecting C compiler ABI info
+[0.186s] -- Detecting C compiler ABI info - done
+[0.195s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.195s] -- Detecting C compile features
+[0.195s] -- Detecting C compile features - done
+[0.200s] -- Detecting CXX compiler ABI info
+[0.279s] -- Detecting CXX compiler ABI info - done
+[0.285s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.285s] -- Detecting CXX compile features
+[0.285s] -- Detecting CXX compile features - done
+[0.290s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.385s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.428s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.491s] -- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.535s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.552s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.567s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.582s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.640s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.643s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.701s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[0.714s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[0.728s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.787s] -- Found rclcpp_action: 28.1.18 (/opt/ros/jazzy/share/rclcpp_action/cmake)
+[0.856s] -- Found nav2_msgs: 1.3.12 (/opt/ros/jazzy/share/nav2_msgs/cmake)
+[0.995s] -- Found combat_robot_msgs: 0.0.0 (/ws/ros/install/combat_robot_msgs/share/combat_robot_msgs/cmake)
+[1.062s] -- Found robot_localization: 3.8.3 (/opt/ros/jazzy/share/robot_localization/cmake)
+[1.134s] -- Found tf2: 0.36.20 (/opt/ros/jazzy/share/tf2/cmake)
+[1.143s] -- Found tf2_geometry_msgs: 0.36.20 (/opt/ros/jazzy/share/tf2_geometry_msgs/cmake)
+[1.176s] -- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+[1.178s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[1.178s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[1.306s] -- Found visualization_msgs: 5.3.7 (/opt/ros/jazzy/share/visualization_msgs/cmake)
+[1.379s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[1.555s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.557s] -- Configured cppcheck include dirs: 
+[1.557s] -- Configured cppcheck exclude dirs and/or files: 
+[1.559s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.559s] -- Configured 'flake8' exclude dirs and/or files: 
+[1.560s] -- Added test 'lint_cmake' to check CMake code style
+[1.562s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.569s] -- Added test 'uncrustify' to check C / C++ code style
+[1.572s] -- Configured uncrustify additional arguments: 
+[1.573s] -- Added test 'xmllint' to check XML markup files
+[1.577s] -- Configuring done (1.5s)
+[1.635s] -- Generating done (0.0s)
+[1.656s] -- Build files have been written to: /ws/ros/build/combat_robot_nav2
+[1.703s] Invoked command in '/ws/ros/build/combat_robot_nav2' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2 -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/combat_robot_nav2
+[1.704s] Invoking command in '/ws/ros/build/combat_robot_nav2': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/combat_robot_nav2 -- -j24 -l24
+[1.866s] [ 50%] [32mBuilding CXX object CMakeFiles/swarm_path_executor.dir/src/swarm_path_executor.cpp.o[0m
+[7.462s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:[m[K In lambda function:
+[7.462s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:1314:25:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kwhile[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+[7.462s]  1314 |                         [01;35m[Kwhile[m[K (a < -M_PI) a += 2.0 * M_PI; return a; };
+[7.462s]       |                         [01;35m[K^~~~~[m[K
+[7.462s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:1314:60:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kwhile[m[K’
+[7.462s]  1314 |                         while (a < -M_PI) a += 2.0 * M_PI; [01;36m[Kreturn[m[K a; };
+[7.462s]       |                                                            [01;36m[K^~~~~~[m[K
+[7.472s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:[m[K In member function ‘[01m[Kvoid SwarmPathExecutorNode::[01;32m[Ksync_tick[m[K()[m[K’:
+[7.472s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:1368:16:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kdbg_lag[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[7.472s]  1368 |         double [01;35m[Kdbg_lag[m[K = 0.0;
+[7.472s]       |                [01;35m[K^~~~~~~[m[K
+[7.511s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:[m[K In lambda function:
+[7.511s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:2348:13:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kwhile[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+[7.511s]  2348 |             [01;35m[Kwhile[m[K (a < -M_PI) a += 2.0 * M_PI; return a; };
+[7.512s]       |             [01;35m[K^~~~~[m[K
+[7.512s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:2348:48:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kwhile[m[K’
+[7.512s]  2348 |             while (a < -M_PI) a += 2.0 * M_PI; [01;36m[Kreturn[m[K a; };
+[7.512s]       |                                                [01;36m[K^~~~~~[m[K
+[7.512s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:[m[K In member function ‘[01m[Kbool SwarmPathExecutorNode::[01;32m[Kdrive_reposition[m[K(double, double, double)[m[K’:
+[7.512s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:2386:34:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksx[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[7.512s]  2386 |     bool drive_reposition([01;35m[Kdouble sx[m[K, double sy, double syaw)
+[7.512s]       |                           [01;35m[K~~~~~~~^~[m[K
+[7.512s] [01m[K/ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_nav2/src/swarm_path_executor.cpp:2386:45:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksy[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[7.512s]  2386 |     bool drive_reposition(double sx, [01;35m[Kdouble sy[m[K, double syaw)
+[7.512s]       |                                      [01;35m[K~~~~~~~^~[m[K
+[39.565s] [100%] [32m[1mLinking CXX executable swarm_path_executor[0m
+[39.814s] [100%] Built target swarm_path_executor
+[39.825s] Invoked command in '/ws/ros/build/combat_robot_nav2' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/combat_robot_nav2 -- -j24 -l24
+[39.825s] Invoking command in '/ws/ros/build/combat_robot_nav2': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/combat_robot_nav2
+[39.829s] -- Install configuration: "Release"
+[39.830s] -- Execute custom install script
+[39.830s] -- Symlinking: /ws/ros/install/combat_robot_nav2/lib/combat_robot_nav2/swarm_path_executor
+[39.835s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/bag_nav_test.launch.py
+[39.839s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/bringup_realtime.launch.py
+[39.843s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/bringup_sim.launch.py
+[39.849s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/gazebo.launch.py
+[39.855s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/go2_leader.launch.py
+[39.861s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/gz_world_sim.launch.py
+[39.866s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/localization.launch.py
+[39.873s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/map_rviz.launch.py
+[39.879s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/map_rviz_sim.launch.py
+[39.883s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/navigation.launch.py
+[39.888s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/navigation_lite.launch.py
+[39.892s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/navigation_sim.launch.py
+[39.898s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/robot_bringup_sim.launch.py
+[39.903s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/sensor.launch.py
+[39.910s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/swarm_launch_utils.py
+[39.914s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/launch/swarm_sim.launch.py
+[39.921s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/config/ekf.yaml
+[39.925s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/config/nav2_params.yaml
+[39.931s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/config/nav2_params_sim.yaml
+[39.936s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/map/incheon/incheon.osm
+[39.943s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/map/incheon/incheon.pgm
+[39.948s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/map/incheon/incheon.yaml
+[39.953s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/map/incheon/makemap.py
+[39.958s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/map/incheon/osm_to_pgm.py
+[39.963s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/map/sim_empty/sim_empty.pgm
+[39.970s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/map/sim_empty/sim_empty.yaml
+[39.975s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/world/obs_world.world
+[39.982s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/world/poc_runway_world.sdf
+[39.986s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/world/sejong.world
+[39.992s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/world/sejong_obs.world
+[39.997s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/include/single_plan_bt.xml
+[40.001s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/include/way_plan_bt.xml
+[40.007s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/rviz/swarm_nav2_view.rviz
+[40.012s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/rviz/swarm_sim.rviz
+[40.018s] -- Symlinking: /ws/ros/install/combat_robot_nav2/lib/combat_robot_nav2/sensor_time_sync.py
+[40.024s] -- Symlinking: /ws/ros/install/combat_robot_nav2/lib/combat_robot_nav2/can_reader.py
+[40.030s] -- Symlinking: /ws/ros/install/combat_robot_nav2/lib/combat_robot_nav2/gnss_heading.py
+[40.035s] -- Symlinking: /ws/ros/install/combat_robot_nav2/lib/combat_robot_nav2/gnss_status_bridge.py
+[40.042s] -- Symlinking: /ws/ros/install/combat_robot_nav2/lib/combat_robot_nav2/frame_fixer.py
+[40.048s] -- Symlinking: /ws/ros/install/combat_robot_nav2/lib/combat_robot_nav2/gyro_bias_comp.py
+[40.054s] -- Symlinking: /ws/ros/install/combat_robot_nav2/lib/combat_robot_nav2/swarm_lidar_filter.py
+[40.058s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/ament_index/resource_index/package_run_dependencies/combat_robot_nav2
+[40.065s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/ament_index/resource_index/parent_prefix_path/combat_robot_nav2
+[40.069s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/environment/ament_prefix_path.sh
+[40.074s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/environment/ament_prefix_path.dsv
+[40.079s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/environment/path.sh
+[40.084s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/environment/path.dsv
+[40.090s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/local_setup.bash
+[40.096s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/local_setup.sh
+[40.102s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/local_setup.zsh
+[40.107s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/local_setup.dsv
+[40.114s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/package.dsv
+[40.118s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/ament_index/resource_index/packages/combat_robot_nav2
+[40.123s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/cmake/combat_robot_nav2Config.cmake
+[40.129s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/cmake/combat_robot_nav2Config-version.cmake
+[40.136s] -- Symlinking: /ws/ros/install/combat_robot_nav2/share/combat_robot_nav2/package.xml
+[40.141s] Invoked command in '/ws/ros/build/combat_robot_nav2' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/combat_robot_nav2

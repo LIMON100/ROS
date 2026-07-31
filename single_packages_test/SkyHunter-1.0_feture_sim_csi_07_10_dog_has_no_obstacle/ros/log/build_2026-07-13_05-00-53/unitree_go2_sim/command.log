@@ -1,0 +1,6 @@
+Invoking command in '/ws/ros/build/unitree_go2_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/unitree_go2_sim -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/unitree_go2_sim
+Invoked command in '/ws/ros/build/unitree_go2_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/unitree_go2_sim -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/unitree_go2_sim
+Invoking command in '/ws/ros/build/unitree_go2_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/unitree_go2_sim -- -j24 -l24
+Invoked command in '/ws/ros/build/unitree_go2_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/unitree_go2_sim -- -j24 -l24
+Invoking command in '/ws/ros/build/unitree_go2_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/unitree_go2_sim
+Invoked command in '/ws/ros/build/unitree_go2_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/unitree_go2_sim

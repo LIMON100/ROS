@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_msgs/rosidl_generator_cpp/combat_robot_msgs/msg/detail/detected_object__struct.hpp

@@ -1,0 +1,77 @@
+[0.008s] Invoking command in '/ws/ros/build/rslidar_sdk': AMENT_PREFIX_PATH=/ws/ros/install/rslidar_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/rslidar_msg:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/rslidar_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/rslidar_msg/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_nav2/rslidar_sdk -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/rslidar_sdk
+[0.058s] -- The C compiler identification is GNU 13.3.0
+[0.100s] -- The CXX compiler identification is GNU 13.3.0
+[0.111s] -- Detecting C compiler ABI info
+[0.195s] -- Detecting C compiler ABI info - done
+[0.202s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.202s] -- Detecting C compile features
+[0.202s] -- Detecting C compile features - done
+[0.210s] -- Detecting CXX compiler ABI info
+[0.301s] -- Detecting CXX compiler ABI info - done
+[0.306s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.306s] -- Detecting CXX compile features
+[0.306s] -- Detecting CXX compile features - done
+[0.307s] [0m=============================================================[0m
+[0.307s] [0m-- POINT_TYPE is XYZI[0m
+[0.307s] [0m=============================================================[0m
+[0.317s] [0m=============================================================[0m
+[0.317s] [0m-- ROS Not Found. ROS Support is turned Off.[0m
+[0.317s] [0m=============================================================[0m
+[0.414s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.459s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.538s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.551s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.565s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.580s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.643s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.647s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.711s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[0.730s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[0.751s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.860s] [0m=============================================================[0m
+[0.860s] [0m-- ROS2 Found. ROS2 Support is turned On.[0m
+[0.860s] [0m=============================================================[0m
+[0.863s] -- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[0.939s] -- Found rslidar_msg: 0.0.0 (/ws/ros/install/rslidar_msg/share/rslidar_msg/cmake)
+[0.973s] [0m=============================================================[0m
+[0.973s] [0m-- CMake run for UNIX GNU Compiler[0m
+[0.973s] [0m=============================================================[0m
+[0.975s] [0m=============================================================[0m
+[0.975s] [0m-- rs_driver Version : v1.5.19[0m
+[0.975s] [0m=============================================================[0m
+[1.144s] -- Configuring done (1.1s)
+[1.151s] -- Generating done (0.0s)
+[1.154s] -- Build files have been written to: /ws/ros/build/rslidar_sdk
+[1.160s] Invoked command in '/ws/ros/build/rslidar_sdk' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/rslidar_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/rslidar_msg:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/rslidar_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/rslidar_msg/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_nav2/rslidar_sdk -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/rslidar_sdk
+[1.160s] Invoking command in '/ws/ros/build/rslidar_sdk': AMENT_PREFIX_PATH=/ws/ros/install/rslidar_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/rslidar_msg:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/rslidar_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/rslidar_msg/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/rslidar_sdk -- -j24 -l24
+[1.195s] [ 33%] [32mBuilding CXX object CMakeFiles/rslidar_sdk_node.dir/src/manager/node_manager.cpp.o[0m
+[1.197s] [ 66%] [32mBuilding CXX object CMakeFiles/rslidar_sdk_node.dir/node/rslidar_sdk_node.cpp.o[0m
+[19.226s] [100%] [32m[1mLinking CXX executable rslidar_sdk_node[0m
+[19.534s] [100%] Built target rslidar_sdk_node
+[19.549s] Invoked command in '/ws/ros/build/rslidar_sdk' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/rslidar_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/rslidar_msg:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/rslidar_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/rslidar_msg/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/rslidar_sdk -- -j24 -l24
+[19.553s] Invoking command in '/ws/ros/build/rslidar_sdk': AMENT_PREFIX_PATH=/ws/ros/install/rslidar_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/rslidar_msg:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/rslidar_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/rslidar_msg/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/rslidar_sdk
+[19.563s] -- Install configuration: "Release"
+[19.563s] -- Execute custom install script
+[19.563s] -- Symlinking: /ws/ros/install/rslidar_sdk/lib/rslidar_sdk/rslidar_sdk_node
+[19.575s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/launch/elequent_start.py
+[19.587s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/launch/humble_start.py
+[19.599s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/launch/start.launch
+[19.609s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/launch/start.py
+[19.620s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/rviz/rviz.rviz
+[19.632s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/rviz/rviz2.rviz
+[19.644s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/ament_index/resource_index/package_run_dependencies/rslidar_sdk
+[19.655s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/ament_index/resource_index/parent_prefix_path/rslidar_sdk
+[19.666s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/environment/ament_prefix_path.sh
+[19.675s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/environment/ament_prefix_path.dsv
+[19.685s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/environment/path.sh
+[19.694s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/environment/path.dsv
+[19.705s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/local_setup.bash
+[19.714s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/local_setup.sh
+[19.720s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/local_setup.zsh
+[19.730s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/local_setup.dsv
+[19.740s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/package.dsv
+[19.754s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/ament_index/resource_index/packages/rslidar_sdk
+[19.766s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/cmake/rslidar_sdkConfig.cmake
+[19.776s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/cmake/rslidar_sdkConfig-version.cmake
+[19.788s] -- Symlinking: /ws/ros/install/rslidar_sdk/share/rslidar_sdk/package.xml
+[19.800s] Invoked command in '/ws/ros/build/rslidar_sdk' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/rslidar_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/rslidar_msg:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/rslidar_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/rslidar_msg/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/rslidar_sdk

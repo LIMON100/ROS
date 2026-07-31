@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_msgs/rosidl_generator_c/combat_robot_msgs/msg/detail/bounding_box2d__functions.h

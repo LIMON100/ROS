@@ -1,0 +1,45 @@
+[0.030s] Invoking command in '/ws/ros/build/pan_tilt_controller': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/pan_tilt_controller -- -j24 -l24
+[0.069s] [ 18%] Built target pan_tilt_controller_node_auto
+[0.086s] [ 63%] Built target async_comm
+[0.113s] [ 81%] Built target pan_tilt_controller
+[0.139s] [100%] Built target pan_tilt_controller_node
+[0.170s] Invoked command in '/ws/ros/build/pan_tilt_controller' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /ws/ros/build/pan_tilt_controller -- -j24 -l24
+[0.171s] Invoking command in '/ws/ros/build/pan_tilt_controller': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/pan_tilt_controller
+[0.175s] -- Install configuration: "Debug"
+[0.175s] -- Execute custom install script
+[0.175s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/lib/pan_tilt_controller/pan_tilt_controller_node_auto
+[0.175s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/lib/pan_tilt_controller/libpan_tilt_controller.so
+[0.175s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/lib/pan_tilt_controller/pan_tilt_controller_node
+[0.175s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/include/pan_tilt_controller/pan_tilt_controller.hpp
+[0.175s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/launch/pan_tilt_controller.launch.xml
+[0.175s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/launch/ptz_square_test.launch.xml
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/param/pan_tilt.param.yaml
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/ament_index/resource_index/package_run_dependencies/pan_tilt_controller
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/ament_index/resource_index/parent_prefix_path/pan_tilt_controller
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/environment/ament_prefix_path.sh
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/environment/ament_prefix_path.dsv
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/environment/path.sh
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/environment/path.dsv
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/local_setup.bash
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/local_setup.sh
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/local_setup.zsh
+[0.176s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/local_setup.dsv
+[0.176s] -- Symlinking: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/package.dsv
+[0.182s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/ament_index/resource_index/packages/pan_tilt_controller
+[0.182s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/ament_index/resource_index/rclcpp_components/pan_tilt_controller
+[0.182s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.182s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.182s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/cmake/pan_tilt_controllerConfig.cmake
+[0.182s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/cmake/pan_tilt_controllerConfig-version.cmake
+[0.182s] -- Up-to-date symlink: /ws/ros/install/pan_tilt_controller/share/pan_tilt_controller/package.xml
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/lib/libasync_comm.so
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/tcp_client.h
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/serial.h
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/message_handler.h
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/udp.h
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/include/async_comm/comm.h
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/lib/async_comm/async_comm-targets.cmake
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/lib/async_comm/async_comm-targets-debug.cmake
+[0.182s] -- Up-to-date: /ws/ros/install/pan_tilt_controller/lib/async_comm/async_comm-config.cmake
+[0.183s] Invoked command in '/ws/ros/build/pan_tilt_controller' returned '0': AMENT_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/ws/ros/install/combat_robot_msgs:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy LD_LIBRARY_PATH=/ws/ros/install/combat_robot_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/ws/ros/install/combat_robot_msgs/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /ws/ros/build/pan_tilt_controller

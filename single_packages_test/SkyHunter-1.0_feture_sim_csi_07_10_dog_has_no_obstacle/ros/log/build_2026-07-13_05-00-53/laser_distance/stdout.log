@@ -1,0 +1,56 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+-- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found std_msgs: 5.3.7 (/opt/ros/jazzy/share/std_msgs/cmake)
+-- Configuring done (0.9s)
+-- Generating done (0.0s)
+-- Build files have been written to: /ws/ros/build/laser_distance
+[ 25%] [32mBuilding CXX object CMakeFiles/laser_distance.dir/src/laser_distance.cpp.o[0m
+[ 50%] [32m[1mLinking CXX static library liblaser_distance.a[0m
+[ 50%] Built target laser_distance
+[ 75%] [32mBuilding CXX object CMakeFiles/laser_distance_node.dir/node/laser_distance_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable laser_distance_node[0m
+[100%] Built target laser_distance_node
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Symlinking: /ws/ros/install/laser_distance/lib/liblaser_distance.a
+-- Symlinking: /ws/ros/install/laser_distance/lib/laser_distance/laser_distance_node
+-- Symlinking: /ws/ros/install/laser_distance/include//laser_distance.hpp
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance//launch/laser_distance.launch.xml
+-- Symlinking: /ws/ros/install/laser_distance/share/ament_index/resource_index/package_run_dependencies/laser_distance
+-- Symlinking: /ws/ros/install/laser_distance/share/ament_index/resource_index/parent_prefix_path/laser_distance
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/environment/ament_prefix_path.sh
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/environment/ament_prefix_path.dsv
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/environment/path.sh
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/environment/path.dsv
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/local_setup.bash
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/local_setup.sh
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/local_setup.zsh
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/local_setup.dsv
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/package.dsv
+-- Symlinking: /ws/ros/install/laser_distance/share/ament_index/resource_index/packages/laser_distance
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/cmake/laser_distanceConfig.cmake
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/cmake/laser_distanceConfig-version.cmake
+-- Symlinking: /ws/ros/install/laser_distance/share/laser_distance/package.xml

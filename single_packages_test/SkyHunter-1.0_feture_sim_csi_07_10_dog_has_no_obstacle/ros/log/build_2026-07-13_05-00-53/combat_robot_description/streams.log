@@ -1,0 +1,72 @@
+[0.023s] Invoking command in '/ws/ros/build/combat_robot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_description -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/combat_robot_description
+[0.134s] -- The C compiler identification is GNU 13.3.0
+[0.176s] -- The CXX compiler identification is GNU 13.3.0
+[0.185s] -- Detecting C compiler ABI info
+[0.241s] -- Detecting C compiler ABI info - done
+[0.250s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.250s] -- Detecting C compile features
+[0.250s] -- Detecting C compile features - done
+[0.257s] -- Detecting CXX compiler ABI info
+[0.317s] -- Detecting CXX compiler ABI info - done
+[0.322s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.322s] -- Detecting CXX compile features
+[0.323s] -- Detecting CXX compile features - done
+[0.330s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.455s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.498s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.558s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[0.672s] -- Added test 'copyright' to check source files copyright and LICENSE
+[0.676s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.676s] -- Configured 'flake8' exclude dirs and/or files: 
+[0.677s] -- Added test 'lint_cmake' to check CMake code style
+[0.678s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[0.681s] -- Added test 'xmllint' to check XML markup files
+[0.683s] -- Configuring done (0.6s)
+[0.686s] -- Generating done (0.0s)
+[0.687s] -- Build files have been written to: /ws/ros/build/combat_robot_description
+[0.691s] Invoked command in '/ws/ros/build/combat_robot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/skyautonet/combat_robot_system/combat_nav2/combat_robot_description -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/combat_robot_description
+[0.692s] Invoking command in '/ws/ros/build/combat_robot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/combat_robot_description -- -j24 -l24
+[0.714s] Invoked command in '/ws/ros/build/combat_robot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/combat_robot_description -- -j24 -l24
+[0.715s] Invoking command in '/ws/ros/build/combat_robot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/combat_robot_description
+[0.719s] -- Install configuration: "Release"
+[0.720s] -- Execute custom install script
+[0.720s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/camera.xacro
+[0.724s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/chassis.xacro
+[0.728s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/chassis_cameras.xacro
+[0.733s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/gazebo.xacro
+[0.737s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/gazebo_control.xacro
+[0.742s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/gimbal.xacro
+[0.747s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/macros.xacro
+[0.752s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/materials.xacro
+[0.756s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/rifle.xacro
+[0.761s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/robot.urdf.xacro
+[0.765s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/urdf/sensors.xacro
+[0.770s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/camera.dae
+[0.775s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/camera_holder.dae
+[0.780s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/chassis.dae
+[0.785s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/gimbal_base.dae
+[0.790s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/gimbal_pan.dae
+[0.799s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/gimbal_tilt.dae
+[0.812s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/left_track.dae
+[0.817s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/lidar.dae
+[0.822s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/rifle.dae
+[0.827s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/meshes/right_track.dae
+[0.833s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/launch/display.launch.py
+[0.838s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/rviz/view_robot.rviz
+[0.847s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/docs/.gitkeep
+[0.855s] -- Symlinking: /ws/ros/install/combat_robot_description/share/ament_index/resource_index/package_run_dependencies/combat_robot_description
+[0.861s] -- Symlinking: /ws/ros/install/combat_robot_description/share/ament_index/resource_index/parent_prefix_path/combat_robot_description
+[0.865s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/environment/ament_prefix_path.sh
+[0.870s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/environment/ament_prefix_path.dsv
+[0.874s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/environment/path.sh
+[0.880s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/environment/path.dsv
+[0.884s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/local_setup.bash
+[0.890s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/local_setup.sh
+[0.895s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/local_setup.zsh
+[0.900s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/local_setup.dsv
+[0.904s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/package.dsv
+[0.909s] -- Symlinking: /ws/ros/install/combat_robot_description/share/ament_index/resource_index/packages/combat_robot_description
+[0.917s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/cmake/combat_robot_descriptionConfig.cmake
+[0.925s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/cmake/combat_robot_descriptionConfig-version.cmake
+[0.930s] -- Symlinking: /ws/ros/install/combat_robot_description/share/combat_robot_description/package.xml
+[0.940s] Invoked command in '/ws/ros/build/combat_robot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/combat_robot_description

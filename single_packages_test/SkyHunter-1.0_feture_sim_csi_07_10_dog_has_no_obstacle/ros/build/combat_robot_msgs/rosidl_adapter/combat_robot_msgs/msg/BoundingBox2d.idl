@@ -1,0 +1,20 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from combat_robot_msgs/msg/BoundingBox2d.msg
+// generated code does not contain a copyright notice
+
+
+module combat_robot_msgs {
+  module msg {
+    @verbatim (language="comment", text=
+      "BoundingBox2d.msg")
+    struct BoundingBox2d {
+      int32 x;
+
+      int32 y;
+
+      int32 width;
+
+      int32 height;
+    };
+  };
+};

@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblaser_distance.a CMakeFiles/laser_distance.dir/src/laser_distance.cpp.o
+/usr/bin/ranlib liblaser_distance.a

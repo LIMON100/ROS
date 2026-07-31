@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_operation_system/ament_cmake_core/combat_robot_operation_systemConfig.cmake

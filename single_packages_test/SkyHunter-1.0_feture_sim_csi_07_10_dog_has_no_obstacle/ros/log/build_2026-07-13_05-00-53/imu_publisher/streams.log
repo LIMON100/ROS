@@ -1,0 +1,28 @@
+[0.648s] Invoking command in '/ws/ros/build/imu_publisher': PYTHONPATH=/ws/ros/build/imu_publisher/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/ws/ros/install/imu_publisher/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /ws/ros/build/imu_publisher/build --no-deps symlink_data
+[0.800s] running develop
+[0.885s] running egg_info
+[0.885s] creating imu_publisher.egg-info
+[0.893s] writing imu_publisher.egg-info/PKG-INFO
+[0.893s] writing dependency_links to imu_publisher.egg-info/dependency_links.txt
+[0.893s] writing entry points to imu_publisher.egg-info/entry_points.txt
+[0.893s] writing requirements to imu_publisher.egg-info/requires.txt
+[0.893s] writing top-level names to imu_publisher.egg-info/top_level.txt
+[0.893s] writing manifest file 'imu_publisher.egg-info/SOURCES.txt'
+[0.909s] reading manifest file 'imu_publisher.egg-info/SOURCES.txt'
+[0.909s] writing manifest file 'imu_publisher.egg-info/SOURCES.txt'
+[0.917s] running build_ext
+[0.918s] Creating /ws/ros/install/imu_publisher/lib/python3.12/site-packages/imu-publisher.egg-link (link to .)
+[0.918s] Installing imu_node script to /ws/ros/install/imu_publisher/lib/imu_publisher
+[0.918s] 
+[0.918s] Installed /ws/ros/build/imu_publisher
+[0.918s] running symlink_data
+[0.918s] creating /ws/ros/install/imu_publisher/share/ament_index
+[0.918s] creating /ws/ros/install/imu_publisher/share/ament_index/resource_index
+[0.918s] creating /ws/ros/install/imu_publisher/share/ament_index/resource_index/packages
+[0.918s] symbolically linking /ws/ros/build/imu_publisher/resource/imu_publisher -> /ws/ros/install/imu_publisher/share/ament_index/resource_index/packages
+[0.919s] symbolically linking /ws/ros/build/imu_publisher/package.xml -> /ws/ros/install/imu_publisher/share/imu_publisher
+[0.919s] creating /ws/ros/install/imu_publisher/share/imu_publisher/launch
+[0.919s] symbolically linking /ws/ros/build/imu_publisher/launch/imu_launch.py -> /ws/ros/install/imu_publisher/share/imu_publisher/launch
+[0.919s] creating /ws/ros/install/imu_publisher/share/imu_publisher/config
+[0.919s] symbolically linking /ws/ros/build/imu_publisher/config/imu_mac.yaml -> /ws/ros/install/imu_publisher/share/imu_publisher/config
+[0.940s] Invoked command in '/ws/ros/build/imu_publisher' returned '0': PYTHONPATH=/ws/ros/build/imu_publisher/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/ws/ros/install/imu_publisher/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /ws/ros/build/imu_publisher/build --no-deps symlink_data

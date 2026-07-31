@@ -1,0 +1,71 @@
+[0.029s] Invoking command in '/ws/ros/build/champ': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/champ -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/champ
+[0.141s] -- The C compiler identification is GNU 13.3.0
+[0.190s] -- The CXX compiler identification is GNU 13.3.0
+[0.201s] -- Detecting C compiler ABI info
+[0.263s] -- Detecting C compiler ABI info - done
+[0.271s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.271s] -- Detecting C compile features
+[0.272s] -- Detecting C compile features - done
+[0.278s] -- Detecting CXX compiler ABI info
+[0.345s] -- Detecting CXX compiler ABI info - done
+[0.350s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.350s] -- Detecting CXX compile features
+[0.350s] -- Detecting CXX compile features - done
+[0.355s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.464s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.527s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.587s] -- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.642s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.662s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.678s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.697s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.783s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.790s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.870s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[0.886s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[0.899s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.962s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[1.015s] -- Configuring done (1.0s)
+[1.019s] -- Generating done (0.0s)
+[1.020s] -- Build files have been written to: /ws/ros/build/champ
+[1.025s] Invoked command in '/ws/ros/build/champ' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /ws/ros/src/third_party/unitree_go2_ros2/champ -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ws/ros/install/champ
+[1.026s] Invoking command in '/ws/ros/build/champ': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/champ -- -j24 -l24
+[1.057s] Invoked command in '/ws/ros/build/champ' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/champ -- -j24 -l24
+[1.058s] Invoking command in '/ws/ros/build/champ': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/champ
+[1.062s] -- Install configuration: "Release"
+[1.062s] -- Execute custom install script
+[1.063s] -- Symlinking: /ws/ros/install/champ/include/champ/LICENSE
+[1.068s] -- Symlinking: /ws/ros/install/champ/include/champ/README.md
+[1.074s] -- Symlinking: /ws/ros/install/champ/include/champ/bla/basic_linear_algebra.h
+[1.080s] -- Symlinking: /ws/ros/install/champ/include/champ/bla/memory_delegate.h
+[1.086s] -- Symlinking: /ws/ros/install/champ/include/champ/body_controller/body_controller.h
+[1.092s] -- Symlinking: /ws/ros/install/champ/include/champ/geometry/geometry.h
+[1.097s] -- Symlinking: /ws/ros/install/champ/include/champ/kinematics/kinematics.h
+[1.102s] -- Symlinking: /ws/ros/install/champ/include/champ/leg_controller/leg_controller.h
+[1.107s] -- Symlinking: /ws/ros/install/champ/include/champ/leg_controller/phase_generator.h
+[1.111s] -- Symlinking: /ws/ros/install/champ/include/champ/leg_controller/trajectory_planner.h
+[1.117s] -- Symlinking: /ws/ros/install/champ/include/champ/macros/macros.h
+[1.122s] -- Symlinking: /ws/ros/install/champ/include/champ/odometry/odometry.h
+[1.127s] -- Symlinking: /ws/ros/install/champ/include/champ/quadruped_base/quadruped_base.h
+[1.132s] -- Symlinking: /ws/ros/install/champ/include/champ/quadruped_base/quadruped_components.h
+[1.136s] -- Symlinking: /ws/ros/install/champ/include/champ/quadruped_base/quadruped_joint.h
+[1.141s] -- Symlinking: /ws/ros/install/champ/include/champ/quadruped_base/quadruped_leg.h
+[1.145s] -- Symlinking: /ws/ros/install/champ/include/champ/utils/urdf_loader.h
+[1.153s] -- Symlinking: /ws/ros/install/champ/include/champ/utils/xmlrpc_helpers.h
+[1.161s] -- Symlinking: /ws/ros/install/champ/share/ament_index/resource_index/package_run_dependencies/champ
+[1.166s] -- Symlinking: /ws/ros/install/champ/share/ament_index/resource_index/parent_prefix_path/champ
+[1.171s] -- Symlinking: /ws/ros/install/champ/share/champ/environment/ament_prefix_path.sh
+[1.176s] -- Symlinking: /ws/ros/install/champ/share/champ/environment/ament_prefix_path.dsv
+[1.181s] -- Symlinking: /ws/ros/install/champ/share/champ/environment/path.sh
+[1.186s] -- Symlinking: /ws/ros/install/champ/share/champ/environment/path.dsv
+[1.194s] -- Symlinking: /ws/ros/install/champ/share/champ/local_setup.bash
+[1.200s] -- Symlinking: /ws/ros/install/champ/share/champ/local_setup.sh
+[1.207s] -- Symlinking: /ws/ros/install/champ/share/champ/local_setup.zsh
+[1.212s] -- Symlinking: /ws/ros/install/champ/share/champ/local_setup.dsv
+[1.217s] -- Symlinking: /ws/ros/install/champ/share/champ/package.dsv
+[1.223s] -- Symlinking: /ws/ros/install/champ/share/ament_index/resource_index/packages/champ
+[1.231s] -- Symlinking: /ws/ros/install/champ/share/champ/cmake/ament_cmake_export_include_directories-extras.cmake
+[1.237s] -- Symlinking: /ws/ros/install/champ/share/champ/cmake/champConfig.cmake
+[1.247s] -- Symlinking: /ws/ros/install/champ/share/champ/cmake/champConfig-version.cmake
+[1.257s] -- Symlinking: /ws/ros/install/champ/share/champ/package.xml
+[1.264s] Invoked command in '/ws/ros/build/champ' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/champ

@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_msgs/ament_cmake_core/combat_robot_msgsConfig-version.cmake

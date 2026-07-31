@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_launch/ament_cmake_core/combat_robot_launchConfig-version.cmake

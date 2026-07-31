@@ -1,0 +1,4 @@
+Invoking command in '/ws/ros/build/bluespace_ai_xsens_mti_driver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/bluespace_ai_xsens_mti_driver -- -j24 -l24
+Invoked command in '/ws/ros/build/bluespace_ai_xsens_mti_driver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /ws/ros/build/bluespace_ai_xsens_mti_driver -- -j24 -l24
+Invoking command in '/ws/ros/build/bluespace_ai_xsens_mti_driver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/bluespace_ai_xsens_mti_driver
+Invoked command in '/ws/ros/build/bluespace_ai_xsens_mti_driver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /ws/ros/build/bluespace_ai_xsens_mti_driver

@@ -1,0 +1,8 @@
+source;share/gun_trigger/hook/cmake_prefix_path.ps1
+source;share/gun_trigger/hook/cmake_prefix_path.dsv
+source;share/gun_trigger/hook/cmake_prefix_path.sh
+source;share/gun_trigger/local_setup.bash
+source;share/gun_trigger/local_setup.dsv
+source;share/gun_trigger/local_setup.ps1
+source;share/gun_trigger/local_setup.sh
+source;share/gun_trigger/local_setup.zsh

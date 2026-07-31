@@ -1,0 +1,1 @@
+/ws/ros/build/combat_robot_msgs/rosidl_typesupport_introspection_cpp/combat_robot_msgs/msg/detail/detected_objects__rosidl_typesupport_introspection_cpp.hpp

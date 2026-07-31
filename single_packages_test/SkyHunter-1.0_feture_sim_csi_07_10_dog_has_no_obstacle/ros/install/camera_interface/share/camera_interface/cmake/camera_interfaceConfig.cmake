@@ -1,0 +1,1 @@
+/ws/ros/build/camera_interface/ament_cmake_core/camera_interfaceConfig.cmake
