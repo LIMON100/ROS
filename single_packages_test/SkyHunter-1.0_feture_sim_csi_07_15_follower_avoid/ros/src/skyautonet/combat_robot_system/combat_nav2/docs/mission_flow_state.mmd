@@ -1,0 +1,44 @@
+%% mission_control_node 내부 상태머신 (PAUSE/RESUME 포함)
+stateDiagram-v2
+    [*] --> Idle
+
+    Idle --> Loaded : CMD_LOAD_PATH<br/>(path_json 파싱 성공)
+    Idle --> Idle   : CMD_LOAD_PATH<br/>(파싱 실패 → 무시)
+
+    Loaded --> Loaded : CMD_LOAD_PATH<br/>(새 경로로 교체)
+    Loaded --> Idle   : CMD_STOP<br/>pending_path_.clear()
+
+    Loaded --> Driving : CMD_START<br/>start_mission(pending_path_)<br/>active_index_=0
+    Idle   --> Idle    : CMD_START<br/>(캐시 없음 → 무시)
+
+    state Driving {
+        [*] --> WaitingFromLL
+        WaitingFromLL --> WaitingGoalAccept : /fromLL 응답<br/>NavigateToPose goal 전송
+        WaitingGoalAccept --> Navigating    : goal_response<br/>(active_goal_ 저장)
+        WaitingGoalAccept --> [*]           : goal 거절
+        Navigating --> Advanced             : result SUCCEEDED<br/>active_index_++
+        Advanced --> WaitingFromLL          : 다음 wp 존재
+        Advanced --> [*]                    : 마지막 wp 도달
+        Navigating --> [*]                  : result ABORTED/CANCELED
+    }
+
+    Driving --> Idle : Driving 종료<br/>active_=false
+    Driving --> Idle : CMD_STOP<br/>async_cancel_goal(active_goal_)
+
+    %% ─── PAUSE / RESUME ───
+    Driving --> Paused : CMD_PAUSE<br/>paused_=true<br/>async_cancel_goal(active_goal_)<br/>active_index_ 유지
+    Paused  --> Driving : CMD_RESUME<br/>paused_=false<br/>execute_next_waypoint()<br/>(동일 wp 부터 재개)
+    Paused  --> Idle   : CMD_STOP<br/>cancel_mission()
+
+    note right of Paused
+        PAUSE 로 인한 CANCELED result 는
+        paused_ 플래그로 구분 → 미션 실패로
+        처리하지 않고 active_index_ 보존.
+        goal accept / fromLL 응답이 PAUSE 와
+        경합해도 즉시 cancel·보류로 방어.
+    end note
+
+    note right of Driving
+        active_=true 동안 새 CMD_START 들어오면
+        "이미 미션 실행 중" 경고 후 거절
+    end note
