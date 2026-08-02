@@ -1,0 +1,13 @@
+<launch>
+  <arg name="role" default="leader"/>
+  <arg name="robot_id" default="1"/>
+  <arg name="leader_robot_id" default="1"/>
+  <arg name="params_file" default="$(find-pkg-share swarm_coordinator)/config/swarm_coordinator.yaml"/>
+
+  <node pkg="swarm_coordinator" exec="swarm_coordinator_node" name="swarm_coordinator" output="screen">
+    <param from="$(var params_file)"/>
+    <param name="role" value="$(var role)"/>
+    <param name="robot_id" value="$(var robot_id)"/>
+    <param name="leader_robot_id" value="$(var leader_robot_id)"/>
+  </node>
+</launch>
