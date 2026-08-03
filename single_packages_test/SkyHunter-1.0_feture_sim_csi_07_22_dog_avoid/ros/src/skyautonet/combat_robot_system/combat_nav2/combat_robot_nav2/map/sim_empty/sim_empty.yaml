@@ -1,0 +1,8 @@
+# [SIM 전용] 로봇 시작점(map 0,0) 중심, ±150m 자유맵. GPS 미션 waypoint(~100m 분포) 수용.
+image: sim_empty.pgm
+mode: trinary
+resolution: 0.2
+origin: [-150.0, -150.0, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25

@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="display" exec="display_node" name="display_node" output="screen" />
+</launch> 
