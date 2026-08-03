@@ -1,0 +1,4 @@
+# imu_mac.yaml
+car: "da:0a:ad:fb:23:8c"
+gun: "ef:f7:9f:ad:ce:6e"
+scan_hci: 0          # (옵션) 사용할 HCI 번호, 기본 0
