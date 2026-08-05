@@ -1,0 +1,291 @@
+controller_server:
+  ros__parameters:
+    use_sim_time: false
+    publish_zero_velocity: true
+    controller_frequency: 30.0  
+    transform_tolerance: 0.2    
+    failure_tolerance: 1.0
+    progress_checker_plugins: ["progress_checker"]
+    goal_checker_plugins: ["general_goal_checker"]
+    controller_plugins: ["FollowPath"]
+
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.5
+      movement_time_allowance: 90.0
+
+    general_goal_checker:
+      stateful: true
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.3
+      yaw_goal_tolerance: 0.25
+
+    # 🔥 끝판왕 제어기: MPPI Controller 적용 (궤도형/차동구동 특화)
+    FollowPath:
+      plugin: "nav2_mppi_controller::MPPIController"
+      time_steps: 56
+      model_dt: 0.05
+      batch_size: 2000
+      ax_max: 1.0
+      ax_min: -1.0
+      ay_max: 0.0       # 차동 구동이므로 좌우 슬립은 0
+      ay_min: 0.0
+      az_max: 1.5
+      az_min: -1.5
+      vx_std: 0.2
+      vy_std: 0.0
+      wz_std: 0.4
+      vx_max: 1.2
+      vx_min: -0.5
+      vy_max: 0.0
+      wz_max: 1.0
+      iteration_count: 1
+      prune_distance: 1.7
+      transform_tolerance: 0.1
+      temperature: 0.3
+      gamma: 0.015
+      motion_model: "DiffDrive"  # 궤도형 로봇 모델
+      visualize: true
+      TrajectoryVisualizer:
+        trajectory_step: 5
+        time_step: 3
+      critics: ["ConstraintCritic", "CostCritic", "GoalCritic", "GoalAngleCritic", "PathAlignCritic", "PathFollowCritic", "PathAngleCritic", "PreferForwardCritic"]
+      ConstraintCritic:
+        cost_power: 1
+        cost_weight: 4.0
+      CostCritic:
+        cost_power: 1
+        cost_weight: 3.8
+        critical_cost: 300.0
+      GoalCritic:
+        cost_power: 1
+        cost_weight: 5.0
+        threshold_to_consider: 1.4
+      GoalAngleCritic:
+        cost_power: 1
+        cost_weight: 3.0
+        threshold_to_consider: 0.5
+      PreferForwardCritic:
+        cost_power: 1
+        cost_weight: 5.0
+        threshold_to_consider: 0.5
+      PathAlignCritic:
+        cost_power: 1
+        cost_weight: 14.0
+        max_heuristic_cost: 0.15
+        offset_from_furthest: 20
+        trajectory_point_step: 4
+      PathFollowCritic:
+        cost_power: 1
+        cost_weight: 5.0
+        offset_from_furthest: 5
+      PathAngleCritic:
+        cost_power: 1
+        cost_weight: 2.0
+        offset_from_furthest: 4
+        threshold_to_consider: 0.5
+        max_angle_to_furthest: 1.0
+
+planner_server:
+  ros__parameters:
+    use_sim_time: false
+    expected_planner_frequency: 1.0  
+    planner_plugins: ["GridBased"]
+    GridBased:
+      # SmacPlanner2D → NavfnPlanner: 대형 global costmap(500×500=1M셀)에서 Smac 가 우회
+      #   경로 탐색 시 20s 행→abort(code6)→얕은 swerve 폴백→벽 코너 잼(실측). NavFn(Dijkstra/
+      #   A*)은 훨씬 빠르고 견고해 좁은 갭 우회를 안정적으로 산출한다.
+      plugin: "nav2_navfn_planner::NavfnPlanner"
+      tolerance: 0.5
+      use_astar: true
+      allow_unknown: true
+
+behavior_server:
+  ros__parameters:
+    use_sim_time: false
+    behavior_plugins: ["wait"]
+    wait:
+      plugin: "nav2_behaviors::Wait"
+    global_frame: map
+    robot_base_frame: base_footprint
+    transform_tolerance: 0.1
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      use_sim_time: false
+      global_frame: odom
+      always_send_full_costmap: true
+      robot_base_frame: base_footprint
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      rolling_window: true
+      # 10→18: 좁은 갭 회피 시 갭 전체를 시야에 넣어 벽 모서리를 여유있게 도는 경로를 계획
+      #        (10m 는 갭 진입 직전에야 벽이 보여 가장자리를 스치는 경로 → 후미 정체, 사용자 승인).
+      width: 18
+      height: 18
+      # 0.05→0.1: 로봇 풋프린트 1.32×0.86m·E1 점정밀도 ±3cm 에 5cm 격자는 과밀 —
+      # 10cm 로도 회피/footprint 판정 충분, 셀 4×↓(40k→10k) RK3588 CPU 절감.
+      resolution: 0.1
+      transform_tolerance: 1.0
+      # 🔥 궤도형 로봇(combat_robot)의 정확한 사이즈 반영
+      footprint: "[ [0.66, 0.43], [0.66, -0.43], [-0.66, -0.43], [-0.66, 0.43] ]"
+      plugins: ["obstacle_layer", "inflation_layer"]
+      
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        observation_sources: front_lidar swarm_shared
+        front_lidar:
+          topic: /rslidar_points_filtered  # swarm_lidar_filter 출력(팀메이트 마스킹, 미마스킹시 passthrough)
+          data_type: "PointCloud2"
+          obstacle_max_range: 12.0  # E1 선행감지(넓은 장애물 조기우회용 planner 시야)
+          raytrace_max_range: 13.0
+          max_obstacle_height: 2.0
+          min_obstacle_height: 0.1   # box 감지(현장 RSLidar 지면클러터 심하면 0.15~0.2로)
+          clearing: true
+          marking: true
+        swarm_shared:
+          # 편대 장애물 공유(swarm_obstacle_share.py): 팀원이 본 장애물 점(map좌표, z=0.5).
+          # marking 전용 — clearing 은 라이다 raytrace 담당(내 시야에서 비면 지워짐).
+          # TTL(6s)·자기위치 self-clear·재공유 echo 차단은 공유노드가 처리.
+          topic: swarm_obstacles
+          data_type: "PointCloud2"
+          obstacle_max_range: 12.0
+          raytrace_max_range: 13.0
+          max_obstacle_height: 2.0
+          min_obstacle_height: 0.1
+          expected_update_rate: 0.0
+          clearing: false
+          marking: true
+
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.5
+        # 0.55→0.8: 좁은 갭에서 경로를 벽에서 더 밀어 갭 중앙으로(footprint 0.43 반폭 + 여유)
+        #           통과시켜 벽 모서리 스침·collision_monitor 감속 정체 방지(사용자 승인).
+        inflation_radius: 0.8
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: false
+      global_frame: map
+      robot_base_frame: base_footprint 
+      update_frequency: 5.0
+      publish_frequency: 1.0
+      # ★ 미션구역 고정 경계(datum 중심 ±250m). 종전엔 static_layer(incheon.pgm =
+      #   ±50m·0.05m·4M셀·전픽셀 free 플레이스홀더)가 마스터 그리드 크기를 결정 —
+      #   ① datum 에서 50m 넘는 미션은 planner "outside bounds" 영구실패(sim 활주로
+      #     x>100 서 실측된 우회 deadlock 과 동일 패턴), ② 4M셀@5Hz = RK3588 CPU 낭비.
+      #   콘텐츠 없는 맵이라 static_layer 제거, 명시 경계 500×500m @0.5(1M셀, 4×↓).
+      #   장애물은 obstacle_layer(라이다)가 담당. track_unknown_space=false(기본 free).
+      rolling_window: false
+      origin_x: -250.0
+      origin_y: -250.0
+      width: 500
+      height: 500
+      resolution: 0.5
+      track_unknown_space: false
+      transform_tolerance: 1.0
+      # 🔥 글로벌 영역도 궤도형 로봇 사이즈 동일하게 반영
+      footprint: "[ [0.66, 0.43], [0.66, -0.43], [-0.66, -0.43], [-0.66, 0.43] ]"
+      plugins: ["obstacle_layer", "inflation_layer"]
+
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        observation_sources: front_lidar 
+        front_lidar:
+          topic: /rslidar_points_filtered  # swarm_lidar_filter 출력
+          data_type: "PointCloud2"
+          obstacle_max_range: 12.0  # E1 선행감지(넓은 장애물 조기우회용 planner 시야)  
+          raytrace_max_range: 13.0
+          max_obstacle_height: 2.0
+          min_obstacle_height: 0.1   # box 감지(현장 RSLidar 지면클러터 심하면 0.15~0.2로)
+          clearing: true
+          marking: true
+          
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.5
+        # 0.55→1.0(global): planner 우회 경로를 벽에서 ~1m 밀어(footprint 상단이 벽 y=-6 밖으로)
+        #   갭을 깊게 통과. 1.5 는 7m 갭에서 여유폭(7-2×1.5=4m)이 좁아 planner 가 행/실패(code6)
+        #   → 얕은 swerve 폴백 → 벽 코너 잼(실측). 1.0 이면 여유 5m 로 planner 성공하며 충분히 깊다.
+        inflation_radius: 1.0
+
+velocity_smoother:
+  ros__parameters:
+    use_sim_time: false
+    smoothing_frequency: 30.0
+    max_velocity: [1.2, 0.0, 1.0]
+    min_velocity: [-0.5, 0.0, -1.0]
+    max_accel: [0.5, 0.0, 1.0]
+    max_decel: [-1.0, 0.0, -1.5]
+
+# jazzy nav2_bringup 은 collision_monitor 를 lifecycle 노드로 관리한다(humble 엔 없었음).
+# cmd_vel 체인: controller -> cmd_vel_nav -> velocity_smoother -> cmd_vel_smoothed
+#               -> collision_monitor -> cmd_vel (최종)
+collision_monitor:
+  ros__parameters:
+    use_sim_time: false
+    base_frame_id: "base_footprint"
+    odom_frame_id: "odom"
+    cmd_vel_in_topic: "cmd_vel_smoothed"
+    cmd_vel_out_topic: "cmd_vel"
+    state_topic: "collision_monitor_state"
+    transform_tolerance: 0.2
+    source_timeout: 1.0
+    base_shift_correction: True
+    stop_pub_timeout: 2.0
+    # 실제 footprint(1.32 x 0.86 m) 기준 approach 정지 — 충돌 예상 시 감속/정지
+    polygons: ["FootprintApproach"]
+    FootprintApproach:
+      type: "polygon"
+      action_type: "approach"
+      footprint_topic: "/local_costmap/published_footprint"
+      # 1.2→0.6: 좁은 갭(7m) 통과 시 벽 far 코너(101,-6)에 approach 투영이 닿아 로봇이 오탐
+      #   정지(항상 100.9,-6.7)하던 것 완화. 0.6s 투영이면 저속 통과 중 코너 스침을 안 잡는다.
+      #   (실차는 실제 충돌회피 필요하므로 이 값은 sim 통과 튜닝 — 보드 배포 시 재검토.)
+      time_before_collision: 0.6
+      simulation_time_step: 0.1
+      min_points: 6
+      visualize: False
+      enabled: True
+    # 장애물 소스: 기존 costmap 과 동일한 LiDAR PointCloud2 사용
+    observation_sources: ["pointcloud"]
+    pointcloud:
+      type: "pointcloud"
+      topic: "/rslidar_points_filtered"  # swarm_lidar_filter 출력
+      min_height: 0.1
+      max_height: 2.0
+      enabled: True
+
+# jazzy nav2_bringup 은 docking_server(opennav_docking)도 lifecycle 노드로 관리한다.
+# 이 로봇은 도킹 기능이 없지만, 노드가 configure 되려면 dock plugin 이 최소 1개 필요.
+# dock 인스턴스(docks)는 비워둠 — 실제 도킹은 사용하지 않음.
+docking_server:
+  ros__parameters:
+    use_sim_time: false
+    controller_frequency: 50.0
+    base_frame: "base_footprint"
+    fixed_frame: "odom"
+    dock_plugins: ['simple_charging_dock']
+    simple_charging_dock:
+      plugin: 'opennav_docking::SimpleChargingDock'
+      use_external_detection_pose: false
+      use_battery_status: false
+      use_stall_detection: false
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: false
+    # 명시적 프레임: per-robot 네임스페이스(robot_ns) 가 sN/map, sN/base_footprint 로
+    # prefix 할 수 있도록 노출. 단일로봇(robot_ns='') 은 이 값(map/base_footprint)이
+    # 그대로 쓰여 기존 동작과 동일하다.
+    global_frame: map
+    robot_base_frame: base_footprint
+    # 실제 경로는 navigation.launch.py 에서 패키지 share 경로로 런타임 치환됨(RewrittenYaml).
+    # 아래 값은 navigation_launch.py 를 직접 호출할 때만 쓰이는 fallback(파일명).
+    default_nav_to_pose_bt_xml: "single_plan_bt.xml"
+    default_nav_through_poses_bt_xml: "way_plan_bt.xml"
