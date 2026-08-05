@@ -1,0 +1,75 @@
+%% Combat Robot — 타깃(분산) 군집 아키텍처
+%% (대칭 스택 + command_server role 어댑터 + mesh 브로드캐스트 + 정적 robot_id)
+%% 리더 S1 은 노드 전부 표시(전투/짐벌/센서 포함), 팔로워 Sn 은 동일 스택(/sn/) 압축 표기.
+%% swarm_path_executor 가 구 mission_control 흡수(파싱+편대변형+GPS→map+nav2 goal+상태).
+flowchart TB
+    Tablet["📱 태블릿/앱 (리더에만 연결)"]
+
+    BUS{{"글로벌 swarm 명령 (리더 command_server 발행)<br/>/swarm/path_command · /mission_control_command · /swarm/control_command<br/>mesh · domain 96 · reliable + transient_local(latched)"}}
+
+    subgraph S1["로봇 S1 — robot_id=1 (정적) · role=leader"]
+        direction TB
+        LCMD["command_server (role=leader)"]
+        LFSM["FSM (모드/상태/게이트)"]
+        LEXE["swarm_path_executor slot=f(1)<br/>파싱+편대변형+nav2 goal+상태"]
+        LNAV["nav2 (planner/controller)"]
+        LGNSS["gnss + localization (ekf/navsat)"]
+        LDET["human_detector"]
+        LPTC["pan_tilt_controller"]
+        LGUN["gun_trigger"]
+        LTEL["teleop_controller"]
+        LRTSP["rtsp_server"]
+        LCOORD["swarm_coordinator<br/>status/heartbeat/리더선출"]
+    end
+
+    subgraph SN["로봇 Sn — robot_id=n · role=follower · 동일 스택(/sn/)"]
+        direction TB
+        FCMD["command_server (role=follower)"]
+        FREST["FSM · swarm_path_executor · nav2 · gnss/loc<br/>human_detector · pan_tilt · gun · teleop · rtsp"]
+        FCOORD["swarm_coordinator"]
+    end
+
+    %% 명령
+    Tablet -- "TCP/UDP" --> LCMD
+    LCMD -- "글로벌 발행" --> BUS
+    BUS -- "구독" --> FCMD
+    LCMD -- "/s1/ 모드·터치" --> LFSM
+    LCMD -- "/s1/ 기준경로·대형" --> LEXE
+    FCMD -- "/sn/ 로컬 재발행" --> FREST
+
+    %% 주행
+    LFSM -- "게이트(모드/상태)" --> LEXE
+    LEXE -- "NavigateToPose" --> LNAV
+    LGNSS -- "fix·heading·odom·tf" --> LEXE
+    LGNSS --> LNAV
+    LEXE -. "/s1/swarm/mission_state" .-> LFSM
+
+    %% 전투/짐벌/영상
+    LDET -- "타깃" --> LFSM
+    LFSM -- "짐벌 제어" --> LPTC
+    LPTC -. "자세" .-> LFSM
+    LFSM -- "발사" --> LGUN
+    LFSM -- "수동주행" --> LTEL
+    LFSM -- "crosshair" --> LRTSP
+    LRTSP -- "RTSP :8554" --> Tablet
+
+    %% 상태 → 태블릿
+    LFSM -. "로컬상태" .-> LCOORD
+    LEXE -. "로컬상태" .-> LCOORD
+    LCOORD -- "SwarmRobotStatus(id=1)" --> LCMD
+    FREST -. "로컬상태" .-> FCOORD
+    FCOORD -- "SwarmRobotStatus(id=n)" --> LCMD
+    LCMD -- "SwarmStatusPacket" --> Tablet
+
+    %% 페일오버
+    FCOORD -. "heartbeat" .-> LCOORD
+    LCOORD -. "리더 부재 시 role 플립" .-> FCMD
+
+    classDef exe fill:#fff3b0,stroke:#e0a800,stroke-width:2px;
+    classDef bus fill:#cfe8ff,stroke:#1c6fb3,stroke-width:2px;
+    classDef cmd fill:#d8f5d8,stroke:#2f8f2f,stroke-width:2px;
+    classDef coord fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    class LEXE exe;
+    class BUS bus;
+    class LCMD,FCMD cmd;
+    class LCOORD,FCOORD coord;

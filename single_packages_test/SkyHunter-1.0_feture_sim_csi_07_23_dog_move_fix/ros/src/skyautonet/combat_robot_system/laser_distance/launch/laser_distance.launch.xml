@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="laser_distance" exec="laser_distance_node" name="laser_distance_node" output="screen">
+    <param name="port" value="/dev/ttyUSB0"/>
+    <param name="baudrate" value="115200"/>
+    <remap from="/distance"                 to="sensor/distance"/>
+  </node>
+</launch>

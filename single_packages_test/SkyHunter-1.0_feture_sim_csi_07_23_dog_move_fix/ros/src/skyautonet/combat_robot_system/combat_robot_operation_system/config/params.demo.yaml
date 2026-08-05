@@ -1,0 +1,41 @@
+combat_robot_operation_system:
+  ros__parameters:
+    deployment_mode: "demo"
+
+    # Pan/Tilt launch waits 5s before configure + 2s before activate,
+    # so state isn't published until ~7s after node start.
+    # Relax the watchdog so the FSM doesn't bounce to ERROR before pan_tilt comes up.
+    checks:
+      pantilt_status_timeout_sec: 15.0
+
+    # Wider, slower sweep during the demo scan so onlookers can actually
+    # see the pan/tilt range of motion — this is the visual showcase phase.
+    # Production / office_test keep the tighter 40°/0° defaults from code.
+    scanning:
+      pan_range_deg: 80.0
+      tilt_range_deg: 20.0
+      tilt_step_deg: 10.0
+
+    # Demo tuning typically adjusted on-site
+    demo:
+      forward_distance_m: 0.3
+      reverse_distance_m: 0.3
+      drive_speed_mps: 0.2
+      # Single-target case: fire window when scan returned just one target.
+      fire_duration_sec: 2.0
+      # Multi-target case: fire window when scan returned >= 2 targets,
+      # so you can actually see the pan/tilt swing between targets.
+      fire_duration_multi_sec: 3.0
+      # Long enough to show the pan/tilt sweep across the new wider range.
+      scan_duration_sec: 8.0
+      target_count: 3
+      scan_default_pan_deg: 0.0
+      scan_default_tilt_deg: 0.0
+      # If a queued target's track_id never re-appears (SORT often re-assigns
+      # ids after a track loss), give up after this many seconds and move on
+      # to the next queued target or the reverse phase.
+      engage_target_timeout_sec: 5.0
+      # Wall-demo: keep cycling scan→engage for this many seconds before
+      # finally reversing back to IDLE. Set to 0 for the original one-shot
+      # behavior (one scan, one engagement pass, then reverse).
+      total_duration_sec: 180.0
