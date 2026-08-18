@@ -1,0 +1,2 @@
+float32 touch_x
+float32 touch_y

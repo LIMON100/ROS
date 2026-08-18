@@ -1,0 +1,111 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Global Options:
+    Fixed Frame: s2/map
+    Frame Rate: 8
+    Background Color: 30; 36; 42
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Color: 90; 100; 110
+      Cell Size: 1
+      Plane Cell Count: 50
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: true
+      Show Axes: true
+      Marker Scale: 1.0
+      Update Interval: 0.1
+    # ---------- 글로벌 편대 ----------
+    - Class: rviz_default_plugins/PointCloud2
+      Name: "SWARM · shared obstacles"
+      Enabled: true
+      Topic:
+        Value: /swarm/obstacle_cloud
+        Reliability Policy: Reliable
+      Style: Squares
+      Size (m): 0.25
+      Color Transformer: Intensity
+      Channel Name: intensity
+      Use rainbow: true
+      Min Intensity: 2
+      Max Intensity: 4
+    - Class: rviz_default_plugins/Path
+      Name: "SWARM · leader_ref_path"
+      Enabled: true
+      Topic:
+        Value: /swarm/leader_ref_path
+        Durability Policy: Transient Local
+        Reliability Policy: Reliable
+      Color: 200; 200; 200
+      Line Style: Billboards
+      Line Width: 0.1
+    # ---------- s2 리더 (violet) ----------
+    - Class: rviz_default_plugins/Map
+      Name: "s2 · local costmap"
+      Enabled: true
+      Topic: { Value: /s2/local_costmap/costmap, Durability Policy: Volatile, Reliability Policy: Reliable }
+      Color Scheme: costmap
+      Alpha: 0.55
+    - Class: rviz_default_plugins/Path
+      Name: "s2 · plan"
+      Enabled: true
+      Topic: { Value: /s2/plan, Reliability Policy: Reliable }
+      Color: 150; 110; 230
+      Line Style: Lines
+    - Class: rviz_default_plugins/MarkerArray
+      Name: "s2 · slot markers"
+      Enabled: true
+      Topic: { Value: /s2/swarm_debug, Durability Policy: Volatile, Reliability Policy: Reliable }
+    # ---------- s3 팔로워 (green) ----------
+    - Class: rviz_default_plugins/Map
+      Name: "s3 · local costmap"
+      Enabled: true
+      Topic: { Value: /s3/local_costmap/costmap, Durability Policy: Volatile, Reliability Policy: Reliable }
+      Color Scheme: costmap
+      Alpha: 0.4
+    - Class: rviz_default_plugins/Path
+      Name: "s3 · plan"
+      Enabled: true
+      Topic: { Value: /s3/plan, Reliability Policy: Reliable }
+      Color: 70; 200; 130
+      Line Style: Lines
+    - Class: rviz_default_plugins/MarkerArray
+      Name: "s3 · slot markers"
+      Enabled: true
+      Topic: { Value: /s3/swarm_debug, Durability Policy: Volatile, Reliability Policy: Reliable }
+    # ---------- s4 팔로워 (amber) ----------
+    - Class: rviz_default_plugins/Map
+      Name: "s4 · local costmap"
+      Enabled: true
+      Topic: { Value: /s4/local_costmap/costmap, Durability Policy: Volatile, Reliability Policy: Reliable }
+      Color Scheme: costmap
+      Alpha: 0.4
+    - Class: rviz_default_plugins/Path
+      Name: "s4 · plan"
+      Enabled: true
+      Topic: { Value: /s4/plan, Reliability Policy: Reliable }
+      Color: 230; 170; 60
+      Line Style: Lines
+    - Class: rviz_default_plugins/MarkerArray
+      Name: "s4 · slot markers"
+      Enabled: true
+      Topic: { Value: /s4/swarm_debug, Durability Policy: Volatile, Reliability Policy: Reliable }
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: Orbit
+      Distance: 28
+      Pitch: 1.0
+      Yaw: 3.1
+      Focal Point: { X: 0, Y: 0, Z: 0 }
