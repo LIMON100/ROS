@@ -1,0 +1,17 @@
+/**:
+  ros__parameters:
+    image_width: 640
+    image_height: 512
+    framerate: 30
+    format: "YUY2"
+    device_path: "/dev/video22"
+    
+    image_crop: false
+    crop_width: 640
+    crop_height: 512
+    
+    image_resize: false
+    resize_width: 640
+    resize_height: 512
+
+    camera_frame_id: "camera_frame2"
