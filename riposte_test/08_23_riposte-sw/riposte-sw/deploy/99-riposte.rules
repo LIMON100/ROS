@@ -1,0 +1,4 @@
+# Stable device name for the SiK 433 MHz telemetry radio on USB, so mavlink-router
+# does not depend on ttyUSB enumeration order (RIPOSTE-SAD-001 §5.3).
+# Adjust idVendor/idProduct to the actual SiK USB-serial bridge (CP210x shown).
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="riposte-sik", MODE="0660", GROUP="dialout"
