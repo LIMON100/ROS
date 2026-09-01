@@ -1,0 +1,23 @@
+[Unit]
+Description=Riposte Supervisor (health aggregation + blackbox)
+After=riposte-obc.service
+
+[Service]
+# Type=notify + WatchdogSec REQUIRE a binary built with RIPOSTE_WITH_SYSTEMD=ON
+# (sd_notify READY=1 / WATCHDOG=1). A build without it never reports ready under
+# this unit and is killed by the watchdog — for such a build deploy an override
+# with Type=simple and no WatchdogSec instead of shipping a unit that loops.
+Type=notify
+WorkingDirectory=/opt/riposte
+ExecStart=/opt/riposte/bin/riposte-supervisor /opt/riposte/config/riposte.ini
+# Dedicated service account (deploy/sysusers.d/riposte.conf) — not root.
+User=riposte
+Group=riposte
+# /var/log/riposte — JSONL blackbox (supervisor.blackbox), owned by User=.
+LogsDirectory=riposte
+WatchdogSec=5
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

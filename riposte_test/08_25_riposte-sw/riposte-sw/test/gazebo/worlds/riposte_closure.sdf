@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<!--
+  Riposte UAS-tracking closure world (Gazebo Harmonic / gz-sim 8).
+
+  Contains the ground, sun, and a moving TARGET drone. The OWNSHIP (PX4 x500)
+  is spawned into this world by PX4 SITL at the origin; run with:
+
+    PX4_GZ_WORLD=riposte_closure \
+    GZ_SIM_RESOURCE_PATH=<repo>/riposte-sw/test/gazebo/worlds:<...>/models \
+    make px4_sitl gz_x500        (or the PX4 gz_x500 launch of your build)
+
+  The target flies a constant-velocity crossing path (VelocityControl). Edit
+  <initial_linear> / its start pose below to script other approach geometries.
+  Its truth pose is published on /world/riposte_closure/pose/info and consumed
+  by tools/gz_track_bridge, which converts it to a body-FRD TrackState for the OBC.
+-->
+<sdf version="1.9">
+  <world name="riposte_closure">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <!-- x500 sensor feeds (IMU/baro/GPS) — PX4 EKF needs these world systems. -->
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+    <!-- PX4 v1.16+ 의 x500 모델은 자력계 센서를 포함하며, 월드가 자체 플러그인
+         목록을 명시하면 서버 기본 목록(server.config)이 적용되지 않으므로
+         자력계 시스템을 여기서 직접 로드해야 한다. 없으면 preflight 가
+         "Found 0 compass" 로 실패한다 (PX4 v1.17 + gz 8.14 실측). -->
+    <plugin filename="gz-sim-magnetometer-system" name="gz::sim::systems::Magnetometer"/>
+    <plugin filename="gz-sim-air-pressure-system"
+            name="gz::sim::systems::AirPressure"/>
+    <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat"/>
+
+    <!-- PX4 GPS origin (matches PX4 default SITL home). -->
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg>8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+          <material>
+            <ambient>0.3 0.35 0.3 1</ambient>
+            <diffuse>0.3 0.4 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Target drone: starts 18 m East, 3 m Up, crosses at ~1.5 m/s.
+         VelocityControl integrates the commanded body velocity kinematically. -->
+    <model name="target">
+      <pose>18 0 3 0 0 0</pose>
+      <link name="body">
+        <inertial>
+          <mass>0.5</mass>
+          <inertia><ixx>0.01</ixx><iyy>0.01</iyy><izz>0.02</izz>
+                   <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+        </inertial>
+        <visual name="core">
+          <geometry><box><size>0.30 0.30 0.10</size></box></geometry>
+          <material>
+            <ambient>0.8 0.1 0.1 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+        <visual name="arm">
+          <geometry><box><size>0.5 0.05 0.03</size></box></geometry>
+          <material><diffuse>0.2 0.2 0.2 1</diffuse></material>
+        </visual>
+      </link>
+      <plugin filename="gz-sim-velocity-control-system"
+              name="gz::sim::systems::VelocityControl">
+        <initial_linear>-1.5 0.6 0.0</initial_linear>
+        <initial_angular>0 0 0</initial_angular>
+      </plugin>
+    </model>
+  </world>
+</sdf>
