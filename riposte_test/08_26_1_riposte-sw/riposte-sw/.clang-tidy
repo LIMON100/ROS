@@ -1,0 +1,108 @@
+# C/C++ 생산용 코드 표준 — clang-tidy
+# 표준 G16.2 의 강제 설정 파일. repo 루트에 복사해서 사용.
+# 적용:    clang-tidy -p build <file>           (compile_commands.json 필요)
+# 일괄:    run-clang-tidy -p build
+# 자동수정: clang-tidy -p build --fix <file>
+# CI 게이트: 신규/수정 코드에 대해 경고 0 (--warnings-as-errors=* + git-clang-tidy diff)
+#
+# 활성 그룹 근거(표준 매핑):
+#   bugprone-*          : 결함 패턴 (G5 자원/초기화, G12 완전성)
+#   cppcoreguidelines-* : C++ Core Guidelines (G5 소유권/RAII)
+#   concurrency-*       : 동시성 결함 (G6 공유상태/동시성)
+#   cert-*              : CERT C/C++ 보안 코딩 (G15 보안)
+#   performance-*       : 핫패스 효율 (G7.2 publish+store)
+#   portability-*       : 이식성 (G13)
+#   misc-* / readability-* : 품질/가독성 (G3, G12)
+#   clang-analyzer-*    : 정적 분석 (G11.3)
+#
+# 제외 근거:
+#   *-magic-numbers           : 상수화 권장이나 임베디드에서 과도 → 리뷰로 (G3.3은 유지)
+#   *-vararg                  : 로깅 매크로가 가변인자 사용 (G10.1)
+#   *-avoid-c-arrays / -pro-bounds-*-pointer-arithmetic : HW/C 경계, 링버퍼에 불가피
+#   readability-identifier-length : 짧은 루프변수(i,j) 허용
+#   modernize-use-trailing-return-type : 스타일 강제 안 함
+#   llvmlibc-*, fuchsia-*, abseil-* : 무관한 벤더 규칙
+
+Checks: >
+  -*,
+  bugprone-*,
+  cppcoreguidelines-*,
+  concurrency-*,
+  cert-*,
+  performance-*,
+  portability-*,
+  misc-*,
+  readability-*,
+  clang-analyzer-*,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -readability-magic-numbers,
+  -cppcoreguidelines-avoid-c-arrays,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-pro-type-reinterpret-cast,
+  -cert-dcl50-cpp,
+  -cert-err58-cpp,
+  -readability-identifier-length,
+  -readability-function-cognitive-complexity,
+  -bugprone-easily-swappable-parameters,
+  -misc-non-private-member-variables-in-classes,
+  -modernize-use-trailing-return-type,
+  -portability-avoid-pragma-once,
+  -cppcoreguidelines-avoid-do-while
+
+# 추가 제외 근거 (G16.6 deviation):
+#   portability-avoid-pragma-once   : 표준 G1.8이 #pragma once를 요구 (표준이 우선)
+#   cppcoreguidelines-avoid-do-while: do{}while(0)는 다구문 매크로 위생 관용구
+#                                     (테스트 CHECK 매크로 등)에 불가피
+#   identifier-naming *IgnoredRegexp: 칼만/행렬 표기 (F, P, H, K, S, R, FP, PHt,
+#                                     Sinv, dP, vE ...) — 추정기 수식은 교과서
+#                                     표기가 snake_case 강제보다 대조·검증에 유리
+#   macro-usage AllowedRegexp CHECK : 의존성-제로 테스트 하네스의 CHECK는
+#                                     __FILE__/__LINE__/#c 와 return을 쓰므로
+#                                     함수로 대체 불가
+
+# 경고는 에러로 (CI). 로컬 점진 도입 시 이 줄을 비우거나 특정 그룹만.
+WarningsAsErrors: 'bugprone-*,cert-*,concurrency-*,clang-analyzer-*'
+
+# 프로젝트 헤더만 검사(서드파티/벤더 헤더 제외) — riposte-sw 레이아웃에 맞게 조정
+HeaderFilterRegex: '.*/riposte-sw/(common/include|obc/src|seeker/src|supervisor/src)/.*\.(h|hpp)$'
+FormatStyle:      file
+
+CheckOptions:
+  # 명명 규칙 — 표준 G3.1
+  # 칼만/행렬 표기 예외 (G16.6, 위 주석): 대문자 1자로 시작하는 짧은 행렬명과
+  # 그 파생(dP, detS, vE, P_out ...). 일반 식별자는 그대로 snake_case 강제.
+  - { key: readability-identifier-naming.VariableIgnoredRegexp,      value: '^[a-z]{0,3}[A-Z][A-Za-z0-9]{0,3}$' }
+  - { key: readability-identifier-naming.LocalConstantIgnoredRegexp, value: '^[a-z]{0,3}[A-Z][A-Za-z0-9]{0,3}$' }
+  - { key: readability-identifier-naming.ParameterIgnoredRegexp,     value: '^[A-Z][A-Za-z0-9]{0,3}(_(in|out))?$' }
+  - { key: readability-identifier-naming.ClassCase,            value: CamelCase }
+  - { key: readability-identifier-naming.StructCase,           value: CamelCase }
+  - { key: readability-identifier-naming.EnumCase,             value: CamelCase }
+  - { key: readability-identifier-naming.FunctionCase,         value: lower_case }
+  - { key: readability-identifier-naming.VariableCase,         value: lower_case }
+  - { key: readability-identifier-naming.ParameterCase,        value: lower_case }
+  - { key: readability-identifier-naming.MemberCase,           value: lower_case }
+  - { key: readability-identifier-naming.PrivateMemberSuffix,  value: '_' }
+  - { key: readability-identifier-naming.NamespaceCase,        value: lower_case }
+  - { key: readability-identifier-naming.ConstantCase,         value: UPPER_CASE }
+  - { key: readability-identifier-naming.GlobalConstantCase,   value: UPPER_CASE }
+  # 컴파일타임 상수만 UPPER_SNAKE (G3.1) — const 런타임 지역변수는 lower_case
+  - { key: readability-identifier-naming.ConstexprVariableCase,  value: UPPER_CASE }
+  - { key: readability-identifier-naming.LocalConstantCase,      value: lower_case }
+  - { key: readability-identifier-naming.StaticConstantCase,     value: UPPER_CASE }
+  - { key: readability-identifier-naming.ClassConstantCase,      value: UPPER_CASE }
+  - { key: readability-identifier-naming.EnumConstantCase,     value: UPPER_CASE }
+  - { key: readability-identifier-naming.MacroDefinitionCase,  value: UPPER_CASE }
+  # 테스트 CHECK 하네스 (G16.6, 위 주석)
+  - { key: cppcoreguidelines-macro-usage.AllowedRegexp,        value: '^CHECK$' }
+  # 드모르간 재작성 비활성 (G16.6): CHECK(!(a && b)) 류 시험 술어는 사양 문장과
+  # 1:1 로 읽히는 형태가 우선 — !a || !b 로 풀면 의도가 흐려진다
+  - { key: readability-simplify-boolean-expr.SimplifyDeMorgan, value: 'false' }
+  # 함수 길이 상한 — 표준 G16.4 (측정 가능한 acceptance)
+  - { key: readability-function-size.LineThreshold,            value: '120' }
+  - { key: readability-function-size.StatementThreshold,       value: '80' }
+  - { key: readability-function-size.BranchThreshold,          value: '20' }
+  - { key: readability-function-size.NestingThreshold,         value: '5' }
+  - { key: readability-function-size.ParameterThreshold,       value: '7' }

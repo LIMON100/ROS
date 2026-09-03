@@ -1,0 +1,180 @@
+<?xml version="1.0" ?>
+<!--
+  Riposte BALLOON TRIAL world (Gazebo Harmonic / gz-sim 8).
+
+  A rehearsal of the outdoor balloon trials (RIPOSTE-DUALEO-REQ-001 T-1..T-5)
+  without the aircraft, the range booking, or a trained detector: six 25 cm red
+  balloons are scattered inside a 50 x 50 m area at 3-6 m altitude, and the
+  ownship (PX4 x500, spawned by PX4 SITL at the origin) has to find them one at
+  a time, fly at each, and turn back when the geofence gets close.
+
+    PX4_GZ_WORLD=riposte_balloon \
+    GZ_SIM_RESOURCE_PATH=<repo>/riposte-sw/test/gazebo/worlds:<...> \
+    make px4_sitl gz_x500
+
+  Balloon truth poses go out on /world/riposte_balloon/pose/info and are consumed
+  by tools/gz_track_bridge in MULTI-TARGET mode (`balloon_*`), which applies a
+  range + field-of-view model so a balloon is only "detected" when the camera is
+  actually pointing at it — that is what makes the patrol's search sweep real.
+
+  LAYOUT: the balloons sit between 12 and 23 m from the origin, inside the 50 m
+  box (+-25 m) but spread across enough bearings that the vehicle must yaw to
+  find them. balloon_5 is deliberately parked at 23 m East — close enough to the
+  boundary that approaching it trips the patrol's turn-away margin, which is the
+  T-5 behaviour the trial most needs to exercise.
+
+  Balloons are STATIC: a real balloon on a tether drifts slowly, but a fixed
+  target is the right first rehearsal — it isolates the search/approach/turn-away
+  behaviour from any target motion.
+-->
+<sdf version="1.9">
+  <world name="riposte_balloon">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <!-- x500 sensor feeds (IMU/baro/GPS/mag) — PX4 EKF and preflight need these
+         world systems. A world that lists its own plugins does NOT inherit the
+         server defaults, so every one the vehicle needs must appear here (a
+         missing magnetometer shows up as "Found 0 compass" at preflight). -->
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+    <plugin filename="gz-sim-magnetometer-system" name="gz::sim::systems::Magnetometer"/>
+    <plugin filename="gz-sim-air-pressure-system"
+            name="gz::sim::systems::AirPressure"/>
+    <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat"/>
+
+    <!-- PX4 GPS origin (matches PX4 default SITL home). The OBC's SM-10 fence is
+         resolved from telemetry at engage, so it lands on whatever this is. -->
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg>8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+          <material>
+            <ambient>0.3 0.35 0.3 1</ambient>
+            <diffuse>0.3 0.4 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ===================== balloons (25 cm, red) =====================
+         Static so they cannot be pushed around by rotor wash or a contact; the
+         trial measures the vehicle's behaviour, not balloon physics. Pose is
+         ENU: x=East, y=North, z=Up. -->
+
+    <model name="balloon_1">
+      <static>true</static>
+      <pose>15 2 4 0 0 0</pose>
+      <link name="body">
+        <visual name="skin">
+          <geometry><sphere><radius>0.125</radius></sphere></geometry>
+          <material>
+            <ambient>0.7 0.05 0.05 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="balloon_2">
+      <static>true</static>
+      <pose>-4 16 5 0 0 0</pose>
+      <link name="body">
+        <visual name="skin">
+          <geometry><sphere><radius>0.125</radius></sphere></geometry>
+          <material>
+            <ambient>0.7 0.05 0.05 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="balloon_3">
+      <static>true</static>
+      <pose>-14 -9 3.5 0 0 0</pose>
+      <link name="body">
+        <visual name="skin">
+          <geometry><sphere><radius>0.125</radius></sphere></geometry>
+          <material>
+            <ambient>0.7 0.05 0.05 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="balloon_4">
+      <static>true</static>
+      <pose>6 -13 4.5 0 0 0</pose>
+      <link name="body">
+        <visual name="skin">
+          <geometry><sphere><radius>0.125</radius></sphere></geometry>
+          <material>
+            <ambient>0.7 0.05 0.05 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Near the eastern boundary: approaching this one must trip the patrol's
+         turn-away margin rather than carry the vehicle over the fence (T-5). -->
+    <model name="balloon_5">
+      <static>true</static>
+      <pose>23 -3 4 0 0 0</pose>
+      <link name="body">
+        <visual name="skin">
+          <geometry><sphere><radius>0.125</radius></sphere></geometry>
+          <material>
+            <ambient>0.7 0.05 0.05 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="balloon_6">
+      <static>true</static>
+      <pose>-10 10 6 0 0 0</pose>
+      <link name="body">
+        <visual name="skin">
+          <geometry><sphere><radius>0.125</radius></sphere></geometry>
+          <material>
+            <ambient>0.7 0.05 0.05 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>

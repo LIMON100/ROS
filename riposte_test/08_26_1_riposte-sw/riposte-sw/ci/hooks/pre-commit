@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# Fast local pre-commit gate (G16.5): clang-format + clang-tidy on STAGED C/C++
+# files only, so feedback is immediate. CI (ci/run_gates.sh) re-runs the full
+# gate so the hook can never be the sole line of defense.
+#
+# Install once:  git config core.hooksPath riposte-sw/ci/hooks
+# Bypass (rare): git commit --no-verify
+set -euo pipefail
+ROOT=$(git rev-parse --show-toplevel)
+
+mapfile -t FILES < <(git diff --cached --name-only --diff-filter=ACM \
+    | grep -E '\.(c|cc|cpp|h|hpp)$' || true)
+[ "${#FILES[@]}" -eq 0 ] && exit 0
+
+have() { command -v "$1" >/dev/null 2>&1; }
+
+# --- clang-format: fail if any staged file is not formatted ------------------
+if have clang-format; then
+    bad=()
+    for f in "${FILES[@]}"; do
+        [ -f "$ROOT/$f" ] || continue
+        clang-format --dry-run --Werror "$ROOT/$f" >/dev/null 2>&1 || bad+=("$f")
+    done
+    if [ "${#bad[@]}" -ne 0 ]; then
+        echo "pre-commit: clang-format violations (run: clang-format -i <files>):"
+        printf '  %s\n' "${bad[@]}"
+        exit 1
+    fi
+else
+    echo "pre-commit: clang-format not found, skipping format check"
+fi
+
+# --- clang-tidy: needs a compile DB; skip cleanly if not built yet -----------
+DB=""
+for d in "$ROOT/riposte-sw/build" "$ROOT/build"; do
+    [ -f "$d/compile_commands.json" ] && DB=$d && break
+done
+if have clang-tidy && [ -n "$DB" ]; then
+    # Only files the compile database actually knows. A TU that is absent —
+    # anything behind RIPOSTE_WITH_* that this build has OFF, or a target added
+    # since the build was configured — gets parsed with fallback flags instead,
+    # which fails at the first vendor include and then reports a pile of
+    # confident nonsense: virtual overrides "can be made static", needed
+    # includes "not used directly". Three separate times that noise was mistaken
+    # for real findings, so skip those files and SAY which ones. The vendor TUs
+    # have their own coverage (ci/vendor_syntax.sh); the fix for anything else
+    # is to reconfigure the build so the DB includes it.
+    tidy_files=()
+    skipped=()
+    for f in "${FILES[@]}"; do
+        case "$f" in
+            *.c|*.cc|*.cpp)
+                if grep -q "\"$ROOT/$f\"" "$DB/compile_commands.json" 2>/dev/null; then
+                    tidy_files+=("$ROOT/$f")
+                else
+                    skipped+=("$f")
+                fi
+                ;;
+        esac
+    done
+    if [ "${#skipped[@]}" -ne 0 ]; then
+        echo "pre-commit: not in the compile DB, tidy skipped: ${skipped[*]}"
+    fi
+    if [ "${#tidy_files[@]}" -ne 0 ]; then
+        if ! clang-tidy -p "$DB" --quiet --warnings-as-errors='*' \
+                "${tidy_files[@]}" >/dev/null 2>&1; then
+            echo "pre-commit: clang-tidy findings on staged files:"
+            clang-tidy -p "$DB" --quiet "${tidy_files[@]}" 2>/dev/null \
+                | grep -E '(warning|error):' | sort -u
+            exit 1
+        fi
+    fi
+elif have clang-tidy; then
+    echo "pre-commit: no compile_commands.json (configure a build); skipping tidy"
+fi
+
+echo "pre-commit: format/tidy OK (${#FILES[@]} staged file(s))"

@@ -1,0 +1,28 @@
+[Unit]
+Description=Riposte Offboard Controller (20 Hz control + guidance + safety)
+After=mavlink-router.service
+Requires=mavlink-router.service
+# On repeated failure, stop restarting: PX4 offboard-loss failsafe owns the
+# aircraft (decision D-1). Do not mask that with an infinite restart storm.
+# NOTE: these are [Unit]-section keys — placed in [Service] systemd ignores
+# them and the restart limit silently vanishes (systemd-analyze verify).
+StartLimitIntervalSec=30
+StartLimitBurst=3
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/riposte
+ExecStart=/opt/riposte/bin/riposte-obc /opt/riposte/config/riposte.ini
+# Dedicated service account (deploy/sysusers.d/riposte.conf) — not root.
+User=riposte
+Group=riposte
+# /run/riposte — operator command socket (obc.sock). Owned riposte:riposte, so
+# operators join the riposte group to use the CLI instead of running it as root.
+RuntimeDirectory=riposte
+# Real-time control loop needs SCHED_FIFO + CPU pinning without full root.
+AmbientCapabilities=CAP_SYS_NICE
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
