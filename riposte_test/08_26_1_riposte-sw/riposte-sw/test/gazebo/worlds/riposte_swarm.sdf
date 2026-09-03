@@ -1,0 +1,221 @@
+<?xml version="1.0" ?>
+<!--
+Riposte MULTI-TARGET swarm world (Gazebo Harmonic / gz-sim 8).
+
+GENERATED FILE - edit make_swarm_world.py and re-run, not this file.
+
+5 target drones, each an independent model with its own start pose and its
+own VelocityControl command, sharing the prefix "drone_" so the bridge can
+track them all at once:
+    PX4_GZ_WORLD=riposte_swarm \
+      GZ_SIM_RESOURCE_PATH=<repo>/riposte-sw/test/gazebo/worlds:<...> \
+        make px4_sitl gz_x500
+
+      gz_track_bridge riposte_swarm x500_0 'drone_*'
+
+    Truth poses go out on /world/riposte_swarm/pose/info.  The bridge applies its range
+    + field-of-view model (GZ_BRIDGE_MAX_RANGE_M / HFOV_DEG / VFOV_DEG), counts
+    the visible targets into num_targets, and publishes the nearest as primary
+    (REQ-001 R-8).
+  -->
+  <sdf version="1.9">
+    <world name="riposte_swarm">
+      <physics name="1ms" type="ignored">
+        <max_step_size>0.004</max_step_size>
+        <real_time_factor>1.0</real_time_factor>
+      </physics>
+
+      <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+      <plugin filename="gz-sim-user-commands-system"
+              name="gz::sim::systems::UserCommands"/>
+      <plugin filename="gz-sim-scene-broadcaster-system"
+              name="gz::sim::systems::SceneBroadcaster"/>
+      <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+      </plugin> 
+      <!-- x500 sensor feeds. A world listing its own plugins does not inherit the
+           server defaults, so each system the vehicle needs must appear here. -->
+      <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+      <plugin filename="gz-sim-magnetometer-system" name="gz::sim::systems::Magnetometer"/>
+      <plugin filename="gz-sim-air-pressure-system"
+              name="gz::sim::systems::AirPressure"/>
+      <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat"/>
+  
+      <!-- PX4 GPS origin (matches PX4 default SITL home). -->
+      <spherical_coordinates>
+        <surface_model>EARTH_WGS84</surface_model>
+        <world_frame_orientation>ENU</world_frame_orientation>
+        <latitude_deg>47.397971057728974</latitude_deg>
+        <longitude_deg>8.546163739800146</longitude_deg>
+        <elevation>0</elevation>
+      </spherical_coordinates>
+
+      <light type="directional" name="sun">
+        <cast_shadows>true</cast_shadows>
+        <pose>0 0 10 0 0 0</pose>
+        <diffuse>0.8 0.8 0.8 1</diffuse>
+        <specular>0.2 0.2 0.2 1</specular>
+        <direction>-0.5 0.1 -0.9</direction>
+      </light>
+      <model name="ground_plane">
+        <static>true</static>
+        <link name="link">
+          <collision name="collision">
+            <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+          </collision>
+          <visual name="visual">
+            <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+            <material>
+              <ambient>0.3 0.35 0.3 1</ambient>
+              <diffuse>0.3 0.4 0.3 1</diffuse>
+            </material>
+          </visual>
+        </link>
+      </model>
+  
+      <!-- drone_1: start (30.0 -6.0 5.0) ENU, velocity (-0.4 0.15 0.0) m/s, speed 0.43 m/s -->
+      <model name="drone_1">
+        <pose>30.0 -6.0 5.0 0 0 0</pose>
+        <link name="body">
+        <gravity>false</gravity>
+          <inertial>
+            <mass>0.5</mass>
+            <inertia><ixx>0.01</ixx><iyy>0.01</iyy><izz>0.02</izz>
+                     <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+          </inertial>
+          <visual name="core">
+            <geometry><box><size>0.30 0.30 0.10</size></box></geometry>
+            <material>
+              <ambient>0.9 0.1 0.1 1</ambient>
+              <diffuse>0.9 0.1 0.1 1</diffuse>
+            </material>
+          </visual>
+          <visual name="arm">
+            <geometry><box><size>0.5 0.05 0.03</size></box></geometry>
+            <material><diffuse>0.2 0.2 0.2 1</diffuse></material>
+          </visual>
+        </link>
+        <plugin filename="gz-sim-velocity-control-system"
+                name="gz::sim::systems::VelocityControl">
+          <initial_linear>-0.4 0.15 0.0</initial_linear>
+          <initial_angular>0 0 0</initial_angular>
+        </plugin>
+        </model>
+  
+      <!-- drone_2: start (32.0 0.0 5.5) ENU, velocity (-0.45 0.0 0.0) m/s, speed 0.45 m/s -->
+      <model name="drone_2">
+        <pose>32.0 0.0 5.5 0 0 0</pose>
+        <link name="body">
+        <gravity>false</gravity>
+          <inertial>
+            <mass>0.5</mass>
+            <inertia><ixx>0.01</ixx><iyy>0.01</iyy><izz>0.02</izz>
+                     <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+          </inertial>
+          <visual name="core">
+            <geometry><box><size>0.30 0.30 0.10</size></box></geometry>
+            <material>
+              <ambient>0.1 0.5 0.9 1</ambient>
+              <diffuse>0.1 0.5 0.9 1</diffuse>
+            </material>
+          </visual>
+          <visual name="arm">
+            <geometry><box><size>0.5 0.05 0.03</size></box></geometry>
+            <material><diffuse>0.2 0.2 0.2 1</diffuse></material>
+          </visual>
+        </link>
+        <plugin filename="gz-sim-velocity-control-system"
+                name="gz::sim::systems::VelocityControl">
+          <initial_linear>-0.45 0.0 0.0</initial_linear>
+          <initial_angular>0 0 0</initial_angular>
+        </plugin>
+        </model>
+  
+      <!-- drone_3: start (28.0 6.0 4.5) ENU, velocity (-0.4 -0.15 0.0) m/s, speed 0.43 m/s -->
+      <model name="drone_3">
+        <pose>28.0 6.0 4.5 0 0 0</pose>
+        <link name="body">
+        <gravity>false</gravity>
+          <inertial>
+            <mass>0.5</mass>
+            <inertia><ixx>0.01</ixx><iyy>0.01</iyy><izz>0.02</izz>
+                     <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+          </inertial>
+          <visual name="core">
+            <geometry><box><size>0.30 0.30 0.10</size></box></geometry>
+            <material>
+              <ambient>0.9 0.7 0.1 1</ambient>
+              <diffuse>0.9 0.7 0.1 1</diffuse>
+            </material>
+          </visual>
+          <visual name="arm">
+            <geometry><box><size>0.5 0.05 0.03</size></box></geometry>
+            <material><diffuse>0.2 0.2 0.2 1</diffuse></material>
+          </visual>
+        </link>
+        <plugin filename="gz-sim-velocity-control-system"
+                name="gz::sim::systems::VelocityControl">
+          <initial_linear>-0.4 -0.15 0.0</initial_linear>
+          <initial_angular>0 0 0</initial_angular>
+        </plugin>
+        </model>
+  
+      <!-- drone_4: start (36.0 -3.0 6.0) ENU, velocity (-0.5 0.1 0.0) m/s, speed 0.51 m/s -->
+      <model name="drone_4">
+        <pose>36.0 -3.0 6.0 0 0 0</pose>
+        <link name="body">
+        <gravity>false</gravity>
+          <inertial>
+            <mass>0.5</mass>
+            <inertia><ixx>0.01</ixx><iyy>0.01</iyy><izz>0.02</izz>
+                     <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+          </inertial>
+          <visual name="core">
+            <geometry><box><size>0.30 0.30 0.10</size></box></geometry>
+            <material>
+              <ambient>0.2 0.8 0.2 1</ambient>
+              <diffuse>0.2 0.8 0.2 1</diffuse>
+            </material>
+          </visual>
+          <visual name="arm">
+            <geometry><box><size>0.5 0.05 0.03</size></box></geometry>
+            <material><diffuse>0.2 0.2 0.2 1</diffuse></material>
+          </visual>
+        </link>
+        <plugin filename="gz-sim-velocity-control-system"
+                name="gz::sim::systems::VelocityControl">
+          <initial_linear>-0.5 0.1 0.0</initial_linear>
+          <initial_angular>0 0 0</initial_angular>
+        </plugin>
+        </model>
+  
+      <!-- drone_5: start (34.0 4.0 4.5) ENU, velocity (-0.45 -0.1 0.0) m/s, speed 0.46 m/s -->
+      <model name="drone_5">
+        <pose>34.0 4.0 4.5 0 0 0</pose>
+        <link name="body">
+        <gravity>false</gravity>
+          <inertial>
+            <mass>0.5</mass>
+            <inertia><ixx>0.01</ixx><iyy>0.01</iyy><izz>0.02</izz>
+                     <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+          </inertial>
+          <visual name="core">
+            <geometry><box><size>0.30 0.30 0.10</size></box></geometry>
+            <material>
+              <ambient>0.8 0.2 0.8 1</ambient>
+              <diffuse>0.8 0.2 0.8 1</diffuse>
+            </material>
+          </visual>
+          <visual name="arm">
+            <geometry><box><size>0.5 0.05 0.03</size></box></geometry>
+            <material><diffuse>0.2 0.2 0.2 1</diffuse></material>
+          </visual>
+        </link>
+        <plugin filename="gz-sim-velocity-control-system"
+                name="gz::sim::systems::VelocityControl">
+          <initial_linear>-0.45 -0.1 0.0</initial_linear>
+          <initial_angular>0 0 0</initial_angular>
+        </plugin>
+        </model>
+    </world>
+</sdf>
