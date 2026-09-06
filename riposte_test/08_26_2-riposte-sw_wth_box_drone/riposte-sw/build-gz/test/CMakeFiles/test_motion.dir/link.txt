@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/test_motion.dir/test_motion.cpp.o CMakeFiles/test_motion.dir/__/seeker/src/MotionCandidates.cpp.o -o test_motion  -lpthread -lrt 

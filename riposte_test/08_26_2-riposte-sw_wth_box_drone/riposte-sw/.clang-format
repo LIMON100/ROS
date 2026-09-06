@@ -1,0 +1,72 @@
+# C/C++ 생산용 코드 표준 — clang-format
+# 표준 G16.1 의 강제 설정 파일. repo 루트에 복사해서 사용.
+# 실제 코드 스타일(4-space, attached brace, pointer-left, aligned continuation)에 맞춤.
+# 적용:  clang-format -i $(git ls-files '*.c' '*.cc' '*.cpp' '*.h' '*.hpp')
+# 검증(CI): clang-format --dry-run --Werror <files>
+---
+Language:        Cpp
+BasedOnStyle:    Google
+
+# 들여쓰기 — 4 spaces, 탭 금지
+IndentWidth:     4
+TabWidth:        4
+UseTab:          Never
+ContinuationIndentWidth: 4
+AccessModifierOffset: -4
+NamespaceIndentation: None
+
+# 줄 길이
+ColumnLimit:     90
+
+# 중괄호 — K&R(attached), 함수 본문만 다음 줄 아님 (Google 기본 유지)
+BreakBeforeBraces: Attach
+
+# 포인터/참조 — 타입에 붙임 (int* p, const T& r)
+PointerAlignment: Left
+ReferenceAlignment: Left
+DerivePointerAlignment: false
+
+# 인자 줄바꿈 — 여는 괄호 다음에 줄바꿈하지 않고 정렬
+AlignAfterOpenBracket: Align
+AllowAllParametersOfDeclarationOnNextLine: true
+BinPackArguments: true
+BinPackParameters: true
+
+# 정렬
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignTrailingComments: true
+AlignOperands:   Align
+
+# 한 줄 압축 — 짧은 것만 허용, 함수/루프 본문은 펼침
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: false
+
+# include 정렬 — G3.4 (자기헤더 → 프로젝트 → 서드파티 → 표준)
+SortIncludes:    CaseSensitive
+IncludeBlocks:   Regroup
+IncludeCategories:
+  - Regex:           '^"[^/]+\.h"$'        # 같은 디렉터리 헤더(자기 헤더 근접)
+    Priority:        1
+  - Regex:           '^"(include|src)/'     # 프로젝트 헤더
+    Priority:        2
+  - Regex:           '^<.*\.(h|hpp)>'       # 서드파티 / 시스템 헤더(.h)
+    Priority:        3
+  - Regex:           '^<[^.]+>'             # C++ 표준 라이브러리(<vector> 등)
+    Priority:        4
+
+# 공백
+SpaceBeforeParens: ControlStatements
+SpacesBeforeTrailingComments: 1
+Cpp11BracedListStyle: true
+
+# 기타
+FixNamespaceComments: true
+ReflowComments:  true
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+SortUsingDeclarations: true
+Standard:        c++17

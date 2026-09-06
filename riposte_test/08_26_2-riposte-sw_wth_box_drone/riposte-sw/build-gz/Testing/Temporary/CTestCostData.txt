@@ -1,0 +1,26 @@
+safety_fsm 2 0.00163193
+seqslot 2 0.113077
+seeker 2 0.000753494
+search 2 0.00156944
+modelio 2 0.000665592
+hailoparse 2 0.0006562
+preproc 2 0.0070388
+assoc 2 0.000716188
+fusion 2 0.00067514
+ekf 2 0.00058721
+imm 2 0.000563248
+sizeekf 2 0.000790303
+seekerconfig 2 0.000567087
+motion 2 0.0507865
+channelmap 2 0.000679885
+rendezvous 2 0.000424457
+guidance 2 0.000782744
+authz 2 0.000637047
+patrol 2 0.00509961
+camera 2 0.00038123
+config 2 0.00196022
+recorder 2 0.0980211
+attitude 2 0.0028357
+blackbox 2 0.00451063
+embedworker 2 0.275803
+---

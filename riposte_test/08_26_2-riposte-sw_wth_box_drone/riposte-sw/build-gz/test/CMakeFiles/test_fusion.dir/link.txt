@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/test_fusion.dir/test_fusion.cpp.o CMakeFiles/test_fusion.dir/__/seeker/src/TrackFusion.cpp.o CMakeFiles/test_fusion.dir/__/seeker/src/Tracker.cpp.o CMakeFiles/test_fusion.dir/__/seeker/src/AssocCost.cpp.o -o test_fusion  -lpthread -lrt 
