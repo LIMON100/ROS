@@ -1,0 +1,469 @@
+Start testing: Aug 26 06:32 UTC
+----------------------------------------------------------
+1/25 Testing: safety_fsm
+1/25 Test: safety_fsm
+Command: "/ws/riposte-sw/build-gz/test/test_safety_fsm"
+Directory: /ws/riposte-sw/build-gz/test
+"safety_fsm" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+[12536.846313] INF fcu        connect udpin://0.0.0.0:14540 (SIL stub)
+[12536.846354] INF obc        IDLE -> CONNECTING (startup)
+[12536.846360] INF obc        CONNECTING -> READY (fcu discovered + telemetry valid)
+[12536.846366] WRN obc        target REJECTED: attitude mode has no mission-cue consumer (no engage latched)
+[12536.846371] INF obc        engage authorized
+[12536.846376] INF obc        READY -> PRESTREAM (engage)
+[12536.846381] INF fcu        connect udpin://0.0.0.0:14540 (SIL stub)
+[12536.846386] INF obc        IDLE -> CONNECTING (startup)
+[12536.846389] INF obc        CONNECTING -> READY (fcu discovered + telemetry valid)
+[12536.846394] INF obc        engage authorized
+[12536.846397] INF obc        READY -> PRESTREAM (engage)
+[12536.846401] INF obc        operator hold in attitude mode -> disengage (PX4 Hold)
+[12536.846405] INF obc        PRESTREAM -> READY (disengage during prestream)
+[12536.846410] INF fcu        connect udpin://0.0.0.0:14540 (SIL stub)
+[12536.846416] INF obc        IDLE -> CONNECTING (startup)
+[12536.846419] INF obc        CONNECTING -> READY (fcu discovered + telemetry valid)
+[12536.846423] INF obc        engage authorized
+[12536.846427] INF obc        READY -> PRESTREAM (engage)
+[12536.846431] WRN obc        return-home unsupported in attitude mode -> disengage (PX4 Hold; vehicle will HOLD, not fly home)
+[12536.846435] INF obc        PRESTREAM -> READY (disengage during prestream)
+test_safety_fsm: 82 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"safety_fsm" end time: Aug 26 06:32 UTC
+"safety_fsm" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/25 Testing: seqslot
+2/25 Test: seqslot
+Command: "/ws/riposte-sw/build-gz/test/test_seqslot"
+Directory: /ws/riposte-sw/build-gz/test
+"seqslot" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+seqslot: 2396 reads, 0 torn
+seqslot fork: 20000 reads, 0 torn
+test_seqslot: 33 checks passed
+<end of output>
+Test time =   0.23 sec
+----------------------------------------------------------
+Test Passed.
+"seqslot" end time: Aug 26 06:32 UTC
+"seqslot" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/25 Testing: seeker
+3/25 Test: seeker
+Command: "/ws/riposte-sw/build-gz/test/test_seeker"
+Directory: /ws/riposte-sw/build-gz/test
+"seeker" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_seeker: 173 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"seeker" end time: Aug 26 06:32 UTC
+"seeker" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/25 Testing: search
+4/25 Test: search
+Command: "/ws/riposte-sw/build-gz/test/test_search"
+Directory: /ws/riposte-sw/build-gz/test
+"search" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_search: 57303 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"search" end time: Aug 26 06:32 UTC
+"search" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/25 Testing: modelio
+5/25 Test: modelio
+Command: "/ws/riposte-sw/build-gz/test/test_modelio"
+Directory: /ws/riposte-sw/build-gz/test
+"modelio" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_modelio: 592 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"modelio" end time: Aug 26 06:32 UTC
+"modelio" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/25 Testing: hailoparse
+6/25 Test: hailoparse
+Command: "/ws/riposte-sw/build-gz/test/test_hailoparse"
+Directory: /ws/riposte-sw/build-gz/test
+"hailoparse" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_hailoparse: 34 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"hailoparse" end time: Aug 26 06:32 UTC
+"hailoparse" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/25 Testing: preproc
+7/25 Test: preproc
+Command: "/ws/riposte-sw/build-gz/test/test_preproc"
+Directory: /ws/riposte-sw/build-gz/test
+"preproc" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_preproc: 153 checks passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"preproc" end time: Aug 26 06:32 UTC
+"preproc" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/25 Testing: assoc
+8/25 Test: assoc
+Command: "/ws/riposte-sw/build-gz/test/test_assoc"
+Directory: /ws/riposte-sw/build-gz/test
+"assoc" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_assoc: 42 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"assoc" end time: Aug 26 06:32 UTC
+"assoc" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/25 Testing: fusion
+9/25 Test: fusion
+Command: "/ws/riposte-sw/build-gz/test/test_fusion"
+Directory: /ws/riposte-sw/build-gz/test
+"fusion" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_fusion: 54 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"fusion" end time: Aug 26 06:32 UTC
+"fusion" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/25 Testing: ekf
+10/25 Test: ekf
+Command: "/ws/riposte-sw/build-gz/test/test_ekf"
+Directory: /ws/riposte-sw/build-gz/test
+"ekf" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_ekf: 32 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"ekf" end time: Aug 26 06:32 UTC
+"ekf" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/25 Testing: imm
+11/25 Test: imm
+Command: "/ws/riposte-sw/build-gz/test/test_imm"
+Directory: /ws/riposte-sw/build-gz/test
+"imm" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_imm: 142 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"imm" end time: Aug 26 06:32 UTC
+"imm" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/25 Testing: sizeekf
+12/25 Test: sizeekf
+Command: "/ws/riposte-sw/build-gz/test/test_sizeekf"
+Directory: /ws/riposte-sw/build-gz/test
+"sizeekf" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_sizeekf: 11 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"sizeekf" end time: Aug 26 06:32 UTC
+"sizeekf" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/25 Testing: seekerconfig
+13/25 Test: seekerconfig
+Command: "/ws/riposte-sw/build-gz/test/test_seekerconfig"
+Directory: /ws/riposte-sw/build-gz/test
+"seekerconfig" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_seekerconfig: 40 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"seekerconfig" end time: Aug 26 06:32 UTC
+"seekerconfig" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/25 Testing: motion
+14/25 Test: motion
+Command: "/ws/riposte-sw/build-gz/test/test_motion"
+Directory: /ws/riposte-sw/build-gz/test
+"motion" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_motion: 54 checks passed
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"motion" end time: Aug 26 06:32 UTC
+"motion" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/25 Testing: channelmap
+15/25 Test: channelmap
+Command: "/ws/riposte-sw/build-gz/test/test_channelmap"
+Directory: /ws/riposte-sw/build-gz/test
+"channelmap" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_channelmap: 48 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"channelmap" end time: Aug 26 06:32 UTC
+"channelmap" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/25 Testing: rendezvous
+16/25 Test: rendezvous
+Command: "/ws/riposte-sw/build-gz/test/test_rendezvous"
+Directory: /ws/riposte-sw/build-gz/test
+"rendezvous" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_rendezvous: 39 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"rendezvous" end time: Aug 26 06:32 UTC
+"rendezvous" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/25 Testing: guidance
+17/25 Test: guidance
+Command: "/ws/riposte-sw/build-gz/test/test_guidance"
+Directory: /ws/riposte-sw/build-gz/test
+"guidance" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+[12537.210153] WRN obc        target switch (track 1 -> 2) — PN lead re-seeded
+test_guidance: 117 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"guidance" end time: Aug 26 06:32 UTC
+"guidance" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/25 Testing: authz
+18/25 Test: authz
+Command: "/ws/riposte-sw/build-gz/test/test_authz"
+Directory: /ws/riposte-sw/build-gz/test
+"authz" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_authz: 31 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"authz" end time: Aug 26 06:32 UTC
+"authz" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/25 Testing: patrol
+19/25 Test: patrol
+Command: "/ws/riposte-sw/build-gz/test/test_patrol"
+Directory: /ws/riposte-sw/build-gz/test
+"patrol" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+[12537.221781] WRN patrol     no geofence configured — cannot patrol
+[12537.221815] INF patrol     engage: patrol state reset
+[12537.221824] INF patrol     SEARCH -> APPROACH (balloon acquired)
+[12537.221838] INF patrol     engage: patrol state reset
+[12537.221841] INF patrol     SEARCH -> APPROACH (balloon acquired)
+[12537.221846] INF patrol     APPROACH -> TURN_AWAY (balloon reached)
+[12537.221850] INF patrol     TURN_AWAY -> SEARCH (clear of boundary)
+[12537.221853] WRN obc        target switch (track 7 -> 8) — PN lead re-seeded
+[12537.221859] INF patrol     SEARCH -> APPROACH (balloon acquired)
+[12537.221871] INF patrol     engage: patrol state reset
+[12537.221874] INF patrol     SEARCH -> APPROACH (balloon acquired)
+[12537.221886] INF patrol     engage: patrol state reset
+[12537.221889] INF patrol     SEARCH -> APPROACH (balloon acquired)
+[12537.221892] INF patrol     APPROACH -> TURN_AWAY (fence boundary reached)
+[12537.221903] INF patrol     engage: patrol state reset
+[12537.221914] INF patrol     engage: patrol state reset
+[12537.221917] INF patrol     SEARCH -> APPROACH (balloon acquired)
+[12537.221929] INF patrol     engage: patrol state reset
+[12537.221932] INF patrol     SEARCH -> APPROACH (balloon acquired)
+[12537.221942] INF patrol     engage: patrol state reset
+[12537.221945] INF patrol     SEARCH -> APPROACH (balloon acquired)
+[12537.221948] INF patrol     APPROACH -> SEARCH (track lost)
+[12537.221957] INF patrol     engage: patrol state reset
+[12537.221961] INF patrol     SEARCH -> APPROACH (balloon acquired)
+[12537.221964] INF patrol     APPROACH -> TURN_AWAY (balloon reached)
+[12537.221965] INF patrol     engage: patrol state reset
+test_patrol: 143 checks passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"patrol" end time: Aug 26 06:32 UTC
+"patrol" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/25 Testing: camera
+20/25 Test: camera
+Command: "/ws/riposte-sw/build-gz/test/test_camera"
+Directory: /ws/riposte-sw/build-gz/test
+"camera" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_camera: 26 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"camera" end time: Aug 26 06:32 UTC
+"camera" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/25 Testing: config
+21/25 Test: config
+Command: "/ws/riposte-sw/build-gz/test/test_config"
+Directory: /ws/riposte-sw/build-gz/test
+"config" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_config: 86 checks passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"config" end time: Aug 26 06:32 UTC
+"config" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/25 Testing: recorder
+22/25 Test: recorder
+Command: "/ws/riposte-sw/build-gz/test/test_recorder"
+Directory: /ws/riposte-sw/build-gz/test
+"recorder" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+[12537.228947] ERR recorder   encoder 'ffmpeg' not runnable
+[12537.229341] ERR recorder   encoder 'ffmpeg' not runnable
+[12537.230073] INF recorder   recording to /tmp/riposte_rec_die_3108 (64x48 @ 25 fps, libx264)
+[12537.260266] WRN recorder   encoder died — restarting next frame
+[12537.320535] WRN recorder   encoder died — restarting next frame
+[12537.380842] WRN recorder   encoder died — restarting next frame
+[12537.420729] ERR recorder   encoder 'ffmpeg' not runnable
+[12537.421768] ERR recorder   encoder 'ffmpeg' not runnable
+[12537.422528] ERR recorder   encoder '/nonexistent/ffmpeg' not runnable
+SKIP: ffmpeg unavailable — integration tier not run
+SKIP: ffmpeg unavailable — integration tier not run
+SKIP: ffmpeg/hstack unavailable — dual tier not run
+SKIP: ffmpeg/hstack unavailable — dual tier not run
+test_recorder: 17 checks passed
+<end of output>
+Test time =   0.20 sec
+----------------------------------------------------------
+Test Passed.
+"recorder" end time: Aug 26 06:32 UTC
+"recorder" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/25 Testing: attitude
+23/25 Test: attitude
+Command: "/ws/riposte-sw/build-gz/test/test_attitude"
+Directory: /ws/riposte-sw/build-gz/test
+"attitude" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_attitude: 60 checks passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"attitude" end time: Aug 26 06:32 UTC
+"attitude" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/25 Testing: blackbox
+24/25 Test: blackbox
+Command: "/ws/riposte-sw/build-gz/test/test_blackbox"
+Directory: /ws/riposte-sw/build-gz/test
+"blackbox" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+test_blackbox: 21 checks passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"blackbox" end time: Aug 26 06:32 UTC
+"blackbox" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/25 Testing: embedworker
+25/25 Test: embedworker
+Command: "/ws/riposte-sw/build-gz/test/test_embedworker"
+Directory: /ws/riposte-sw/build-gz/test
+"embedworker" start time: Aug 26 06:32 UTC
+Output:
+----------------------------------------------------------
+[12537.655485] WRN seeker     EmbedWorker stuck in ScriptedEmbedder; detaching at shutdown
+[12537.717574] WRN seeker     ScriptedEmbedder produced no embedding for 30 consecutive frames; T1 is now motion-only (TR-3)
+[12537.940359] WRN seeker     EmbedWorker stuck in ScriptedEmbedder; detaching at shutdown
+[12537.990783] WRN seeker     embedder threw (simulated vendor fault); frame runs motion-only
+test_embedworker: OK (69 checks)
+<end of output>
+Test time =   0.55 sec
+----------------------------------------------------------
+Test Passed.
+"embedworker" end time: Aug 26 06:32 UTC
+"embedworker" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 26 06:32 UTC

@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/test_safety_fsm.dir/test_safety_fsm.cpp.o CMakeFiles/test_safety_fsm.dir/__/obc/src/SafetyMonitor.cpp.o CMakeFiles/test_safety_fsm.dir/__/obc/src/Geofence.cpp.o CMakeFiles/test_safety_fsm.dir/__/obc/src/OffboardController.cpp.o CMakeFiles/test_safety_fsm.dir/__/obc/src/FcuLink.cpp.o -o test_safety_fsm  -lpthread -lrt 

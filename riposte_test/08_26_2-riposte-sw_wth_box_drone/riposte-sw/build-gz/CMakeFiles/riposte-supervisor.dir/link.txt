@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG "CMakeFiles/riposte-supervisor.dir/supervisor/src/main.cpp.o" -o riposte-supervisor  -lpthread -lrt 

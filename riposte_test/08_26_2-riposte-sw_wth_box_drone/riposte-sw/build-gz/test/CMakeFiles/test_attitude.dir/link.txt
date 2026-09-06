@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/test_attitude.dir/test_attitude.cpp.o CMakeFiles/test_attitude.dir/__/obc/src/SafetyMonitor.cpp.o CMakeFiles/test_attitude.dir/__/obc/src/Geofence.cpp.o CMakeFiles/test_attitude.dir/__/obc/src/sources/AttitudeTrackingSource.cpp.o -o test_attitude  -lpthread -lrt 

@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/test_assoc.dir/test_assoc.cpp.o CMakeFiles/test_assoc.dir/__/seeker/src/AssocCost.cpp.o -o test_assoc  -lpthread -lrt 

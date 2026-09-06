@@ -1,0 +1,24 @@
+[Unit]
+Description=Riposte Seeker (camera -> Hailo -> track -> TrackBus)
+After=riposte-obc.service
+
+[Service]
+Type=simple
+# Relative paths in riposte.ini (seeker.hef = config/model.hef) resolve against
+# the working directory — without it they resolve against / and the HEF load
+# fails at startup.
+WorkingDirectory=/opt/riposte
+ExecStart=/opt/riposte/bin/riposte-seeker /opt/riposte/config/riposte.ini
+# Dedicated service account (deploy/sysusers.d/riposte.conf) — not root.
+# video: V4L2 capture devices. The Hailo PCIe node's group depends on the
+# HailoRT udev rules; add that group here if the driver does not use video.
+User=riposte
+Group=riposte
+SupplementaryGroups=video
+# /var/lib/riposte — recording output volume (seeker.record_dir), owned by User=.
+StateDirectory=riposte
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/test_preproc.dir/test_preproc.cpp.o CMakeFiles/test_preproc.dir/__/seeker/src/Preproc.cpp.o CMakeFiles/test_preproc.dir/__/seeker/src/ModelIo.cpp.o -o test_preproc  -lpthread -lrt 
