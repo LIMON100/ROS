@@ -1,0 +1,32 @@
+<launch>
+  <group>
+    <arg name="output_image" default="/camera/image_raw"/>
+    <arg name="config_file"  default="$(find-pkg-share camera_interface)/config/camera_driver.config.yaml"/>
+
+    <arg name="output_image2" default="/camera/image_raw2"/>
+    <arg name="config_file2"  default="$(find-pkg-share camera_interface)/config/camera_driver.config2.yaml"/>
+  
+    <node pkg="camera_interface" exec="camera_driver_node" name="camera_driver_node" output="screen" >
+      <remap from="out/image_raw"                 to="$(var output_image)"/>
+      <remap from="out/image_raw/compressed"      to="$(var output_image)/compressed"/>
+      <remap from="out/image_raw/compressedDepth" to="$(var output_image)/compressedDepth"/>
+      <remap from="out/image_raw/theora"          to="$(var output_image)/theora"/>
+
+      <param from="$(var config_file)"/>
+    </node>
+
+    <!-- Auto-configure and activate lifecycle node with delay -->
+    <executable cmd="bash -c 'sleep 2; ros2 lifecycle set camera_driver_node configure; sleep 1; ros2 lifecycle set camera_driver_node activate'" output="screen"/>  
+       
+   <!--
+    <node pkg="camera_interface" exec="camera_driver_node" name="camera_driver_node" output="screen" >
+      <remap from="out/image_raw"                 to="$(var output_image2)"/>
+      <remap from="out/image_raw/compressed"      to="$(var output_image2)/compressed"/>
+      <remap from="out/image_raw/compressedDepth" to="$(var output_image2)/compressedDepth"/>
+      <remap from="out/image_raw/theora"          to="$(var output_image2)/theora"/>
+
+      <param from="$(var config_file2)"/>
+	    </node>
+    -->
+  </group>
+</launch>

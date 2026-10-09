@@ -1,0 +1,155 @@
+%% Combat Robot — ROS 2 topic/communication graph
+%% Verified against source on 2026-06-08 (test_nav2).
+%%  - gnss_status_bridge -> /gnss/status (real leader fix)
+%%  - path→FSM routing (/mission/path_command) + mission_state→FSM 통합
+%%  - /path/waypoints_forward 제거, mission_control_node → swarm_path_executor(편대 오프셋)
+%% Edges are labeled with the resolved topic / interface name.
+%% Dashed red nodes = subscribed-but-no-publisher-found (planned / external HW feed).
+
+graph LR
+    %% ===== External actor & hardware =====
+    Tablet([Tablet App]):::ext
+    ChassisHW([Chassis / CAN bus]):::hw
+    PTZHW([Pan-Tilt HW]):::hw
+    GunHW([Gun servo PWM]):::hw
+
+    %% ===== Sensors & drivers =====
+    subgraph Sensors[Sensors and Drivers]
+        direction TB
+        Cam[camera_interface]
+        IMU[imu_publisher]
+        Laser[laser_distance]
+        Lidar[rslidar_sdk]
+        Gnss[gnss_heading.py]
+        GnssBr[gnss_status_bridge.py]
+        Can[can_reader.py - CAN bridge]
+    end
+
+    %% ===== Perception =====
+    subgraph Perception[Perception]
+        Det[human_detector]
+    end
+
+    %% ===== FSM brain =====
+    FSM[combat_robot_operation_system\nFSM brain]
+
+    %% ===== Actuators =====
+    subgraph Actuators[Actuators]
+        direction TB
+        PTC[pan_tilt_controller]
+        Gun[gun_trigger]
+        Teleop[teleop_controller]
+    end
+
+    %% ===== Robot server =====
+    subgraph Server[robot_server]
+        direction TB
+        Cmd[command_server]
+        RTSP[rtsp_server]
+    end
+
+    %% ===== Swarm =====
+    Swarm[swarm_coordinator\nleader and follower]
+
+    %% ===== Nav2 (combat_nav2) =====
+    subgraph Nav2[combat_nav2]
+        direction TB
+        Mission[swarm_path_executor\n구 mission_control + 편대 오프셋\n파싱+GPS→map+nav2 goal+상태]
+        Nav2Stack[nav2 stack\ncontroller / planner / collision_monitor]
+        Loc[robot_localization\nekf + navsat_transform]
+    end
+
+    %% ===== Sensor flows =====
+    Cam -- "/image_raw" --> Det
+    Cam -- "/image_raw" --> RTSP
+    FSM -- "/zoom_level" --> Cam
+    Laser -- "/sensor/distance" --> FSM
+
+    %% ===== Perception -> FSM / server =====
+    Det -- "/human_detector/human/target_point" --> FSM
+    Det -- "/detected_objects" --> RTSP
+
+    %% ===== FSM <-> actuators =====
+    FSM -- "/pan_tilt_control_command" --> PTC
+    PTC -- "/pan_tilt_state" --> FSM
+    FSM -- "/gun_trigger/cmd" --> Gun
+    Gun -- "/gun_trigger/status" --> FSM
+    FSM -- "/drive_command" --> Teleop
+    FSM -- "/center_object" --> RTSP
+
+    %% ===== FSM state out =====
+    FSM -- "/operation_state" --> Cmd
+    FSM -- "/operation_state" --> Swarm
+    FSM -- "/operation_state" --> Teleop
+
+    %% ===== Tablet <-> robot_server =====
+    Tablet <-. "TCP 65432/65435/65436\nUDP 65433/65434" .-> Cmd
+    RTSP -. "RTSP :8554" .-> Tablet
+    Cmd -- "/stream_control_command" --> RTSP
+    RTSP -- "/rtsp_status" --> Cmd
+
+    %% ===== command_server -> system (모든 명령은 FSM 게이트 경유) =====
+    Cmd -- "/mission_control_command" --> FSM
+    Cmd -- "/touch_command" --> FSM
+    Cmd -- "/drive_command" --> Teleop
+    Cmd -- "/swarm/path_command" --> FSM
+    Cmd -- "/swarm/control_command" --> Swarm
+    Cmd -- "/swarm/path_command" --> Swarm
+
+    %% ===== FSM -> swarm_path_executor (게이트 후 경로 전달) =====
+    FSM -- "/mission/path_command" --> Mission
+    %% 편대 오프셋용 입력 (executor 가 자기 슬롯 경로 계산)
+    Cmd -- "/swarm/control_command (편대)" --> Mission
+
+    %% ===== Status feeds into command_server =====
+    %% GnssStatus 는 gnss_status_bridge 가 실제 발행; chassis/lidar 는 아직 planned.
+    GnssBr -- "/gnss/status (GnssStatus)" --> Cmd
+    ChStat([ChassisStatus]):::planned -. "/chassis/status" .-> Cmd
+    LiStat([LidarStatus]):::planned -. "/lidar/status" .-> Cmd
+    Swarm -. "/swarm/follower/sN/status" .-> Cmd
+
+    %% ===== Swarm relay (leader <-> followers over DDS) =====
+    Swarm -- "/swarm/follower/sN/command" --> Swarm
+    Swarm -- "/swarm/leader/heartbeat" --> Swarm
+    Swarm -- "/swarm/follower/sN/status" --> Swarm
+
+    %% ===== Nav2 mission flow =====
+    Mission -- "navigate_to_pose (action)" --> Nav2Stack
+    Mission -- "/fromLL (srv)" --> Loc
+    Mission -- "/swarm/mission_state" --> FSM
+    Mission -. "/mission_input (WaypointList, test)" .-> Mission
+    Nav2Stack -- "/cmd_vel" --> Can
+    Can -- "Modbus/CAN" --> ChassisHW
+    Can -- "/odom" --> Loc
+
+    %% ===== Nav2 localization / GNSS inputs =====
+    IMU -- "/imu/data" --> Loc
+    Gnss -- "/fix" --> Mission
+    Gnss -- "/edge_heading" --> Mission
+    Gnss -- "/odom (speed)" --> Mission
+    Gnss -- "/fix" --> Loc
+    Gnss -- "/gps/heading_imu" --> Loc
+    Gnss -- "/fix · /edge_heading · /vel" --> GnssBr
+    Lidar -- "/rslidar_points" --> Nav2Stack
+    Loc -- "/tf, /odometry/gps_map" --> Nav2Stack
+
+    %% ===== Hardware links =====
+    PTC -- "Serial RS232/485" --- PTZHW
+    Gun -- "sysfs PWM" --- GunHW
+    Teleop -- "Modbus RTU" --- ChassisHW
+
+    %% ===== Styling =====
+    classDef ext fill:#fff1e0,stroke:#92400e,stroke-width:2px,stroke-dasharray:5 5,color:#0f172a;
+    classDef hw fill:#f8fafc,stroke:#1e293b,stroke-width:2px,color:#0f172a;
+    classDef planned fill:#fff1f2,stroke:#be123c,stroke-width:2px,stroke-dasharray:6 4,color:#881b1b;
+    style FSM fill:#fde8c8,stroke:#d97706,stroke-width:4px,color:#0f172a
+    style Det fill:#ede9fe,stroke:#5b21b6,stroke-width:2px,color:#0f172a
+    style PTC fill:#dbeafe,stroke:#1d4ed8,stroke-width:2px,color:#0f172a
+    style Swarm fill:#dcfce7,stroke:#166534,stroke-width:2px,color:#0f172a
+    style Cmd fill:#dbf4ff,stroke:#0c4a6e,stroke-width:2px,color:#0f172a
+    style RTSP fill:#dbf4ff,stroke:#0c4a6e,stroke-width:2px,color:#0f172a
+    style Nav2 fill:#dcfce7,stroke:#166534,stroke-width:2px,color:#0f172a
+    style GnssBr fill:#dcfce7,stroke:#166534,stroke-width:2px,color:#0f172a
+    style Sensors fill:#f1f5f9,stroke:#475569,color:#0f172a
+    style Actuators fill:#f8fafc,stroke:#1e293b,color:#0f172a
+    style Server fill:#e0f2fe,stroke:#0369a1,color:#0f172a

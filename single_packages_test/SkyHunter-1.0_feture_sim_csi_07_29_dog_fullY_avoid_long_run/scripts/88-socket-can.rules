@@ -1,0 +1,1 @@
+SUBSYSTEM=="net", ATTRS{idVendor}=="0c72", ATTRS{idProduct}=="000c", ACTION=="add", DRIVERS=="?*", NAME="obd_can"

@@ -1,0 +1,18 @@
+<launch>
+  <node pkg="gun_trigger"
+        exec="gun_trigger_node"
+        name="gun_trigger_node"
+        output="screen">
+
+    <param name="chip"        value="0"/>
+    <param name="line"        value="0"/>
+    <param name="us1"         value="1410"/>
+    <param name="us2"         value="1580"/>
+    <param name="hold_ms"     value="500"/>
+    <param name="trigger_ms"  value="200"/>
+
+    <param name="cmd_topic"    value="/gun_trigger/cmd"/>
+    <param name="status_topic" value="/gun_trigger/status"/>
+
+  </node>
+</launch>

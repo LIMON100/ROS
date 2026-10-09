@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================== -->
+  <!-- GAZEBO FRICTION      -->
+  <!-- ==================== -->
+  <xacro:macro name="wheel_friction" params="wheel_name mu_val:=1.0">
+    <!-- <gazebo reference="${wheel_name}">
+      <mu1>1.5</mu1>
+      <mu2>1.5</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <minDepth>0.001</minDepth>
+      <maxVel>0.1</maxVel>
+    </gazebo> -->
+    <gazebo reference="${wheel_name}">
+      <collision>
+        <surface>
+          <!-- 6-wheel skid-steer turn fix (geometric, works under default DART):
+               DART ignores ODE anisotropic friction (fdir1/mu2), so we instead
+               give traction only to the MIDDLE wheels (x=0, on the turn center)
+               and make front/rear wheels (x=+-0.40) near-frictionless.
+               Middle wheels at the rotation center roll (no lateral scrub) during
+               an in-place turn, so the robot pivots; front/rear slip freely so they
+               add no scrub resistance. Forward drive comes from the middle wheels. -->
+          <friction>
+            <ode>
+              <mu>${mu_val}</mu>
+              <mu2>${mu_val}</mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000.0</kp>
+              <kd>100.0</kd>
+              <min_depth>0.001</min_depth>
+              <max_vel>1.0</max_vel>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Apply friction to all hidden wheels -->
+  <!-- 중앙 바퀴(x=0, 회전중심)만 접지 마찰 -> 전진 구동 + 제자리 회전 가능.
+       앞/뒤 바퀴는 마찰 거의 0 -> 회전 시 scrub 저항 제거. -->
+  <xacro:wheel_friction wheel_name="left_front_wheel"  mu_val="0.05" />
+  <xacro:wheel_friction wheel_name="left_mid_wheel"    mu_val="1.2" />
+  <xacro:wheel_friction wheel_name="left_rear_wheel"   mu_val="0.05" />
+  <xacro:wheel_friction wheel_name="right_front_wheel" mu_val="0.05" />
+  <xacro:wheel_friction wheel_name="right_mid_wheel"   mu_val="1.2" />
+  <xacro:wheel_friction wheel_name="right_rear_wheel"  mu_val="0.05" />
+
+  <!-- ==================== -->
+  <!-- GAZEBO MATERIALS     -->
+  <!-- ==================== -->
+
+  <gazebo reference="base_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_track_visual">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="right_track_visual">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="gimbal_base_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="gimbal_pan_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="gimbal_tilt_link">
+    <material>Gazebo/DarkGrey</material>
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="gimbal_pan_link">
+    <self_collide>false</self_collide>
+  </gazebo>
+  <gazebo reference="camera_holder_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="lidar_link">
+    <material>Gazebo/DarkGray</material>
+  </gazebo>
+  <gazebo reference="rifle_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+</robot>

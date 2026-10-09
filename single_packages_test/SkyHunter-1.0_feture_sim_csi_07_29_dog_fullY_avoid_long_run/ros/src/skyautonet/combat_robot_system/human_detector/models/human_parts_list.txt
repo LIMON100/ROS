@@ -1,0 +1,5 @@
+background
+head
+arms
+torso
+legs

@@ -1,0 +1,13 @@
+<launch>
+  <arg name="param_file"            default="$(find-pkg-share pan_tilt_controller)/param/pan_tilt.param.yaml" />
+
+  <node pkg="pan_tilt_controller" exec="pan_tilt_controller_node" name="pan_tilt_controller" output="screen">
+    <param from="$(var param_file)"/>
+    
+    <remap from="input/control_command" to="pan_tilt_control_command"/>
+    <remap from="output/state" to="/current_actuator_state_info"/>
+  </node>
+
+  <!-- Auto-configure and activate lifecycle node with delay -->
+  <executable cmd="bash -c 'sleep 5; ros2 lifecycle set pan_tilt_controller configure; sleep 2; ros2 lifecycle set pan_tilt_controller activate'" output="screen"/>
+</launch>

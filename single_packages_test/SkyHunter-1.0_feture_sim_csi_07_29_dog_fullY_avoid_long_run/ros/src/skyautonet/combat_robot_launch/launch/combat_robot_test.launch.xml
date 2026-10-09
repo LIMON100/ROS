@@ -1,0 +1,121 @@
+<launch>
+    <arg name="use_operator" default="true"/>
+    <arg name="use_pan_tilt_controller" default="false"/>
+    <arg name="use_detector" default="false"/>
+    <arg name="use_sensor" default="false"/>
+    <arg name="use_visualization" default="false"/>
+    <arg name="use_camera_motor" default="false"/>
+    <arg name="use_robot_server" default="true"/>
+    <arg name="use_command_server" default="$(var use_robot_server)"/>
+    <arg name="use_rtsp_server" default="$(var use_robot_server)"/>
+    <arg name="use_teleop" default="false"/>
+    <arg name="use_trigger" default="false"/>
+    <arg name="use_dummy_data" default="true"/>
+    <arg name="load_dummy_swarm_data" default="true"/>
+    <arg name="robot_id" default="1"/>
+    <arg name="deployment_mode" default="office_test"/>
+    <!--
+      params_overlay_file 은 deployment_mode 로부터 자동 도출됩니다
+      (예: deployment_mode:=demo 이면 params.demo.yaml).
+      커스텀 yaml 을 쓰려면 params_overlay_file:=<path> 로 명시적으로 override 하세요.
+    -->
+    <arg name="params_overlay_file" default="$(find-pkg-share combat_robot_operation_system)/config/params.$(var deployment_mode).yaml"/>
+    <arg name="rtsp_config_file" default="$(find-pkg-share robot_server)/config/rtsp_server.yaml"/>
+
+    <!--
+      Dummy scenario presets for FSM regression. Valid values:
+        full_cycle, idle_only, surveillance_sweep,
+        tracking_lock, attack_fire, error_recovery
+    -->
+    <arg name="scenario" default="full_cycle"/>
+    <arg name="dummy_loop" default="true"/>
+    <arg name="script_duration_sec" default="24.0"/>
+    <!-- Per-topic dummy publisher toggles. Disable the one whose real HW
+         driver is brought up in the same session to avoid topic conflicts. -->
+    <arg name="dummy_pub_pan_tilt_state" default="true"/>
+    <arg name="dummy_pub_target_point" default="true"/>
+    <arg name="dummy_pub_gun_status" default="true"/>
+    <arg name="dummy_pub_zoom_level" default="true"/>
+    <arg name="dummy_pub_laser_distance" default="true"/>
+
+    <!-- Observability -->
+    <arg name="use_foxglove_bridge" default="false"/>
+    <arg name="foxglove_bridge_port" default="8765"/>
+
+    <!-- Detection Package -->
+    <group if="$(var use_detector)">
+      <include file="$(find-pkg-share camera_interface)/launch/camera_driver.launch.xml"> </include>
+      <include file="$(find-pkg-share human_detector)/launch/human_detector.launch.xml"> </include>
+    </group>
+
+    <!-- Operator Package -->
+    <group if="$(var use_operator)">
+      <group if="$(var use_pan_tilt_controller)">
+        <include file="$(find-pkg-share pan_tilt_controller)/launch/pan_tilt_controller.launch.xml"> </include>
+      </group>
+      <include file="$(find-pkg-share combat_robot_operation_system)/launch/combat_robot_operation_system.launch.xml">
+        <arg name="params_overlay_file" value="$(var params_overlay_file)"/>
+      </include>
+    </group>
+
+    <group if="$(var use_dummy_data)">
+      <node pkg="combat_robot_operation_system" exec="combat_robot_test_dummy_node" name="combat_robot_test_dummy" output="screen">
+        <param name="scenario" value="$(var scenario)"/>
+        <param name="loop" value="$(var dummy_loop)"/>
+        <param name="script_duration_sec" value="$(var script_duration_sec)"/>
+        <param name="pub_pan_tilt_state" value="$(var dummy_pub_pan_tilt_state)"/>
+        <param name="pub_target_point" value="$(var dummy_pub_target_point)"/>
+        <param name="pub_gun_status" value="$(var dummy_pub_gun_status)"/>
+        <param name="pub_zoom_level" value="$(var dummy_pub_zoom_level)"/>
+        <param name="pub_laser_distance" value="$(var dummy_pub_laser_distance)"/>
+      </node>
+    </group>
+
+    <!-- Sensor Packages -->
+    <group if="$(var use_sensor)">
+      <include file="$(find-pkg-share laser_distance)/launch/laser_distance.launch.xml" />
+    </group>
+
+    <!-- Visualization Packages -->
+    <group if="$(var use_visualization)">
+      <include file="$(find-pkg-share display)/launch/display.launch.xml" />
+    </group>
+
+    <!-- Camera Motor Packages -->
+    <group if="$(var use_camera_motor)">
+      <include file="$(find-pkg-share camera_interface)/launch/zoom_controller.launch.xml"> </include>
+    </group>
+
+    <!-- Robot Server Packages (command_server / rtsp_server toggle separately) -->
+    <group if="$(var use_command_server)">
+      <include file="$(find-pkg-share robot_server)/launch/command_server.launch.xml">
+        <arg name="load_dummy_swarm_data" value="$(var load_dummy_swarm_data)"/>
+        <arg name="robot_id" value="$(var robot_id)"/>
+        <arg name="deployment_mode" value="$(var deployment_mode)"/>
+      </include>
+    </group>
+    <group if="$(var use_rtsp_server)">
+      <include file="$(find-pkg-share robot_server)/launch/rtsp_server.launch.xml">
+        <arg name="config_file" value="$(var rtsp_config_file)"/>
+      </include>
+    </group>
+
+    <!-- teleop Packages -->
+    <group if="$(var use_teleop)">
+      <include file="$(find-pkg-share teleop_controller)/launch/teleop_controller.launch.xml"> </include>
+    </group>
+
+    <!-- trigger Packages -->
+    <group if="$(var use_trigger)">
+      <include file="$(find-pkg-share gun_trigger)/launch/gun_trigger.launch.xml"> </include>
+    </group>
+
+    <!-- Foxglove bridge for browser-side topic/FSM inspection.
+         Requires the foxglove_bridge package to be installed on the target
+         (apt: ros-${ROS_DISTRO}-foxglove-bridge). -->
+    <group if="$(var use_foxglove_bridge)">
+      <node pkg="foxglove_bridge" exec="foxglove_bridge" name="foxglove_bridge" output="screen">
+        <param name="port" value="$(var foxglove_bridge_port)"/>
+      </node>
+    </group>
+</launch>

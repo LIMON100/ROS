@@ -1,0 +1,24 @@
+<launch>
+  <group>
+    <arg name="input_image"      default="/camera/image_raw"/>
+    <arg name="output_human_point" default="/human_detector/human/target_point"/>
+    <arg name="output_human_info"  default="/human_detector/human/info"/>
+    <arg name="output_human_image" default="/human_detector/human/image_raw"/>
+    <arg name="config_file"      default="$(find-pkg-share human_detector)/config/default.config.yaml"/>
+  
+    <node pkg="human_detector" exec="human_detector_node" name="human_detector_node" output="screen" >
+      <remap from="in/image"                      to="$(var input_image)"/>
+      <remap from="in/image/compressed"           to="$(var input_image)/compressed"/>
+      <remap from="out/human/target_point"        to="$(var output_human_point)"/>
+      <!-- for debugging -->
+      <remap from="out/human/info"                 to="$(var output_human_info)"/>  <!-- Detected all boxes -->
+      <remap from="out/human/image"                to="$(var output_human_image)"/> <!-- Image with detected boxes drawn -->
+      <remap from="out/human/image/compressed"     to="$(var output_human_image)/compressed"/>
+      <remap from="out/human/image/compressedDepth" to="$(var output_human_image)/compressedDepth"/>
+      <remap from="out/human/image/theora"         to="$(var output_human_image)/theora"/>
+      <!-- Parameters -->
+      <param name="model_path" type="str" value="$(find-pkg-share human_detector)/models/"/>
+      <param from="$(var config_file)"/>
+    </node>
+  </group>
+</launch>

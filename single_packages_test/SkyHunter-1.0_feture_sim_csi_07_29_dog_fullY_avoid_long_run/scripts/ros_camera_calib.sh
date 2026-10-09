@@ -1,0 +1,1 @@
+ros2 run camera_calibration cameracalibrator --size 8x6 --square 0.025 --ros-args -r image:=/camera/front_camera/image_raw -p camera:=/camera/front_camera

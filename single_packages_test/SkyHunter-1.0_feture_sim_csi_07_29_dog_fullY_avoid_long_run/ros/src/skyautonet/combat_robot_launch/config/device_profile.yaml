@@ -1,0 +1,4 @@
+device:
+  robot_name: S1  # S1 ~ S8
+  platform: rk3588  # rk3588 | rpi | pc
+  deployment_mode: production  # demo | office_test | production

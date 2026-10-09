@@ -1,0 +1,9 @@
+<launch>
+  <arg name="config_file" default="$(find-pkg-share robot_server)/config/rtsp_server.yaml"/>
+
+  <node pkg="robot_server" exec="rtsp_server_node" name="rtsp_server" output="screen" >
+    <param from="$(var config_file)"/>
+  </node>
+</launch>
+
+<!-- launch-prefix="xterm -e gdb -ex=r args" -->

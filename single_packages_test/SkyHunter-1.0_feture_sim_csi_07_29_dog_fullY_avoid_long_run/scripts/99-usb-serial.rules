@@ -1,0 +1,4 @@
+# sudo cp 99-usb-serial.rules /etc/udev/rules.d/
+# sudo udevadm control --reload-rules
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", KERNELS=="4-2", SYMLINK+="ttyPTZ"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", KERNELS=="2-2", SYMLINK+="ttyTELEOP"

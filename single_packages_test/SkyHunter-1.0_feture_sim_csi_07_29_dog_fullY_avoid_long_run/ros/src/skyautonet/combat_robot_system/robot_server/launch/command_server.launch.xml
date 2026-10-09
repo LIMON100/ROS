@@ -1,0 +1,18 @@
+<launch>
+  <arg name="load_dummy_swarm_data" default="false"/>
+  <arg name="robot_id" default="1"/>
+  <arg name="deployment_mode" default="production"/>
+  <arg name="role" default="leader"/>
+  <arg name="robot_namespace" default="s$(var robot_id)"/>
+
+  <node pkg="robot_server" exec="command_server_node" name="command_server" output="screen" >
+    <param name="load_dummy_swarm_data" value="$(var load_dummy_swarm_data)"/>
+    <param name="robot_id" value="$(var robot_id)"/>
+    <param name="deployment_mode" value="$(var deployment_mode)"/>
+    <param name="role" value="$(var role)"/>
+    <param name="robot_namespace" value="$(var robot_namespace)"/>
+  </node>
+
+</launch>
+
+<!-- launch-prefix="xterm -e gdb -ex=r args" -->

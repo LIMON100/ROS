@@ -1,0 +1,6 @@
+builtin_interfaces/Time stamp
+uint8 control_mode
+float32 horizontal_angle
+float32 vertical_angle
+int32 pan_speed
+int32 tilt_speed

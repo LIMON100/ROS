@@ -1,0 +1,61 @@
+%% 정상 시나리오: 태블릿 LOAD_PATH → START → Nav2 주행
+sequenceDiagram
+    autonumber
+    actor T as 📱 Tablet
+    participant CS as command_server
+    participant MC as mission_control_node
+    participant NT as navsat_transform_node
+    participant NAV as Nav2 stack
+    participant V as 🚗 Vehicle
+
+    %% ─── 경로 적재 ───
+    T->>CS: TCP: LOAD_PATH + path_json
+    CS->>MC: /swarm/path_command<br/>(cmd=CMD_LOAD_PATH, path_json)
+    Note over MC: parsePathJson()<br/>→ pending_path_ : vector<(lat,lon)>
+
+    %% ─── 미션 시작 ───
+    T->>CS: TCP: START
+    CS->>MC: /swarm/path_command<br/>(cmd=CMD_START)
+    Note over MC: start_mission(pending_path_)<br/>active_=true, active_index_=0
+
+    %% ─── 웨이포인트 순회 ───
+    loop 각 waypoint i = 0 .. N-1
+        MC->>NT: /fromLL request<br/>ll_point(lat, lon)
+        NT-->>MC: response<br/>map_point(x, y)
+        MC->>NAV: NavigateToPose Goal<br/>PoseStamped(map, x, y)
+        NAV-->>MC: GoalHandle (active_goal_ 저장)
+        loop 주행 중
+            NAV->>V: /cmd_vel (Twist)
+        end
+        NAV-->>MC: Result(SUCCEEDED)
+        Note over MC: active_index_++
+    end
+
+    Note over MC: 모든 waypoint 완료<br/>active_=false
+
+    %% ─── 일시정지 / 재개 시나리오 ───
+    rect rgb(235, 244, 255)
+        Note over T,MC: 주행 중 PAUSE → RESUME
+        T->>CS: TCP: PAUSE
+        CS->>MC: /swarm/path_command (cmd=CMD_PAUSE)
+        Note over MC: paused_=true<br/>active_index_ 유지
+        MC->>NAV: async_cancel_goal(active_goal_)
+        NAV-->>MC: Result(CANCELED)
+        Note over MC: paused_ 이므로 실패로<br/>처리하지 않고 RESUME 대기
+        T->>CS: TCP: RESUME
+        CS->>MC: /swarm/path_command (cmd=CMD_RESUME)
+        Note over MC: paused_=false<br/>execute_next_waypoint()
+        MC->>NT: /fromLL request (동일 wp)
+        NT-->>MC: response map_point(x, y)
+        MC->>NAV: NavigateToPose Goal (현재 위치에서 재플래닝)
+    end
+
+    %% ─── 중단 시나리오 ───
+    rect rgb(255, 235, 235)
+        Note over T,MC: 사용자가 중간에 STOP 누르면
+        T->>CS: TCP: STOP
+        CS->>MC: /swarm/path_command (cmd=CMD_STOP)
+        MC->>NAV: async_cancel_goal(active_goal_)
+        NAV-->>MC: Result(CANCELED)
+        Note over MC: active_=false, paused_=false<br/>pending_path_.clear()
+    end

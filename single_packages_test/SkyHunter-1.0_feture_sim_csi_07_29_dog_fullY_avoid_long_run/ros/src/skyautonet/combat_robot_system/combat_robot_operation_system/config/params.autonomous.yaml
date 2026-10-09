@@ -1,0 +1,18 @@
+/**:
+  ros__parameters:
+    # 자율주행 전용 프로파일.
+    # combat 하드웨어(pan/tilt 포탑·gun trigger·detector)가 없는 nav2-distributed
+    # swarm 차량에서 FSM 을 ERROR_STATE 없이 자율주행(nav/GPS) 기능만 돌린다.
+    # ★하드웨어 기능 코드는 그대로 보존 — 아래 checks 플래그(param)만 false 로 내려
+    #   watchdog 만 비활성한다. production 으로 되돌리면 모든 기능이 그대로 동작한다.
+    deployment_mode: "production"
+
+    # combat 하드웨어 watchdog 비활성 (없는 장치 timeout → ERROR_STATE 방지)
+    checks:
+      detector_status: false
+      gun_status: false
+      pantilt_status: false
+
+    # 실제 GPS(/fix → swarm/mission_state)를 쓰므로 더미 텔레메트리는 끈다
+    dummy_leader_state:
+      enabled: false

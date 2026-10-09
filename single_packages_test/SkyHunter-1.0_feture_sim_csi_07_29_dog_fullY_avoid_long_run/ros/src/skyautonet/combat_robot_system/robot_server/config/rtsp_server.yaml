@@ -1,0 +1,24 @@
+# RTSP Server Configuration
+# Select the appropriate video encoder for your hardware platform.
+
+rtsp_server:
+  ros__parameters:
+    rtsp_port: "8554"
+    stream_width: 640
+    stream_height: 360
+    target_bitrate: 1000000  # 1 Mbps
+    bitrate_mode: 0          # 0=Default, 1=CBR, 2=VBR
+
+    # --- Hardware Selection (Uncomment one) ---
+
+    # 1. Raspberry Pi 5 
+    #    (No HW H.264 encoder; uses optimized software encoding)
+    # video_encoder: "x264enc tune=zerolatency speed-preset=superfast"
+
+    # 2. Rockchip RK3588 (Orange Pi 5, Radxa Rock 5, etc.)
+    #    (Uses MPP hardware encoder)
+    video_encoder: "mpph264enc"
+
+    # 3. PC / Generic x86_64
+    #    (Standard software encoding)
+    # video_encoder: "x264enc tune=zerolatency speed-preset=ultrafast"
