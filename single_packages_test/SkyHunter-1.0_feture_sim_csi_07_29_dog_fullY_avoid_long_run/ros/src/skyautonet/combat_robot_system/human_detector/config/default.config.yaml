@@ -1,0 +1,16 @@
+/**:
+  ros__parameters:
+    hailo_model: "y5s_0223_6.hef" #class_num: 2 (field test ~100% drone detection; y5s_0223 was ~0%)
+    #hailo_model: "y5s_0223.hef" #class_num: 2 (prev default; weak drone detection)
+    #hailo_model: "y5s.hef" #class_num: 4
+    box_thresh: 0.3
+    human_thresh: 0.6
+    drone_thresh: 0.3
+    class_num: 2
+
+    # common parameters
+    is_compressed: false
+    label_text_path: "person_drone.txt"
+    debug_mode: true
+    save_image: false
+    save_image_path: "/home/firefly/debug_images"

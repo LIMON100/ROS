@@ -1,0 +1,262 @@
+controller_server:
+  ros__parameters:
+    use_sim_time: false
+    publish_zero_velocity: true
+    controller_frequency: 20.0  
+    transform_tolerance: 0.2    
+    failure_tolerance: 1.0
+    progress_checker_plugins: ["progress_checker"]
+    goal_checker_plugins: ["general_goal_checker"]
+    controller_plugins: ["FollowPath"]
+
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.5
+      movement_time_allowance: 90.0
+
+    general_goal_checker:
+      stateful: true
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.25
+      # [SIM] executor 가 각 waypoint goal 에 orientation.w=1(yaw=0) 을 고정으로 박아서,
+      # 도착 방위 강제 시 가까운 점도 빙 돌게 됨. waypoint 추종은 위치만 중요하므로
+      # 도착 방위는 사실상 무시(±π)해서 직진/제자리회전만으로 통과하게 한다.
+      yaw_goal_tolerance: 3.15
+
+    # 🔥 [SIM] 경로를 "정확히" 따라가게: Regulated Pure Pursuit (RPP).
+    #    작은 lookahead 로 cross-track 오차 최소화 + 큰 각도는 제자리 회전(코너컷 방지).
+    #    직선 구간=오차 거의 0, 코너=제자리 회전. (궤도형: 후진 금지)
+    FollowPath:
+      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
+      desired_linear_vel: 3.3   # base(1.5)×2.2 — 팔로워가 코너 바깥서 가속 가능(speed_limit로 제어)
+      # lookahead 0.4(타이트)는 팔로워가 라인 밖일 때 과조향→오실레이션(와리가리) 유발.
+      # 회전 중 ekf yaw 동적지연과 겹쳐 ±60° 진동. 1.0으로 키워 부드럽게 추종 → 흔들림 0.
+      # ★와리가리(직선 오버슛) 근본원인 = Pure Pursuit 조향게인 ∝ 1/lookahead 인데 lookahead 가
+      #   짧아 P 게인이 세서 오버슛→진동(사용자 진단: "p 제어가 강해 오버슈팅"). 속도비례 lookahead
+      #   는 저속 순항(0.4~0.7m/s)에서 lookahead 를 0.6m 로 줄여 게인을 키우고, 속도 stutter 가
+      #   lookahead(=게인)를 진동시켜 오히려 악화. → 고정 긴 lookahead(1.5m)로 게인을 낮고 일정하게
+      #   → 직선 오버슛 제거. 캐치업(2.4m/s)도 1.5 가 기존 1.0 보다 부드러움. 갭통과 곡선은
+      #   regulated_linear_velocity_scaling 이 감속으로 정확도 보전.
+      lookahead_dist: 1.5
+      min_lookahead_dist: 1.0
+      max_lookahead_dist: 2.0
+      lookahead_time: 1.0
+      use_velocity_scaled_lookahead_dist: false
+      # 제자리 회전: 경로와 각도차 > ~17° 면 회전(코너에서 안 자르고 정렬 후 직진)
+      use_rotate_to_heading: true
+      # 0.15(8.6°)은 너무 민감 → 직진 중 미세 heading 흔들림(특히 s3 ekf yaw 노이즈)에도
+      # 제자리회전 발동, 그 빠른 회전이 ekf를 앞질러(회전 중 ekf yaw가 실제보다 ~20° 뒤처짐)
+      # → 오버슈트 → 역회전 = 와리가리. 0.6(34°)로 올려 직진 중엔 주행하며 부드럽게 보정,
+      # 출발정렬(90°)·진짜 코너(>34°)에서만 제자리회전. 회전속도↓로 ekf가 따라오게.
+      # 0.6(34°)도 직진 중 와리가리가 남음 — 팔로워가 nav2 planned path 굴곡을 따라
+      # rotate_to_heading(제자리 빠른회전) 발동 → 회전 중 ekf/IMU yaw 동적지연(±20~36°)
+      # → 오버슈트 → 더 회전(악순환). 1.2(69°)로 올려 직진/복귀 중엔 절대 제자리회전
+      # 안 하고 주행하며 부드럽게 보정. 출발(90°)·진짜 코너(>69°)만 제자리회전.
+      # 검증: 이전 s3 yaw ±60° 와리가리 → 1.2에서 흔들림폭 0.0 (셋 다).
+      rotate_to_heading_min_angle: 1.2
+      rotate_to_heading_angular_vel: 0.8
+      max_angular_accel: 3.2
+      allow_reversing: false           # 전역 후진 허용 시 주행 중에도 후진arc 써서 대형 깨짐.
+                                       # 차량은 후진 가능하나, 재배치는 '리더 전진+팔로워 횡이동'으로
+                                       # 후진 없이 처리(웨지=리더가 앞서 나가 팔로워가 뒤처짐).
+      # 곡선/접근 감속(추종 정확도↑)
+      use_regulated_linear_velocity_scaling: true
+      regulated_linear_scaling_min_radius: 0.9
+      regulated_linear_scaling_min_speed: 0.25
+      use_cost_regulated_linear_velocity_scaling: false
+      min_approach_linear_velocity: 0.1
+      approach_velocity_scaling_dist: 1.0
+      transform_tolerance: 0.2
+      use_collision_detection: false   # sim 단순화(평지·장애물 없음)
+      max_robot_pose_search_dist: 10.0
+
+planner_server:
+  ros__parameters:
+    use_sim_time: false
+    expected_planner_frequency: 0.5  
+    planner_plugins: ["GridBased"]
+    GridBased:
+      # SmacPlanner2D → NavfnPlanner: 좁은 갭 우회 시 Smac 가 20s 행→abort(code6)→얕은 swerve
+      #   폴백→로봇이 벽 전방콘에 걸려 executor hard-stop(벽 코너 잼, 실측). NavFn(Dijkstra/A*)은
+      #   빠르고 견고해 갭 우회 경로를 안정적으로 산출 → 리더가 갭을 깊게 통과.
+      plugin: "nav2_navfn_planner::NavfnPlanner"
+      tolerance: 0.5
+      use_astar: true
+      allow_unknown: true
+
+behavior_server:
+  ros__parameters:
+    use_sim_time: false
+    behavior_plugins: ["wait"]
+    wait:
+      plugin: "nav2_behaviors::Wait"
+    global_frame: map
+    robot_base_frame: base_footprint
+    transform_tolerance: 0.1
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      use_sim_time: false
+      global_frame: odom
+      always_send_full_costmap: true
+      robot_base_frame: base_footprint
+      update_frequency: 3.0
+      publish_frequency: 1.5
+      rolling_window: true
+      # 전방 라이다만 → 후방 코스트맵은 데이터도 없고 지나친 장애물이 stale 로 남을 뿐.
+      # nav2 롤링윈도우는 로봇중심이라 오프셋 불가 → 창을 20→10m(전후 5m)로 줄여 후방 낭비 제거
+      # (셀 4×↓ CPU 절감, stale 후방장애물 조기 소멸). 원거리 전방 회피는 swarm_path_executor
+      # body-frame 감지(avoid_radius 6m)가 담당하므로 코스트맵 전방 5m 안전망으로 충분.
+      width: 10
+      height: 10
+      # 0.05→0.1: 풋프린트 1.32×0.86m 에 5cm 격자는 과밀 — 10cm 로 충분, 셀 4×↓(실차와 동일).
+      resolution: 0.1
+      transform_tolerance: 1.0
+      # 🔥 궤도형 로봇(combat_robot)의 정확한 사이즈 반영
+      footprint: "[ [0.66, 0.43], [0.66, -0.43], [-0.66, -0.43], [-0.66, 0.43] ]"
+      plugins: ["obstacle_layer", "inflation_layer"]
+      
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        observation_sources: front_lidar 
+        front_lidar:
+          topic: /rslidar_points_filtered
+          data_type: "PointCloud2"
+          obstacle_max_range: 12.0  # E1 선행감지(넓은 장애물 조기우회용 planner 시야)  
+          raytrace_max_range: 13.0
+          max_obstacle_height: 2.0
+          min_obstacle_height: 0.5 #0.1   # box 접근점 감지(성공 사이클 값). 클러터는 전방윈도우로 차단
+          clearing: true
+          marking: true
+          
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.5    
+        inflation_radius: 0.85   # footprint(0.43)+여유 → 우회경로가 장애물에 덜 붙음(SmacPlanner 권장)
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: false
+      global_frame: map
+      robot_base_frame: base_footprint 
+      update_frequency: 3.0
+      publish_frequency: 1.5
+      # [SIM] 글로벌 코스트맵 = 미션구역 고정 경계(정적 origin).
+      #  · 롤링윈도우(±100m)는 재중심이 getRobotPose(TF)에 의존 — N대 부하로 ekf TF 가
+      #    늦으면 재중심이 멈춰 로봇이 창 밖으로 나가고, planner 가 "Start Coordinates
+      #    outside bounds" 로 영구 실패(POC 활주로 x≈100+ 에서 5대 sim 실측, 우회 deadlock).
+      #  · 고정 경계는 재중심 의존이 없고, 활주로(0..400m)+세종 북측 미션을 다 덮는다.
+      #    셀수 1534×267 ≈ 0.41M @0.3m = 종전 롤링(0.44M)과 동일 수준 → 부하 무증가.
+      rolling_window: false
+      origin_x: -30.0
+      origin_y: -40.0
+      width: 460
+      height: 80
+      resolution: 0.3
+      track_unknown_space: false
+      transform_tolerance: 1.0
+      footprint: "[ [0.66, 0.43], [0.66, -0.43], [-0.66, -0.43], [-0.66, 0.43] ]"
+      # static_layer 제거: sim_empty(빈 맵, ±150m)는 장애물 기여가 없는데, 비롤링
+      # costmap 에 static_layer 가 있으면 마스터 그리드가 '맵 크기'로 강제 리사이즈돼
+      # 위 origin/width 가 무시되고(±150m) 활주로(x>150)를 못 덮는다.
+      plugins: ["obstacle_layer", "inflation_layer"]
+
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        observation_sources: front_lidar 
+        front_lidar:
+          topic: /rslidar_points_filtered
+          data_type: "PointCloud2"
+          obstacle_max_range: 12.0  # E1 선행감지(넓은 장애물 조기우회용 planner 시야)  
+          raytrace_max_range: 13.0
+          max_obstacle_height: 2.0
+          min_obstacle_height: 0.5 #0.1   # box 접근점 감지(성공 사이클 값). 클러터는 전방윈도우로 차단
+          clearing: true
+          marking: true
+          
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.5   
+        inflation_radius: 0.85   # footprint(0.43)+여유 → 우회경로가 장애물에 덜 붙음(SmacPlanner 권장)
+
+velocity_smoother:
+  ros__parameters:
+    use_sim_time: false
+    smoothing_frequency: 30.0
+    max_velocity: [3.4, 0.0, 1.4]   # base(1.5) 상향 — 바깥차 코너 따라잡기 여유(~2.2x)
+    min_velocity: [-0.5, 0.0, -1.0]
+    max_accel: [1.0, 0.0, 1.4]      # 빠른 가감속(정지/재출발·간격유지 응답성)
+    max_decel: [-1.5, 0.0, -1.8]
+
+# jazzy nav2_bringup 은 collision_monitor 를 lifecycle 노드로 관리한다(humble 엔 없었음).
+# cmd_vel 체인: controller -> cmd_vel_nav -> velocity_smoother -> cmd_vel_smoothed
+#               -> collision_monitor -> cmd_vel (최종)
+collision_monitor:
+  ros__parameters:
+    use_sim_time: false
+    base_frame_id: "base_footprint"
+    odom_frame_id: "odom"
+    cmd_vel_in_topic: "cmd_vel_smoothed"
+    cmd_vel_out_topic: "cmd_vel"
+    state_topic: "collision_monitor_state"
+    transform_tolerance: 0.2
+    source_timeout: 1.0
+    base_shift_correction: True
+    stop_pub_timeout: 2.0
+    # [SIM] collision_monitor 는 sim 3D 라이다의 지면/팀원 returns 로 출발조차 못 하게 상시
+    # 정지시킴(min_height 올려도 해소 안 됨). 이 sim 구성에선 비활성. 대신 "밀고 들어감" 정지
+    # 안전망은 swarm_path_executor 가 자체 견고한 감지(클러스터+전방콘+팀원마스킹)로 hard-stop
+    # 구현 — sim 오탐 없이 real 에서도 동작. (실차 nav2_params.yaml 에선 collision_monitor 사용 가능)
+    polygons: ["FootprintApproach"]
+    FootprintApproach:
+      type: "polygon"
+      action_type: "approach"
+      footprint_topic: "/local_costmap/published_footprint"
+      time_before_collision: 1.5
+      simulation_time_step: 0.1
+      min_points: 6
+      visualize: False
+      enabled: False
+    # 장애물 소스: 기존 costmap 과 동일한 LiDAR PointCloud2 사용
+    observation_sources: ["pointcloud"]
+    pointcloud:
+      type: "pointcloud"
+      topic: "/rslidar_points_filtered"
+      # sim 3D 라이다 지면 returns 가 0.1 위로도 흩뿌려져 collision_monitor 가 상시 정지함.
+      # 실차 회피 대상(차량/벽/사람/박스)은 모두 키 큼 → 0.5 로 올려 지면 제거·실장애물 유지.
+      # (1.2m 박스 등 진짜 장애물은 0.5~2.0 구간에 충분히 잡힘. 저높이 턱은 executor 가 담당.)
+      min_height: 0.5
+      max_height: 2.0
+      enabled: True
+
+# jazzy nav2_bringup 은 docking_server(opennav_docking)도 lifecycle 노드로 관리한다.
+# 이 로봇은 도킹 기능이 없지만, 노드가 configure 되려면 dock plugin 이 최소 1개 필요.
+# dock 인스턴스(docks)는 비워둠 — 실제 도킹은 사용하지 않음.
+docking_server:
+  ros__parameters:
+    use_sim_time: false
+    controller_frequency: 50.0
+    base_frame: "base_footprint"
+    fixed_frame: "odom"
+    dock_plugins: ['simple_charging_dock']
+    simple_charging_dock:
+      plugin: 'opennav_docking::SimpleChargingDock'
+      use_external_detection_pose: false
+      use_battery_status: false
+      use_stall_detection: false
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: false
+    # Explicit frames so per-robot namespacing can prefix them (sN/map, sN/base_footprint).
+    # Single-robot keeps the nav2 defaults (map / base_footprint), unchanged behavior.
+    global_frame: map
+    robot_base_frame: base_footprint
+    # 실제 경로는 navigation.launch.py 에서 패키지 share 경로로 런타임 치환됨(RewrittenYaml).
+    # 아래 값은 navigation_launch.py 를 직접 호출할 때만 쓰이는 fallback(파일명).
+    default_nav_to_pose_bt_xml: "single_plan_bt.xml"
+    default_nav_through_poses_bt_xml: "way_plan_bt.xml"

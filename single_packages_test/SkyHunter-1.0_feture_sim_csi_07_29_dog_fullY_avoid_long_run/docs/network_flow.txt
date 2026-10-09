@@ -1,0 +1,28 @@
+
+iptime 5008(192.168.100.1)
+wan <- pc main 1
+lan1 -> pc main 2(192.168.100.100)
+lan2 -> obu-예비
+lan3 -> (nell)
+lan4 -> (nell)
+lan5 -> (nell)
+lan6 -> (nell)
+lan7 -> gps(192.168.100.250)
+lan8 -> iptime 3004
+
+
+iptime 3004(192.168.100.2)
+wan <- iptime 5008
+lan1 - orin(192.168.100.110)
+lan2 - front left lidar(192.168.100.200)  7502/7503
+lan3 - front right lidar(192.168.100.210) 7504/7505
+lan4 - rear lidar(192.168.100.220)        7506/7507
+
+PC
+wifi - hot spot
+main 1(10.42.0.1) -> iptime 5008 wan 
+main 2(192.168.100.100) -> iptime 5008 lan
+pcie 1 -> (nell)
+pcie 2 -> (nell)
+pcie 3 -> (nell)
+pcie 4 -> (nell)

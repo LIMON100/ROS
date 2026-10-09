@@ -1,0 +1,70 @@
+%% 채널별 메시지 스키마 요약
+classDiagram
+    class SwarmPathCommand {
+        +Header header
+        +uint8 command
+        +uint16 num_waypoints
+        +string path_json
+        --
+        CMD_NONE = 0
+        CMD_START = 1
+        CMD_STOP = 2
+        CMD_PAUSE = 3
+        CMD_RESUME = 4
+        CMD_LOAD_PATH = 5
+    }
+
+    class WaypointList {
+        +int32 mode
+        +int32 formation
+        +int32 mission_id
+        +int32 mission_status
+        +Waypoint[] waypoints
+    }
+
+    class Waypoint {
+        +int32 way_id
+        +float64 way_lon
+        +float64 way_lat
+        +int32 way_status
+    }
+
+    class FromLL_Request {
+        +GeoPoint ll_point
+        ~ latitude
+        ~ longitude
+        ~ altitude
+    }
+
+    class FromLL_Response {
+        +Point map_point
+        ~ x
+        ~ y
+        ~ z
+    }
+
+    class NavigateToPose_Goal {
+        +PoseStamped pose
+        +string behavior_tree
+        ~ header.frame_id = "map"
+        ~ pose.position.x, y
+        ~ pose.orientation
+    }
+
+    class NavigateToPose_Feedback {
+        +PoseStamped current_pose
+        +Duration navigation_time
+        +Duration estimated_time_remaining
+        +int16 number_of_recoveries
+        +float32 distance_remaining
+    }
+
+    class NavigateToPose_Result {
+        ~ ResultCode: SUCCEEDED · ABORTED · CANCELED
+    }
+
+    WaypointList "1" o-- "*" Waypoint : contains
+    SwarmPathCommand ..> WaypointList : path_json 파싱 시<br/>(mission_control_node 내부에서<br/>vector<(lat,lon)>로 변환)
+    FromLL_Request --> FromLL_Response : /fromLL service
+    NavigateToPose_Goal --> NavigateToPose_Feedback : action progress
+    NavigateToPose_Goal --> NavigateToPose_Result   : action terminal

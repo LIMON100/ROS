@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="param_file" default="$(find-pkg-share pan_tilt_controller)/param/pan_tilt.param.yaml"/>
+
+  <node pkg="pan_tilt_controller"
+        exec="pan_tilt_controller_node"
+        name="pan_tilt_controller"
+        output="screen">
+    <param from="$(var param_file)" />
+    <remap from="input/control_command" to="/pan_tilt_control_command"/>
+    <remap from="output/state" to="/current_actuator_state_info"/>
+  </node>
+
+  <executable cmd="python3 /home/firefly/combatrobot_1/test/square_controller_logger.py"
+              output="screen">
+  </executable>
+
+</launch>

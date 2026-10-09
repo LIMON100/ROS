@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>image_best_effort_viewer</name>
+  <version>0.1.0</version>
+  <description>ROS2 Galactic용 best_effort QoS 이미지 시각화 노드</description>
+
+  <maintainer email="kijong.gong@skyautonet.com">sky</maintainer>
+  <license>SkyAutoNet Commercial License</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Build dependencies -->
+  <build_depend>rclcpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>image_transport</build_depend>
+
+  <!-- Runtime dependencies -->
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>image_transport</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>opencv</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

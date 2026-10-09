@@ -1,0 +1,1 @@
+ACTION=="add|change", SUBSYSTEM=="input", KERNEL=="event*", ATTRS{name}=="BT003 Keyboard", ATTRS{idProduct}=="YOUR_PRODUCT_ID", ATTRS{idVendor}=="YOUR_VENDOR_ID", RUN+="/path/to/your/script.sh"

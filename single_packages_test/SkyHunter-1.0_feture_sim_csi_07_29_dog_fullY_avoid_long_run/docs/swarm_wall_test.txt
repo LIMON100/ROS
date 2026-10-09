@@ -1,0 +1,103 @@
+====================================================================================
+ Swarm Wall-Avoidance Test — Reproduction (COLUMN / DIAMOND / WEDGE)
+ 3-robot swarm driving EAST through a narrow gap (poc_wall_world.sdf).
+ Verifies IDM column following + early-column obstacle passage.
+ ros2 launch based (no shell wrappers).
+====================================================================================
+
+Repo / branch:
+  combatrobot_1  : test_nav2
+  SkyHunter-1.0  : feature/swarm-sim-csi
+
+World: combat_robot_nav2/world/poc_wall_world.sdf
+  wall at x=100 blocking y in [-6,+12], 7 m gap at y in [-13,-6] (right side).
+  Robots start abreast at x=0, drive east, must thread the gap and reach x~160.
+
+------------------------------------------------------------------------------------
+0. Build (once)
+------------------------------------------------------------------------------------
+  cd ~/combatrobot_1/ros
+  colcon build --symlink-install --packages-select combat_robot_nav2
+
+------------------------------------------------------------------------------------
+  Common environment — run these in EVERY terminal first
+  (★ ROS_DOMAIN_ID=77 isolates the sim from real-vehicle data: vehicle=96, boards=0)
+------------------------------------------------------------------------------------
+  source /opt/ros/jazzy/setup.bash
+  source ~/combatrobot_1/ros/install/setup.bash
+  export ROS_DOMAIN_ID=77
+  export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+  export FASTRTPS_DEFAULT_PROFILES_FILE=~/combatrobot_1/scripts/fastdds_profile.xml
+  export GZ_IP=127.0.0.1
+  unset CYCLONEDDS_URI
+
+------------------------------------------------------------------------------------
+1. Bring up the wall sim (Terminal A) — LAUNCH FILE
+------------------------------------------------------------------------------------
+  ros2 launch combat_robot_nav2 swarm_sim.launch.py \
+      num_robots:=3 \
+      world:=poc_wall_world.sdf \
+      path_axis:=east \
+      formation_lateral_spacing_m:=2.0 \
+      use_rviz:=false
+
+  Watch the Gazebo window. Wait for "Managed nodes are active" x3 (~30-60 s).
+
+------------------------------------------------------------------------------------
+2. Drive a formation through the gap (Terminal B)
+------------------------------------------------------------------------------------
+  python3 ~/combatrobot_1/scripts/poc_scenario_driver.py \
+      --robots 3 --via direct --formation column
+
+  # swap the formation:
+  #   --formation diamond
+  #   --formation wedge
+  # longer route:  --dist 200
+
+  (Starts in LINE, then at x=15 changes to the chosen formation WHILE DRIVING — no stop
+   (rolling merge: the leader keeps driving and followers fall in from the front, no reverse).
+   Drives east to x=160. Publishes to /sN/mission/* — sim path; real board chain uses the FSM.)
+
+------------------------------------------------------------------------------------
+3. (Optional) log positions to score a run (Terminal C)
+------------------------------------------------------------------------------------
+  python3 ~/combatrobot_1/scripts/pos_monitor.py 3
+  # prints every 2 s:  t, s1=(x,y|v) s2=(...) s3=(...)
+
+------------------------------------------------------------------------------------
+Expected result (all three formations)
+------------------------------------------------------------------------------------
+  1. Followers merge diagonally behind the leader (lane-change, not a right-angle move).
+  2. Smooth IDM following — constant-speed gap, no stop-go / oscillation.
+  3. Order kept — s1 ahead of s2 ahead of s3, no overtaking.
+  4. Gap threaded — near x=100 every robot reaches y <= -6, then reforms past the wall.
+  5. All reach the goal (x ~ 160) and stop.
+
+  Quick score from a pos_monitor log:
+    - no robot frozen (v~0) at x < 95 for > 15 s
+    - each robot min y <= -6 somewhere in x in [90,105]
+    - all three end at x >= 150
+
+------------------------------------------------------------------------------------
+Teardown / restart between runs
+------------------------------------------------------------------------------------
+  Ctrl-C Terminal B, then Ctrl-C Terminal A. If procs linger:
+    pkill -9 -f 'gz sim'; pkill -9 -f '__ns:=/s'; rm -f /dev/shm/fastrtps_*
+
+------------------------------------------------------------------------------------
+Known issues (WIP)
+------------------------------------------------------------------------------------
+  - Minor speed asymmetry (s3 slightly faster than s2) in wedge.
+  (Fixed: line -> wedge mid-drive formation change is now a rolling merge — leader keeps
+   driving, followers fall in from the front, no reverse.)
+
+------------------------------------------------------------------------------------
+What changed (for reviewers)
+------------------------------------------------------------------------------------
+  swarm_path_executor.cpp (+ early_column.hpp, test_early_column.cpp, nav2_params_sim.yaml,
+  poc_wall_world.sdf):
+  - Column follower longitudinal control unified on the IDM (Intelligent Driver Model)
+    car-following law (P-IDM reference): a = a_max[1 - (v/v_des)^4 - (s*/s)^2].
+  - Early-column obstacle passage (/swarm/obstacle_pass broadcast).
+  - forwardTeammateGap path-axis fix (was freezing followers).
+  - Leader constant cruise; RPP fixed lookahead 1.5; lateral-formation symmetry.

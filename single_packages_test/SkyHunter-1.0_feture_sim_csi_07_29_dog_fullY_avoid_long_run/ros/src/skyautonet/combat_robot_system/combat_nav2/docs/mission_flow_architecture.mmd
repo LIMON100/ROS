@@ -1,0 +1,28 @@
+%% Tablet → Nav2 미션 흐름: 컴포넌트 / 채널 / 메시지 타입
+flowchart TD
+    Tablet["📱 Tablet App"]
+    CS["command_server<br/><i>combatrobot_1</i>"]
+    MC["mission_control_node<br/><i>combat_nav2</i>"]
+    NT["navsat_transform_node<br/><i>robot_localization</i>"]
+    NAV["Nav2 Stack<br/>bt_navigator · planner ·<br/>controller · smoother"]
+    VEH["🚗 Vehicle (모터/CAN)"]
+
+    Tablet -- "① TCP socket<br/>[binary header] + path_json<br/>command: LOAD_PATH/START/STOP/PAUSE/RESUME" --> CS
+    CS -- "② /swarm/path_command<br/><b>combat_robot_msgs/SwarmPathCommand</b><br/>{command, num_waypoints, path_json}" --> MC
+    MC -- "③ /fromLL (service request)<br/><b>robot_localization/srv/FromLL</b><br/>Req: ll_point.{latitude, longitude}" --> NT
+    NT -- "③' service response<br/>Resp: map_point.{x, y}" --> MC
+    MC -- "④ /navigate_to_pose (action goal)<br/><b>nav2_msgs/action/NavigateToPose</b><br/>Goal: PoseStamped (map frame)" --> NAV
+    NAV -- "④' action result/feedback<br/>SUCCEEDED · ABORTED · CANCELED" --> MC
+    NAV -- "⑤ /cmd_vel<br/><b>geometry_msgs/Twist</b><br/>{linear.x, angular.z}" --> VEH
+
+    classDef ext fill:#fdf2d0,stroke:#a87f00,color:#000
+    classDef node1 fill:#e3f2fd,stroke:#1565c0,color:#000
+    classDef node2 fill:#e8f5e9,stroke:#2e7d32,color:#000
+    classDef nav fill:#fff3e0,stroke:#e65100,color:#000
+    classDef hw fill:#fce4ec,stroke:#ad1457,color:#000
+
+    class Tablet ext
+    class CS node1
+    class MC,NT node2
+    class NAV nav
+    class VEH hw

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>laser_distance</name>
+  <version>0.1.0</version>
+  <description>ROS2 node for ETYS-30X laser distance sensor UART interface</description>
+  <maintainer email="kijong.gong@skyautonet.com">sky</maintainer>
+  <license>SkyAutoNet Commercial License</license>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

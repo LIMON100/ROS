@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="gnss_base_link">
+    <inertial>
+      <mass value="0.1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="gnss_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="gnss_base_link"/>
+    <origin xyz="0 0 0.5" rpy="0 0 0"/> </joint>
+
+  <gazebo reference="gnss_base_link">
+    <sensor name="gnss_sensor" type="navsat">
+      <always_on>true</always_on>
+      <update_rate>10.0</update_rate>
+      <topic>${topic_prefix}/sensing/gnss/nav_sat_fix</topic>
+      <gz_frame_id>${frame_prefix}gnss_base_link</gz_frame_id>
+    </sensor>
+  </gazebo>
+
+  <link name="imu_link">
+    <inertial>
+      <mass value="0.1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0.1 0 0.2" rpy="0 0 0"/> </joint>
+
+  <gazebo reference="imu_link">
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100.0</update_rate>
+      <topic>${topic_prefix}/sensing/imu/imu_data</topic>
+      <gz_frame_id>${frame_prefix}imu_link</gz_frame_id>
+      <imu>
+        <angular_velocity>
+          <x><noise type="gaussian"><mean>0.0</mean><stddev>0.0001</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0.0</mean><stddev>0.0001</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0.0</mean><stddev>0.0001</stddev></noise></z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x><noise type="gaussian"><mean>0.0</mean><stddev>0.0001</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0.0</mean><stddev>0.0001</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0.0</mean><stddev>0.0001</stddev></noise></z>
+        </linear_acceleration>
+      </imu>
+    </sensor>
+  </gazebo>
+
+  <link name="front_lidar_link">
+    <inertial>
+      <mass value="0.1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- [COMBAT 로봇 전용] 라이다 지면 높이(광학중심, base_footprint 기준) — 그룹별 실측(2026-07-09).
+       s2/s3 = 0.3775m (지면~라이다 하단 36cm ~ 상단 39.5cm 의 중심),
+       s4/s5 = 0.3275m (31cm ~ 34.5cm 의 중심).
+       base_link 는 base_footprint 위 0.387m 이므로 조인트 z = 목표높이 - 0.387.
+       ★이 z 가 실장착과 맞아야 obstacle_layer(min_obstacle_height 0.1)가 지면을 정확히 제거한다
+        (틀리면 지면이 z≠0 으로 변환돼 바닥이 장애물로 찍힘). Go2(unitree_nav2) 와는 완전 별개. -->
+  <xacro:property name="lidar_ground_z" value="${0.3275 if ns in ['s4','s5'] else 0.3775}" />
+  <joint name="front_lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_lidar_link"/>
+    <origin xyz="0.6 0 ${lidar_ground_z - 0.387}" rpy="0 0 0"/> </joint>
+
+  <gazebo reference="front_lidar_link">
+    <!-- RoboSense E1: 전방 솔리드스테이트 블라인드스폿 LiDAR.
+         수평 FoV 120°, 수직 FoV 90°(상향 8.5° → −81.5°..+8.5°), 10~30Hz, 최대 30m@10%.
+         기존 360° 회전형 → 전방형. (제원 출처: robosense.ai/en/rslidar/E1) -->
+    <sensor name="front_lidar_sensor" type="gpu_lidar">
+      <always_on>true</always_on>
+      <!-- [SIM 부하절감] 15→10Hz. N대 동시구동 시 PointCloud2 처리부하의 큰 축이라
+           costmap 갱신(3Hz) 대비 충분한 10Hz 로 낮춤(E1 제원 10~30Hz 범위 내). -->
+      <update_rate>10.0</update_rate>
+      <topic>${topic_prefix}/front_lidar/scan/points</topic>
+      <gz_frame_id>${frame_prefix}front_lidar_link</gz_frame_id>
+      <visualize>false</visualize>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>180</samples>            <!-- 120° / 0.67° -->
+            <resolution>1.0</resolution>
+            <min_angle>-1.0472</min_angle>     <!-- -60° -->
+            <max_angle>1.0472</max_angle>      <!-- +60° -->
+          </horizontal>
+          <vertical>
+            <samples>60</samples>             <!-- 90° / 1.5° -->
+            <resolution>1.0</resolution>
+            <min_angle>-1.42244</min_angle>    <!-- -81.5° -->
+            <max_angle>0.14835</max_angle>     <!-- +8.5° -->
+          </vertical>
+        </scan>
+        <range>
+          <min>0.15</min>                      <!-- 지면 blind ≤15cm -->
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </lidar>
+    </sensor>
+  </gazebo>
+
+</robot>

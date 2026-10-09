@@ -1,0 +1,126 @@
+<launch>
+    <arg name="use_operator" default="true"/>
+    <arg name="use_detector" default="true"/>
+    <arg name="use_sensor" default="false"/>
+    <arg name="use_visualization" default="false"/>
+    <arg name="use_controller" default="true"/>
+    <arg name="use_camera_motor" default="false"/>
+    <arg name="use_robot_server" default="true"/>
+    <arg name="use_teleop" default="true"/>
+    <arg name="use_trigger" default="true"/>
+    <arg name="use_swarm_coordinator" default="false"/>
+    <arg name="use_gnss" default="true"/>
+    <arg name="robot_id" default="1"/>
+    <arg name="swarm_role" default="leader"/>
+    <arg name="leader_robot_id" default="1"/>
+    <arg name="deployment_mode" default="production"/>
+    <!--
+      params_overlay_file 은 deployment_mode 로부터 자동 도출됩니다
+      (예: deployment_mode:=demo 이면 params.demo.yaml).
+      커스텀 yaml 을 쓰려면 params_overlay_file:=<path> 로 명시적으로 override 하세요.
+    -->
+    <arg name="params_overlay_file" default="$(find-pkg-share combat_robot_operation_system)/config/params.$(var deployment_mode).yaml"/>
+    <arg name="rtsp_config_file" default="$(find-pkg-share robot_server)/config/rtsp_server.yaml"/>
+    <!-- Detection Package (자율주행 불필요: camera/human detector 비활성) -->
+    <group if="$(var use_detector)">
+      <!-- <include file="$(find-pkg-share camera_interface)/launch/camera_driver.launch.xml"> </include> -->
+      <!-- <include file="$(find-pkg-share camera_interface)/launch/zoom_controller.launch.xml"> </include> -->      
+      <!-- <include file="$(find-pkg-share human_detector)/launch/human_detector.launch.xml"> </include> -->
+      <!-- Added camera_ros camera_node launch -->
+      <!-- <node pkg="camera_ros" exec="camera_node" name="camera_node" output="screen">
+        <param name="format" value="RGB888"/>
+        <param name="width" value="640"/>
+        <param name="height" value="640"/>
+        <param name="sensor_mode" value="1332:990"/>
+        <param name="FrameDurationLimits" value="[10000,10000]"/>
+      </node> -->
+    </group>
+    
+    <!-- Operator Package (자율주행 불필요: pan_tilt + operation_system 비활성) -->
+    <!--
+    <group if="$(var use_operator)">
+      <include file="$(find-pkg-share pan_tilt_controller)/launch/pan_tilt_controller.launch.xml"> </include>
+      <include file="$(find-pkg-share combat_robot_operation_system)/launch/combat_robot_operation_system.launch.xml">
+        <arg name="params_overlay_file" value="$(var params_overlay_file)"/>
+      </include>
+    </group>
+    -->
+
+    <!-- Sensor Packages (자율주행 불필요: laser distance 비활성) -->
+    <group if="$(var use_sensor)">
+      <!-- <include file="$(find-pkg-share laser_distance)/launch/laser_distance.launch.xml" /> -->
+      <!--<include file="$(find-pkg-share imu_publisher)/launch/imu_launch.py" />-->
+    </group>
+
+    <!-- GNSS: real RTK position/heading/speed for the app status.
+         gnss_heading.py parses the RTK receiver (NMEA) into /fix, /edge_heading,
+         /vel; gnss_status_bridge.py converts those into /gnss/status, which
+         command_server forwards to the app (replacing the DEFAULT_GPS placeholder). -->
+    <!-- 자율주행: 위치는 차량 mission_control 이 /swarm/mission_state 로 전달하므로
+         이 호스트의 GNSS reader/bridge 는 비활성 (gnss_heading 은 /dev/ttyUSB1 없음). -->
+    <!--
+    <group if="$(var use_gnss)">
+      <node pkg="combat_robot_nav2" exec="gnss_heading.py" name="gnss_heading" output="screen">
+        <param name="port" value="/dev/ttyUSB1"/>
+        <param name="baud" value="921600"/>
+        <param name="antenna_yaw_offset_deg" value="70.5"/>
+      </node>
+      <node pkg="combat_robot_nav2" exec="gnss_status_bridge.py" name="gnss_status_bridge" output="screen"/>
+    </group>
+    -->
+
+    <!-- Visualization Packages (자율주행 불필요) -->
+    <!--
+    <group if="$(var use_visualization)">
+      <include file="$(find-pkg-share display)/launch/display.launch.xml" />
+    </group>
+    -->
+
+    <!-- BLE Command Node -->
+
+
+
+    <!-- Camera Motor Packages (자율주행 불필요) -->
+    <!--
+    <group if="$(var use_camera_motor)">
+      <include file="$(find-pkg-share camera_interface)/launch/zoom_controller.launch.xml"> </include>
+    </group>
+    -->
+
+    <!-- RTSP Packages -->
+    <group if="$(var use_robot_server)">
+      <include file="$(find-pkg-share robot_server)/launch/command_server.launch.xml">
+        <arg name="robot_id" value="$(var robot_id)"/>
+        <arg name="deployment_mode" value="$(var deployment_mode)"/>
+      </include>
+      <include file="$(find-pkg-share robot_server)/launch/rtsp_server.launch.xml">
+        <arg name="config_file" value="$(var rtsp_config_file)"/>
+      </include>
+    </group>
+
+    <!-- Leader/follower relay (자율주행 단독 운용: 비활성). It does not publish drive commands. -->
+    <!--
+    <group if="$(var use_swarm_coordinator)">
+      <include file="$(find-pkg-share swarm_coordinator)/launch/swarm_coordinator.launch.xml">
+        <arg name="role" value="$(var swarm_role)"/>
+        <arg name="robot_id" value="$(var robot_id)"/>
+        <arg name="leader_robot_id" value="$(var leader_robot_id)"/>
+      </include>
+    </group>
+    -->
+
+    <!-- teleop Packages (자율주행 불필요: 수동 조종 비활성) -->
+    <!--
+    <group if="$(var use_teleop)">
+      <include file="$(find-pkg-share teleop_controller)/launch/teleop_controller.launch.xml"> </include>
+    </group>
+    -->
+
+      <!-- trigger Packages (자율주행 불필요: 발사 제어 비활성) -->
+    <!--
+    <group if="$(var use_trigger)">
+      <include file="$(find-pkg-share gun_trigger)/launch/gun_trigger.launch.xml"> </include>
+    </group>
+    -->
+</launch>
+    
